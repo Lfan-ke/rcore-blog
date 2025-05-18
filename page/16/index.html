@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rcore-os.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="rcore-os Blog">
+<meta property="og:url" content="http://rcore-os.github.io/blog/page/16/index.html">
+<meta property="og:site_name" content="rcore-os Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="rcore-os Group">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rcore-os.github.io/blog/page/16/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>rcore-os Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">rcore-os Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rcore-os Group</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">680</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">588</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content index posts-expand">
+          
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/29/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-chy669086/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/29/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-chy669086/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第三阶段总结-chy669086</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-29 20:08:07" itemprop="dateCreated datePublished" datetime="2024-11-29T20:08:07+00:00">2024-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" itemprop="url" rel="index"><span itemprop="name">第三阶段总结报告</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>也是很高兴能进入三阶段学习。三阶段让我对操作系统的理解更进一步，通过课后的作业，我也学到了不少知识。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><ul>
+<li>学会了操作系统对设备的挂载</li>
+<li>了解了 unikernel 到宏内核的转化</li>
+<li>对操作系统内存分配的了解更进一步</li>
+<li>通过查漏补缺对上一阶段掌握不熟的知识进行了复习</li>
+</ul>
+<p>通过阅读 arceos 的源代码和课后练习，我的程序编写能力也得到了锻炼，让我对操作系统有了全新的认识。</p>
+<h2 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h2><p>通过这个阶段的学习，我有以下打算：</p>
+<ul>
+<li>四阶段希望进行宏内核的学习</li>
+<li>在寒假时间自己实现一个轻量级的 unikernel 内核，并通过组件化的形式将他变成宏内核</li>
+</ul>
+<p>最后，感谢老师的悉心教导，也感谢平台提供的学习机会，让我有了深入学习操作系统的机会。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/28/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/28/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第三阶段总结-杨学聪</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-28 10:36:20" itemprop="dateCreated datePublished" datetime="2024-11-28T10:36:20+00:00">2024-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/summary/" itemprop="url" rel="index"><span itemprop="name">summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>After the 3rd stage of the 2024 autumn winter open source operating system training camp, I would like to share my experience and summary with you.</p>
+<p>There are three system structures to compare: </p>
+<ul>
+<li>Unikernel<ul>
+<li>Single-Privilege Physical-Address-Space Combination-of-Kernel-and-UserApps</li>
+</ul>
+</li>
+<li>Macrokernel Mode<ul>
+<li>Multi-Privilege Paging-Address-Space Isolation-between-Kernel-and-UserApps</li>
+</ul>
+</li>
+<li>Hypervisor (Virtual) Mode<ul>
+<li>Isolation-between-Host-and-Guest</li>
+</ul>
+</li>
+</ul>
+<p>The critical key to the Component-based design is the <code>Feature</code>. This can be configured in the Cargo.toml file and in the Makefile environment variable, which can decide which content to compile and link. It feels like a advanced <code>#if - #endif</code> switch option.</p>
+<h3 id="Unikernel"><a href="#Unikernel" class="headerlink" title="Unikernel"></a>Unikernel</h3><!-- U1 -->
+
+<p>We use 3 stages to express the system advancing from bare-metal program to a component-based system.</p>
+<ul>
+<li>Bare-metal program<ul>
+<li>Hardfirm + Bootloader</li>
+<li>Initialize the special registers</li>
+<li>Initialize MMU (for Paging)</li>
+<li>Initialize Stack</li>
+<li>Initialize Interrupt Vector </li>
+<li>Initialize Peripherals / Devices</li>
+<li>Transfer to <code>main</code> program</li>
+</ul>
+</li>
+<li>Layer / Hierarchy<ul>
+<li>Hardfirm + Bootloader (Layer)</li>
+<li><strong>Hardware Initialization</strong>(Layer): the special registers 、MMU(for Paging)、STACK、Interrupt Vector</li>
+<li>Peripherals (Layer)</li>
+<li>Transfer to <code>main</code> program (Layer)</li>
+</ul>
+</li>
+<li>Component-based<ul>
+<li>Hardfirm + Bootloader</li>
+<li><strong>Hardware Initialization</strong> (HAL)</li>
+<li>Runtime Environment (RTE)</li>
+<li>Transfer to <code>main</code> program</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Reset_Handler</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="function">__asm__ <span class="title">volatile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">".code 32                                         \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"CPSID   if                                      \n"</span><span class="comment">// Mask interrupts</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Put any cores other than 0 to sleep */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, R0, c0, c0, 5                   \n"</span>  <span class="comment">/* Read MPIDR */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ANDS    R0, R0, #3                              \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"goToSleep:                                      \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ITT  NE                                         \n"</span>  <span class="comment">/* Needed when in Thumb mode for following WFINE instruction */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"WFINE                                           \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BNE     goToSleep                               \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Reset SCTLR Settings */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, R0, c1, c0, 0                   \n"</span>  <span class="comment">/* Read CP15 System Control register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 12)                    \n"</span>  <span class="comment">/* Clear I bit 12 to disable I Cache */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt;  2)                    \n"</span>  <span class="comment">/* Clear C bit  2 to disable D Cache */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #0x1                            \n"</span>  <span class="comment">/* Clear M bit  0 to disable MMU */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 11)                    \n"</span>  <span class="comment">/* Clear Z bit 11 to disable branch prediction */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 13)                    \n"</span>  <span class="comment">/* Clear V bit 13 to disable hivecs */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 29)                    \n"</span>  <span class="comment">/* Clear AFE bit 29 to enable the full range of access permissions */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ORR     R0, R0, #(0x1 &lt;&lt; 30)                    \n"</span>  <span class="comment">/* Set TE bit to take exceptions in Thumb mode */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR     p15, 0, R0, c1, c0, 0                   \n"</span>  <span class="comment">/* Write value back to CP15 System Control register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ISB                                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Configure ACTLR */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, r0, c1, c0, 1                   \n"</span>  <span class="comment">/* Read CP15 Auxiliary Control Register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ORR     r0, r0, #(1 &lt;&lt;  1)                      \n"</span>  <span class="comment">/* Enable L2 prefetch hint (UNK/WI since r4p1) */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR     p15, 0, r0, c1, c0, 1                   \n"</span>  <span class="comment">/* Write CP15 Auxiliary Control Register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Set Vector Base Address Register (VBAR) to point to this application's vector table */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"LDR    R0, =Vectors                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR    p15, 0, R0, c12, c0, 0                   \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ISB                                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  ...</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"CPSIE  if                                       \n"</span><span class="comment">// Unmask interrupts</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BL __libc_init_array \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BL     main                                     \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  ...)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The above code selected from the HAL Code of STM32MP13, as the initialization and reset handler code, which will help initialize STACK, Interrupt-Vector and critical registers, and end up transferring to <code>main</code> program.<br>The code is followed similar logic as the rCore, and can help us have a better understanding of the MCU, MPU and CPU.</p>
+<hr>
+<!-- U2 -->
+
+<p>Like rCore, We need to provide implementation for the memory interfaces about heap operations, to avoid memory leaks and memory fragmentation.<br>This can help us manage memory more efficiently, and provide convenience for future expansion.</p>
+<p>There are 2 kinds of Memory Allocation Functions: One is based on Page (<code>palloc</code>), and the other is based on Byte (<code>balloc</code>), where the “ByteAlloc” is based on “PageAlloc”.</p>
+<blockquote>
+<p>If we take “PageAlloc” based on “ByteAlloc”, it will be difficult to align.</p>
+</blockquote>
+<p>Algorithm for Memory Allocation </p>
+<ul>
+<li>TLSF, Two-Level Segregated Fit</li>
+<li>Buddy</li>
+<li>Slab</li>
+<li>Bump</li>
+</ul>
+<hr>
+<!-- U3 -->
+
+<p>How to enable paging mechanism:</p>
+<ol>
+<li>Early in the kernel startup, use the ruled identity mapping part of memory<ul>
+<li><code>0xffff_ffc0_8000_0000 ~ 0xffff_ffc0_C000_FFFF</code> $\rightarrow$ <code>0x8000_0000~0xC000_0000</code></li>
+<li>Note that some address-related registers, such as SP, need to be changed to linear addresses</li>
+</ul>
+</li>
+<li>Then if paging feature specified, rebuild the complete paging reflect.</li>
+</ol>
+<hr>
+<!-- U4 -->
+
+<p><strong>Task switching</strong>:<br>Swaps the task currently being executed with a task in the ready queue.<br>For Single-core CPU, the form of multitasking can only be concurrent, but not parallel.</p>
+<p>State of Task</p>
+<ul>
+<li>Running<ul>
+<li>The number is equal to the number of processor cores</li>
+<li><strong>SWITCH-TO</strong>: Ready or Blocked or Exited</li>
+</ul>
+</li>
+<li>Ready<ul>
+<li>Is ready to be scheduled at any time</li>
+<li><strong>SWITCH-TO</strong>: Running</li>
+</ul>
+</li>
+<li>Blocked<ul>
+<li>Waiting for an event or resource satisfying a condition</li>
+<li><strong>SWITCH-TO</strong>: Ready</li>
+</ul>
+</li>
+<li>Exited<ul>
+<li>The task is finished and waiting to be recycled</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U5 -->
+
+<p>Task switching: Firsty, save the context of the current task. Then, restore the context of the new task. Finally, trandfer to switch tasks.<br>Note that the interrupt enable state of the processor switching the task, should be off during the switching process (CLI).<br>If neccessary, the <strong>Spinlock</strong> and <strong>Mutex</strong> are required to be used to avoid race conditions (SMP?).</p>
+<hr>
+<!-- U6 -->
+
+<p>There are usual preemption conditions: One is the time slice of the task is exhausted, and the other is the interrupt source, such as the clock (Timer). The privilege level may be used to determine the nested or re-entry of the traps.</p>
+<p>Algorithm of Scheduling</p>
+<ul>
+<li>Collaborative scheduling algorithm (FIFO, fair)</li>
+<li>Preemptive scheduling algorithm (Privileged)<ul>
+<li>ROUND_ROBIN</li>
+<li>CFS (Completely Fair Scheduler)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U7 -->
+
+<p>The DEVICEs are usually in the kinds of <code>net</code>, <code>block</code>, <code>display</code> and so on.</p>
+<p>How to <strong>discover and initialize devices</strong></p>
+<ul>
+<li>(axruntime at startup) discovers the device and initializes it with the appropriate driver</li>
+<li>axdriver Indicates the process of discovering and initializing devices<ul>
+<li>2-stage cyclic detection discovers the device<ul>
+<li><strong>Level 1</strong>: traverses all virtio_mmio address ranges, determined by the platform physical memory layout, and performs transition page mapping</li>
+<li><strong>Level 2</strong>: Enumerate devices with the for_each_drivers macro, and then probe each virtio device probe_mmio</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>probe discovers devices based on the bus, matches drivers one by one, and initializes them<ul>
+<li>Bus connecting with devices<ul>
+<li>PCI</li>
+<li>MMIO</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U8 -->
+
+<p>A File System is a mechanism used in an operating system to manage files and data on computer storage devices such as hard disks, SSDS, flash memory, etc.<br>(In Linux, every device will also exist as one or more files)</p>
+<p>File System</p>
+<ul>
+<li>RAMFS: A memory-based virtual file system <ul>
+<li>For temporary data storage that is fast but easy to lose.</li>
+</ul>
+</li>
+<li>DEVFS: Device file system<ul>
+<li>For managing and accessing hardware devices, simplifying the development and access of device drivers.</li>
+</ul>
+</li>
+<li>ProcFS: process file system<ul>
+<li>Provides system process and status information for system monitoring and management.</li>
+</ul>
+</li>
+<li>SysFS: System file system <ul>
+<li>Exports kernel objects and properties for viewing and managing hardware devices and drivers.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Macro-kernel"><a href="#Macro-kernel" class="headerlink" title="Macro kernel"></a>Macro kernel</h3><p>More than before:</p>
+<ul>
+<li>Privilege Level</li>
+<li>Address space</li>
+</ul>
+<p>So we need</p>
+<ul>
+<li>Map user/kernel space (address space)<ul>
+<li>Usual method<ul>
+<li>The high end of the page table is used as kernel space</li>
+<li>The low end is used as user application space, because user programs mostly start from low addresses</li>
+</ul>
+</li>
+<li>Kernel space is shared and user space is used independently</li>
+</ul>
+</li>
+<li>Add system call (cross-privilege + address space)</li>
+</ul>
+<!-- M1 -->
+
+<p>The user applications toggle between two privilege levels:</p>
+<ul>
+<li>Task Context : User Level, execute application logic</li>
+<li>Trap Context : Kernel Level, handle system calls and exceptions</li>
+</ul>
+<hr>
+<!-- M2 -->
+
+<p>Address space Area mapping Back-end <code>Backend</code> maps specific areas in a space</p>
+<ul>
+<li><strong>Linear</strong><ul>
+<li><strong>case</strong> The target physical address space area already exists, and the mapping relationship is directly established</li>
+<li>It can be used for MMIO area mapping and special shared address area mapping</li>
+<li>Corresponding physical page frames must be <strong>consecutive</strong></li>
+</ul>
+</li>
+<li><strong>Alloc</strong> (Lazy)<ul>
+<li><strong>case</strong> Use missing page exception (亡羊补牢)</li>
+<li>Mapped by page, the corresponding physical page frames are usually <strong>discontinuous</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- M3 -->
+
+<p>To compatible with Linux applications, we should implement the compatible system calls, file systems and other system resources. This asks us to follow the POSIX standard. </p>
+<p>POSIX allows developers to write applications using a standard set of apis without worrying about differences in the underlying operating system. </p>
+<p>Except <em>Windows</em>, many modern operating systems, such as <em>Linux</em>, <em>macOS</em> (based on <em>Unix</em>), and many embedded systems (RtOS ?) , are partially or fully POSIX compliant. This allows applications developed on these systems to run seamlessly on different platforms.</p>
+<p>When loading the ELF-formatted application, the <code>VirtAddr</code> and <code>MemSiz</code> are used to place the segment in the target virtual memory location. Beware that some segments like .bss are all zeros, so the actual data is not stored in the ELF file, but rather dynamically allocated space is requested.</p>
+<p>The important support to do is to implemwnt hosted-standing environment <code>main</code> function.<br>We should provide:</p>
+<ul>
+<li>Parameter information (<code>argc</code> and <code>argv</code>): parameter number, parameter string pointer array</li>
+<li>Environment information (<code>envv</code>): environment variable string pointer array</li>
+</ul>
+<h3 id="Hypervisor"><a href="#Hypervisor" class="headerlink" title="Hypervisor"></a>Hypervisor</h3><p>Each virtual machine has its own independent virtual machine hardware, based on the physical computer. Each virtual machine runs its own operating system, and the operating system believes that it is alone in the execution environment, and cannot distinguish whether the environment is a physical machine or a virtual machine. (ideal state)</p>
+<blockquote>
+<p>This is similar to virtualization software, like VMware ?</p>
+</blockquote>
+<blockquote>
+<p>Is the <strong>virtual 8086 mode</strong> on x86 the same or similar principle?</p>
+</blockquote>
+<p>The difference between a Hypervisor and an Emulator is <em>whether the architecture of the virtual running environment is the same as that of the physical running environment that supports it</em>.</p>
+<blockquote>
+<p>It Seems to have something to do with emulation KVM acceleration.</p>
+</blockquote>
+<p>Layers of resource objects supported by the Hypervisor:</p>
+<ul>
+<li>VM: manages the address space. </li>
+<li>vCPU: indicates the virtualization of computing resources and the flow of execution on VMS</li>
+<li>vMem: Memory virtualization based on the physical space layout of VMS</li>
+<li>vDevice: indicates device virtualization, including direct mapping and emulation</li>
+<li>vUtilities: interrupts virtualization and bus device operation</li>
+</ul>
+<p>Usually use below items to implement a Hypervisor:</p>
+<ul>
+<li><strong>run_guest</strong>  is responsible for entering Guest environment</li>
+<li><strong>guest_exit</strong> is responsible for exiting Guest environment</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/13/stage-2-ProerLoneW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/13/stage-2-ProerLoneW/" class="post-title-link" itemprop="url">stage-2-ProerLoneW</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-13 23:33:51" itemprop="dateCreated datePublished" datetime="2024-11-13T23:33:51+00:00">2024-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rCore第二阶段总结报告"><a href="#rCore第二阶段总结报告" class="headerlink" title="rCore第二阶段总结报告"></a>rCore第二阶段总结报告</h1><h3 id="第二阶段回顾"><a href="#第二阶段回顾" class="headerlink" title="第二阶段回顾"></a>第二阶段回顾</h3><p>​    本以为第一阶段后将是一马平川，却不曾想第二阶段竟是噩梦的开始。本以为第二阶段也和第一阶段一样，只需断断续续抽出一周的零碎时间即可轻易完成，但只有亲身尝试过才会知道这种想法多么的错误，最后几乎是推掉了所有的学业任务，把一整周都投入在了rCore上才勉勉强强卡ddl写完了所有lab。</p>
+<p>​    第零章和到第二章可以说是第二阶段的环境配置和任务理解阶段，由于上一阶段仅仅是在mac电脑上轻松写代码，故在一开始的环境配置上还是耗费了小两天，在此过程中第一次接触到了windows的wsl，然后一步一步在实验指导书的指导下搭建了 <code>vscode + wsl + ubuntu20.02</code> 这样的开发环境，在阅读前面几章的文档内容后也对所学的知识、实验的相关方向有了大致的了解，并能够初步运行起来自己的rust-os。在第一章的学习过程中，我理解了应用程序的执行环境，对 <code>应用程序、函数调用、标准库、系统调用、操作系统、指令集和硬件平台</code> 这些概念又有了新的认识，有种学习汇编语言的感觉，另外也接触到了 <code>裸机编程、目标三元组</code> 这些比较新的东西。但也仅停留在有印象的层面，没能深入理解其中奥秘；第二章的内容比较全面，我了解到了应用程序执行过程和操作系统的特权级切换机制，了解了编写risc-v的链接脚本来控制内存布局、内嵌汇编、异常处理、上下文切换的实现，这些操作在代码中的实现，更是让我操作系统的课上所学映入了现实，第二章的批处理调度系统，也是一个很好的帮助我入门并理解整体的代码架构的案例。</p>
+<p>​    后面几章就没有那么多时间细细咀嚼了，通常都是扫两眼知识然后直奔作业，除了文件系统外，其他由于都在课上学过，因此在gpt的帮助下没有被卡住太久的时间。也很感谢用心设计该实验教程的学长/学姐，不仅让我们快速入门了os，还让我们快速了解了如何系统开发一个os的各个功能。</p>
+<p>​    在lab1实验就卡了很久——不会仔细品读知识中所蕴含的代码实现细节，也不会投机取巧地去看看测试用例和作业所给的提示，而仅仅是闭门造车，最终卡了许久才在群聊天记录中找到了问题的关键所在，也就是时间的记录问题，当然在写的过程中也遇到诸如生命周期等等问题，让语言基础不太牢固的我举步维艰。</p>
+<p>​    lab2是虚拟存储多级页表实验，虽然在课上老听说页表的神奇和重要性，但从没有像本次实验这样深刻地接触过操作系统中的页表，最初做的时候由于考虑的太多又无法实现便导致一度停滞不前，后来在发呆的时候又仔细重新阅读了一下题目的要求，发现需要实现的东西都还挺简单的，而且测试用例也给的非常宽松因此很快的做完了，并没有想象中那么复杂。</p>
+<p>​    lab3是有关进程的简单创建和调度，实现上并不困难，主要难度还是在于代码结构发生了较大变化，比如本来 <code>task_manager</code> 做的事情现在换成了 <code>process</code> 在做。</p>
+<p>​    lab4是最痛苦的一次实验，在把ch5的代码移植过来后发现仅需要过三个测试文件即可便觉得它很简单，但真正想要得心应手地写出来需要对文件系统和代码实现有详细的理解，最终还是在听了ddl前的讲解才恍然大悟：linkat和create略像前一章所提到的fork和spawn，否则将根本无从下手然后白白浪费时间并放弃之前的一切努力。在给 <code>inode</code> 加上 <code>inode_id</code> 相关的方法后很快完成了这次实验。</p>
+<p>​    lab5的内容相对比较熟悉，也是课上自认为十分简单的死锁检测问题，但代码框架阅读起来难度较大，最终将前面的 <code>sys_get_time</code> 搬过来后跟着题目的提示实现了资源分配图和死锁检测系统调用的实现</p>
+<h3 id="第二阶段收获"><a href="#第二阶段收获" class="headerlink" title="第二阶段收获"></a>第二阶段收获</h3><p>​    这次的第二阶段学习就像一场不断挑战极限的马拉松，让我既感到疲惫不堪，又充满了意想不到的收获。在本阶段的学习中，我获得了关于操作系统核心机制的更深入理解，体验到了真实操作系统开发的复杂性和细致入微的编程要求，特别是在进程管理、内存管理、以及文件系统的设计上有了全新的认识。</p>
+<p>​    首先，通过批处理调度系统的实现，我理解了特权级切换、上下文保存与恢复等机制。这种直接操控硬件资源的编程体验帮助我更好地理解了操作系统在管理硬件与应用间的角色。其次，在实现文件系统的过程中，我也是初次了解了文件路径解析、inode 管理和文件描述符等底层概念，这不仅让我理解了文件系统的设计精髓，也磨炼了抽象和模块化编程的能力。</p>
+<p>​    同时，在死锁检测的实验中，资源分配图的设计让我更深刻地理解了进程间的依赖关系和并发控制策略，学习知识的最好方式绝对是动手实践。</p>
+<p>​    总的来说，这一阶段的收获不止是技术上的进步，更让我体会到了系统开发的全局性思维和精确性要求。这不仅提升了我的编程能力，也让我更有信心面对后续操作系统开发中的复杂问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/13/stage-1-ProerLoneW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/13/stage-1-ProerLoneW/" class="post-title-link" itemprop="url">stage-1-ProerLoneW</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-13 21:17:20" itemprop="dateCreated datePublished" datetime="2024-11-13T21:17:20+00:00">2024-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rCore第一阶段总结报告"><a href="#rCore第一阶段总结报告" class="headerlink" title="rCore第一阶段总结报告"></a>rCore第一阶段总结报告</h1><h3 id="参加训练营的契机"><a href="#参加训练营的契机" class="headerlink" title="参加训练营的契机"></a>参加训练营的契机</h3><p>​    本人是大三信息安全专业学生，起因是在学期初老师在班级群中转发了本次训练营的相关推送，正好本学期在修操作系统专业课，再加上在过去的两年实际上没有学过过硬的技术，就希望能通过本次训练营收获到许多实际项目开发相关的东西，希望能做到技多不压身。</p>
+<h3 id="第一阶段回顾"><a href="#第一阶段回顾" class="headerlink" title="第一阶段回顾"></a>第一阶段回顾</h3><p>​    本阶段的主要任务是根据 <code>rust语言官方圣经</code> 来学习rust语法，并在简单的知识训练、算法实现中掌握基本的编程逻辑和rust语言的独特思维。在学习过程中最大的感受就是，这是一门非常“麻烦”（或者说拗口）、非常底层但却非常“安全”的语言。</p>
+<p>​    在进一步地阅读文档和代码实操的过程中，我也深深地体会到了rust语言的魅力，很多在其他语言中不需要关注的问题，都是rust使用者的家常便饭，例如所有权与借用、生命周期、模式匹配、并发和线程、内存管理、特征泛型、智能指针、宏等等全新的概念，在学习的过程中，也能十分自然地和以往所写过的语言进行对比，也能十分自然地联想到自己所学的专业知识，整个学习过程是痛苦而充满趣味和成就感的。</p>
+<p>​    最终也是断断续续地在国庆后完成了110分的编程题目，虽然很多地方都有囫囵吞枣、只求大概的不好处理，但还算是初步打开了rust语言的大门。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/12/2024a-rcore-srcres258-stage2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/12/2024a-rcore-srcres258-stage2/" class="post-title-link" itemprop="url">2024 秋冬季开源操作系统训练营 第2阶段（专业阶段 - OS设计实现）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-12 22:04:16" itemprop="dateCreated datePublished" datetime="2024-11-12T22:04:16+00:00">2024-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/srcres258/" itemprop="url" rel="index"><span itemprop="name">srcres258</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="阶段目标与晋级条件"><a href="#阶段目标与晋级条件" class="headerlink" title="阶段目标与晋级条件"></a>阶段目标与晋级条件</h1><ul>
+<li><p>从零开始构建操作系统的各个模块，不断完善操作系统核心功能</p>
+</li>
+<li><p>完成5道rCore操作系统大实验编程题，深入领会OS重要概念，掌握必备技能</p>
+</li>
+<li><p>排行榜积分达到500分，方可进入项目阶段学习，参与团队合作完成关键任务</p>
+</li>
+</ul>
+<h1 id="阶段个人总结"><a href="#阶段个人总结" class="headerlink" title="阶段个人总结"></a>阶段个人总结</h1><p>从本阶段开始本人感到明显的学习吃力，各种新概念在教学过程中如泉涌般浮现在脑海，难以在短时间内完全消化完毕。 故专门抽出一整个周末以及课余时间反复研读与理解教学文档，深入洞悉各种新概念的内涵，在彻底理解相关知识点后再结合视频直播中老师的讲解理解每一行代码的实现逻辑（5W1H原则：‌Why（何因）‌、‌What（何事）‌、‌Where（何地）‌、‌When（何时）‌、‌Who（何物）‌、‌How（何法））。在确保完全弄懂文档知识点与代码的实现逻辑之后，方才着手完成每个实验的习题。</p>
+<p>通过本阶段的学习，我也认识到学习操作系统相较于其他编程实践项目需要投入更多的精力，对于陌生的技术栈需要花更多的心思去理解其技术细节与应用方式，不能向以前一样盲目自信而心不在焉地学习。同时这几次实验也建立起我实战大型编程项目的经验，为以后参与更多更繁杂的编程项目打下基础。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/12/2024a-rcore-srcres258-stage1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/12/2024a-rcore-srcres258-stage1/" class="post-title-link" itemprop="url">2024 秋冬季开源操作系统训练营 第1阶段（基础阶段 - Rust编程）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-12 21:54:11" itemprop="dateCreated datePublished" datetime="2024-11-12T21:54:11+00:00">2024-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/srcres258/" itemprop="url" rel="index"><span itemprop="name">srcres258</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="阶段目标与晋级条件"><a href="#阶段目标与晋级条件" class="headerlink" title="阶段目标与晋级条件"></a>阶段目标与晋级条件</h1><ul>
+<li><p>Rust编程语言为学习操作系统设计与实现打下坚实基础</p>
+</li>
+<li><p>通过完成100道Rustling编程题，强化训练Rust编程技能</p>
+</li>
+<li><p>该阶段排行榜达到满分可晋级，进入专业阶段学习</p>
+</li>
+</ul>
+<h1 id="阶段个人总结"><a href="#阶段个人总结" class="headerlink" title="阶段个人总结"></a>阶段个人总结</h1><p>Rust 语言是参加本训练营必须掌握的一门语言，因为本训练营的所有项目均基于本语言编写。由于本人已学习过 Rust 编程语言，故本阶段无太大压力，跟着晋级要求完成 rustlings习题后即达成目标。</p>
+<p>而重点是后续专业阶段 rCore 操作系统的学习与代码理解，因操作系统相关知识早已忘记（虽然曾跟着网络教程阅读过 Linux 内核源码，但年代久远早已忘记细节），故需要一定时间重拾相关知识，并跟着实验在旧知识基础上提升自己的理解水平。</p>
+<p>附：本人学习 Rust 语言的主要参考<a href="https://www.bilibili.com/video/BV1hp4y1k7SV/" target="_blank" rel="noopener">视频教程</a>。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/12/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/12/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营第三阶段总结报告-侯文武</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-12 16:36:32" itemprop="dateCreated datePublished" datetime="2024-11-12T16:36:32+00:00">2024-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="记得恢复package-json"><a href="#记得恢复package-json" class="headerlink" title="记得恢复package.json"></a>记得恢复package.json</h1><h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><h2 id="组件化内核实验路线"><a href="#组件化内核实验路线" class="headerlink" title="组件化内核实验路线"></a>组件化内核实验路线</h2><ul>
+<li>第一周 组件化内核基础和Unikernel模式（以下4部分压缩合并到3次课）<br>内核组件化基本概念、思路和框架 (U.1)<br>内存管理 - 分页、地址空间(U.3)和动态内存分配(U.2)<br>任务调度 - 任务与运行队列(U.4)、协作式调度(U.5) 、 抢占式调度(U.6)<br>块设备驱动(U.7)和文件系统(U.8)</li>
+<li>第二周 宏内核扩展（其中第3次课由郑友捷老师讲，内容待定）<br>从Unikernel到宏内核的扩展 (M.1)<br>用户地址空间管理和页面异常(M.2)<br>进程和Linux应用支持(M.3)</li>
+<li>第三周 Hypervisor扩展<br>从Unikernel到宏内核的扩展 (H.1)<br>Guest地址空间管理(H.2)<br>VMExit各类情况处理与设备管理 (H.3)<br><img src="/blog/.io//Snipaste_2024-11-12_20-59-50.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_20-59-42.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_21-03-29.png" alt="alt text"><h2 id="ArceOS框架"><a href="#ArceOS框架" class="headerlink" title="ArceOS框架"></a>ArceOS框架</h2>除了运行需要的基本工具外，其他所有东西都可以以组件的形式添加到内核中，通过rust提供的feature，能够自行选择需要的组件，实现内核最小化运行。<br>axfeat是一个空的feature，用来汇聚所有的feature。<br><img src="/blog/.io//Snipaste_2024-11-12_21-18-34.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_21-23-20.png" alt="alt text"></li>
+</ul>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><h3 id><a href="#" class="headerlink" title></a><img src="/blog/.io//Snipaste_2024-11-12_16-57-27.png" alt="alt text"></h3><p>在println!宏定义处添加颜色输出控制信息。</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a><img src="/blog/.io//Snipaste_2024-11-12_17-11-06.png" alt="alt text"></h3><p>hashbrown有在no_std模式下使用的hashmap，在axstd文件夹下进行修改。<br>Cargo.toml中添加依赖<code>hashbrown = &quot;0.15&quot;</code><br>axstd/src/lib.rs 将原来的 alloc::collections删除<br>添加 mod collections<br>在src下创建文件夹collections，在mod.rs中添加如下代码，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#[cfg(feature &#x3D; &quot;alloc&quot;)]</span><br><span class="line">#[doc(hidden)]</span><br><span class="line">pub use hashbrown::HashMap as HashMap;</span><br></pre></td></tr></table></figure>
+<p>需要为hashmap添加全局分配器，所以要引入alloc，否则会报出如下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: no global memory allocator found but one is required; link to std or add &#96;#[global_allocator]&#96; to a static item that implements the GlobalAlloc trait</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/11/mtul-rcore-%E7%AC%AC%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/11/mtul-rcore-%E7%AC%AC%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">mtul-rcore-第一二阶段总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-11 22:22:14" itemprop="dateCreated datePublished" datetime="2024-11-11T22:22:14+00:00">2024-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="第一阶段-rust基础与算法"><a href="#第一阶段-rust基础与算法" class="headerlink" title="第一阶段 - rust基础与算法"></a>第一阶段 - rust基础与算法</h2><p>由于我有rust基础，没有遇到什么困难，但还是第一次完整地做一次rustlings，有一定收获</p>
+<h2 id="第二阶段-专业阶段"><a href="#第二阶段-专业阶段" class="headerlink" title="第二阶段 - 专业阶段"></a>第二阶段 - 专业阶段</h2><h3 id="实验环境配置"><a href="#实验环境配置" class="headerlink" title="实验环境配置"></a>实验环境配置</h3><p>rcore开发的环境配置比较繁琐，而我恰好比较熟悉nix，因此我用nix定义的一个完美兼容rcore的开发环境。由于不需要 <code>rustup</code> ， 必须在 <code>os/Makefile</code> 中禁用 rust 环境的检测. <code>flake.nix</code> 如下：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">description</span> = <span class="string">"rCore dev flake"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attr">inputs</span> = &#123;</span><br><span class="line">    nixpkgs.<span class="attr">url</span> = <span class="string">"github:NixOS/nixpkgs/nixpkgs-unstable"</span>;</span><br><span class="line">    oldnixpkgs.<span class="attr">url</span> = <span class="string">"github:NixOS/nixpkgs/7cf5ccf1cdb2ba5f08f0ac29fc3d04b0b59a07e4"</span>;</span><br><span class="line">    flake-utils.<span class="attr">url</span> = <span class="string">"github:numtide/flake-utils"</span>;</span><br><span class="line">    <span class="attr">rust-overlay</span> = &#123;</span><br><span class="line">      <span class="attr">url</span> = <span class="string">"github:oxalica/rust-overlay"</span>;</span><br><span class="line">      inputs.nixpkgs.<span class="attr">follows</span> = <span class="string">"nixpkgs"</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="attr">outputs</span> = &#123;</span><br><span class="line">    nixpkgs,</span><br><span class="line">    oldnixpkgs,</span><br><span class="line">    flake-utils,</span><br><span class="line">    rust-overlay,</span><br><span class="line">    ...</span><br><span class="line">  &#125;:</span><br><span class="line">    flake-utils.lib.eachDefaultSystem (system: <span class="keyword">let</span></span><br><span class="line">      <span class="attr">pkgs</span> = <span class="built_in">import</span> nixpkgs &#123;</span><br><span class="line">        <span class="keyword">inherit</span> system;</span><br><span class="line">        <span class="attr">overlays</span> = [(<span class="built_in">import</span> rust-overlay)];</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="attr">oldpkgs</span> = <span class="built_in">import</span> oldnixpkgs &#123;</span><br><span class="line">        <span class="keyword">inherit</span> system;</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="keyword">in</span> &#123;</span><br><span class="line">      devShells.<span class="attr">default</span> = pkgs.mkShell &#123;</span><br><span class="line">        <span class="attr">packages</span> = <span class="keyword">with</span> pkgs;</span><br><span class="line">          [</span><br><span class="line">            (rust-bin.nightly.<span class="string">"2024-05-02"</span>.minimal.override &#123;</span><br><span class="line">              <span class="attr">extensions</span> = [</span><br><span class="line">                <span class="string">"rust-src"</span></span><br><span class="line">                <span class="string">"llvm-tools"</span></span><br><span class="line">                <span class="string">"rustfmt"</span></span><br><span class="line">                <span class="string">"rust-analyzer"</span></span><br><span class="line">                <span class="string">"rust-docs"</span></span><br><span class="line">                <span class="string">"clippy"</span></span><br><span class="line">              ];</span><br><span class="line">              <span class="attr">targets</span> = [<span class="string">"riscv64gc-unknown-none-elf"</span>];</span><br><span class="line">            &#125;)</span><br><span class="line">            cargo-binutils</span><br><span class="line">            python3</span><br><span class="line">            gdb</span><br><span class="line">            tmux</span><br><span class="line">          ]</span><br><span class="line">          ++ [oldpkgs.qemu];</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 进入环境后显示rust和qemu版本</span></span><br><span class="line">        <span class="attr">shellHook</span> = <span class="string">''</span></span><br><span class="line"><span class="string">          rustc --version</span></span><br><span class="line"><span class="string">          cargo --version</span></span><br><span class="line"><span class="string">          qemu-system-riscv64 --version</span></span><br><span class="line"><span class="string">          qemu-riscv64 --version</span></span><br><span class="line"><span class="string">        ''</span>;</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这份 <code>flake.nix</code> 也已经分享到<a href="https://opencamp.cn/os2edu/bbs/1391" target="_blank" rel="noopener">官方问答论坛</a></p>
+<h3 id="第一-二章"><a href="#第一-二章" class="headerlink" title="第一/二章"></a>第一/二章</h3><p>阅读这两章需要先了解riscv，特别是特权级相关设计。</p>
+<p>主要参考:</p>
+<ul>
+<li><a href="https://ysyx.oscc.cc/books/riscv-reader.html" target="_blank" rel="noopener">RISC-V开放架构设计之道</a></li>
+<li><a href="http://www.riscvbook.com/" target="_blank" rel="noopener">The RISC-V Reader: An Open Architecture Atlas</a> 前一个的英文原著，而且有能下载到单独的RISC-V Green Card，方便查阅</li>
+<li><a href="https://github.com/riscv/riscv-isa-manual" target="_blank" rel="noopener">RISC-V Instruction Set Manual</a> 完整详细</li>
+</ul>
+<h3 id="第三章：多道程序与分时多任务"><a href="#第三章：多道程序与分时多任务" class="headerlink" title="第三章：多道程序与分时多任务"></a>第三章：多道程序与分时多任务</h3><p>学习了系统调用，陷入等知识，上下文切换过程中通用寄存器和CSR的使用加深了我对riscv特权级设计的理解。</p>
+<p>本章练习较为简单。</p>
+<h3 id="第四章：地址空间"><a href="#第四章：地址空间" class="headerlink" title="第四章：地址空间"></a>第四章：地址空间</h3><p>SV39的设计又引入了若干相关的寄存器，如satp, pmp csr。查阅<a href="https://github.com/riscv/riscv-isa-manual" target="_blank" rel="noopener">riscv manul</a>以加深理解。</p>
+<p>本章练习中，为了处理<em>请求映射已经被映射的页</em>的错误，我使用了<code>Result</code>错误传递，无法想象如果不使用<code>Result</code>和<code>?</code>语法糖我的代码会多么丑陋。然而很奇怪，整个rcore中极少使用<code>Result</code>。</p>
+<h3 id="第五章：进程及进程管理"><a href="#第五章：进程及进程管理" class="headerlink" title="第五章：进程及进程管理"></a>第五章：进程及进程管理</h3><p>本章内容比较轻松，完善了TCB的设计并实现<code>fork()</code>和<code>exec()</code>系统调用。</p>
+<p>本章练习也比较简单。</p>
+<h3 id="第六章：文件系统"><a href="#第六章：文件系统" class="headerlink" title="第六章：文件系统"></a>第六章：文件系统</h3><p>easy-fs is <strong>NOT</strong> easy！层层抽象几乎让我晕头转向！</p>
+<p>尽管如此，easy-fs囊括了superblock、索引节点、blockcache等现代文件系统中的基础概念，似乎不能再精简了。</p>
+<p>link和unlink操作主要是查找inode并创建/删除目录项。在inode_block里创建与删除目录项无非是一些线性序列的操作，但由于没有封装成<code>&amp;[DirEntry]</code>，需要手动操作，比较费劲。将来有空我会尝试改进一下。</p>
+<h3 id="第七章：进程间通信"><a href="#第七章：进程间通信" class="headerlink" title="第七章：进程间通信"></a>第七章：进程间通信</h3><p>本章内容较少，但进程间通信是个大话题，还需拓展学习。</p>
+<h3 id="第八章：并发"><a href="#第八章：并发" class="headerlink" title="第八章：并发"></a>第八章：并发</h3><p>学习了多线程的同步与互斥。</p>
+<p>练习：学习了死锁检测算法</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/11/2024%E5%B9%B4%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E3%80%81%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-guoraymon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/11/2024%E5%B9%B4%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E3%80%81%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-guoraymon/" class="post-title-link" itemprop="url">2024年秋冬季开源操作系统训练营一、二阶段总结报告-guoraymon</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-11 16:05:18" itemprop="dateCreated datePublished" datetime="2024-11-11T16:05:18+00:00">2024-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5/" itemprop="url" rel="index"><span itemprop="name">2024秋冬季开源操作系统训练营</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段"></a>第一阶段</h2><p>好几年前就被 Rust 的性能和并发功能吸引，无奈日常没有运用，只能学而时习之。不过 Rusting 还是没有什么难度的，多看看文档，轻松拿下不是问题。</p>
+<h2 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段"></a>第二阶段</h2><p>第二阶段就需要了解操作系统原理了，各类教科书都停留在原理阶段，学完了也不知道自己学会了没有。<br>lab1 比较简单，原理是需要了解特权级和系统调用，实践上懂得在哪里记录数据和返回即可。<br>lab2 难度提升不小，原理上需要了解页表机制，多级页表极其抽象，算是一个难点。实践上要注意内核态拿到的是用户态的虚拟地址，要注意转换而不是直接访问。<br>lab3 难度不大，原理上就是进程那些事，不算难。实践上因为基础代码都已经提供了，依样画葫芦很容易就能通过。<br>lab4 感觉也是不算难的，原理上就是各种数据结构的管理。实践上因为现在的文件系统比较简易，很多可以不过多考虑直接取巧实现。最大的问题是我的机子性能太差，跑全部测试必定超时，我误以为是自己代码问题。<br>lab5 感觉是个巨坑，原理上实验说明写的模模糊糊，完全看不懂。实践上也是感觉测例不完善，虽然顺利通过了，但是没把握实现是正确的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/11/rcore-2024-a%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/11/rcore-2024-a%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">rcore-2024-a-一二阶段实验总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-11 16:00:00" itemprop="dateCreated datePublished" datetime="2024-11-11T16:00:00+00:00">2024-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>紧赶慢赶，终于是在交上了最后的实验，带着许多想法，写下了这篇总结。同样作为清朝老兵，我又回来了。</p>
+<h2 id="一阶段：Rust-110-道算法题"><a href="#一阶段：Rust-110-道算法题" class="headerlink" title="一阶段：Rust 110 道算法题"></a>一阶段：Rust 110 道算法题</h2><p>在第一阶段，主要通过编写 110 道算法题，掌握 Rust 编程的基本和高级特性。Rust 语言强调安全性和高效性，<br>这在算法编程中尤其重要，是的，单个语法题目还是比较轻松的，查阅资料什么的也都可以直接解决。当真正开始算法部分的<br>题目的时候，才开始慢慢体会到rust的折磨——借用检查器（Borrow Checker）、所有权（Ownership）以及生命周期（Lifetime）等概念<br>统统在处理复杂数据结构时痛击我，Rust 的强类型系统帮助我减少了运行时错误，经常是我的逻辑天衣无缝，但还是borrowed error。<br>没事，慢慢折磨吧，折磨多了就会了。。。</p>
+<p>实际上，作为清朝老兵，一阶段倒是没花多少时间，翻出以前的仓库，看看填填也就过去了，但是当时熬夜做rustlings的日子仍然是我挥之不去的记忆。酸爽！</p>
+<h2 id="二阶段：实现-rCore-简单内核"><a href="#二阶段：实现-rCore-简单内核" class="headerlink" title="二阶段：实现 rCore 简单内核"></a>二阶段：实现 rCore 简单内核</h2><p>是的，一拳打爆rcore。第二阶段则是操作系统开发，说白了就是补全各种系统调用。我也慢慢感受到书上说的种种在我看起来毫不起眼的东西，真正实现起来是真的困难,(这里点名虚拟内存和文件系统，东西是真的很多)，每个ch都是一脸懵到嘎嘎乱写，然后对着panic疯狂调，期间甚至一度动摇额我的计算机世界观——计算机是真的有玄学啊。不过还好，总是能在某些神奇的地方调调代码就神奇地通过了测试，也是给我留下了不少的未解之谜。</p>
+<p>在二阶段确实收获了不少，我现在对于一些较大的工程项目已经没有感觉了，也确实是慢慢熟悉rust了，好玩，爱玩！期待后面的考核。</p>
+<p>祝训练营越办越好！希望能在虚拟内存和文件管理那多讲一点，确实很抽象。</p>
+<p>最后，感觉你读完我的碎碎念，不管怎样，还是磕磕绊绊弄完了这两个阶段，也算是给上半年自己中间跑路一个交代吧，行文至此，拜拜。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/blog/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/68/">68</a><a class="extend next" rel="next" href="/blog/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rcore-os Group</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

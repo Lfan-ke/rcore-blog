@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rcore-os.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="rcore-os Blog">
+<meta property="og:url" content="http://rcore-os.github.io/blog/page/11/index.html">
+<meta property="og:site_name" content="rcore-os Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="rcore-os Group">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rcore-os.github.io/blog/page/11/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>rcore-os Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">rcore-os Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rcore-os Group</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">680</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">588</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content index posts-expand">
+          
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/22/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-XiangyuTu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/22/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-XiangyuTu/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第四阶段总结报告</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-22 01:15:00" itemprop="dateCreated datePublished" datetime="2024-12-22T01:15:00+00:00">2024-12-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>作为常年开发网络程序的我，对异步、并发操作却仅仅停留在使用层面，这对我来说是一件长期的困扰。于是在第四阶段，我毫不犹豫地选择了“基于协程异步机制的OS”方向。在这个方向上，我学到了很多新的知识，也遇到了很多新的问题。</p>
+<h2 id="第一周"><a href="#第一周" class="headerlink" title="第一周"></a>第一周</h2><p>第一周的任务主要是了解 Rust 中异步的基本概念，通过阅读资料，我了解到了 Rust 中的 <code>async</code> 和 <code>await</code> 关键字背后的原理，并且了解到了如何实现有栈/无栈协程。过去我只了解过有栈协程，而无栈协程对我来说是一个全新的概念，其 LLVM Generator 的实现机制让我感到十分精妙。在这一周中，我主要是通过阅读资料和代码来了解这些概念，对于这些概念的理解还不是很深入。</p>
+<h2 id="第二周"><a href="#第二周" class="headerlink" title="第二周"></a>第二周</h2><p>第二周主要的工作是阅读 Tokio 代码，我阅读了 Tokio 的 <code>net</code>、<code>signal</code> 和 <code>sync</code> 模块，我将部分代码的分析记录在了共享文档中，这些代码的阅读让我对异步编程有了更深入的理解。</p>
+<h2 id="第三周"><a href="#第三周" class="headerlink" title="第三周"></a>第三周</h2><p>第三周通过阅读 <code>epoll</code>、<code>io-uring</code> 等相关资料，我了解到了异步 IO 的原理。通过阅读 <code>async-io</code> 和 <code>polling</code> 的代码，我了解了 <code>epoll</code> 在 Rust 异步运行时中的运用，而通过阅读 <code>monoio</code> 和 <code>tokio-uring</code> 的代码，我了解了 <code>io-uring</code> 在 Rust 异步运行时中的运用，这些代码的阅读让我对异步 IO 有了更深入的理解。<code>io-uring</code> 的机制起初让我感到困惑，但是在领悟到 <code>io-uring</code> 事实上是一个异步的系统调用框架而不是 <code>epoll</code> 这样的文件描述符复用机制后，我便茅塞顿开。</p>
+<p>在阅读了大量相关的资料后，我也着手开始实现一个简单的异步运行时，通过对 <a href="https://github.com/ihciah/mini-rust-runtime" target="_blank" rel="noopener"><code>mini-rust-runtime</code></a> 的学习和修改，我将其中使用 <code>polling</code> 实现的基于 <code>epoll</code> 的异步运行时改为了基于 <code>io-uring</code> 的异步运行时，并初步支持了文件的异步读写和 TCP 连接。因为使用 <code>io-uring</code> 必须从系统调用层面进行编程，抽象层次很低，在查阅了大量资料后我才勉强完成了这个十分粗糙的实现。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>毫不夸张的说，这短短的三周我学到了近年来对我来说最有价值的知识，使我对异步编程的理解有了质的飞跃，使我未来能更好地开发出高性能的网络程序。在学习的过程中，我也遇到了很多问题，但是通过查阅资料和请教老师，我都得到了解决。这次训练营对我来说是一次非常有意义的经历，我也希望未来能有机会继续参加这样的活动。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%A2%9C%E7%86%99%E7%82%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%A2%9C%E7%86%99%E7%82%86/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营四阶段学习总结报告-颜熙炆</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 22:59:33" itemprop="dateCreated datePublished" datetime="2024-12-21T22:59:33+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第一周"><a href="#第一周" class="headerlink" title="第一周:"></a>第一周:</h1><h2 id="有栈协程与无栈协程"><a href="#有栈协程与无栈协程" class="headerlink" title="有栈协程与无栈协程"></a>有栈协程与无栈协程</h2><p>协程这块的概念可能比较混乱，不太能说得清，但是计科毕竟大多数情况下也不是深究定义的，所以纤程、绿色线程、协程大体上是可以混为一谈的，以下我们统称为协程。<br>尽管名称可能不同，但它们都可以被划分为两大类，一类是有栈（stackful）协程，一类是无栈（stackless）协程。<br>此处的有栈和无栈指的不是指协程在运行时是否需要栈，（毕竟不能回到“远古时代”的面条式编程）对于大多数语言来说，一个函数调用另一个函数，总是存在调用栈的；而是指协程是否可以在其任意嵌套函数中被挂起。有栈协程是可以的，而无栈协程则不可以。</p>
+<h3 id="有栈协程"><a href="#有栈协程" class="headerlink" title="有栈协程"></a>有栈协程</h3><p>实现一个协程的关键点在于如何保存、恢复和切换上下文。<br>在有栈协程中，我们将函数作为协程，保存上下文也就是保存从这个函数及其嵌套函数的栈帧存储的值。恢复上下文则是将这些值重新写回对应的栈帧和寄存器当中。切换上下文也就是保存当前的上下文，恢复下一个要执行的函数的上下文。有栈协程就是这么地朴素，也是我这种刚听说协程的萌新最易于理解的一种协程实现。</p>
+<h3 id="无栈协程"><a href="#无栈协程" class="headerlink" title="无栈协程"></a>无栈协程</h3><p>相比于无栈协程直接切换栈帧的思路，无栈协程则没有改变调用栈。而是使用了生成器（一种特殊的迭代器，能够在函数的执行过程中保存状态，并在需要时恢复执行）。这种特性可以用来模拟协程切换的行为，从而实现上下文切换。</p>
+<p>无栈协程就是把代码转换成状态机，我们可以将 Future 视为一种协程。</p>
+<p>rust的 Future 是通过状态机的形式来实现异步操作的。每个 Future 都是一个状态机，表示一个可能尚未完成的计算。<br>它通过轮询（polling）的方式推进计算过程，直到完成。<br>poll 方法会被异步运行时反复调用，当 Future 返回 Poll::Pending 时表示还没准备好，当返回 Poll::Ready 时表示完成。<br>所以，对future的运算实际上也就可以视为是在执行协程。</p>
+<p>它不依赖操作系统或运行时的栈切换，而是通过将状态信息嵌入到 Future 的数据结构中。这样可以在编译时生成高效的代码来管理异步操作。</p>
+<h3 id="rust的协程"><a href="#rust的协程" class="headerlink" title="rust的协程"></a>rust的协程</h3><p>rust在古早版本（1.0之前）曾经有过一个有栈协程的方案——绿色线程。但是由于不符合零成本抽象的思想被移除了。此外，对于rust而言，绿色线程需要尽可能地减小预分配的堆栈大小，进而降低内存上的开销，毕竟需要比操作系统的线程更加轻量级，否则为什么不直接使用操作系统的线程呢？<br>之后，rust使用了无栈协程的方案，虽然增加了开发上的复杂度，但是良好地解决了并发问题。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>阅读了：</p>
+<p><a href="https://os.phil-opp.com/async-await/" target="_blank" rel="noopener">https://os.phil-opp.com/async-await/</a></p>
+<p>两百行实现绿色线程：<br><a href="https://zhuanlan.zhihu.com/p/100058478" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/100058478</a></p>
+<h1 id="第二周"><a href="#第二周" class="headerlink" title="第二周:"></a>第二周:</h1><p>基本上就读读tokio和smol的源码，但是说实话，没太看明白，但是smol确实会更简单易懂一点。剩下的就是在读io_uring</p>
+<h2 id="io-uring机制"><a href="#io-uring机制" class="headerlink" title="io_uring机制"></a>io_uring机制</h2><p>io_uring的设计主要围绕着环形缓冲区实现，SQ和CQ都是环形的，并且大小都是2的n次方（位运算奇技淫巧 index % size == index &amp; (size - 1)，当且仅当size为2的n次方时成立）。并且由于 UInt 的回环，所以可以直接tail - head，这种设计的一个优势是可以利用环的完整大小，而无需额外管理“环已满”标志。</p>
+<p>应用程序与内核通过io_uring交互的过程大致如下：</p>
+<p>应用程序通过提交队列SQ将SQE（IO请求）提交给内核，内核操作完成之后通过完成队列CQ将CQE（完成的IO请求）写回给应用程序，应用程序自行处理已完成的事件。</p>
+<p>SQ 和 CQ 是内核与应用程序共享的内存区域，这样子，我们避免了频繁的用户态和内核态之间的切换，并且支持批量地提交请求，也减少了系统调用的次数，提高了性能。此外，由于 io_uring 可以直接访问用户态提供的缓冲区，避免不必要的内存拷贝操作。</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p>看了io_uring的一些资料：</p>
+<p><a href="https://kernel.dk/io_uring.pdf" target="_blank" rel="noopener">https://kernel.dk/io_uring.pdf</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/361955546" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/361955546</a></p>
+<p>稍微看了看:</p>
+<p><a href="https://tony612.github.io/tokio-internals/01.html" target="_blank" rel="noopener">https://tony612.github.io/tokio-internals/01.html</a></p>
+<h1 id="第三周"><a href="#第三周" class="headerlink" title="第三周:"></a>第三周:</h1><h2 id="实现运行时"><a href="#实现运行时" class="headerlink" title="实现运行时"></a>实现运行时</h2><p>大体上是参考了 <a href="https://toetoe55.github.io/async-rt-book/Introduction.html" target="_blank" rel="noopener">async-rt-book</a> 和 <a href="https://github.com/ringbahn/maglev" target="_blank" rel="noopener">maglev</a> 这两个写出来的</p>
+<p>仓库在<a href="https://github.com/ZIYAN137/my_runtime.git" target="_blank" rel="noopener">my_runtime</a></p>
+<h2 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h2><p>读了点与异步协程运行时以及IO_Uring有关的一些资料</p>
+<p>一个实验性质的运行时: <a href="https://github.com/ringbahn/maglev" target="_blank" rel="noopener">https://github.com/ringbahn/maglev</a></p>
+<p>训练营内的一位同学的博客：<a href="https://zhuanlan.zhihu.com/p/12850908116" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/12850908116</a></p>
+<p>rust与io_uring: <a href="https://zhuanlan.zhihu.com/p/346219893" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/346219893</a></p>
+<p>无栈协程: <a href="https://mthli.xyz/coroutines-in-c/" target="_blank" rel="noopener">https://mthli.xyz/coroutines-in-c/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Aoi979/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Aoi979/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营第四阶段总结-Aoi979</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 22:54:33" itemprop="dateCreated datePublished" datetime="2024-12-21T22:54:33+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>第四阶段选择了基于协程的操作系统，但并没有选择引入协程到操作系统的方向，不过也有相关思考，这段时间主要学习了rust的协程以及异步运行时的功能以及如何设计</p>
+<h2 id="协程只是可以挂起和恢复的函数"><a href="#协程只是可以挂起和恢复的函数" class="headerlink" title="协程只是可以挂起和恢复的函数"></a>协程只是可以挂起和恢复的函数</h2><p>函数只有2个行为：调用和返回，函数返回后，栈上所拥有的状态会被全部销毁，协程则可以挂起，协程挂起时可以保留协程上下文，恢复则恢复协程的上下文，协程的上下文取决于协程内的局部变量等，反正是比线程上下文小，当协程像函数一样返回，协程也要被销毁</p>
+<h2 id="Cpp-协程和Rust协程的对比"><a href="#Cpp-协程和Rust协程的对比" class="headerlink" title="Cpp 协程和Rust协程的对比"></a>Cpp 协程和Rust协程的对比</h2><p>cpp和rust同为无栈协程，但设计不同</p>
+<ul>
+<li><h2 id="对于协程的调用者"><a href="#对于协程的调用者" class="headerlink" title="对于协程的调用者"></a>对于协程的调用者</h2></li>
+</ul>
+<p>cpp的做法是协程的调用者会得到来自promise_type结构体内get_return_object方法返回的对象，这里一般通过form_promise构造协程句柄coroutine_handle<promise_type>，调用者可以通过协程句柄resume协程和destroy协程，cpp的协程不是lazy的，这点和rust不一样，相当于拿到future后直接开始poll,不过cpp不需要waker，cpp的handle不需要程序员提供函数也不需要提供指针，已经构造好了，而rust需要rawwaker,需要一个函数表定义行为，再传入任务对象的指针，让waker能够操作任务对象，自然而然就能调度这个任务了，cpp只需要管理好何时resume,但rust是loop poll,程序员管理何时把future重新加入被poll的队列</promise_type></p>
+<p>rust则是每一个async函数都会自动生成并返回一个future对象，通过future trait可以看到主要是通过poll来执行协程内代码以及状态切换，这里贴一下tokio教学文档里的例子</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Future <span class="keyword">for</span> MainFuture &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span> = ();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">mut</span> <span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">'_</span>&gt;)</span><br><span class="line">        -&gt; Poll&lt;()&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">use</span> MainFuture::*;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">loop</span> &#123;</span><br><span class="line">            <span class="keyword">match</span> *<span class="keyword">self</span> &#123;</span><br><span class="line">                State0 =&gt; &#123;</span><br><span class="line">                    <span class="keyword">let</span> when = Instant::now() +</span><br><span class="line">                        Duration::from_millis(<span class="number">10</span>);</span><br><span class="line">                    <span class="keyword">let</span> future = Delay &#123; when &#125;;</span><br><span class="line">                    *<span class="keyword">self</span> = State1(future);</span><br><span class="line">                &#125;</span><br><span class="line">                State1(<span class="keyword">ref</span> <span class="keyword">mut</span> my_future) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">match</span> Pin::new(my_future).poll(cx) &#123;</span><br><span class="line">                        Poll::Ready(out) =&gt; &#123;</span><br><span class="line">                            <span class="built_in">assert_eq!</span>(out, <span class="string">"done"</span>);</span><br><span class="line">                            *<span class="keyword">self</span> = Terminated;</span><br><span class="line">                            <span class="keyword">return</span> Poll::Ready(());</span><br><span class="line">                        &#125;</span><br><span class="line">                        Poll::Pending =&gt; &#123;</span><br><span class="line">                            <span class="keyword">return</span> Poll::Pending;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                Terminated =&gt; &#123;</span><br><span class="line">                    <span class="built_in">panic!</span>(<span class="string">"future polled after completion"</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>rust中.await会变成对其future的poll,而waker则需要在对最外层future的poll时构造进context作为形参，通过poll的结果决定是否挂起，但是rust协程没有恢复这个操作，rust的协程是通过waker把任务重新调度回来再poll</p>
+<p>cpp使用Awaiter来控制协程，符合直觉的操作，没有rust那么绕，resume就是直接重新进入协程</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">State</span></span> &#123;</span><br><span class="line">    Start,</span><br><span class="line">    YieldValue,</span><br><span class="line">    FinalSuspend,</span><br><span class="line">    Done</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CoroutineStateMachine</span></span> &#123;</span><br><span class="line">    State current_state = Start; </span><br><span class="line">    int a = <span class="number">1</span>, b = <span class="number">1</span>;          <span class="comment">//  </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// promise_type的引用，协程的promise接口</span></span><br><span class="line">    promise_type&amp; promise;</span><br><span class="line"></span><br><span class="line">    void resume() &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            switch (current_state) &#123;</span><br><span class="line">                case Start:</span><br><span class="line">                    <span class="comment">// 执行 initial_suspend</span></span><br><span class="line">                    <span class="keyword">if</span> (promise.initial_suspend()) &#123;</span><br><span class="line">                        current_state = YieldValue;</span><br><span class="line">                        <span class="keyword">return</span>;  <span class="comment">// 挂起</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 进入协程主体</span></span><br><span class="line">                    [[fallthrough]];</span><br><span class="line"></span><br><span class="line">                case YieldValue:</span><br><span class="line">                    <span class="keyword">while</span> (a &lt; <span class="number">1000000</span>) &#123;</span><br><span class="line">                        <span class="comment">// co_yield a</span></span><br><span class="line">                        promise.yield_value(a);</span><br><span class="line">                        current_state = YieldValue;</span><br><span class="line">                        std::tie(a, b) = std::make_tuple(b, a + b);</span><br><span class="line">                        <span class="keyword">return</span>;  <span class="comment">// 挂起</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// co_return</span></span><br><span class="line">                    promise.return_void();</span><br><span class="line">                    current_state = FinalSuspend;</span><br><span class="line">                    [[fallthrough]];</span><br><span class="line"></span><br><span class="line">                case FinalSuspend:</span><br><span class="line">                    <span class="comment">// 执行 final_suspend</span></span><br><span class="line">                    <span class="keyword">if</span> (promise.final_suspend()) &#123;</span><br><span class="line">                        current_state = Done;</span><br><span class="line">                        <span class="keyword">return</span>;  <span class="comment">// 挂起</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 结束</span></span><br><span class="line">                    [[fallthrough]];</span><br><span class="line"></span><br><span class="line">                case Done:</span><br><span class="line">                    <span class="keyword">return</span>;  <span class="comment">// 协程结束</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (...) &#123;</span><br><span class="line">            <span class="comment">// 异常处理</span></span><br><span class="line">            <span class="keyword">if</span> (!promise.initial_await_resume_called()) &#123;</span><br><span class="line">                promise.unhandled_exception();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h2 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h2></li>
+</ul>
+<p>cpp是全都开堆上，而rust的future可自由选择在栈上还是堆上，对于自引用的结构体，当其被协程捕获作为协程的局部变量时，不允许转移所有权，我们使用Pin来进行保障，因为引用所代表的地址已经被标记为无效</p>
+<h2 id="异步运行时设计"><a href="#异步运行时设计" class="headerlink" title="异步运行时设计"></a>异步运行时设计</h2><p>协程是用户态的任务调度机制，而线程是内核的任务机制，做的事和内核一样，不断执行不同任务，不过是协作式调度，我们需要手动挂起来让其他任务运行，设想单线程环境下的任务调度，我们需要把任务存储在一个集合中，一个接一个运行协程，协程挂起时就再放入集合中。初步想法是这样的，但我们又不在内核态，完全可以把任务交给内核，而不是协程一挂起就重新放回集合，当集合为空时我们的线程就可以休息（多线程环境下其他线程使协程重新加入集合并把休眠的线程唤醒[把阻塞任务丢给了专门的线程]）或是主动检查异步任务是否准备完成（阻塞调用不在用户态[需要内核的异步支持]）</p>
+<p>这样我们的线程可以把阻塞都丢给其他线程或是内核执行，而本身只需要处理更多的任务，提高并发量</p>
+<p>和线程一样，我们也需要一个调用在协程里创建一个协程，我们需要spawn，有时候我们需要等待另一个协程的结果（仍然不会阻塞，因为外层的协程也挂起了），我们要为此添加JoinHandle,如果我们持有一个线程池来执行任务，spawn出的协程就需要一个面对线程池调度的waker,当资源准备好时加入线程池所用的任务队列，但当我们对其JoinHandle进行.await的话我们需要把当前协程的waker和其默认的waker进行替换，因为我们需要这个原本自由的协程在我们等待他的协程上恢复而不是在线程池中恢复后，任务的返回值不被关心，等待自然drop,使用线程池我们可以把同步调用异步化，让阻塞在单独的线程上运行，如果使用io_uring的话就更轻松了</p>
+<h2 id="io-uring"><a href="#io-uring" class="headerlink" title="io_uring"></a>io_uring</h2><p>io_uirng是真正的异步io,通过他我们可以实现上述的第二种方案，当异步任务都处理完了我们的线程就检查完成队列，然后重新加入集合中，进行poll,此时资源已经准备好，不会造成任何阻塞</p>
+<h2 id="对协程引入操作系统的想法"><a href="#对协程引入操作系统的想法" class="headerlink" title="对协程引入操作系统的想法"></a>对协程引入操作系统的想法</h2><p>考虑多核情况下，每个核心运行一个协程执行器，对于Mutex或信号量如果资源申请失败那么直接把任务挂起，把waker和任务指针记录下来，当资源被释放时，自动寻找等待队列的第一个元素，通过waker提供的函数表操作任务指针，使其重新加入对应核心的任务执行队列中。协程在内核态给我感觉是和序列生成器一般，能在一些部分减少时间片的浪费，提高任务处理的效率</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-hbuxiaofei/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-hbuxiaofei/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-hbuxiaofei/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-hbuxiaofei/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营第四阶段总结-hbuxiaofei</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 22:00:35" itemprop="dateCreated datePublished" datetime="2024-12-21T22:00:35+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="x86-架构-hypervisor-SeaBIOS-引导与-Linux-启动实现"><a href="#x86-架构-hypervisor-SeaBIOS-引导与-Linux-启动实现" class="headerlink" title="x86 架构 hypervisor SeaBIOS 引导与 Linux 启动实现"></a>x86 架构 hypervisor SeaBIOS 引导与 Linux 启动实现</h2><h3 id="1-seabios-工作流程"><a href="#1-seabios-工作流程" class="headerlink" title="1. seabios 工作流程"></a>1. seabios 工作流程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(1) POST( Power On Self Test)：上电自检，BIOS 对计算机硬件（CPU、主板、内存等）的检测。</span><br><span class="line">(2) POST 之后的初始化与启动相关硬件（磁盘、键盘控制器等）。</span><br><span class="line">(3) 为 OS 创建一些参数，如 ACPI、E820 表等。</span><br><span class="line">(4) 选择引导设备，从设备中加载 BootLoader，进而启动操作系统。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-qemu-加载seabios过程"><a href="#2-qemu-加载seabios过程" class="headerlink" title="2. qemu 加载seabios过程"></a>2. qemu 加载seabios过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1) qemu加载 seabios 在地址的 4G 最顶端的 LOW_MMIO 区，以及低 1M 区域各有一份。</span><br><span class="line">(2) cpu 的第一条取指地址为 0xFFFFFFF0，该地址指向贴近 4G 的 BIOS 的最后 16 个字节，这也是 BIOS 的第一条指令。</span><br><span class="line">(3) BIOS 最后 16 个字节处，是一个长跳转指令，目的就是换到低 1M 段空间去执行 entry_post ( ORG 0xe05b )</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-kbuild-使用方法"><a href="#3-kbuild-使用方法" class="headerlink" title="3. kbuild 使用方法"></a>3. kbuild 使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">参考: https:&#x2F;&#x2F;github.com&#x2F;Starry-OS&#x2F;Starry</span><br><span class="line"></span><br><span class="line"># To download the tool</span><br><span class="line">$ cargo install kbuild</span><br><span class="line">$ mkdir crates</span><br><span class="line">$ kbuild patch add axstarry</span><br><span class="line">$ kbuild patch remove axstarry</span><br><span class="line">$ kbuild patch list</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-seabios-编译方法"><a href="#4-seabios-编译方法" class="headerlink" title="4. seabios 编译方法"></a>4. seabios 编译方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; .config &lt;&lt; EOF</span><br><span class="line"># for qemu machine types 2.0 + newer</span><br><span class="line">CONFIG_QEMU&#x3D;y</span><br><span class="line">CONFIG_ROM_SIZE&#x3D;256</span><br><span class="line">CONFIG_ATA_DMA&#x3D;n</span><br><span class="line"></span><br><span class="line">CONFIG_XEN&#x3D;n</span><br><span class="line"></span><br><span class="line">CONFIG_DEBUG_LEVEL&#x3D;9</span><br><span class="line">CONFIG_DEBUG_SERIAL&#x3D;y</span><br><span class="line">EOF</span><br><span class="line">echo &quot;CONFIG_DEBUG_LEVEL&#x3D;9&quot; &gt;&gt; .config</span><br><span class="line"></span><br><span class="line">make PYTHON&#x3D;python3 oldnoconfig</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-seabios-反汇编"><a href="#5-seabios-反汇编" class="headerlink" title="5. seabios 反汇编"></a>5. seabios 反汇编</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">objdump -D -b binary -m i8086 bios.bin</span><br><span class="line">objdump -D -b binary -m i8086 romlayout.o</span><br><span class="line"></span><br><span class="line">-M intel : 指定intel格式</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-kvm-中所有-port-IO"><a href="#6-kvm-中所有-port-IO" class="headerlink" title="6. kvm 中所有 port IO"></a>6. kvm 中所有 port IO</h3><p>所谓端口Port IO, x86上使用in out指令进行访问, 和内存的地址空间完全隔离.(ARM上没有PIO) Guest以Linux为例: <code>cat /proc/ioports</code>查看当前OS的所有的ioports :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">  0000-0cf7 : PCI Bus 0000:00</span><br><span class="line">  0000-001f : dma1</span><br><span class="line">  0020-0021 : pic1</span><br><span class="line">  0040-0043 : timer0</span><br><span class="line">  0050-0053 : timer1</span><br><span class="line">  0060-0060 : keyboard</span><br><span class="line">  0064-0064 : keyboard</span><br><span class="line">  0070-0077 : rtc0</span><br><span class="line">  0080-008f : dma page reg</span><br><span class="line">  00a0-00a1 : pic2</span><br><span class="line">  00c0-00df : dma2</span><br><span class="line">  00f0-00ff : fpu</span><br><span class="line">  03c0-03df : vga+</span><br><span class="line">  03f8-03ff : serial</span><br><span class="line">  0510-051b : QEMU0002:00</span><br><span class="line">    0510-051b : fw_cfg_io</span><br><span class="line">  0600-067f : 0000:00:1f.0</span><br><span class="line">    0600-0603 : ACPI PM1a_EVT_BLK</span><br><span class="line">    0604-0605 : ACPI PM1a_CNT_BLK</span><br><span class="line">    0608-060b : ACPI PM_TMR</span><br><span class="line">    0620-062f : ACPI GPE0_BLK</span><br><span class="line">    0630-0633 : iTCO_wdt.0.auto</span><br><span class="line">      0630-0633 : iTCO_wdt</span><br><span class="line">    0660-067f : iTCO_wdt.0.auto</span><br><span class="line">      0660-067f : iTCO_wdt</span><br><span class="line">  0700-073f : 0000:00:1f.3</span><br><span class="line">    0700-073f : i801_smbus</span><br><span class="line">0cf8-0cff : PCI conf1</span><br><span class="line">0d00-ffff : PCI Bus 0000:00</span><br><span class="line">  1000-1fff : PCI Bus 0000:01</span><br><span class="line">  2000-2fff : PCI Bus 0000:02</span><br><span class="line">  3000-3fff : PCI Bus 0000:03</span><br><span class="line">  4000-4fff : PCI Bus 0000:04</span><br><span class="line">  5000-5fff : PCI Bus 0000:05</span><br><span class="line">  6000-6fff : PCI Bus 0000:06</span><br><span class="line">  7000-7fff : PCI Bus 0000:07</span><br><span class="line">  c040-c05f : 0000:00:1f.2</span><br><span class="line">    c040-c05f : ahci</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-项目实现总结"><a href="#7-项目实现总结" class="headerlink" title="7. 项目实现总结"></a>7. 项目实现总结</h3><p>项目刚开始, 我把seabios当作 kernel，写了个简单的 bios 来引导 seabios ，seabios成功运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.section .text</span><br><span class="line">.code16</span><br><span class="line">.global entry16</span><br><span class="line">entry16:</span><br><span class="line">    cli</span><br><span class="line">    cld</span><br><span class="line"></span><br><span class="line">        xor     ax, ax</span><br><span class="line">        mov     ds, ax</span><br><span class="line">        mov     es, ax</span><br><span class="line"></span><br><span class="line">        ljmp    0xf000, 0xe05b</span><br></pre></td></tr></table></figure>
+
+<p>后面通过学习vmcs的使用方法，增加了CS寄存器的设置后，seabios 可以自启动成功。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VmcsGuestNW::RIP.write(entry.as_usize() &amp; <span class="number">0xffff</span>)?;</span><br><span class="line">VmcsGuest16::CS_SELECTOR.write(((entry.as_usize() &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xf000</span>) <span class="keyword">as</span> <span class="built_in">u16</span>)?;</span><br><span class="line"><span class="comment">// On Intel requires 'base' to be 'selector * 16' in real mode.</span></span><br><span class="line">VmcsGuestNW::CS_BASE.write(entry.as_usize() &amp; <span class="number">0xf0000</span>)?;</span><br></pre></td></tr></table></figure>
+<p>对应的linux.tmol修改为</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cpu_num</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">phys_cpu_sets</span> = [<span class="number">1</span>]</span><br><span class="line"><span class="attr">entry_point</span> = <span class="number">0</span>xf_e05b</span><br><span class="line"><span class="attr">bios_path</span> = <span class="string">"bios-256k.bin"</span></span><br><span class="line"><span class="attr">bios_load_addr</span> = <span class="number">0</span>xc_0000</span><br><span class="line"><span class="attr">kernel_path</span> = <span class="string">"arceos-x86_64.bin"</span></span><br><span class="line"><span class="attr">kernel_load_addr</span> = <span class="number">0</span>x<span class="number">100_0000</span></span><br><span class="line"><span class="comment"># ramdisk_path = ""</span></span><br><span class="line"><span class="comment"># ramdisk_load_addr = 0</span></span><br><span class="line"><span class="comment"># disk_path = "disk.img"</span></span><br><span class="line"><span class="comment"># Memory regions with format (`base_paddr`, `size`, `flags`).</span></span><br><span class="line"><span class="attr">memory_regions</span> = [</span><br><span class="line">    [<span class="number">0</span>x<span class="number">0000_0000</span>, <span class="number">0</span>x<span class="number">1_0000</span>, <span class="number">0</span>x13],    <span class="comment"># IO Port		64K	0b10011</span></span><br><span class="line">    [<span class="number">0</span>x<span class="number">0001_0000</span>, <span class="number">0</span>x<span class="number">400_0000</span>, <span class="number">0</span>x7],   <span class="comment"># Low RAM		64M	0b111</span></span><br><span class="line">    [<span class="number">0</span>xfec<span class="number">0_0000</span>, <span class="number">0</span>x1000, <span class="number">0</span>x17],      <span class="comment"># IO APIC		4K	0b10111</span></span><br><span class="line">    [<span class="number">0</span>xfee<span class="number">0_0000</span>, <span class="number">0</span>x1000, <span class="number">0</span>x17],      <span class="comment"># Local APIC	4K	0b10111</span></span><br><span class="line">    [<span class="number">0</span>xfed<span class="number">0_0000</span>, <span class="number">0</span>x1000, <span class="number">0</span>x17],      <span class="comment"># HPET 		4K  0b10111</span></span><br><span class="line">]</span><br><span class="line"><span class="comment"># Emu_devices</span></span><br><span class="line"><span class="comment"># Name Base-Ipa Ipa_len Alloc-Irq Emu-Type EmuConfig</span></span><br><span class="line"><span class="attr">emu_devices</span> = [</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>Seabios 加载内核流程，seabios加载内核是通过 fw_cfg 的 file 接口，读取 multiboo.bin 当作 rom 来加载的，这个 multiboo.bin是linux内核封装过的带有 0x55aa 标记的可以引导的 rom，seabios读取到 rom后，加载到内存中然后执行。整理需要实现内容如下(“对号” 为截至此笔记已完成的):</p>
+<ul>
+<li><input checked disabled type="checkbox"> <ol>
+<li>seabios第一条指令地址为: 0xf000:0xe05b, 支持设置primary vcpu第一条指令地址 entry_point.</li>
+</ol>
+</li>
+</ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 目前实模式下还不支设置超过0xffff的地址</span><br><span class="line">2. 考虑设置代码段 CS 寄存器</span><br></pre></td></tr></table></figure></code></pre><ul>
+<li><input checked disabled type="checkbox"> <ol start="2">
+<li><p>设置虚拟化需要截获的io端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">有些端口需要进行截获, 否则会透传到宿主机, 获取宿主机的信息, 例如pci信息, 内存大小信息等</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><input disabled type="checkbox"> <ol start="3">
+<li><p>dma 实现支持</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">很多数据的传输需要通过 dma 传输</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><input disabled type="checkbox"> <ol start="4">
+<li>实现fw_cfg设备模拟</li>
+</ol>
+</li>
+</ul>
+<pre><code>- [x] fw_cfg 实现 pio, 设备地址 [0x510, 0x511]
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">告诉seabios, 虚拟化环境为 “QEMU”</span><br></pre></td></tr></table></figure>
+
+- [ ] fw_cfg 实现 dma, 设备地址 [0x514]
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用于传输数据, 例如内核data数据等</span><br></pre></td></tr></table></figure></code></pre><ul>
+<li><input checked disabled type="checkbox"> <ol start="5">
+<li>实现rtc设备模拟, 设备地址 [0x70, 0x71]</li>
+</ol>
+</li>
+</ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在虚拟化环境中, seabios 通过 rtc 几个保留的寄存器获取内存大小信息</span><br></pre></td></tr></table></figure></code></pre><ul>
+<li><input disabled type="checkbox"> <ol start="6">
+<li><p>multiboot 实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seabios通过内核启动是通过multiboot协议启动的, 需要将内核文件进行重新封装</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><input disabled type="checkbox"> 其他 …</li>
+</ul>
+<p><strong>修改链接如下:</strong></p>
+<p><a href="https://github.com/hbuxiaofei/arceos-umhv/tree/support-seabios" target="_blank" rel="noopener">https://github.com/hbuxiaofei/arceos-umhv/tree/support-seabios</a></p>
+<p><a href="https://github.com/hbuxiaofei/axvcpu/tree/support-seabios" target="_blank" rel="noopener">https://github.com/hbuxiaofei/axvcpu/tree/support-seabios</a></p>
+<p><a href="https://github.com/hbuxiaofei/x86_vcpu/tree/support-seabios" target="_blank" rel="noopener">https://github.com/hbuxiaofei/x86_vcpu/tree/support-seabios</a></p>
+<p><a href="https://github.com/hbuxiaofei/axvm/tree/support-seabios" target="_blank" rel="noopener">https://github.com/hbuxiaofei/axvm/tree/support-seabios</a></p>
+<p><a href="https://github.com/hbuxiaofei/axdevice/tree/support-seabios" target="_blank" rel="noopener">https://github.com/hbuxiaofei/axdevice/tree/support-seabios</a></p>
+<p><strong>运行日志：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">[  0.307806 0:2 axvm::vm:230] Booting VM[1]</span><br><span class="line">[  0.308076 0:2 arceos_vmm::vmm:40] VM[1] boot success</span><br><span class="line">[  0.308390 0:2 axtask::run_queue:393] task block: Task(2, &quot;main&quot;)</span><br><span class="line">[  0.308757 0:3 axtask::task:471] task drop: Task(4, &quot;&quot;)</span><br><span class="line">[  0.309079 0:3 axtask::run_queue:393] task block: Task(3, &quot;gc&quot;)</span><br><span class="line">[  0.309436 0:5 arceos_vmm::vmm::vcpus:240] VM[1] Vcpu[0] waiting for running</span><br><span class="line">[  0.309852 0:5 arceos_vmm::vmm::vcpus:243] VM[1] Vcpu[0] running...</span><br><span class="line">[  0.310227 0:5 x86_vcpu::vmx::vcpu:118] VmxVcpu bind to current processor vmcs @ PA:0x5b2000</span><br><span class="line">[  0.310751 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  IoWrite &#123;</span><br><span class="line">    port: 0x70,</span><br><span class="line">    width: Byte,</span><br><span class="line">    data: 0x8f,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[  0.311332 0:5 axvm::vm:289] IoWrite: 0x70 Byte 0x8f</span><br><span class="line">[  0.311646 0:5 axdevice::device:96] emu: GPA:0x70..GPA:0x72 handler write port:GPA:0x70 width:1 val:0x8f</span><br><span class="line">[  0.312180 0:5 axdevice::rtc:54] Rtc select 0xf</span><br><span class="line"></span><br><span class="line">[  0.312482 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  IoRead &#123;</span><br><span class="line">    port: 0x71,</span><br><span class="line">    width: Byte,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[  0.312984 0:5 axvm::vm:278] IoRead: 0x71 Byte</span><br><span class="line">[  0.313268 0:5 axdevice::device:79] emu: GPA:0x70..GPA:0x72 handler read port:GPA:0x71 width:1</span><br><span class="line">[  0.313758 0:5 axdevice::rtc:81] Rtc read addr: GPA:0x71 GPA:0x71</span><br><span class="line"></span><br><span class="line">[  0.314130 0:5 axdevice::rtc:62] Rtc get index: 0xf</span><br><span class="line"></span><br><span class="line">[  0.314454 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  Nothing</span><br><span class="line"></span><br><span class="line">[  0.314787 0:5 x86_vcpu::vmx::vcpu:131] VmxVcpu unbind from current processor vmcs @ PA:0x5b2000</span><br><span class="line">[  0.315285 0:5 x86_vcpu::vmx::vcpu:118] VmxVcpu bind to current processor vmcs @ PA:0x5b2000</span><br><span class="line">SeaBIOS (version 1.16.0-20241104_115553-centos83-dev)</span><br><span class="line">BUILD: gcc: (GCC) 8.5.0 20210514 (Red Hat 8.5.0-4) binutils: version 2.30-108.el8_5.1</span><br><span class="line">enabling shadow ram</span><br><span class="line">[  0.316631 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  IoWrite &#123;</span><br><span class="line">    port: 0xcf8,</span><br><span class="line">    width: Dword,</span><br><span class="line">    data: 0x80000000,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[  0.317243 0:5 axvm::vm:289] IoWrite: 0xcf8 Dword 0x80000000</span><br><span class="line">[  0.317586 0:5 axdevice::device:96] emu: GPA:0xcf8..GPA:0xd00 handler write port:GPA:0xcf8 width:4 val:0x80000000</span><br><span class="line">[  0.318159 0:5 axdevice::pci:210] &gt;&gt;&gt; axdevice pci write GPA:0xcf8 0x80000000...</span><br><span class="line"></span><br><span class="line">[  0.318592 0:5 axdevice::pci:87] &gt;&gt;&gt; set address 0x0 : device:0x0 : 0x0 : 0x0</span><br><span class="line"></span><br><span class="line">[  0.319020 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  IoRead &#123;</span><br><span class="line">    port: 0xcfc,</span><br><span class="line">    width: Word,</span><br><span class="line">&#125;</span><br><span class="line">read QEMU_CFG_SIGNATURE 85(U)</span><br><span class="line">Found QEMU fw_cfg</span><br><span class="line">&gt;&gt;&gt; qemu_cfg_read_entry start ...</span><br><span class="line">&gt;&gt;&gt; cfg read qemu_cfg_read over</span><br><span class="line">&gt;&gt;&gt; qemu_cfg_read_entry over ...</span><br><span class="line">QEMU fw_cfg: 956659(0xe98f3) 0x2</span><br><span class="line">QEMU fw_cfg DMA interface supported</span><br><span class="line">&gt;&gt;&gt; qemu_early_e820 call qemu_cfg_read_entry, port:0x19</span><br><span class="line">&gt;&gt;&gt; qemu_cfg_read_entry start ...</span><br><span class="line">&gt;&gt;&gt; cfg read qemu_cfg_dma_transfer 0x6f80 4</span><br><span class="line">&gt;&gt;&gt; dma outl: 0x518 0x806f000000000000</span><br><span class="line">[  0.508528 0:5 axvm::vm:258] &gt;&gt;&gt;&gt;&gt; exit_reason  IoWrite &#123;</span><br><span class="line">    port: 0x518,</span><br><span class="line">    width: Dword,</span><br><span class="line">    data: 0x206f0000,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[  0.509263 0:5 axvm::vm:289] IoWrite: 0x518 Dword 0x206f0000</span><br><span class="line">[  0.509671 0:5 axdevice::device:96] emu: GPA:0x510..GPA:0x522 handler write port:GPA:0x518 width:4 val:0x206f0000</span><br><span class="line">[  0.510356 0:5 axdevice::fwcfg:238] &gt;&gt;&gt; do_write GPA:0x518 4 0x206f0000</span><br><span class="line"></span><br><span class="line">[  0.510837 0:5 axdevice::fwcfg:226] dma_write: GPA:0x518 0x206f0000</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; dma outl over: 0x518 0x806f000000000000</span><br><span class="line">QEMU: Terminated</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>参考文档:</strong></p>
+<p><a href="https://www.cnblogs.com/gnuemacs/p/14287120.html" target="_blank" rel="noopener">SeaBIOS实现简单分析</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/678576761" target="_blank" rel="noopener">浅度剖析 SeaBIOS 之 QEMU 初始化</a></p>
+<p>&lt;&lt;Qemu/kvm源码解析与应用&gt;&gt; - 李强</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/greatbridf-2024%E7%A7%8B%E5%86%AC%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%89%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/greatbridf-2024%E7%A7%8B%E5%86%AC%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%89%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">greatbridf-2024秋冬操作系统训练营三四阶段总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 21:01:04" itemprop="dateCreated datePublished" datetime="2024-12-21T21:01:04+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="三、四阶段学习总结"><a href="#三、四阶段学习总结" class="headerlink" title="三、四阶段学习总结"></a>三、四阶段学习总结</h1><h2 id="ArceOS及Starry项目"><a href="#ArceOS及Starry项目" class="headerlink" title="ArceOS及Starry项目"></a>ArceOS及Starry项目</h2><h3 id="ArceOS"><a href="#ArceOS" class="headerlink" title="ArceOS"></a>ArceOS</h3><p><em>ArceOS</em>是一个<strong>组件化内核</strong>，我的理解就是把传统内核中的那些模块都变成一个一个的组件，如果你需要fs相关的功能，你就把这个包弄进来，编译进来，然后就可以在里面直接用他的功能。这样给使用这个内核的人一种灵活性，同时每个模块<strong>相对</strong>独立，也让不同的模块之间的耦合较松，维护进来也很方便。</p>
+<p>另一个好处就是我可以在这个项目的基础上做出我自己的扩展，比如说第四阶段的项目<em>Starry</em>。或者是如果我只需要用到其中的一些功能，例如我在一些嵌入式设备上使用，那额外的功能就可能完全没有用，还会有额外的开销，我就可以把我不需要的功能全都干掉。</p>
+<p>具体来说主要看了的一些模块：</p>
+<ul>
+<li><code>axhal</code>管理了和平台相关的那些东西，这样可以把平台相关的代码（尽量）全都压缩到一个模块里，只暴露出一个接口就可以了，<del>避免漏得到处都是</del>。</li>
+<li><code>axmm</code>实现的是虚拟内存管理相关的功能，提供了一些有关的抽象。里面用了<code>MemorySet</code>这个东西，把具体的实现给分开了（到<code>Backend</code>里），扩展性也比较好。</li>
+<li><code>axtask</code>实现了任务管理的功能，提供了很好用的接口，每一个<strong>任务</strong>可以被很容易地创建。这个项目里用来实现用户进程也很方便。</li>
+<li><code>axfs</code>实现的是文件系统相关的功能。</li>
+<li><code>axns</code>实现的是类似于<em>Linux</em>的<em>namespace</em>的功能，可以让一些不同的应用有自己独占的资源。</li>
+</ul>
+<p>等等</p>
+<h3 id="Starry"><a href="#Starry" class="headerlink" title="Starry"></a>Starry</h3><p><em>Starry</em>是在<em>ArceOS</em>基础上做的一个宏内核的项目。我的理解大概就是，使用<em>ArceOS</em>提供的这些模块的基本功能，在这个基础之上做出我们常见的宏内核的样子，并且可以和我们现在常用的<em>Linux</em>等内核实现兼容，这样有很多的好处。</p>
+<p>比如其中之一就是，用传统的方式来实现一个宏内核，很有可能会得到一个很乱很庞大的代码树。但是<em>ArceOS</em>他每个模块都分开来，本身各个模块的分工都是很清晰的，我们只需要用这些已有的功能，把我们需要的东西给组装起来，然后再加上额外的一些东西就可以了。这样我们写起来也很快乐，得到的代码也比较好理解。</p>
+<h2 id="我做的事"><a href="#我做的事" class="headerlink" title="我做的事"></a>我做的事</h2><p>一句话说一下的话，就是在这个项目框架的基础上实现了一些系统调用。</p>
+<h3 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h3><p><em>ArceOS</em>的任务管理基本上是保持了<strong>简单</strong>的风格，有了大多数我们所必需的任务管理的内容，同时也把类似于<em>Linux</em>中的进程组啊，会话啊这些内容给拿掉，保持了简洁。他有一个<code>TaskExt</code>的设计，就是如果我们需要什么额外的功能，我们可以在这个位置加上我们所需要的field，这样就实现了扩展性。</p>
+<p>就比如在这个项目里，我们对其扩展，加上了<code>pid</code>的字段。<em>ArceOS</em>中的任务已经有一个编号了，但是我们希望将对用户空间可见的部分和<em>ArceOS</em>中这些实现相关的部分给分开来。所以我们再添加了一个额外的<code>pid</code>，专门用于用户空间进程的管理，以后如果我们实现了进程组，会话等，可以再在这些加上<code>pgid</code>，<code>sid</code>等，或者可以加上侵入式链表来把这些<code>Task</code>给串起来等。</p>
+<p>然后还加了用于实现<code>brk</code>的变量，记录当前进程的<strong>break</strong>的位置。另外，用户空间程序的地址空间和<code>Context</code>也放在这里。因为每一个用户态程序都需要自己的（也有可能和其他人共用）虚拟地址空间，所以把这些放在这个位置，而不需要去修改原本<em>ArceOS</em>的任务部分。</p>
+<h4 id="AxNamespace"><a href="#AxNamespace" class="headerlink" title="AxNamespace"></a><code>AxNamespace</code></h4><p>其中还用到的一个部分就是<code>AxNamespace</code>，但是这个用的觉得有一些问题。这个东西本来的作用大概就是我可以虚拟出几个空间，在这些空间里的进程都有自己的一些资源。在<code>AxNamespace</code>的描述里说，可以实现每进程专属的资源。他的实现是类似于 Thread Local，我有一个全局的数据，然后我可以选择，对于每一个任务，我在访问的时候要不要全都用这个全局的数据，还是每个任务都有自己的数据。</p>
+<p>实际使用中发现，他在初始化每个任务自己的数据的时候，是直接把全局的这个数据给<em>Copy</em>过来。也就是说，如果我想把东西放到这个里面，那我需要这个东西都是<em>Copy</em>的。但是<code>CURRENT_DIR</code>这样的东西，他用的是<code>AxResource</code>，或者也叫<code>Arc&lt;Mutex&lt;T&gt;&gt;</code>，那把这个东西直接复制其实应该是会造成一些问题。其一就是他根本没有实现希望有的<strong>复制</strong>的语义。第二个就是这样实际会造成<strong>内存泄漏</strong>，因为这样相当于是造出了一个没有引用计数的<code>Arc</code>。如果我要是用一个<code>Copy</code>的东西呢？我觉得这样也比较麻烦。。。或者说这个实现在某种意义上有点像<code>TLS</code>。所以说这个<code>AxNamespace</code>的使用是我感觉有些疑惑的一个点。</p>
+<h4 id="实现的系统调用"><a href="#实现的系统调用" class="headerlink" title="实现的系统调用"></a>实现的系统调用</h4><p>实现了<code>clone</code>，但是具体的<code>flags</code>没有处理，只按照<code>fork</code>的语义+返回并且用给定的栈。这个位置应该加上Copy on Write的支持，在<code>MemorySet</code>的<code>Backend</code>里加上这个，给每个页一个标记，然后在处理Page Fault的时候如果这个标记有了，就把这个页给复制一份，然后取消共享（虽然因为时间的关系没有实现）。我觉得<code>Backend</code>这个设计很好，在一些库里可以看到。这个设计让我们可以很方便地扩展三方库给的一些功能，同时不破坏这个库本身的代码和结构。</p>
+<h3 id="内存管理相关"><a href="#内存管理相关" class="headerlink" title="内存管理相关"></a>内存管理相关</h3><p>现在的内存管理部分还是非常的简单，没有CoW，也没有懒分配，这个是我希望可以进一步完善的部分。<code>axmm</code>还有其他的一些库提供了很好的抽象，我觉得在这些基础上完成这个部分应该会相对比较轻松。</p>
+<h3 id="文件系统相关"><a href="#文件系统相关" class="headerlink" title="文件系统相关"></a>文件系统相关</h3><p>实现了<code>open</code>，<code>close</code>，<code>read</code>还有<code>dup</code>等。这些都比较简单，因为<em>ArceOS</em>本身已经大致提供了这些功能的函数了，我们只需要把这些功能给封装一下。</p>
+<p>在做这个部分的时候，想到了一个玩法。因为<em>Starry</em>本身就是一个<em>ArceOS</em>的应用，那我们可不可以在一个<em>ArceOS</em>的基座上同时跑两个<em>Starry</em>呢？现在这样实现，他们的进程之间就是分开的（都在<code>TaskExt</code>中有各自管理的<code>pid</code>），并且我们可以将他们在文件系统中的根目录给分开，比如说<em>ArceOS</em>这边的<code>/mounta</code>是其中一个的根，<code>/mountb</code>是另外一个的根。这样有些类似于是容器了，但是可能能提供更好的隔离性？</p>
+<h1 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h1><p>期末周杀我，这次项目中没做很多的事，还是感觉很遗憾吧。但是看了<em>ArceOS</em>的架构以后，感觉有很多的收获，了解到了一些新的想法。希望有时间的时候，可以进一步完善这个项目。参加这次训练营非常开心。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E5%B9%B4%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-guoraymon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E5%B9%B4%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-guoraymon/" class="post-title-link" itemprop="url">2024年秋冬季开源操作系统训练营四阶段总结报告-guoraymon</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 16:20:45" itemprop="dateCreated datePublished" datetime="2024-12-21T16:20:45+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5/" itemprop="url" rel="index"><span itemprop="name">2024秋冬季开源操作系统训练营</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>第四阶段参加了项目四基于协程异步机制的 OS，主要学习了协程异步的基本原理，阅读了 Tokio 源码，还了解了 io_uring。最终实现了简单的异步任务调度的操作系统，实现了异步任务调度功能，已经用于模拟异步延迟的 delay 函数，下一阶段还要继续实现异步的 I/O。</p>
+<p>第四阶段还旁听了项目一题目一 Unikernel 支持 LinuxApp 第一周的学习，并参与项目实验，切身体验到了单内核应用开发所遇到的问题和难点。第二周是关于实现 Linux 应用支持的，因为本身对 Linux 应用了解就较少，也没精力和时间投入学习，只能战略性先放弃了。</p>
+<p>我觉得经过两个项目的学习，我已经有了一个构建单内核异步操作系统的想法：内核像库一样提供，开发者只需选择需要使用的 future，然后像构建普通应用一样构建单内核操作系统，可以主要应用于嵌入式系统。接下来就是尝试实现这个框架，OS 库实现内存分配，异步任务调度等功能，使开发者调用库即可构建支持 Http Server 的单内核 OS，并运行到真机上。</p>
+<p>同时，我也输出了两篇笔记，内容如下：</p>
+<h1 id="【Async-OS】协程基本概念"><a href="#【Async-OS】协程基本概念" class="headerlink" title="【Async OS】协程基本概念"></a>【Async OS】协程基本概念</h1><h2 id="协程的目的"><a href="#协程的目的" class="headerlink" title="协程的目的"></a>协程的目的</h2><p>协程的目的在于解决并发问题。常规并发是借助操作系统提供的线程来实现，其过程包含生成线程，通过系统调用执行 I/O 操作，并且在 I/O 执行期间会阻塞相应线程直至操作完成。在此过程中，存在两大显著问题：</p>
+<ol>
+<li>用户态和内核态切换成本颇高。每次切换都涉及到系统资源的开销以及一定的时间消耗，这在频繁进行切换的场景下，会对整体性能产生较大影响。</li>
+<li>操作系统线程需要预分配堆栈。每个线程都要提前分配好相应的堆栈空间来存储运行时的数据，当要实现大规模并发时，大量的线程就意味着需要大量内存来维持这些堆栈，内存资源占用较大。</li>
+</ol>
+<h2 id="协程解决并发问题的方式"><a href="#协程解决并发问题的方式" class="headerlink" title="协程解决并发问题的方式"></a>协程解决并发问题的方式</h2><p>协程主要通过以下两种方式来解决上述并发问题：</p>
+<ol>
+<li>实现用户态的线程，也就是协程本身。协程运行在用户态，避免了频繁进出内核态带来的高昂切换成本，使得执行流程相对更为高效、轻便。</li>
+<li>采用无栈协程的方式，实现不保存堆栈。这就避免了像操作系统线程那样，为每个任务都预留大量堆栈空间，从而节省内存开销。</li>
+</ol>
+<h2 id="线程、绿色线程与协程"><a href="#线程、绿色线程与协程" class="headerlink" title="线程、绿色线程与协程"></a>线程、绿色线程与协程</h2><p>协程的概念相对模糊，它本质上是一种可以暂停后再恢复执行的函数。不过其暂停机制存在歧义，可分为显式的通过语法函数实现（对应协作式调度）以及隐式地由运行时执行（对应抢占式调度）这两种情况。像知名的 Golang 使用的是堆栈式的抢占式调度方案，在 Rust 术语里，将这种类似操作系统线程的、堆栈式的抢占式调度方案定义为 “绿色线程” 或 “虚拟线程”。从本质上看，它们除了是在用户态实现之外，和操作系统线程并无根本差异。而严格意义上的协程，理应是无栈的协作式调度。</p>
+<h2 id="协作式调度与抢占式调度"><a href="#协作式调度与抢占式调度" class="headerlink" title="协作式调度与抢占式调度"></a>协作式调度与抢占式调度</h2><p>协作式调度的特点是，任务若不主动让出执行权（yield），就会持续执行下去。与之相反，抢占式调度则是任务随时可能被切换出去。现代操作系统出于避免恶意程序长时间占用 CPU 的考量，大多采用抢占式调度方式。然而，抢占式调度存在明显缺点，由于任务随时可能被切换，所以必须保存任务的堆栈，如此一来，当任务再次被切回时，才能恢复到切换出去时的状态。这就导致在大规模并发场景下，需要耗费大量内存来保存众多任务的堆栈。</p>
+<h2 id="有栈协程与无栈协程"><a href="#有栈协程与无栈协程" class="headerlink" title="有栈协程与无栈协程"></a>有栈协程与无栈协程</h2><p>有栈协程就是上述提到的在抢占式调度场景下，需要保存任务堆栈的协程类型。那么无栈协程是如何实现的呢？在协作式调度中，因为任务不会被外部强制切出，所以可以在主动让出执行权（yield）时，仅保存必要的状态信息，无需像有栈协程那样完整保存计算过程中的数据。更进一步来说，甚至可以直接利用状态机来实现，从而彻底摆脱对堆栈保存的依赖。</p>
+<h2 id="Rust-的协程情况"><a href="#Rust-的协程情况" class="headerlink" title="Rust 的协程情况"></a>Rust 的协程情况</h2><p>早期 Rust 曾有过一个堆栈式协程的方案，但在 1.0 版本发布前被移除了。对于 Rust 而言，绿色线程需要解决的关键问题是怎样减小预分配堆栈的大小，进而降低内存开销，毕竟若不能比操作系统线程更节省内存，那使用操作系统线程就好了，没必要再另辟蹊径。<br>其中 Golang 采用的一种方法是堆栈复制，即先分配一个较小的堆栈，待其达到上限时，再将数据转移至更大的堆栈。但这种方式会引发两个问题：一方面，需要跟踪并更新原先指向堆栈的指针，这一过程本质上和垃圾回收器类似，只是将释放内存变成了移动内存；另一方面，内存复制操作会带来额外的性能开销。而 Golang 本身就有垃圾回收器且能接受额外的性能开销，所以在某些方面可以应对这种方式带来的问题。但对于注重性能和内存管理效率的 Rust 来说，这两点都是难以接受的，因此 Rust 最终选择使用无栈式的协程方案，其实现原理是将代码编译成状态机，虽然这种方式相对较难理解，但社区中已有不少优秀文章对此进行了清晰讲解，例如 <a href="https://os.phil-opp.com/async-await/" target="_blank" rel="noopener">blog-os 的 async-await 章节</a>。以下是编译成状态机后的大致伪代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">enum ExampleStateMachine &#123;</span><br><span class="line">    Start(StartState),</span><br><span class="line">    WaitingOnFooTxt(WaitingOnFooTxtState),</span><br><span class="line">    WaitingOnBarTxt(WaitingOnBarTxtState),</span><br><span class="line">    End(EndState),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">impl Future for ExampleStateMachine &#123;</span><br><span class="line">    type Output &#x3D; String; &#x2F;&#x2F; return type of &#96;example&#96;</span><br><span class="line"></span><br><span class="line">    fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context) -&gt; Poll&lt;Self::Output&gt; &#123;</span><br><span class="line">        loop &#123;</span><br><span class="line">            match self &#123; &#x2F;&#x2F; TODO: handle pinning</span><br><span class="line">                ExampleStateMachine::Start(state) &#x3D;&gt; &#123;…&#125;</span><br><span class="line">                ExampleStateMachine::WaitingOnFooTxt(state) &#x3D;&gt; &#123;…&#125;</span><br><span class="line">                ExampleStateMachine::WaitingOnBarTxt(state) &#x3D;&gt; &#123;…&#125;</span><br><span class="line">                ExampleStateMachine::End(state) &#x3D;&gt; &#123;…&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>协程主要是用于解决并发问题，而非性能问题。</p>
+<p>Golang 中的协程属于 “<code>有栈协程</code>”，与操作系统中基于堆栈式抢占式调度的线程本质相同，在 Rust 中被称作 “<code>绿色线程</code>”。而 Rust 实现的协程是 “<code>无栈协程</code>”，采用无堆栈的协作式调度方案，其核心原理是将代码编译成状态机。</p>
+<blockquote>
+<p>网上常见对于 async Rust 的批判，认为其提升不了多少性能，却需要投入大量资源进行开发，还增加了开发复杂度，甚至会导致 “<code>函数着色</code>” 问题。实际上，这些批判有一定道理，但需要明确的是协程本身旨在解决并发问题，而非聚焦于性能提升。</p>
+</blockquote>
+<h1 id="【Async-OS】最小化异步操作系统"><a href="#【Async-OS】最小化异步操作系统" class="headerlink" title="【Async OS】最小化异步操作系统"></a>【Async OS】最小化异步操作系统</h1><h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>需要了解操作系统基础知识，实现简单的操作系统内核框架，并且要实现堆内存分配，因为必须要使用 <code>Box</code> 和 <code>Pin</code>，还要实现打印功能用于测试，还需要实现时间获取，用于模拟异步延迟。</p>
+<h2 id="Async-in-Rust"><a href="#Async-in-Rust" class="headerlink" title="Async in Rust"></a>Async in Rust</h2><p>Rust 提供了 Future trait 用于实现异步操作，其结构定义如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Future</span></span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, cx: &amp;<span class="keyword">mut</span> Context) -&gt; Poll&lt;Self::Output&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>poll 方法接受两个参数，<code>Pin&lt;&amp;mut Self&gt;</code> 其实和 <code>&amp;mut Self</code> 类似，只是需要 <code>Pin</code> 来固定内存地址，<code>cx</code> 参数是用于传入一个唤醒器，在异步任务完成时可以通过唤醒器发出信号。poll 方法返回一个 Poll 枚举：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">enum</span> <span class="title">Poll</span></span>&lt;T&gt; &#123;</span><br><span class="line">    Ready(T),</span><br><span class="line">    Pending,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大致工作原理其实很简单，调用异步函数的 poll 方法，如果返回的是 <code>Pending</code> 表示值还不可用，CPU 可以先去执行其他任务，稍候再试。返回 <code>Ready</code> 则表示任务已完成，可以接着执行往下的程序。</p>
+<h2 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h2><p>知道基本原理后，基于异步来构建操作系统的思路就很清晰了，即遇到 <code>Pending</code> 就切换到另一个任务，直到所有任务都完成。</p>
+<p>先创建一个 <code>Runtime</code> 结构体，包含 <code>tasks</code> 队列，用于存储需要执行的任务。<code>spawn</code> 方法用于将任务添加到队列，<code>run</code> 方法用于执行异步任务，其逻辑是先取出队列中一个任务，通过 <code>loop</code> 不断尝试执行异步任务，如果任务 <code>Pending</code>，则先去执行另一个任务，以此实现非阻塞，直到队列任务全部为空。</p>
+<blockquote>
+<p>poll 方法需要传入 Waker 参数，用于在异步任务完成后发出信号，因为目前是 loop 盲等的机制，并没有实现真正的唤醒，所以先采用一个虚假唤醒器。</p>
+</blockquote>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Runtime</span></span> &#123;</span><br><span class="line">    tasks: VecDeque&lt;Task&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Runtime &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>() -&gt; <span class="keyword">Self</span> &#123;</span><br><span class="line">        Runtime &#123;</span><br><span class="line">            tasks: VecDeque::new(),</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">spawn</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>, future: <span class="keyword">impl</span> Future&lt;Output = ()&gt; + <span class="built_in">Send</span> + <span class="built_in">Sync</span> + <span class="symbol">'static</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.tasks.push_back(Task::new(future))</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">let</span> <span class="literal">Some</span>(<span class="keyword">mut</span> task) = <span class="keyword">self</span>.tasks.pop_front() &#123;</span><br><span class="line">            <span class="keyword">let</span> waker = dummy_waker();</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut</span> context = Context::from_waker(&amp;waker);</span><br><span class="line">            <span class="keyword">loop</span> &#123;</span><br><span class="line">                <span class="keyword">match</span> task.poll(&amp;<span class="keyword">mut</span> context) &#123;</span><br><span class="line">                    Poll::Ready(val) =&gt; <span class="keyword">break</span> val,</span><br><span class="line">                    Poll::Pending =&gt; &#123;</span><br><span class="line">                        <span class="keyword">self</span>.tasks.push_back(task);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p>任务的结构也很简单，含有一个内部 future，在 poll 时执行 future 的 poll。内部 future 定义很长但是不复杂，基于的 future 结构是 <code>Future&lt;Output = ()&gt;</code>，然后需要一个 <code>&#39;static</code> 生命周期，同时需要 <code>Send</code> 和 <code>Sync</code> 实现跨线程共享，虽然现在没用到，但是 Rust 编译器可不同意你不写。<code>dyn</code> 声明动态类型也是必须要，同时还需要使用 <code>Box</code> 包裹来使编译器确定闭包大小，<code>Pin</code> 用于固定内存位置不可以动。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Task</span></span> &#123;</span><br><span class="line">    future: Pin&lt;<span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> Future&lt;Output = ()&gt; + <span class="built_in">Send</span> + <span class="built_in">Sync</span> + <span class="symbol">'static</span>&gt;&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Task &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(future: <span class="keyword">impl</span> Future&lt;Output = ()&gt; + <span class="built_in">Send</span> + <span class="built_in">Sync</span> + <span class="symbol">'static</span>) -&gt; Task &#123;</span><br><span class="line">        Task &#123;</span><br><span class="line">            future: <span class="built_in">Box</span>::pin(future),</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>, cx: &amp;<span class="keyword">mut</span> Context) -&gt; Poll&lt;()&gt; &#123;</span><br><span class="line">        <span class="keyword">self</span>.future.as_mut().poll(cx)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="虚假唤醒器"><a href="#虚假唤醒器" class="headerlink" title="虚假唤醒器"></a>虚假唤醒器</h2><p>无需了解过多，真正实现唤醒器的时候才需深入了解。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">dummy_waker</span></span>() -&gt; Waker &#123;</span><br><span class="line">    <span class="keyword">unsafe</span> &#123; Waker::from_raw(dummy_raw_waker()) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">dummy_raw_waker</span></span>() -&gt; RawWaker &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">no_op</span></span>(_: *<span class="keyword">const</span> ()) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">clone</span></span>(_: *<span class="keyword">const</span> ()) -&gt; RawWaker &#123;</span><br><span class="line">        dummy_raw_waker()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> vtable = &amp;RawWakerVTable::new(clone, no_op, no_op, no_op);</span><br><span class="line">    RawWaker::new(<span class="number">0</span> <span class="keyword">as</span> *<span class="keyword">const</span> (), vtable)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h2><p>基础框架实现完后，还需要实现一个延迟任务，用于模拟耗时操作。我打算实现一个 <code>delay</code> 方法模拟 <code>sleep</code>，以测试任务 sleep 的时候运行时会切换到下一个任务。代码很简单，<code>DelayFuture</code> 结构体包含一个 <code>target_time</code> 和一个 <code>waker</code>，<code>target_time</code> 表示延迟到什么时候，<code>waker</code> 用于在延迟完成后发出信号。<code>poll</code> 方法中判断当前时间是否大于 <code>target_time</code>，如果大于则返回 <code>Ready</code>，否则返回 <code>Pending</code>。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">delay</span></span>(ms: <span class="built_in">usize</span>) &#123;</span><br><span class="line">    DelayFuture::new(ms).<span class="keyword">await</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DelayFuture</span></span> &#123;</span><br><span class="line">    target_time: <span class="built_in">usize</span>,</span><br><span class="line">    waker: <span class="built_in">Option</span>&lt;Waker&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> DelayFuture &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(ms: <span class="built_in">usize</span>) -&gt; <span class="keyword">Self</span> &#123;</span><br><span class="line">        DelayFuture &#123;</span><br><span class="line">            target_time: get_time_ms() + ms,</span><br><span class="line">            waker: <span class="literal">None</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Future <span class="keyword">for</span> DelayFuture &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Output</span></span> = ();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">poll</span></span>(<span class="keyword">mut</span> <span class="keyword">self</span>: Pin&lt;&amp;<span class="keyword">mut</span> <span class="keyword">Self</span>&gt;, cx: &amp;<span class="keyword">mut</span> Context&lt;<span class="symbol">'_</span>&gt;) -&gt; Poll&lt;Self::Output&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> get_time_ms() &gt;= <span class="keyword">self</span>.target_time &#123;</span><br><span class="line">            Poll::Ready(())</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Poll::Pending</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p><code>rust_main</code> 操作系统的 rust 入口，<code>task1</code> 和 <code>task2</code> 是两个异步任务，<code>task1</code> 先打印 <code>start task 1</code>，然后延迟 200ms，再打印 <code>end task 1</code>。<code>task2</code> 也是类似，只是延迟时间更长。运行时先执行 <code>task1</code>，然后切换到 <code>task2</code>，再切换到 <code>task1</code>，最后切换到 <code>task2</code>。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[no_mangle]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">rust_main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> rt = Runtime::new();</span><br><span class="line">    rt.spawn(task1());</span><br><span class="line">    rt.spawn(task2());</span><br><span class="line">    rt.run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">task1</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"start task 1"</span>);</span><br><span class="line">    delay(<span class="number">200</span>).<span class="keyword">await</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"end task 1"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">task2</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"start task 2"</span>);</span><br><span class="line">    delay(<span class="number">500</span>).<span class="keyword">await</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"end task 2"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">start task 1</span><br><span class="line">start task 2</span><br><span class="line">end task 1</span><br><span class="line">end task 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>Rust 的异步编程还是很方便的，但是目前的实现还是很粗糙，比如没有实现真正的唤醒器，也没有实现真正的异步操作，只是模拟了异步延迟。下一步是实现真正的唤醒器，然后尝试实现异步的 I/O。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-cereal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-cereal/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营四阶段学习总结报告-cereal</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 11:40:41" itemprop="dateCreated datePublished" datetime="2024-12-21T11:40:41+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="arceos宏内核扩展"><a href="#arceos宏内核扩展" class="headerlink" title="arceos宏内核扩展"></a>arceos宏内核扩展</h3><p>我选择的方向是arceos宏内核扩展，主要工作是在新的宏内核扩展starry-next上，补全系统调用。我希望通过这个过程能更好的理解宏内核的内部的结构，和组件化操作系统的抽象解耦思想，也希望自己的代码能够更好的实现宏内核扩展和基座的解耦，虽然现在还是以先实现功能为前提，但是先完成后完美，之后逐步完善功能，并且抽离耦合的部分，让系统调用的实现更加优雅。</p>
+<h3 id="实现成果"><a href="#实现成果" class="headerlink" title="实现成果"></a>实现成果</h3><p>目前已经完成绝大部分系统调用的实现，最花费时间的是任务clone的相关系统调用，将arceos的多任务切换（时钟中断抢占机制），地址空间（与rcore的地址空间排布不同，复制内核的地址空间）等相关的知识进行研究之后，才将clone的简单功能fork实现，之后关于任务相关的系统调用就很顺利了。</p>
+<p>接下来，对arceos的文件系统进行研究，研究了线程间资源独立的新机制namespace，使用了一个很好的方法，实现了unikernel资源全局共享，使用宏内核扩展后，资源线程间独立或共享的机制。实现文件系统相关的api主要也就是调用axfs提供的api进行实现，需要解决的是axfs不支持open目录，但是openat这个系统调用需要打开目录，所以需要解决这个问题。</p>
+<h3 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h3><p>通过四阶段的学习，学习了组件化操作系统实现宏内核的思想和方法，经历过这三个月的学习，从不会rust和操作系统的小白，慢慢一步一步做，从学习rust，到完成rcore，再到学习arceos，逐步学习操作系统多任务、地址空间、文件系统等等，更加理解了riscv特权级结构，sv39页表结构等risv体系结构知识，总结这三个月，收获非常大，在这里也希望开源操作系统训练营可以越办越好，更多的人可以在这里学到知识，收获成长。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%BC%A0%E5%AE%87%E9%A9%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/21/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%BC%A0%E5%AE%87%E9%A9%B0/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第四阶段总结-张宇驰</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-21 03:58:24" itemprop="dateCreated datePublished" datetime="2024-12-21T03:58:24+00:00">2024-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="2024秋冬开源操作系统训练营第四阶段总结-张宇驰"><a href="#2024秋冬开源操作系统训练营第四阶段总结-张宇驰" class="headerlink" title="2024秋冬开源操作系统训练营第四阶段总结-张宇驰"></a>2024秋冬开源操作系统训练营第四阶段总结-张宇驰</h1><h2 id="学习内容"><a href="#学习内容" class="headerlink" title="学习内容"></a>学习内容</h2><p>这个阶段，我选择了unikernel方向一的任务，为arceos实现linux的app移植，其中我进行了如下方向的探索：</p>
+<ol>
+<li>跟安同学讨论了基于对Ecall进行截断的思路，并自己尝试截断Ecall并导向自己提供的函数，在最小幅度的情况下实现。最后也是其他东西都有了，但是没有做明白怎么截断。</li>
+<li>同样是在群里，和安同学讨论在SBI中进行转发的设想，不过后来没琢磨明白怎么处理这些新的调用号而困惑，最后也仅仅停留在理论层面上。</li>
+<li>最终的选择：自己实现Mocklibc，验证了用自己的函数替换musl中的系统调用的思路，也就是获得abitable，然后在对应的地方直接进行跳转。交流会的时候看到了另一个同学针对动态链接的实现思路，尝试修改代码后发现支持动态链接还是好做的，但是由于时间原因在交这份报告之前还没有跑起来。</li>
+</ol>
+<h2 id="学习收获"><a href="#学习收获" class="headerlink" title="学习收获"></a>学习收获</h2><p>这个任务对我来说属实难度比较大，总结一下有两点没有做好：</p>
+<ol>
+<li>时间管理。在学校安排中，我们进行了为期两周的实习，其实空余时间挺多的，但是自己没有利用起来（也跟中间还有个考试有关），然后往后做的时间少而且累。</li>
+<li>探索能力。在面对二、三周的复杂项目时，我没有很好的确定到自己的方向，在一定程度上延误了时间。（不过就是探索了很多有意思的东西了）</li>
+</ol>
+<h2 id="下一步计划"><a href="#下一步计划" class="headerlink" title="下一步计划"></a>下一步计划</h2><p>往后顺着PPT上的东西继续探索吧，我不是特别在意一定要在训练营之中去做什么事儿。出于对这个项目的兴趣，我打算保持跟这里的交流，往后继续探索，验证一下自己的想法。然后看看寒假有没有机会去实习，吧这个项目完善完善，而且家里也没人，假期回家的意义也不大。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/20/OS%E9%A1%B9%E7%9B%AE-igb%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/20/OS%E9%A1%B9%E7%9B%AE-igb%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">OS项目unikernel igb驱动开发总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-20 20:25:37" itemprop="dateCreated datePublished" datetime="2024-12-20T20:25:37+00:00">2024-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、验证说明"><a href="#一、验证说明" class="headerlink" title="一、验证说明"></a>一、验证说明</h1><p>在这个仓库中 <a href="https://github.com/ghostdragonzero/arceos_test" target="_blank" rel="noopener">https://github.com/ghostdragonzero/arceos_test</a> 我直接修改了ixgbe的pid vid匹配参数来匹配igb网卡，并且通过修改axdriver到引用我自己的仓库。以此来实现替换ixgbe的目的。<br>拉取后可以直接执行<code>make A=examples/httpserver PLATFORM=aarch64-qemu-virt LOG=debug SMP=2 NET=y FEATURES=driver-ixgbe NET_DEV=user run</code></p>
+<p>这个仓库 <a href="https://github.com/ghostdragonzero/igb-driver/tree/my_driver" target="_blank" rel="noopener">https://github.com/ghostdragonzero/igb-driver/tree/my_driver</a><br>是我在share_test框架下实现的驱动完成了 link_up rx_init tx_init 初始化流程也是我在这个框架下实现然后搬到ixgbe框架里在arceos内运行没问题的<br>但是这里实现的memry是使用的arceos中hal的实现   ring结构是直接使用的ixgbe的ring</p>
+<h1 id="二、学习的感受"><a href="#二、学习的感受" class="headerlink" title="二、学习的感受"></a>二、学习的感受</h1><p>这是我第一次成功完成这个训练营，之前参加了很多次都在各种阶段就没有坚持下去，这次能成功完成是相当开心的。</p>
+<p>并且这次的驱动开发给我感受最深的就是，<strong>硬件（虽然是模拟的外设）的逻辑是很固定的出现了预期之外的行为，99%是自己写的存在错误</strong><br>记录我认为在我开发的时候我查看时间最久的问题：</p>
+<ol>
+<li>注意有效数据位<br>在操作MDIC寄存器的时候，我使用的先读取在写入的方法，但是我读取的是u32，它的数据位是低16位。我把高位的标志位也保留到了下次要写的数据里面。导致一直出错，后面是使用断点调试的方法才对比出来不同再进行了改正。</li>
+<li>注意不要定义类似的常量<br>还是在操作MCIC寄存器的时候  在判断标志位时候我错误的使用了<strong>MDIC_READ</strong>作为<strong>READY</strong>导致我一直读取成功但是写失败，这我反复的追查了好久，但是这也是我自己的不细心。</li>
+<li>注意set_flag和set_reg的区别<br>这是在最后的检查的时候发现的，因为是在ixgbe的基础上使用的所以一些寄存器不仅仅是地址变了  一些功能也分配到了不同的寄存器，而导致有些适用set_reg有些则应该是set_flag<br>这一点要尤其注意因为很多时候就是一些标志位的不同就会有不一样的地方</li>
+</ol>
+<h1 id="三、学习的总结"><a href="#三、学习的总结" class="headerlink" title="三、学习的总结"></a>三、学习的总结</h1><p>这次学习给我最大的收获就是真的从datasheet来一步步的开发一个驱动的经验，并且在开发的过程中一步一步的调试，通过设置断点来看寄存器的值。这个是我最喜欢的一个功能，因为我在平时驱动的开发时候最难受的就是修改需要编译版本才能做验证，找不到一个快速验证的办法导致问题进展缓慢。如果能有多一点的可以这样来验证的控制就好了。</p>
+<p>再来说一下，这次学习中我的不足，实际上我算是让这个网卡能用起来了 但是我还是不理解他更上层的东西，不清楚他的ring是怎样收发信息的，不明白他这个网络是怎么跑通的，群友说的报文又是什么。体现在开发过程中就是，出现问题我只能再次去查看linux的igb驱动都配置了哪些寄存器，ixgbe有什么流程但是对于这些流程的意义我不明白，只是datasheet上写了，或者看到其他驱动做了于是我也就去做试试看。</p>
+<p>感觉还需要继续学习一下网络相关的基本概念才能真的完成这个网卡驱动</p>
+<h1 id="四、关于ixgbe与igb的思考"><a href="#四、关于ixgbe与igb的思考" class="headerlink" title="四、关于ixgbe与igb的思考"></a>四、关于ixgbe与igb的思考</h1><p>因为我是直接鸠占鹊巢的方式在arceos里成功用起来igb，所以我认为既然能够这样用起来 是不是侧面说明对于ixgb_hal和ixgbe_nic的抽象就是一个能够在igb上（或者同一E100系列的网卡）复用的结构。后续是不是可以直接通过条件编译或者直接在网卡驱动的匹配处来区分出来，这样可以减少重复的代码结构，并且我认为上层本来也不关心下层实际的控制器。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/20/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E9%A1%B9%E7%9B%AE1%E6%96%B9%E5%90%912%E6%80%BB%E7%BB%93-shj/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/20/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E9%A1%B9%E7%9B%AE1%E6%96%B9%E5%90%912%E6%80%BB%E7%BB%93-shj/" class="post-title-link" itemprop="url">2024秋冬季开源操作系统训练营项目1方向2总结-shj</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-20 20:20:20" itemprop="dateCreated datePublished" datetime="2024-12-20T20:20:20+00:00">2024-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-18 00:47:36" itemprop="dateModified" datetime="2025-05-18T00:47:36+00:00">2025-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E9%A1%B9%E7%9B%AE1%E6%96%B9%E5%90%912%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">2024秋冬季开源操作系统训练营项目1方向2总结</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>因为之前在忙别的事情，所以晚了一周进组，写代码更是只剩两天时间，所以对代码基本是能跑就行的态度。</p>
+<p>不过也有好处，因为晚开始所以资料会比一开始弄多点，开始写的时候就基本能 link up 了。</p>
+<h2 id="找参考资料"><a href="#找参考资料" class="headerlink" title="找参考资料"></a>找参考资料</h2><p>最重要的参考资料自然是 Intel 82576 手册。不过如果有代码参考肯定是更好的。</p>
+<p>ArceOS 自己项目里面就有一个 ixgbe 的驱动，虽然是不同型号的网卡，但是部分逻辑可以参考，而且是 Rust 编写，很好理解。</p>
+<p>其次就是 igb 官方驱动，在 github 上可以找到，参考资料里也给了链接。</p>
+<p>我简单瞟了两眼，里面感觉到这估计在 linux kernel 源码里也有一份，一搜果然有。</p>
+<p>正好我机器上有一份之前用来学习的 linux 源码，配置一下正好可以看看。</p>
+<h2 id="Linux-src"><a href="#Linux-src" class="headerlink" title="Linux src"></a>Linux src</h2><p>把 CONFIG_IGB 开起来，编译一下再 gen_compile_commands.py 生成下 compile_commands.json 就可以愉快的跳转了。</p>
+<p>驱动初始化代码在 <code>__igb_open</code> 里，感觉把这玩意实现了应该就可以了。</p>
+<p>为了方便实现，我直接跳过了 Flow Control 的部分，感觉应该不会有太大问题。</p>
+<p>参考里一直到初始化 link 和 phy 的部分都挺好懂，但是到初始化 rx 和 tx 的时候就开始有点艰难了。</p>
+<h2 id="ethernet-intel-igb-v1-0-1"><a href="#ethernet-intel-igb-v1-0-1" class="headerlink" title="ethernet-intel-igb v1.0.1"></a>ethernet-intel-igb v1.0.1</h2><p>于是我又转头看 github 上 igb 驱动的代码，不过我特意切换到了 v1.0.1 的 tag 上，一般越早期的代码越简单越好懂。</p>
+<p>果然这里的初始化很简单，搞了几个寄存器就完了。</p>
+<p>不过 v1.0.1 用的地址都是 alias 地址，我还是自己查了查手册，把正确的地址定义到常量上搞完的。</p>
+<p>开启中断的方式在代码里也挺简单的。</p>
+<p>不过让我觉得意外的是，老师给的关中断的方式和 igb C 驱动的方式并不一致，我最终决定参考 C 驱动的方式来关闭中断和开启中断。</p>
+<h2 id="Ring"><a href="#Ring" class="headerlink" title="Ring"></a>Ring</h2><p>到了 Ring 部分就困难了，我直接放弃了自己写，正好群里有人提到 ixgbe 改改就能用，我就决定直接把我写完的初始化部分放到 ixgbe 里头跑。</p>
+<p>把 ixgbe fork 下来，加一层 axdriver_net 的实现，把类型名重置一下，再在 ArceOS 的 Cargo.toml 里头改下依赖名字，把 ixgbe.rs 里的 Hal 实现复制一份到 driver.rs 里，一通操作下来先让程序可以编译。</p>
+<p>把原来的东西直接改写进去就能跑 httpclient 了，非常的快乐。</p>
+<p>但是跑 http server 时会遇到 curl 不通的情况。原因是没有在 RCTL 里加入 BAM flag, 加上就好了。</p>
+<p>我自己 debug 的时候发现现象是收不到包，所以中途加过 BAM flag, 但是因为图省事写成 0x8000 的形式，没有单独弄一个 const value 去存。</p>
+<p>结果当时 typo 打成了 0x800 或者 0x80000, 导致 bug 还在，后来 revert 的时候就删掉了。</p>
+<p>我跑 http client 的时候发现实际上是可以正常收包的，所以怀疑是 host 机器不能直接发包到 qemu 里，于是在 http server 源码里开了个 http client 来 request, 结果就 OK 了。</p>
+<p>当时不明所以，不过群里问了下发现正确做法是加 BAM flag, 于是就可以直接在 host 机器上连接到 server 了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/blog/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/blog/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/68/">68</a><a class="extend next" rel="next" href="/blog/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rcore-os Group</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
