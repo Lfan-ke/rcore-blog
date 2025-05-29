@@ -184,20 +184,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">680</span>
+          <span class="site-state-item-count">711</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">588</span>
+        <span class="site-state-item-count">624</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -233,7 +233,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/2023-rCore-StageGuard-summary/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/blog-rcore-ctzsm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -247,7 +247,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2023/11/01/2023-rCore-StageGuard-summary/" class="post-title-link" itemprop="url">2023-rCore-StageGuard-summary</a>
+            <a href="/blog/2023/11/03/blog-rcore-ctzsm/" class="post-title-link" itemprop="url">blog-rcore-ctzsm</a>
         </h2>
 
         <div class="post-meta">
@@ -257,14 +257,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-01 22:27:59" itemprop="dateCreated datePublished" datetime="2023-11-01T22:27:59+00:00">2023-11-01</time>
+              <time title="Created: 2023-11-03 21:42:13" itemprop="dateCreated datePublished" datetime="2023-11-03T21:42:13+00:00">2023-11-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
 
           
@@ -278,15 +278,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>首先感谢各位老师和学长能够创造出让大家接触并学习实战编写操作系统的机会，这在国内的大环境下是非常难得的，感谢你们的无私奉献。</p>
-<p>第一阶段我们从 Rust 基础语法开始学起，在此阶段我巩固了我的 Rust 基础，理解了使用 Rust 语言作为编写操作系统的语言的优势。</p>
-<p>相比于传统的 C 语言，Rust 的语法更加现代化，这对于一个 Java/Kotlin 人非常友好，可以方便地用到现代编程语言的技术，如闭包，迭代器，流式 API 等。而且 Rust 语言也有了出了名的安全性，几乎完美杜绝了垂悬引用和二次释放等危险操作。</p>
-<p>但是，奇迹和魔法不是免费的。同样地，Rust 的语法和编码规则也更为复杂，我们编码必须完全遵循 Rust 所谓的借用和生命周期规则，而且也出现了许多新概念，这也是 Rust 比较劝退的地方。但是如果能坚持下来，我们将能享受到 Rust 语言带给我们的便利，享受编写高安全性代码的快感。</p>
-<p>第二阶直接进入操作系统的学习，这还是第一次实际上手实现操作系统的内核功能，这注定是一个漫长的学习过程。虽然说是使用 Rust 编写操作系统，但接触了底层，难免会和汇编打交道。</p>
-<p>首先要理解文档中的汇编代码才能做好基础准备，虽然在学校课堂上学习了特权级，CPU 中断这些知识，但是把他们体现在代码上还是有些难度。特别是切换特权级别这一过程，他们都直接修改了 pc 寄存器，直接跳转执行地址，我们不能用常规编程的程序流控制思路来理解。而 CPU 级别的直接跳转在 Rust 代码中的体现就是无条件地从这个流跳转到另一个流执行了，对于第一次接触这类操作的我产生了极大的震撼。</p>
-<p>在理解了这个之后，接下来就是逐步实现操作系统应有的功能：进程调度，虚拟内存空间，文件系统，并发操作，IPC 以及 IO 设备管理。目前二阶段的实验主要还是基于 RISC-V 架构实现的，没有做到架构无关，而且这些功能也是直接嵌入到内核中，没有做成单独的模块。</p>
-<p>在实现这些的过程中，我按照教程文档逐一理解代码，然后再将一些调试信息打印出来，直观感受一个操作系统底层运行起来的样子，然后逐步构建起一个庞大的系统架构，每一个模块都精密运作，这是设计师的浪漫。</p>
-<p>这次 rCore 学习让我充分学习了操作系统的底层逻辑，也领会到了 Rust 语言的强大，希望后续可以更进一步学习。</p>
+          <h1 id="Stage-1-Rustling"><a href="#Stage-1-Rustling" class="headerlink" title="Stage 1 (Rustling)"></a>Stage 1 (Rustling)</h1><p>I tried to learn Rust programming language many times, but it was from start to give up every time. Mostly because I never used it in my real job or other personal works. The recent one was trying to implement a vulkan game engine with Rust, but I do have other stuff to do, so that was never finished.</p>
+<p>I spent about 3 nights to finish the rustling problem set, it was fun. For the first half, it was a refresh to my already rusty Rust memory. I did learn something different during the second part. It was indeed engaging. The compiler message is a very powerful tool in general, Many times I just need to follow what the compiler said to answer the question.  I did have to Google a lot and consult The Book and the official Rust lang document.</p>
+<p>With these practices, I started to get used to Rust, I wouldn’t say I am fully equipped comparing with my C++ and Java skill, but I think it is a good start.</p>
+<h1 id="Stage-2-Lab"><a href="#Stage-2-Lab" class="headerlink" title="Stage 2 (Lab)"></a>Stage 2 (Lab)</h1><h2 id="Lab-1"><a href="#Lab-1" class="headerlink" title="Lab 1"></a>Lab 1</h2><p>After setting up the environment, I realized that I had read the tutorial book before, but just brief. It was probably because I followed an OS course from Nanjing University taught by Yanyan Jiang on Bilibili. I even have a qemu installed in my WSL2. In general, the guide book is very readable. I followed the book to understand the code structure and WeChat group helped some of the common questions on newer version of qemu, which saved my a lot of time.</p>
+<p>However, 2 weeks are super short, I can’t finish reading the first two chapters to understand all the details and I have to start chapter 3 right away to meet the deadline. Fortunately the actual lab isn’t very hard. The first lab is just to implement <code>sys_task_info</code>, there is a big hint that the <code>TaskControlBlock</code> has a <code>TaskStatus</code> field, we also have that in <code>TaskInfo</code> struct, I immediately realized that we just need replace that field with the <code>TaskInfo</code> struct type. The rest of the work is fairly straightfoward.</p>
+<h2 id="Lab-2"><a href="#Lab-2" class="headerlink" title="Lab 2"></a>Lab 2</h2><p>This lab is indeed harder than the previous one, again I didn’t have time to read the book in a great detail, so I had to make a guess sometimes. But fortunately the code itself is very readable as well, I can find all the info I need in the code. The first hint I get is the <code>translated_byte_buffer()</code> function, which reminds me <code>memcpy</code> in C/C++, if I can write a function to convert everything to a byte array, I then can use <code>translated_byte_buffer()</code> with that to easily copy data from kernel space to user space. That’s exactly what I did in my code to solve this.</p>
+<p>The second part is <code>mmap</code> and <code>munmap</code>, there are many restrictions on the params, which simplied the whole story. I am happy to see this so I can pass the test cases, but wondering how a real world OS implements them.</p>
+<h2 id="Lab-3"><a href="#Lab-3" class="headerlink" title="Lab 3"></a>Lab 3</h2><p>I spent more time than before to read chapter 5, which didn’ help me a ton in the lab, but I still think that is worth because it provides me some details about how this particular OS is designed.</p>
+<p>I was planning to rewrite all of lab 2 and lab 1 requirements again, but I don’t have that time, so I spent about 1 hour to do cherry-pick from ch4. The <code>spawn</code> part was easy if we understood how <code>fork</code> and <code>exec</code> work.</p>
+<p>The <code>stride</code> part is also not too hard since the problem statement is clear about what I need to do. I did have some bugs (and I probably still have some bugs even I passed the test cases), it was not too hard to debug them. I ended with using a binary heap to implement the algorithm.</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>That’s all I did so far, I wish I can finish the rest two labs soon, 2 weeks are super tight, not sure why this was arranged in this way, the curves in stage 1 and stage 2 are completely different. But maybe that was on purpose, so everyboday has to find their way out, I did have fun and finally had time to get my hands on code.</p>
+<p>Big thanks to all the hosts and staff!</p>
 
       
     </div>
@@ -306,7 +309,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/2023%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E6%80%BB%E7%BB%93-lispking/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-lyoh33/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -320,7 +323,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2023/11/01/2023%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E6%80%BB%E7%BB%93-lispking/" class="post-title-link" itemprop="url">2023秋冬季开源操作系统训练营总结-lispking</a>
+            <a href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-lyoh33/" class="post-title-link" itemprop="url">2023开源操作系统第二阶段总结报告-lyoh33</a>
         </h2>
 
         <div class="post-meta">
@@ -330,14 +333,81 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-01 22:10:55" itemprop="dateCreated datePublished" datetime="2023-11-01T22:10:55+00:00">2023-11-01</time>
+              <time title="Created: 2023-11-03 21:14:34" itemprop="dateCreated datePublished" datetime="2023-11-03T21:14:34+00:00">2023-11-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>此次训练营需要依照提供的os代码框架，完成一些练习，主要是补全函数的实现，整体难度并不大。比较困难的点，一是实验环境的配置，对git,qemu,makefile,cargo等工具的陌生，很容易导致无法理解工作环境。例如实验要拷贝的仓库并不是按照官方仓库的readme里的<code>git clone https://github.com/LearningOS/rCore-Tutorial-Code-2023A.git</code>，而是自己的作业仓库，ci-user这个测试文件夹应与os文件夹平级；二是刚上手代码框架时容易迷失在繁多的文件和文件夹里；三是部分代码比较晦涩，比如涉及到trap的部分，而这些对于理解整个操作系统是至关重要的。</p>
+<p>练习中的几个实验只要求实现基本的功能，只要熟悉框架代码就很容易写出来，部分更困难的部分并没有作为必做的练习，比如实现写时复制、缺页异常等等。某些关键细节比如开启分页并不要求自己填写，因此，完成这次训练营只能算是一张入门系统的入场券。</p>
+<p>不同于xv6，rcore的实验框架是递进式的，从裸机应用到批处理系统到多道程序系统，相当后面才有了文件系统。我对这种安排是否是合适保持一点疑问，因为链接时陌生的，在有文件系统前把用户应用链接到内核反而增添了很多复杂性。我觉得rcore的框架像是把用c翻译成的rust代码写成的，缺乏一些用rust重写的必要性，反而增添了很多复杂性。比如虚拟内存那章的MapArea等抽象我琢磨了很久，但是由c写成的xv6的虚拟内存代码我却很容易看懂，直至现在我依然觉得这种抽象是不必要的(也可能是个人水平欠缺，尚不能理解)。rcore的多进程、多线程也是仿linux的经典设计，这部分能否更有一些rust特色，比如让语言自身来管理一部分并发的功能呢？我希望今后能探索这部分的答案</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8A%A5%E5%91%8A-%E7%BD%97%E7%86%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/11/03/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8A%A5%E5%91%8A-%E7%BD%97%E7%86%99/" class="post-title-link" itemprop="url">操作系统训练营一二阶段报告-罗熙</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-03 20:54:04" itemprop="dateCreated datePublished" datetime="2023-11-03T20:54:04+00:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -360,11 +430,92 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="逆境中的学习与成长：我的开源操作系统训练营之旅"><a href="#逆境中的学习与成长：我的开源操作系统训练营之旅" class="headerlink" title="逆境中的学习与成长：我的开源操作系统训练营之旅"></a>逆境中的学习与成长：我的开源操作系统训练营之旅</h1><h2 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h2><p>今年的经济形势确实不容乐观。没错，我就是那位大龄失业的程序员。在寻找工作的同时，我尝试将自己的经验和心得整理成文章，发布在名为《猿禹宙》的微信公众号上，希望能为广大读者提供一些帮助。如果这些文章对您有所启发，请您不吝啬地关注、转发、点个赞、赏 1 元以示支持。广告部分到此结束，接下来我要分享一次偶然的相遇。</p>
-<p><img src="/blog/.io//wx-mp.png" alt="微信公众号"></p>
+          <h2 id="第一阶段总结"><a href="#第一阶段总结" class="headerlink" title="第一阶段总结"></a>第一阶段总结</h2><p>在第一阶段，我主要进行的工作是学习Rust语言，同时也了解学习了一些RISC-V指令集的知识。</p>
+<p>我对Rust的学习主要参考了<a href="https://course.rs/about-book.html" target="_blank" rel="noopener">Rust语言圣经</a>。不过，由于时间问题，我只阅读了其中的知识点部分，还未阅读过实战项目部分。由于之后需要进行系统编程，我也粗略地看了一下<a href="https://nomicon.purewhite.io/" target="_blank" rel="noopener">Rust 秘典（翻译版本）</a>。</p>
+<p>学习这些知识之后，完成该阶段的Rustlings任务比较简单。只有少数几道题涉及的知识点较冷门，查询对应知识点时花费了一些时间。</p>
+<h2 id="第二阶段总结"><a href="#第二阶段总结" class="headerlink" title="第二阶段总结"></a>第二阶段总结</h2><h3 id="ch0-ch2"><a href="#ch0-ch2" class="headerlink" title="ch0 ~ ch2"></a>ch0 ~ ch2</h3><p>这几章的实践内容主要是配置实验环境。按照书上的操作，配置起来比较顺利。为了之后开发更方便，我也完成了vscode通过ssh远程登录虚拟机的配置。</p>
+<p>第1、2章的学习内容主要是对特权级切换过程和rcore的结构有一个基本的了解，（和之后相比）我觉得算是较为简单的一章。</p>
+<h3 id="ch3"><a href="#ch3" class="headerlink" title="ch3"></a>ch3</h3><p>本章需要实现多道程序和分时多任务。这一章对我来说是一个难点，因为任务切换、特权级切换的过程比ch2更加复杂了。好在最后还是大致理解了这一过程。</p>
+<p>本章的实验是第一个实验，（和之后相比）算是比较简单的，但因为当时我对系统架构还不甚熟悉，该实验对当时的我来说还是有难度的。</p>
+<p>我在任务管理块<code>TaskControlBlock</code>中增加了记录系统调用次数的字段<code>syscall_times</code>和记录程序开始时间的字段<code>start_time</code>。将这两个字段初始化，并分别在任务开始时和进入系统调用时更新这两个字段。之后，我实现了系统调用处理函数<code>sys_task_info</code>，将需要更新的<code>TaskInfo</code>指针传递到<code>TASK_MANAGER</code>内部进行处理，让<code>TASK_MANAGER</code>根据TCB中新增的字段更新<code>TaskInfo</code>的相应字段。</p>
+<h3 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h3><p>本章学习rcore对于地址空间的实现。在阅读过程中，我对本章内容还有一些不理解之处，之后在开发的过程中也慢慢熟悉了。</p>
+<p>从本章开始，需要前向兼容。当时我还不知道<code>git cherry-pick</code>这个命令，因此只能将上一章的代码复制粘贴过来。同时，我在实现两个新的系统调用的时候，原本想把功能代码都写在系统调用函数内，因此也在函数内获取了系统很多资源的引用。结果，我编写的代码怎么修改也通不过Rust编译器的引用检查和生命周期检查，只能重写。这次，我将和不同数据结构有关的功能代码封装成那些数据结构对应的方法，让系统调用函数去使用这些方法，这才通过了编译。这一经历也让我养成了更好的编码习惯。</p>
+<p>我重写了<code>sys_get_time</code>和<code>sys_task_info</code>函数，使它们恢复正常功能。为了做到这点，我编写了<code>map_user_va_to_pa</code>函数，将用户空间的虚拟地址转化为物理地址。通过该函数，我将<code>sys_get_time</code>和<code>sys_task_info</code>函数的输入的指针参数进行了地址变换，再完成之前的工作。</p>
+<p>我实现了<code>mmap</code>和<code>munmap</code>系统调用。它们首先检查输入参数的合法性，再通过<code>TASK_MANAGER</code>获得当前进程的pcb，进而获得当前进程的用户地址空间。之后，调用我实现的地址空间的<code>map_va_range</code>和<code>unmap_va_range</code>方法，完成对应的操作。</p>
+<h3 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h3><p>本章学习rcore的进程管理。有了前几章的铺垫，这章我感觉学起来较为轻松。</p>
+<p>在本章，我学到并使用了<code>git cherry-pick</code>命令。由于这一章涉及进程的代码结构变换较大，而我之前修改的代码也有很多涉及进程TCB，因此出现了大量的合并冲突，其中一部分还只能手动解决。我花费了一些时间解决这些冲突，并且一边解决一边尝试编译，看能否正常运行。</p>
+<p>我实现了<code>spawn</code>系统调用，根据目标程序新建子进程，并且维护它和调用进程的父子关系。参考<code>fork</code>和<code>exec</code>的代码，该系统调用较容易实现。我实现了stride调度算法，在TCB的inner字段中增加了记录stride调度算法所需的数据项<code>priority</code>和<code>stride</code>。增加了设置进程优先级的系统调用<code>set_priority</code>。最后，重写了<code>TaskManager::fetch</code>函数，让其每次选取<code>stride</code>值最小的进程进行调度，并且维护被调度的进程的<code>stride</code>值。</p>
+<p>时间关系，目前只完成了这些实验。在晋级之后，我也会继续对rcore的学习，继续完成实验。例如，我目前阅读完了第6章，准备开始第6章的实验。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/rcore-2023-autumn-summary-xianyuguai/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/11/03/rcore-2023-autumn-summary-xianyuguai/" class="post-title-link" itemprop="url">rcore-2023-autumn-summary-xianyuguai</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-03 19:40:28" itemprop="dateCreated datePublished" datetime="2023-11-03T19:40:28+00:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rcore秋季训练营总结"><a href="#rcore秋季训练营总结" class="headerlink" title="rcore秋季训练营总结"></a>rcore秋季训练营总结</h1><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>之前有听说过rcore，然后在发现群友发了这次的活动，<br>刚好又因为现在是无业，就想着说报个名写写看，然后就报名<br>了</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>rcore的实验内容主要是5个Lab，是二阶段的主要任务</p>
+<p>大概就是这样，下面就是一些个人的碎碎念</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2023/11/01/2023%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E6%80%BB%E7%BB%93-lispking/#more" rel="contents">
+              <a class="btn" href="/blog/2023/11/03/rcore-2023-autumn-summary-xianyuguai/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -388,7 +539,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E6%B1%9F%E6%98%8A/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-ybbybbybbybb/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -402,7 +553,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2023/11/01/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E6%B1%9F%E6%98%8A/" class="post-title-link" itemprop="url">开源操作系统训练营第二阶段总结报告-江昊</a>
+            <a href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-ybbybbybbybb/" class="post-title-link" itemprop="url">2023开源操作系统训练营第二阶段总结报告-ybbybbybbybb</a>
         </h2>
 
         <div class="post-meta">
@@ -412,15 +563,24 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-01 22:00:00" itemprop="dateCreated datePublished" datetime="2023-11-01T22:00:00+00:00">2023-11-01</time>
+              <time title="Created: 2023-11-03 15:56:40" itemprop="dateCreated datePublished" datetime="2023-11-03T15:56:40+00:00">2023-11-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
 
           
 
@@ -433,103 +593,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>在这学习的一个月里，我投入了大量时间和精力来学习Rust编程语言以及操作系统开发。我的目标是掌握这门高效、安全的语言，并借此机会深入了解操作系统的底层原理和实现。</li>
+          <h1 id="2023秋冬季rCore训练营报告"><a href="#2023秋冬季rCore训练营报告" class="headerlink" title="2023秋冬季rCore训练营报告"></a>2023秋冬季rCore训练营报告</h1><h1 id="ch0-amp-ch1-amp-ch2"><a href="#ch0-amp-ch1-amp-ch2" class="headerlink" title="ch0 &amp; ch1 &amp; ch2"></a>ch0 &amp; ch1 &amp; ch2</h1><ul>
+<li>跟这 ch0 进行了一些环境配置，然后边看 ch1 边找着文档一起移除标准库依赖，构建用户态执行环境，构建裸机执行环境，并用 qemu 和 gdb 模拟和监测程序运行的状态，让我对什么是操作系统，操作系统内核运行的环境的有了一个较为深刻的理解。而阅读 ch2，令我理解了早期的操作系统是如何来处理程序的。</li>
 </ul>
-<h2 id="第一阶段-Rust编程语言"><a href="#第一阶段-Rust编程语言" class="headerlink" title="第一阶段 Rust编程语言"></a>第一阶段 Rust编程语言</h2><ul>
-<li>Rust语言基础：我通过阅读官方文档和相关书籍，进一步掌握了Rust的语言特性，包括内存管理、所有权系统、生命周期等。我还通过编写一些小的程序来巩固这些知识，比如实现简单的数据结构和算法。</li>
-<li>在学习过程中，我也遇到了一些挑战。比如，Rust的所有权系统和生命周期机制让我感到有些困惑。通过阅读更多的文档和示例代码，逐渐好像克服了这些困难。</li>
+<h1 id="ch3"><a href="#ch3" class="headerlink" title="ch3"></a>ch3</h1><ul>
+<li>ch3 中我学习了多道程序的放置与加载，任务切换，如何管理多道程序。然后在练习中为了实现 sys_task_info 我在原本 TaskControlBlock 的基础上添加了 task_syscall_times 数组和 first_start_time 字段来记录获取 taskinfo 所需信息。在 syscall 中调用自己封装的 add_cuurent_task_syscall_times 来实现对 task_syscall_times 记录更新。而对于 first_start_time，我在程序第一次运行时更新来记录，使得在调用 sys_task_info 时能够准确获得程序的运行时长。</li>
 </ul>
-<h2 id="第二阶段-操作系统实现"><a href="#第二阶段-操作系统实现" class="headerlink" title="第二阶段 操作系统实现"></a>第二阶段 操作系统实现</h2><ul>
-<li>操作系统原理：为了更好地理解操作系统开发，我深入学习了操作系统的基本原理，例如内核启动过程、地址空间、内存管理、进程管理、文件系统等。我通过阅读经典的操作系统教材（rcore book）和通过实践加深对这部分内容的理解。</li>
-<li>在整个学习过程，以动手实践为主，用最简单的方式重新实践一遍，理解整个过程，细节，原理<h3 id="实践1"><a href="#实践1" class="headerlink" title="实践1"></a>实践1</h3></li>
-<li>按照教程动手实现最简单的系统，输出一行文字，目标是熟悉整个开发环境，编译，打包，启动环境，调试方式<h3 id="实践2"><a href="#实践2" class="headerlink" title="实践2"></a>实践2</h3></li>
-<li>熟悉一些rustsbi调用，riscv汇编指令，特权模式，完善一些日志输出，系统调用方式，了解内核各个段的地址，用途<h3 id="实践3"><a href="#实践3" class="headerlink" title="实践3"></a>实践3</h3></li>
-<li>实现系统调用处理，时钟中断处理，s-&gt;u及u-&gt;s的切换过程，栈的切换，任务的运行环境的保存及恢复，任务进程的调度切换<h3 id="实践4"><a href="#实践4" class="headerlink" title="实践4"></a>实践4</h3></li>
-<li>实现以sv39模式的地址空间管理，页表的管理，虚拟地址到物理地址的转换，在这个实践上花费时间比较多，特别是异常处理时入口地址，返回地址，任务空间的页表地址切换，及程序各个段的映射，按照rcore的实现trap_context是放在应用层地址空间的，基本上可以随意修改，不够安全，准备尝试把trap_context放到内核地址空间<h3 id="实践5"><a href="#实践5" class="headerlink" title="实践5"></a>实践5</h3></li>
-<li>实现了解进程信号的发送接收过程，在内核层触发应用层的回调函数，实际上是一次任务的切换，必须在当前进程调用系统调用后才能触发，了解各种锁通过任务调度的实现，进程间的通信，管道消息的发送接收<h3 id="实践6"><a href="#实践6" class="headerlink" title="实践6"></a>实践6</h3></li>
-<li>实现通过对接调用easy-fs对文件的读写，块设备驱动采用的是virtio接口，这块比较复杂，待进一步理解<h3 id="实践7"><a href="#实践7" class="headerlink" title="实践7"></a>实践7</h3></li>
-<li>尝试启动双核，对任务进行调度，主要涉及到公共资源的加锁，当前任务的结构指针存储到tp寄存器（x4），获取当前进程通过读取tp寄存器实现，trap_context和task_context加入对tp寄存器的保存和加载（针对系统调用和任务调度）<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3></li>
-<li>回顾这个学习实践过程，我认为我对操作系统原理上的理解取得了很大的进步。但我也意识到，还需要不断的继续学习和实践。</li>
-<li>我希望能够继续深入学习Rust和操作系统开发，参与更多的开源项目，提升我的技能和经验。同时，我也希望能够将我在学习过程中积累的知识和经验分享给更多的人，帮助更多的人一起进步。</li>
-<li>总的来说，这个学习过程充满了挑战，但我收获了丰富的知识和技能。我对后面的学习充满了期待。</li>
+<h1 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h1><ul>
+<li>ch4 中我详细学习了虚拟内存与 SV39 多级页表机制。在练习中我重写了 sys_get_time，我利用 get_mut 封装了一个将当前任务指定地址usize大小的数据修改的函数，然后将Timeval分为两个指向值的指针传入函数进行修改，以修正ti指向的地址为虚拟地址的问题，并避免了两个值在两个不同虚拟地址的情况，而对与 sys_task_info 我借鉴了前面 sys_get_time 的写法，利用已有的 translated_byte_buffer 将结构体分片为 u8 数组进行取址修改。而对于要求实现 mmap 与 munmap，我先检查函数参数是否出错和指定虚拟页是否有映射，然后调用 insert_framed_area / shrink_to 来实现要求的功能（虽然我认为单纯使用 shrink_to 有点小问题）。</li>
 </ul>
-<h2 id="感谢老师和助教提供的帮助！！！"><a href="#感谢老师和助教提供的帮助！！！" class="headerlink" title="感谢老师和助教提供的帮助！！！"></a>感谢老师和助教提供的帮助！！！</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/rCore-Learning-Summary-%E9%99%88%E7%A6%B9%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2023/11/01/rCore-Learning-Summary-%E9%99%88%E7%A6%B9%E8%AF%91/" class="post-title-link" itemprop="url">rCore Learning Summary 陈禹译</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-11-01 20:14:14" itemprop="dateCreated datePublished" datetime="2023-11-01T20:14:14+00:00">2023-11-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="整体评价"><a href="#整体评价" class="headerlink" title="整体评价"></a>整体评价</h1><p>我参与 rCore 训练营，是为了较深地学习、掌握 os 知识。此前，我学习了 NJU ics pa，对 riscv isa 即配套的简易版的 os 层有一定的理解，这使我能非常高效地理解 rCore 的文档内容。</p>
-<p>我个人是比较推荐有点基础的人去阅读、完成 rCore 的。若对计算机组成原理或基本的操作系统知识不了解的话可能无法读懂前两章，导致无法理解内核代码，从而无法很好地理解后面章节的逻辑。有一定的基础之后，rCore 就会从一个比较低的起点开始慢慢构建一个功能强大的 os，稍微花点时间就能看懂<strong>全部的代码</strong>，而不存在“庞大而不可测的代码块”。此外，Rust 的 no_std 环境也特别友好，很多<strong>实用的东西</strong>（如 format、RefCell）都会提供；而且也提供了动态分配内存的需求接口，实现之后就能非常方便地使用各个<strong>智能指针和容器</strong>了，大大简化了 os 中细微逻辑的实现难度。</p>
-<p>Rust 编译器的强大也大大改变了实验练习的“画风”，它要求我们必须在很好地理解 API 后，自己使用 unsafe 代码并保证接口是 safe 的，然后要想办法把代码组织起来，不让编译器报错。也就是说，Rust 的特性使得我们不得不深入地理解实验代码、需求才能完成练习。只要编译不报错，就离完成不远了，而且此时也往往说明我们并没有误用已有的代码。</p>
-<h1 id="rCore-之旅"><a href="#rCore-之旅" class="headerlink" title="rCore 之旅"></a>rCore 之旅</h1><p>前几章最有意思的是各个链接脚本。较好地组织链接脚本，才能不浪费空间同时正确地启动 os，而想要理解后面的章节的许多需求（如加载 app）也需要先较好地理解 boot 过程。</p>
-<p>app 都是通过<strong>构建脚本自动生成链接脚本</strong>来加载到内核中的，这非常有意思，我称之为“交叉构建”（化用“交叉编译”）——要清晰地认识到，内核代码和用户代码是完全分离的，rCore 中依靠 user 来编译出可运行在内核上的代码，pa 则是使用 navy-app。这打破了我们平时思考的习惯。我们能在电脑上写代码、跑起来，其实是因为 windows 有能在自己上面跑的面向 windows 的编译器，它可能是自举的，也可能是用其他 os 交叉编译了一部分的。若是没写好这样的自给自足的编译器，就只能向 rCore 一样通过元编程来加载。</p>
-<p>关于特权级切换时的上下文保护，我<a href="https://github.com/LearningOS/rust-based-os-comp2023/discussions/194" target="_blank" rel="noopener">发起了一个讨论</a>。</p>
-<p>第三章引入时间片相关逻辑最大的意义是引入了中断，使得 os 的状态切换更复杂，要求更好地处理上下文关系。而第三章里有 lab1，使得我更加理解了 task 的数据结构构造（此时的 task 都被较简单地、笼统地管理，每个 task 并不能很好地自己管理自己，这在第五章（lab3）得到了改善）。</p>
-<p>第四章，设计者让每个 task 都维护一个地址空间和一个页表，两者甚至是解耦的，使用一个地址空间时要显式指定究竟使用哪个页表，这大大增强了系统的可拓展性。而物理页帧分配器的抽象也十分令人惊叹，它是让丑陋的物理地址变得简单易用的第一步。此外，我觉得此章对跳板的解释并不是特别具体，因此我也<a href="https://github.com/LearningOS/rust-based-os-comp2023/discussions/196" target="_blank" rel="noopener">发起了一个讨论</a>。</p>
-<p>第六章引入进程后的数据结构设计十分精妙，而配套的 lab 也“逼迫”我去理解这种设计，希望同学们也能亲自体会到。另外，我也学到了这一非常巧妙的 Rust unsafe 代码封装技巧：<strong>当原始指针作为结果时，可以将其转化为<code>&amp;&#39;static mut</code>，这样就不需要 unsafe 也能使用该数据：</strong></p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">get_current_mem_set</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="keyword">mut</span> MemorySet &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> ptr = &amp;<span class="keyword">mut</span> result <span class="keyword">as</span> *<span class="keyword">mut</span> MemorySet;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsafe</span>&#123;&amp;<span class="keyword">mut</span> *ptr&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之后的章节我也在逐步学习，to be continued…</p>
+<h1 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h1><ul>
+<li>ch5 我学习了进程管理机制的实现。在练习中我将前面的功能全部移植了过来（虽然后来发现有些好像不用），对于 spawn 我参考了 fork(exec())，只是新建 TCB 时改为直接 TaskControlBlock::new(elf_data)，然后修改其中的 parent。对于 stride 调度算法，我在 TaskControlBlockInner 中添加 stride 与 pass 字段，set_prio 时 pass改为 BIG_STRIDE / prio。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>我跟着 rCore-Tutorial-Book-v3 3.6.0-alpha.1 文档进行了第二阶段的实验，感觉收获还是比较大的，就是环境配置等前置我感觉还是有些混乱，没有一个比较好的教程，希望可以添加一个。最后，感谢老师能供提供一个这么好的平台。 </li>
+</ul>
 
       
     </div>
@@ -549,7 +627,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%83%9D%E6%B7%BC/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%83%91%E5%A5%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -563,7 +641,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2023/11/01/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%83%9D%E6%B7%BC/" class="post-title-link" itemprop="url">2023开源操作系统训练营第二阶段总结报告-郝淼</a>
+            <a href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%83%91%E5%A5%BD/" class="post-title-link" itemprop="url">2023开源操作系统训练营第二阶段总结报告-郑好</a>
         </h2>
 
         <div class="post-meta">
@@ -573,15 +651,24 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-01 18:37:22" itemprop="dateCreated datePublished" datetime="2023-11-01T18:37:22+00:00">2023-11-01</time>
+              <time title="Created: 2023-11-03 15:56:06" itemprop="dateCreated datePublished" datetime="2023-11-03T15:56:06+00:00">2023-11-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
 
           
 
@@ -594,26 +681,330 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="关于开源操作系统训练营"><a href="#关于开源操作系统训练营" class="headerlink" title="关于开源操作系统训练营"></a>关于开源操作系统训练营</h2><p>我是在一年前关注到“开源操作系统训练营”这个活动的，但是苦于那时在进行本科毕业设计工作，没有抽出时间来参加。在那时，我就已经对系统软件、 Rust很感兴趣了，因此本科毕业设计做的也是 OS 相关的工作。如今在研一，课业之外有了一部分时间，想用来提升自身对 OS 前沿的认识，同时积累一些工程经验，于是便参加了今年的开源 OS 训练营。</p>
-<h2 id="关于-Rust"><a href="#关于-Rust" class="headerlink" title="关于 Rust"></a>关于 Rust</h2><p>Rust 是一门比较新的系统级编程语言，我最早听说 Rust 是在一次高中同学聚会上。那时候，我的一位高中同学所在的大学（不是清华）已经使用 Rust 来布置一些课程的大作业，而我所在的大学还没有涉及 Rust 的课程。</p>
-<p>我对 Rust 最深刻的印象是“内存安全”和“系统级编程语言”，但之后的很长一段时间里，我都没有去更深入地了解 Rust 了，原因很简单：没有时间、对课程也没什么帮助。</p>
-<p>后来，做毕业设计的时候，导师偶尔会提到一些清华大学陈渝老师组的一些 OS 方面的前沿研究工作，比如押宝 Rust、组件化 OS 之类的。因此，我对 Rust 的认识也在发生转变。实际上，OS 发展中一个重要的影响因素就是系统级编程语言，而 Rust 作为一门比较新的系统级编程语言，未来势必影响 OS 的发展。</p>
-<p>经过了两个阶段的学习，我对 Rust 的特点有了更深入的认识：Rust 解决的内存安全问题的方法是将相当一部分内存安全检查放到了编译时，同时又提供了 <code>unsafe</code> 块赋予内核设计者操作底层硬件的能力。换言之，我们只需要保证将尽可能少的代码放在 <code>unsafe</code> 块，并保证这一小部分代码是内存安全的，那么经过 <code>rustc</code> 编译后的内核就是内存安全的。</p>
-<h2 id="关于-rCore"><a href="#关于-rCore" class="headerlink" title="关于 rCore"></a>关于 rCore</h2><p>第一次与 rCore 结缘是在第七届“龙芯杯”大赛中，只不过那时遇到的是 rCore 的前身 uCore。</p>
-<blockquote>
-<p>rCore 是 uCore 的 Rust 重构版本，而 uCore 参考了 XV6 的实现。从指令架构上来看，XV6 支持的是 x86，一种广泛使用的 CISC，但由于其闭源性、复杂性已经逐渐被教学所抛弃。uCore、rCore 面向的是以 RISCV 为代表的 RISC。RISC 最早提出是为了解决 CISC 指令间相关性难以判断的问题，两条 RISC 指令之间很容易判断相关性，从而实现流水线的微架构设计。</p>
-</blockquote>
-<p>此次参加开源 OS 训练营，是我第一次学习 rCore。在学习过程中，我体会到了 rCore 是如何利用 Rust 语言的机制（特点）进行编写的。接下来我将举例总结。</p>
-<h3 id="cargo：Rust-的包管理、构建工具"><a href="#cargo：Rust-的包管理、构建工具" class="headerlink" title="cargo：Rust 的包管理、构建工具"></a><code>cargo</code>：Rust 的包管理、构建工具</h3><p>相比于 C 语言等传统的系统级编程语言，Rust 提供了包管理和构建工具 <code>cargo</code>，好处是：</p>
-<ol>
-<li><p>可以方便地引入一些库，为编写内核提供便利，无需重复造论子</p>
-<p> 比如说在 ch3 中出现了一个 <code>heap_alloc.rs</code> 文件，他在里面创建了一个静态的 <code>HEAP_ALLOCATOR</code>，并使用 <code>#[global_allocator]</code> 进行了标记。后来在 ch4 的文档里我才理解它是用来进行（物理）堆内存分配的分配器，这样就能在内核里使用堆上数据了。而该分配器的具体实现则无需我们操心了，因为它是由一个名为 <code>buddy_system_allocator</code> 的 crate 提供的（结果上 crates.io 一查，是由 rcore-os 组织维护的一个库）。</p>
+          <p>感谢老师和主教们提供的这么一次宝贵的学习操作系统的课程，不管是老师们上课时的专业程度，还是文档的详细度，或是练习的代码，都体现出了老师们对于这门课付出的大量的时间和心血。在第一阶段的学习中，我了解和熟悉了Rust语言的使用方法，并在rustlings中尝试解决各种问题。当然，rust语言也并没有那么容易上手，加上时间有限，在学习第一阶段时候我对rust语言本身还是只有一个概念的雏形，有些rust的语法特性由于缺乏实践没有真正掌握。当然，在第二阶段的学习中，我开始真正尝试使用rust实现系统调用，同时努力学习吸收老师们的代码和思路，不仅能够更加熟练的使用rust语言，还对操作系统有了更清晰的概念。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E9%83%91%E5%A5%BD/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/rCore%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A-huaji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/11/03/rCore%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A-huaji/" class="post-title-link" itemprop="url">rCore学习报告-huaji</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-03 15:15:19" itemprop="dateCreated datePublished" datetime="2023-11-03T15:15:19+00:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/catogory/" itemprop="url" rel="index"><span itemprop="name"><catogory></span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Rust语言学习"><a href="#Rust语言学习" class="headerlink" title="Rust语言学习"></a>Rust语言学习</h2><ul>
+<li><p>Rust 编程语言是一个专注于安全、并发和实用性的系统编程语言,语法简洁先进</p>
 </li>
-<li><p>构建过程更加简单<br> 理论上来说，构建一个 Rust 项目只需要 <code>cargo build</code> 就够了，但 rCore 实验还有其他需求，因此框架里使用了 Makefile。</p>
+<li><p>内存安全：无需垃圾回收器即可保证内存安全。</p>
+</li>
+<li><p>所有权系统：所有权、借用和生命周期是 Rust 独有的特性，用于在编译时管理内存。</p>
+</li>
+<li><p>类型系统：Rust 拥有强类型系统和类型推导。</p>
+</li>
+<li><p>并发：Rust 通过所有权模型来避免数据竞争。</p>
+</li>
+<li><p>构建系统: Rust拥有强大且易用的构建系统和包管理器cargo</p>
+</li>
+<li><p>第三方库: 强大的生态系统支持，可以找到几乎任何类型的库。</p>
+</li>
+<li><p>学习资源丰富,做完Rustlings的一系列小练习可以了解rust的各个方面,有官方中文文档</p>
+</li>
+</ul>
+<h1 id="rcore"><a href="#rcore" class="headerlink" title="rcore"></a>rcore</h1><p>课程很硬核,实验较简单</p>
+<h2 id="实验一"><a href="#实验一" class="headerlink" title="实验一"></a>实验一</h2><p>实验一让我了解了rcore基本的进程调度实现,以及RV64汇编语法,寄存器特性,调用约定,RISC-V的指令集很简洁,总共就100多条指令.</p>
+<h2 id="实验二"><a href="#实验二" class="headerlink" title="实验二"></a>实验二</h2><p>实验二让我了解了以下内容</p>
+<ul>
+<li><p>SV39分页机制: 开启SV39分页后所有的内存访问都变成虚拟地址形式,通过MMU将虚拟地址转成物理地址</p>
+</li>
+<li><p>rcore内存管理: rcore为所有物理地址做了一个恒等映射,可以通过虚拟地址访问所有物理地址,先实现了一个分配物理页帧的<code>FrameAllocater</code>,然后实现了一个<code>MemorySet</code>来实现分配地址空间和地址空间对应的物理内存</p>
+</li>
+<li><p>双页表OS: 系统为用户态专门设计了一张没有内核模式代码的页表,内核模式区域只包含了trap入口代码,用户态发生trap就跳到Trampoline切换到内核态页表,内核态返回用户态的时候又切换回用户态的页表,这样子做每次trap会多出两次切页表导致TLB清空的性能消耗</p>
+<p>为了防范可能出现的类似”幽灵熔断”漏洞的攻击,牺牲一些性能来换安全性还是有必要的.</p>
+</li>
+</ul>
+<h2 id="实验三"><a href="#实验三" class="headerlink" title="实验三"></a>实验三</h2><p>实验三学习了rcore的进程管理机制,fork,exec的实现,Elf映射到内存的过程,以及支持进程优先级的stride调度算法</p>
+<p>fork: 按照一个父进程创建一个子进程,子进程拷贝父进程的地址空间</p>
+<p>exec: 清空进程的地址空间来执行新的可执行文件</p>
+<p>stride调度算法: 支持优先级的进程调度算法</p>
+<p>原理是给每个进程添加priority和stride的成员,调度器每次都挑选stride最小的进程来执行,进程执行一个时间片就加上一个大常量BIG_STRIDE除以priority的值</p>
+<p>priority要求必须&gt;=2,因为如果=0的话除法就会发生异常,=1的话就不支持溢出处理,&gt;=2的情况下<code>STRIDE_MAX – STRIDE_MIN &lt;= BigStride / 2</code>,这样可以做溢出判断</p>
+<h2 id="实验四"><a href="#实验四" class="headerlink" title="实验四"></a>实验四</h2><p>实验四学习了easyfs文件系统的实现,这个文件系统可以以模块的形式添加进内核里.</p>
+<p>这个内核模块的开发流程可以在用户模式做测试,测试稳定之后放到系统内核里面,这样子做有很多好处</p>
+<ol>
+<li>让内核设计更模块化</li>
+<li>可以把这个文件系统模块放到用户态,如果以后要实现一个用户态解析这个OS文件系统的工具,比如ch6中的<code>easy-fs-fuse</code>可以在测试环境的用户态生成一个fs.img给虚拟机内的操作系统使用</li>
+</ol>
+<p>easy-fs的实现:</p>
+<p>把磁盘的线性空间分块,每个块大小为常量<code>BLOCK_SZ</code></p>
+<p>第一个块的信息是超级块,包含文件系统的标识,大小,inode区域,数据分布信息</p>
+<p>inode用来描述文件和目录,根目录的inode编号是0,相当于linux中的<code>/</code>根目录,通过根目录来实现索引文件系统中的所有文件</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-Cptraser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-Cptraser/" class="post-title-link" itemprop="url">2023开源操作系统第二阶段总结报告-Cptraser</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-03 15:03:02" itemprop="dateCreated datePublished" datetime="2023-11-03T15:03:02+00:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Rust-amp-RISC-V-amp-Rcore"><a href="#Rust-amp-RISC-V-amp-Rcore" class="headerlink" title="Rust &amp; RISC-V &amp; Rcore"></a>Rust &amp; RISC-V &amp; Rcore</h2><p>第一次知道 rcore 这个项目是在一个 CS 的开源交流群里，因为一直是开发小白，想要找一些项目来写，提升自己的实力。</p>
+<p>暑假开始学 xv6，但是因为旅游计划搁置了，刚好开学后听闻 rcore 的项目，脑袋一拍就想参与，并也是进入以后才了解到 rust 语言。</p>
+<p>起初参加的原因只是希望找人和我一起写课程来督促我成长，因为本人很容易分心。但是这个问题在开始写 lab 以后就眼小云散了，发现自己在写实验的时候还是很专注，能够投入时间的。</p>
+<p>在学习了第一阶段的 rustlings 后，我了解到了很多独属于 rust 本身的魅力，比如所有权，又比如unsafe，同时 rust 的编译器比较严格，能够在编译层面上杜绝一大部分难以在代码层面上发现的 BUG，</p>
+<p>同样的，riscv 架构是一个新兴架构，指令集简洁且开源，易于掌握和学习。</p>
+<p>下面简单总结一下在第二阶段我完成的各个实验情况。</p>
+<h2 id="ch3"><a href="#ch3" class="headerlink" title="ch3"></a>ch3</h2><p>本次实验在一个分时多任务系统架构的基础上实现了一个当前任务信息查询调用。</p>
+<p>从系统调用的层面上（S态）实现了该功能。</p>
+<p>sys_task_info调用的实现建立在对TaskManager的修改的基础上。</p>
+<p>我在TaskManagerInner中的TaskControlBlock里添加了syscall_times来统计该任务的各个系统调用次数的统计（在Trap_handler中增加贡献），并且在Inner中添加start_time来计算Task开启的时间长度，任务块实现函数中统计。</p>
+<p>由于本次实验框架基于数组的实现方式，是建立在系统体量较小的基础上，所以能够理解。但是如果系统逐渐庞大，系统调用和任务数量的增加，会导致TaskManager内存部分乘法增长（因为是数组套数组）。</p>
+<p>任务数量应该远小于系统调用的情况下使用HashMap来替代TaskControlBlock内部的统计数组会好一些。</p>
+<h2 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h2><p>本次实验重写了ch3中的sys_write和sys_task_info，因为在分页机制启用的基础上原有代码不再可用。</p>
+<p>上面两个系统调用涉及到用户空间中的内存使用，所以我设计了一个modify_byte_buffer函数，用于将src(启用分页的内核空间地址)中的len长度的内容拷贝到ptr(启用分页的内核用户地址)相同长度的物理内存中去。</p>
+<p>本次实验还实现了sys_mmap和sys_mummap的匿名映射的内存申请和解绑系统调用。</p>
+<p>这两个函数都需要对所映射的地址范围进行检查，其中有一个关键点在于框架内所有的区间都使用左闭右开的形式。而且在使用虚拟地址来找到对应的物理地址时，框架(mm::page_table::find_pte)在第0和第1层遇到没有下一层映射的情况时返回None，但是到第2层时会直接返回，所以我们在返回值不是None的情况下也要判断是否Vaild。</p>
+<p>上面这个 Vaild 的问题我真的是调了两个小时才发现的，真的需要知道每一块代码的运行方式和功能。</p>
+<h2 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h2><p>本次实验继承了ch4中的所有功能。</p>
+<p>同时实现了spawn创建进程以及通过设置priority优先级和stride参数来对进程进行调度。</p>
+<p>本次实验较为简单，使用 git cherry-pick 能简单的得到前面提交的代码，方便了功能的继承。</p>
+<p>同时这次实验的调试也并不容易，其中在 syscall 统计其次数时，我像之前一样获取了TaskManager的所有权后增加，但是这样导致我在 waitpid 中的一个 assert 一直未能通过，后才发现改正。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本次 rcore-os 训练营的第二阶段，让我巩固和学习掌握了很多操作系统的知识，并且亲身实践了功能，受益匪浅。</p>
+<p>第二阶段将较难的一些概念和功能拆分，让我们不至于对一个东西很难上手，同时实验循序渐进，能够在原来写好东西的基础上增加对系统的理解修改代码，让我们的思维不断蜕变；而且增加功能的实验方式让我感觉像是在写自己的系统，就会更认真的写，学到更多东西，有强烈的正反馈。</p>
+<p>同时第二阶段的实践也让我的 rust 语言熟练读更上一层楼。</p>
+<p>如果还有时间我将继续学习 ch6 和 ch8 两个实验。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E7%A7%8B%E5%86%ACOS%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%8F%8F%E8%BE%B9%E5%A4%A7%E5%8F%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/11/03/2023%E7%A7%8B%E5%86%ACOS%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%8F%8F%E8%BE%B9%E5%A4%A7%E5%8F%94/" class="post-title-link" itemprop="url">2023秋冬OS训练营第二阶段总结-描边大叔</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-03 14:15:53" itemprop="dateCreated datePublished" datetime="2023-11-03T14:15:53+00:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>接触到 rust 断断续续有两年的时间了，始终相信它是未来编程语言的方向（虽然我不是程序，只是一只菜鸡）。没有正经用 rust 去做过项目，参加训练营是机缘巧合，满足了我一直以来的需要：一是给自己一个机会训练 rust 的实际运用。二是本身是 linux 爱好者，使用 linux 超过 20 年，想深入了解一下操作系统的组成及运作原理。</p>
+<h2 id="一阶段总结"><a href="#一阶段总结" class="headerlink" title="一阶段总结"></a>一阶段总结</h2><p>之前对 rust 的关注，还是带了起手的优势，一阶段完成得比较顺利。印象深刻的是clippy3这样，大家踩的坑都踩过。目前看题目的要求是程序能按设计的逻辑正确实现，而不仅仅是设置属性宏让编译能通过。</p>
+<h2 id="二阶段总结"><a href="#二阶段总结" class="headerlink" title="二阶段总结"></a>二阶段总结</h2><p>二阶段对我而言几乎是全新的知识。以学习为目的，尽量在理解清楚的基础上做题。题目的完成也以通过测试为目的，未考虑错误处理等等细节。</p>
+<h3 id="ch1-amp-ch2"><a href="#ch1-amp-ch2" class="headerlink" title="ch1 &amp; ch2"></a>ch1 &amp; ch2</h3><p>这两章从应用执行环境说起，引入了程序执行环境和特权级切换这两个基础概念。第二章的批处理系统和后续的操作系统，本身的角色就是在硬件和应用直接充当桥梁的角色。用 M 态抽象硬件的能力，用 S 态提供接口，供 U 态的应用调用。</p>
+<p>开始阶段研究了一下实验环境在我的 Gentoo Linux 下执行的可能性，做过一些改动来适配。事实证明，直到目前为止（ ch5 ）都能正常运行。具体过程记录在 <a href="https://blog.windeye.tk/blog/hubofoskernel2023a2/" target="_blank" rel="noopener">我的准备工作</a> 和 <a href="https://docs.qq.com/doc/DRGVsdFZZek9lVFhT" target="_blank" rel="noopener">【腾讯文档】Qemu常见问题Q&amp;A</a> 的第 2 ~ 4 个问题。</p>
+<h3 id="ch3"><a href="#ch3" class="headerlink" title="ch3"></a>ch3</h3><p>题目要求：实现 sys_task_info 系统调用，统计任务信息：包括状态、当前任务所用到的系统调用ID及对应的调用次数，任务开始到目前为止的时长（只考虑开始到现在的时长）</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ol>
+<li>task只会以两种方式开始执行，run_first_task 或run_next_task，只在一个地方退出：mark_current_exited。所以在任务开始时保存当时的时间，退出的时候再取一次时间，二者的差就是当前任务的运行时长。</li>
+<li>系统调用最终都是通过 sys_call 进行调用，它的入参就有该次调用的 syscall_id 只需要在这里统计当前任务的系统调用 ID和次数即可。</li>
+</ol>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>具体实现时为了不影响正在执行的任务，直接从当前任务的 TaskInfo 中克隆了它的副本来计算目前为止的运行时间，应该可以有更优的方式。</p>
+<h3 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h3><p>个人觉得是前三个里面最难的，内存管理的部分非常抽象并有一定复杂度。主要是实现 map 和 unmap 功能，能让应用正常申请释放内存。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p>map 时需要遍历当前 task 的 MemorySet.areas，从而判定需要分配的虚拟地址范围 start ~ start + len 有没有跟 areas 里面的 某个 area 有重叠，如果没有，才能创建新的 MapArea，并将它推入 MemorySet.areas。 最后这步不能忘记！</p>
+</li>
+<li><p>因为 map 的机制，areas 中不会出现部分重叠的区域，所以 unmap 的时候，找到的 area 的 范围和 start ~ start + len 一定是重合的。还有就是记得要将它从 areas 中移除。</p>
+</li>
+<li><p>map 和 unmap ，start ~ start + len 覆盖的虚拟和物理地址页面都可能不止一个</p>
 </li>
 </ol>
-<h3 id="所有权、生命周期"><a href="#所有权、生命周期" class="headerlink" title="所有权、生命周期"></a>所有权、生命周期</h3><p>rCore 的内存管理系统巧妙地利用了 Rust 的所有权和声明周期机制。当申请了一个物理页时，分配函数 <code>frame_alloc()</code> 直接将物理页描述符 <code>FrameTracker</code> 的所有权返回，而这些页描述符的所有权直接被申请物理页的变量所拥有（如 <code>PageTable</code> 或 <code>MapArea</code>）。当这些变量的声明周期结束时，他们所持有的 <code>FrameTracker</code> 的生命周期也将结束，而 rCore 为 <code>FrameTracker</code> 实现了 <code>Drop</code> trait，将在它们生命周期结束时“自动”回收物理页。</p>
-
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><p>理解映射关系花了很多时间和心思，最后总结的结果是：map 时，经过一系列检查，先创建了一个 area，此时它的 VPNRange 是 start ~ start + len， 但 data_frames 还是空的，直到我们将它 push 到 MemorySet.areas 时，在 push 函数的实现里，才为每个vpn 分配了一个 ppn ，并将二者的映射插入到 data_frames 中，完成映射。unmap 时我采取的方法是直接遍历 area.vpn_range, 将 vpn 和 ppn 的映射关系断开，然后从 MemorySet.areas 中去掉当前的area，被分配的物理节点会在映射断开时自动释放，area 在从 areas 中移除后，也会自动被释放，从而完成 unmap 操作。</p>
+<h3 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h3><p>相对ch4， 这个让人稍微能缓缓。</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>spawn 的实现，在提示里面已经给出了，可以参考 fork + exec。区别就是建立 MemorySet 时，改成从 path 读取，最后按照 exec 的方式来设置 trap_cx。</p>
+<p>stride 调度算法仅仅只是过关。实现了当 priority 变化时，重新 设置当前任务的 stride。 在 task 管理中，添加任务时根据 stride 添加到适当的位置。当 pop_front 取任务时，自然就取到最小的。没有考虑溢出或其他情况。</p>
+<h4 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h4><p>Stride 考虑溢出的话会更公平，调度队列考虑使用 BtreeMap，利用它的天然有序性，以 stride 为 key，应该表现会更好。</p>
+<h3 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h3>
       
     </div>
 
@@ -632,7 +1023,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/01/2023-autumn-hwy-%E5%A4%8F%E4%BB%A4%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-xiuzz/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -646,7 +1037,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2023/11/01/2023-autumn-hwy-%E5%A4%8F%E4%BB%A4%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">2023-autumn-hwy-夏令营一二阶段总结</a>
+            <a href="/blog/2023/11/03/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-xiuzz/" class="post-title-link" itemprop="url">2023开源操作系统训练营第二阶段总结报告-xiuzz</a>
         </h2>
 
         <div class="post-meta">
@@ -656,14 +1047,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-01 10:49:00" itemprop="dateCreated datePublished" datetime="2023-11-01T10:49:00+00:00">2023-11-01</time>
+              <time title="Created: 2023-11-03 14:03:04" itemprop="dateCreated datePublished" datetime="2023-11-03T14:03:04+00:00">2023-11-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -686,325 +1077,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这是我第二次参加这个训练营了。</p>
-<p>上一次参加夏令营的总结：<br><a href="https://rcore-os.cn/blog/2021/09/10/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E9%BB%84%E6%96%87%E7%A6%B9/" target="_blank" rel="noopener">https://rcore-os.cn/blog/2021/09/10/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E9%BB%84%E6%96%87%E7%A6%B9/</a></p>
-<p>因为有过参加一次这个训练营的经历，所以第一阶段和第二阶段对我难度不算太大。第一阶段在前两周抽空完成了。第二阶段重新看了 rCore-Tutorial 又有了些不一样的收获。整体来说前两阶段相较于之前更加完善了，比如有完善的评测机制，可以来判断自己是否实现正确。</p>
-<p>学习记录：<a href="https://github.com/uran0sH/2023a-os-comp-note" target="_blank" rel="noopener">https://github.com/uran0sH/2023a-os-comp-note</a></p>
-<p>因为对 rCore-Tutorial 还有些印象，所以 ch1 ch2 ch3 都很快的复习了一遍。ch3 的实验内容倒是于之前不同，不过难度也不算很大，很快就有了思路并且将它完成了。ch4 是我这次阶段主要学习的内容，因为之前学习的时候对这块内容有点一知半解的：尤其是开启分页后，内核是如何去管理物理页的（因为开启后内核是不能直接访问到物理地址的）。所以这次重点的学习了一下，并且做了笔记。mmap 和 munmap 实验和之前的基本相同，不过这次需要适配 sys_get_time 和 sys_task_info 系统调用。到了 ch5，还是实现一个 spawn，但是我上一次训练营实现的 spawn 感觉有点问题，这次重新实现了一遍。stride 调度算法对这次的代码进行了适配调整。ch6 实现链接和 fstat，因为对 Linux 这块实现原理比较了解，很快就知道如何去实现了。</p>
-<p>对第三阶段的期望：之前第三阶段是做了一些文档的工作，这次想参与一些代码的开发。</p>
+          <p>第一次参加开源训练营，给我的感觉很不错，感谢老师和助教们的付出。这也是我第一次写rust语言，刚开始写的时候一路想弃坑最后还是坚持下来了。</p>
+<h2 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段"></a>第一阶段</h2><p>第一阶段内容还是比较简单文档也很清晰，照着做就能够完成。第一阶段遇到的最大难题是加入训练营时还有五天就开第二阶段了，然后就拼命爆肝rustling。</p>
+<h2 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段"></a>第二阶段</h2><p>第二阶段就不得不吐槽一下实验文档，刚开始只知道有guide，后面发现还有一本book v3, 感觉还得优化下实验说明， 很容易一开始就找不到方向。还有就是实验测试样例说明不够，只能靠自己摸索。不过指导书写的很不错，之前有上过操作系统课，学习起来还是比较轻松。</p>
+<h3 id="ch1-ch2-ch3"><a href="#ch1-ch2-ch3" class="headerlink" title="ch1 ch2 ch3"></a>ch1 ch2 ch3</h3><p>这部分给我开了个好头，os课上学的知识还是比较零碎的。rcore的操作系统发展脉络很清晰，操作系统上的程序怎么运行起来的，如何构建用户态向内核态的系统调用请求，如何构建裸机上的操作系统，都讲述的很清楚。实验部分完成task_info系统调用难度也不大。</p>
+<h3 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h3><p>地址空间这章感觉是这几章中最难的一章，之前对虚拟内存没什么概念，v3这里也是好长的几章字。学完了现在感觉也是似懂非懂的，<br>不过好在这章实验不是很复杂只需要实现4种系统调用，前面两种还是重写上一章的只不过加入了虚拟地址转换。不过这里有一个神奇的地方在于ch4里面get_time_us()和get_time_ms()产生了很大的误差，而在ch3里面却通过了。</p>
+<h3 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h3><p>进程这章比较简单。不过让我学习到的地方在于，指导书上面介绍了<br>为什么要实现进程。这章实验要求在新增进程功能下，不仅让代码能通过之前的测试，还要新实现sys_spawn,以及进程调度算法，不过总的不算困难。</p>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/31/2023%E7%A7%8B-%E8%AE%AD%E7%BB%83%E8%90%A5%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-OneMore14/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2023/10/31/2023%E7%A7%8B-%E8%AE%AD%E7%BB%83%E8%90%A5%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-OneMore14/" class="post-title-link" itemprop="url">2023秋-训练营阶段总结-OneMore14</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-31 19:49:55" itemprop="dateCreated datePublished" datetime="2023-10-31T19:49:55+00:00">2023-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="阶段一-rustlings"><a href="#阶段一-rustlings" class="headerlink" title="阶段一 rustlings"></a>阶段一 rustlings</h2><p>因为之前有一点 Rust 基础，直接做 Rustlings 没有太大问题，加上当时比较忙着工作和找租房的事，所以阶段一比较潦草，把题目做完就没有再花时间深究其中一些不熟悉的部分。总的来说，Rustings 确实是非常好的入门学习资料，重做一遍也相当于复习了。</p>
-<h2 id="阶段二-rCore"><a href="#阶段二-rCore" class="headerlink" title="阶段二 rCore"></a>阶段二 rCore</h2><p>阶段二最开始看2023A的文档，但是感觉讲得有点模糊，后来读到详细的V3文档感觉一下子通顺了很多。虽然要读的内容多一点，但实际可能因为理解更清晰而做的更快一些。</p>
-<p>前三章主要讲操作系统内核是如何启动的，以及启动后如何运行用户程序的。其实一切都没有魔法，无非是如何合理运用硬件规则而已。一般来说是硬件决定了第一条指令的起始位置，硬件决定如何输入输出，硬件也提供了分等级的环境让我们可以隔离用户态和内核态…总之，程序的运行最终都是落实在硬件之上的，因此操作系统需要根据硬件功能做出相应的适配。而为了简化这种适配的复杂度，又引出了位于硬件和内核之间的一层抽象，称为SBI。我们可以把SBI简单想象成”内核的操作系统”，通过SBI简化后的接口可以调用硬件某些复杂的功能，比如输入输出。在了解了裸机的基本运行环境后，再看内核其实和我们日常编写的应用软件是非常类似的，只是在某些时候，往往需要使用汇编语言来构造一些更底层的上下文或完成指令跳转。在熟悉这些技巧后，前三章内核的执行过程就比较好懂了。</p>
-<p>第四章引入了地址空间的概念，这里再次体现硬件对内核的支持，硬件可以通过设置来开启MMU功能，直接实现了地址转换功能，甚至还提供 TLB 用作缓存。因此内核只需要考虑对内存的管理功能，而不需要在用户程序运行中转换每一个虚拟地址。在rCore的学习中，比较容易迷糊的是到底哪些空间包含了哪些部分，可以通过打印日志的访问查看堆栈的起止位置，感受程序的内存布局。</p>
-<p>第五章引入进程的概念，其实更像是第三章的加强版。理解程序执行需要准备哪些上下文，申请哪些资源，程序进入/退出内核需要如何保存/恢复上下文，之后再做实验就不会迷茫。有点被卡住的是一开始不太理解 idle_task_cx 的作用，仔细阅读 __switch 函数才发现 idle_task_cx 保存了run_tasks() 里循环的上下文。阅读汇编代码实际含义确实不如普通代码好懂，这可能也是操作系统的难点之一吧。</p>
-<p>第六章引入文件的实现，由于不需要关注硬件细节，最底层只需要调用实现了 BlockDevice trait的块设备结构体即可，总体比较好懂。且rCore是运行在单核处理器上，不需要考虑文件的共享问题，整体难度不大。</p>
-<p>第七章进程间通信也主要是在目前内核至少实现一些方便的功能，并没有新硬件的引入。</p>
-<p>第八章线程的引入更加细化了之前对进程的管理，而一些并发原语则是利用了硬件的原子指令的功能，才让一些共享变量能被安全访问。但是rCore没有引入多核，因此也比较好懂。</p>
-<p>总体来说，通过这次rCore的学习，对操作系统内核的基本原理有了更直观的感受，一切都是硬件的支持和指令的跳转，同时也体会到Rust是如何应用在系统软件领域的，唯一稍有遗憾的是rCore没有引入多核，毕竟日常生活工作都是使用多核CPU。但瑕不掩瑜，rCore仍是非常好的操作系统入门资料，V3文档也非常详实，在此衷心感谢各位老师和同学的付出。</p>
-<p>目前虽然完成了规定的几个实验，但深知在框架内添加代码和自己独立实现一个迷你操作系统仍有不小的差距，还需要多多学习。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/31/sunny-rust-rcore/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2023/10/31/sunny-rust-rcore/" class="post-title-link" itemprop="url">sunny_rust_rcore</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-31 19:16:52" itemprop="dateCreated datePublished" datetime="2023-10-31T19:16:52+00:00">2023-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/2023a-rcore/" itemprop="url" rel="index"><span itemprop="name">2023a-rcore</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>#rcore学习总结报告</p>
-<p><strong>总述</strong> </p>
-<p>两周学完rust，两周了解rcore操作系统对于我这个大一的学生来说过程十分艰辛，虽说没有通宵打代码，但确确实实是花了几乎所有非学习睡觉时间完成的。<br>这里非常非常感谢举办这个训练营的所有老师和负责人，资料准备的很全，几乎不需要再找其他资料；热心负责，经常在群里答疑，课上讲得很精炼。  </p>
-<p><strong>lab1</strong><br>在这个实验中我实现了一个TaskInfo函数，该函数可以查询某个Task的运行时间、写入次数、挂起次数、退出次数和查询info次数。<br>fn sys_task_info(ti: *mut TaskInfo) -&gt; isize<br>我通过在TaskInner结构体中加入积累响应信息的值，并在调用这些系统函数的时候维护这些值。<br>ps:一开始真的没想到还可以修改源代码部分，以为只是完成函数，哭  </p>
-<p><strong>lab2</strong><br>在这个实验中我重新写了sys_get_time 和 sys_task_info函数，因为这两个函数传入的虚拟地址可能被分在了不同的页<br>同时我实现了mmap 和 munmap两个函数，分别让用户可以申请虚拟地址空间和取消申请虚拟空间<br>我在重写sys_get_time 和 sys_task_info函数的时候受讲课老师引导，学习详细白皮书的sys_write的写法，知道了如何获取到用户的实际存储内存地址<br>在实现mmap和munmap函数中，我先判断用户输入是否合法，然后把用户给的地址取整，按每个页申请和取消空间。<br>ps:用户空间由TaskInner中memory_set变量控制，不能自己新建memoryset变量！！！  </p>
-<p><strong>lab3</strong><br>在这个实验中这次我实现了spawn函数的调用，它能新建一个子进程，并执行该子进程<br>我参考了给出的fork函数和exec函数的实现过程，在把两者结合，实现利用fork新建子进程，再利用类exec函数启动子进程<br>ps:fork()+exec()≠spawn()</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/30/zHappyFish-rCore-study-record/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2023/10/30/zHappyFish-rCore-study-record/" class="post-title-link" itemprop="url">zHappyFish-rCore-study-record</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-30 22:42:42" itemprop="dateCreated datePublished" datetime="2023-10-30T22:42:42+00:00">2023-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="训练营学习记录"><a href="#训练营学习记录" class="headerlink" title="训练营学习记录"></a>训练营学习记录</h2><p>这篇文章用来记录我在2023秋冬季开源操作系统训练营的学习过程，之所以会参加本次训练营，是因为我想进一步学习操作系统以及Rust编程语言。</p>
-<h2 id="第一阶段（1-2周）"><a href="#第一阶段（1-2周）" class="headerlink" title="第一阶段（1-2周）"></a>第一阶段（1-2周）</h2><p>本阶段的主要目的是掌握Rust编程语言，为后续学习打下基础。</p>
-<h3 id="第一周"><a href="#第一周" class="headerlink" title="第一周"></a>第一周</h3><p>在参加训练营之前，我有学习过Rust，但之后并没有做过有关Rust的项目，只用Rust刷过题，以至于之前学过的知识很快就忘了，所以我并没有马上开始做训练营的题。</p>
-<p>本周我将环境配置好后就开始重新过一遍Rust，主要重学了Rust的所有权、借用、泛型、特征、迭代器、生命周期、智能指针、多线程、迭代器。</p>
-<h3 id="第二周"><a href="#第二周" class="headerlink" title="第二周"></a>第二周</h3><p>本周我开始完成训练营的题，题目不难，但很有针对性，基本上就是各个章节的知识点，这个过程中也学到了一些重要的知识，比如build.rs、#[no_mangle],为后续学习rCore打下基础</p>
-<h2 id="第二阶段（3-4周）"><a href="#第二阶段（3-4周）" class="headerlink" title="第二阶段（3-4周）"></a>第二阶段（3-4周）</h2><p>本阶段的学习目标是完成rCore-Tutorial中的五个实验。相比于上个阶段，本阶段的学习任务要重得多，学习难度也更大，需要花更多的时间。</p>
-<h3 id="第三周"><a href="#第三周" class="headerlink" title="第三周"></a>第三周</h3><p>我首先花了一天时间配置环境，我使用的是Docker，项目中有写好的Dockerfile能直接构建镜像，可惜由于网络问题，我总是构建失败（apt-get 下着下着就卡住了，导致无法构建成功），最后只能新建了一个Ubuntu:20.04的镜像，然后在容器中按照Dockerfile的流程将容器的环境配置好，然后提交容器保存为镜像。</p>
-<p>配置完环境后我就开始看 rCore-Tutorial 并完成实验</p>
-<p>rCore-Tutorial 的第一章从一个应用层的Hello World开始，一点点去掉需要操作系统支持的部分，最后构建一个能在裸机上打印Hello World的程序。</p>
-<p>第二章构建了一个批处理系统，能够依次运行导入的程序。由于没有实现文件系统，从第二章到第五章的用户程序都是同操作系统放在一起的，通过脚本生成的汇编代码来标识应用程序的起始地址和结束地址。<br>这一章讲到了Risc-V的特权级切换，比较重要的就是Trap的上下文切换过程。</p>
-<p>第三章通过时钟中断实现了分时多任务系统，比较重要的就是switch过程，切换任务时我们需要保存任务的上下文，以便下次运行时恢复。这与Trap过程是不同的，Trap是用户态与内核态之间的上下文切换，而switch是不同任务在内核态的上下文切换。</p>
-<p>第四章实现了Risc-V的三级分页机制，这里采用双页表的实现方式，即一个任务的用户态和内核态使用不同的页表，这使得我们在Trap时还需要完成页表的切换。为了使得页表切换时程序能按正常的顺序执行，内核页表和用户页表都必须映射一段相同的地址空间，这段空间保存的代码就是Trap过程的跳板。</p>
-<p>第五章实现了进程管理，调整了一些数据结构，将进程的执行交给各个CPU（不过这里只有一个CPU），将当前运行的进程id交给Processor结构（它是处理器的抽象），然后将进程的调度交给TaskManager。为了支持在用户态输入命令，还实现了一个简单的shell程序以及sys_read系统调用。新建进程则由sys_fork和sys_exec完成。</p>
-<h3 id="第四周"><a href="#第四周" class="headerlink" title="第四周"></a>第四周</h3><p>待续。。。。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/" class="post-title-link" itemprop="url">2023开源操作系统训练营一二阶段总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-30 16:00:00" itemprop="dateCreated datePublished" datetime="2023-10-30T16:00:00+00:00">2023-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>感谢老师和助教们贡献了这么好的课程，可以看到付出的努力和心血，所以我也非常重视这一次的训练营。通过这次的训练营，不仅让我在短时间内快速学习使用了Rust，并乘热打铁学习实践了我一直想掌握的OS知识。在阅读文档的时候详略有当，也给出了很多扩展性的知识和难题，不过个人水平太菜并没有深入。只经过短短两周多的学习，已经基本能在脑海中对操作系统有一个较为清晰的概念了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1022,7 +1101,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/58/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/58/">58</a><span class="page-number current">59</span><a class="page-number" href="/blog/page/60/">60</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/68/">68</a><a class="extend next" rel="next" href="/blog/page/60/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/58/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/58/">58</a><span class="page-number current">59</span><a class="page-number" href="/blog/page/60/">60</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/72/">72</a><a class="extend next" rel="next" href="/blog/page/60/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

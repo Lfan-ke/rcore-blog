@@ -184,20 +184,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">680</span>
+          <span class="site-state-item-count">711</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">588</span>
+        <span class="site-state-item-count">624</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -233,7 +233,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -247,7 +247,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">2022开源操作系统训练营第一阶段总结</a>
+            <a href="/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/" class="post-title-link" itemprop="url">2023开源操作系统训练营一二阶段总结</a>
         </h2>
 
         <div class="post-meta">
@@ -257,14 +257,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-08-01 06:03:42" itemprop="dateCreated datePublished" datetime="2022-08-01T06:03:42+00:00">2022-08-01</time>
+              <time title="Created: 2023-10-30 16:00:00" itemprop="dateCreated datePublished" datetime="2023-10-30T16:00:00+00:00">2023-10-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,12 +287,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="2022-开源操作系统学习笔记"><a href="#2022-开源操作系统学习笔记" class="headerlink" title="2022 开源操作系统学习笔记"></a>2022 开源操作系统学习笔记</h1><p>2022.7.1 网上冲浪时发现了由清华大学、CSDN、毛豆教育等共同举办的<a href="https://github.com/LearningOS/rust-based-os-comp2022/blob/main/scheduling.md" target="_blank" rel="noopener">2022年开源系统系统训练营</a>活动。异常兴奋！之前很长一段时间内利用碎片时间学习了 Rust 语言，并初步了解了计算机操作系统，因为个人工作是使用C语言、嵌入式实时操作系统进行产品开发，所以对基于 Rust 的计算机操作系统开发非常感兴趣，观看、学习了计算机操作系统的相关的教学视频后，好奇并希望完成相关 Lab，但一直没有找到较好的资源。现在这个训练营提供了完备的学习计划、实验内容，并且有多位老师、助教全程指导，上百位爱好者共同学习、交流，能够系统地学习 Rust 语言和计算机操作系统，堪称完美，希望能坚持到底。</p>
-<p>作为从业者，因为工作和家庭的原因，每天没有太多的时间专用于此次训练营活动，基本每天能够早上1.5个小时，晚上小于1个小时。不管是 Rust 还是计算机操作系统，都还只是入门甚至未入门的状态，每天完成的内容非常有限，所以将每日内容记录在 <code>git commit</code> 中，周末总结一篇周记，这是适用于我的学习过程记录方式。</p>
-<pre><code>这是一篇 2022 开源操作系统第一阶段的总结，摘取自个人Blog，部分内容单独建了页面做学习笔记，可能无法跳转，[个人Blog](https://thy1037.github.io/rust-based-os-comp2022.html)中有完整内容。</code></pre>
+          <p>感谢老师和助教们贡献了这么好的课程，可以看到付出的努力和心血，所以我也非常重视这一次的训练营。通过这次的训练营，不仅让我在短时间内快速学习使用了Rust，并乘热打铁学习实践了我一直想掌握的OS知识。在阅读文档的时候详略有当，也给出了很多扩展性的知识和难题，不过个人水平太菜并没有深入。只经过短短两周多的学习，已经基本能在脑海中对操作系统有一个较为清晰的概念了。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/#more" rel="contents">
+              <a class="btn" href="/blog/2023/10/30/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%91%A8%E6%B5%B7%E9%B9%8F/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -316,7 +314,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/08/01/stage-one/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/10/29/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-hercule-karuha-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -330,7 +328,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2022/08/01/stage-one/" class="post-title-link" itemprop="url">stage one</a>
+            <a href="/blog/2023/10/29/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-hercule-karuha-md/" class="post-title-link" itemprop="url">2023开源操作系统训练营第二阶段总结报告-hercule-karuha.md</a>
         </h2>
 
         <div class="post-meta">
@@ -340,24 +338,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-08-01 00:48:52" itemprop="dateCreated datePublished" datetime="2022-08-01T00:48:52+00:00">2022-08-01</time>
+              <time title="Created: 2023-10-29 00:25:37" itemprop="dateCreated datePublished" datetime="2023-10-29T00:25:37+00:00">2023-10-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
 
           
 
@@ -370,429 +359,607 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="总结报告"><a href="#总结报告" class="headerlink" title="总结报告"></a>总结报告</h1><blockquote>
-<p>本文为刘逸珑在2022年开源操作系统训练营中的第一阶段总结报告</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/08/01/stage-one/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Andre-HJR-%E9%BB%84%E5%BB%BA%E8%8D%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Andre-HJR-%E9%BB%84%E5%BB%BA%E8%8D%A3/" class="post-title-link" itemprop="url">2022开源操作系统夏令营总结-Andre-HJR-黄建荣</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-08-01 00:19:33" itemprop="dateCreated datePublished" datetime="2022-08-01T00:19:33+00:00">2022-08-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是第二阶段独立出来的文档</p>
-<p>rCore-N 的学习总结： <a href="https://i1zg818wt7.feishu.cn/wiki/wikcnZ6QYqRetw1JUIUJySvsHwh" target="_blank" rel="noopener">rCore-N</a></p>
-<p>rCore-N 实验复现的问题汇总： <a href="https://i1zg818wt7.feishu.cn/wiki/wikcnj30jtaePruEtzUjPOWDdHh" target="_blank" rel="noopener">rCore-N 实验复现的问题</a></p>
-<p><strong>以下是所有文章的汇总</strong></p>
-<p>学习记录和总结，都写在了一起，然后还没有写完， 具体在 <a href="https://andre-hjr.github.io/2022/07/06/os/camp/note" target="_blank" rel="noopener">参营日常</a><br>repo:<a href="https://github.com/LearningOS/lab0-0-setup-env-run-os1-Andre-HJR" target="_blank" rel="noopener">https://github.com/LearningOS/lab0-0-setup-env-run-os1-Andre-HJR</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/08/01/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Andre-HJR-%E9%BB%84%E5%BB%BA%E8%8D%A3/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/07/31/oscamp2022-part1-report-eastfisher-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2022/07/31/oscamp2022-part1-report-eastfisher-md/" class="post-title-link" itemprop="url">2022开源操作系统训练营第一阶段总结-eastfisher</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-07-31 23:59:59" itemprop="dateCreated datePublished" datetime="2022-07-31T23:59:59+00:00">2022-07-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>第一阶段的学习以 Rust 语言 和 rCore 操作系统实验为主，历时一个月。从结果来看，到完整完成第一阶段任务还有一段距离，但是学习过程还是有着不小的收获。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/07/31/oscamp2022-part1-report-eastfisher-md/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/07/31/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Ameima/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2022/07/31/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Ameima/" class="post-title-link" itemprop="url">2022开源操作系统训练营第一阶段总结-Ameima</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-07-31 23:39:40" itemprop="dateCreated datePublished" datetime="2022-07-31T23:39:40+00:00">2022-07-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在训练营第一阶段中，我顺利完成了rustlings与rCore的五个实验，学习了Rust与操作系统知识。</p>
-<h1 id="Rust学习"><a href="#Rust学习" class="headerlink" title="Rust学习"></a>Rust学习</h1><p>因为之前有一些Rust的基础，加入训练营后，我首先用两天时间把rustlings做了一下，集中查漏补缺，之后按照不熟练的地方去细读了Rust参考手册与Rust标准库，加深了对Rust的理解。</p>
-<h1 id="RISCV学习"><a href="#RISCV学习" class="headerlink" title="RISCV学习"></a>RISCV学习</h1><p>之前有了解过RISCV，这次重点看了特权级和MMU的相关知识。因为前面Rust花费了很多时间，RISCV上没敢用太多时间就赶紧开始rCore实验了。</p>
-<h1 id="rCore实验"><a href="#rCore实验" class="headerlink" title="rCore实验"></a>rCore实验</h1><p>时间还是非常紧的，每一章对我来说都有大量的新知识。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/07/31/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Ameima/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2021/09/15/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-tiny-kernel-%E9%99%88%E4%B9%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/09/15/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-tiny-kernel-%E9%99%88%E4%B9%90/" class="post-title-link" itemprop="url">2021开源操作系统夏令营总结-tiny_kernel-陈乐</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-15 08:34:03" itemprop="dateCreated datePublished" datetime="2021-09-15T08:34:03+00:00">2021-09-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>repo地址：<a href="https://github.com/yuoo655/async_os" target="_blank" rel="noopener">https://github.com/yuoo655/async_os</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/09/15/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-tiny-kernel-%E9%99%88%E4%B9%90/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2021/09/10/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E9%BB%84%E6%96%87%E7%A6%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/09/10/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E9%BB%84%E6%96%87%E7%A6%B9/" class="post-title-link" itemprop="url">2021操作系统夏令营总结-黄文禹</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-10 10:49:00" itemprop="dateCreated datePublished" datetime="2021-09-10T10:49:00+00:00">2021-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在这次夏令营中，我主要做了几件事情：  </p>
+          <h1 id="2023rCore训练营第二阶段总结"><a href="#2023rCore训练营第二阶段总结" class="headerlink" title="2023rCore训练营第二阶段总结"></a>2023rCore训练营第二阶段总结</h1><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>因为不满足于学校的课程教学，想写一些稍微硬核一些的作业，在2023年5月左右的时候在国内外各大操作系统公开课中挑选了一番，最终是选择了rCore，大概有下面这些选择的理由。</p>
 <ul>
-<li>Rust 编程能力的提升，通过使用 Rust 编写 OS，对 Rust 这门语言有了更进一步的掌握</li>
-<li>rCore-Tutorial 的实验，通过这次实验的学习，弄明白了以前上课很多感到模糊的概念。</li>
-<li>zCore 的学习和编写 zCore-Tutorial 的文档。通过 zCore 的学习，了解了什么是微内核，什么是内核对象，使用内核对象有什么好处。我主要负责编写了第三章内存管理的内容，在一开始看代码的时候对 VMO 和 VMAR 之间的关系十分模糊，在张译仁助教的帮助下对这些概念有了比较清楚的认识，顺利的完成了第三章的文档，但是我觉得这份文档在用词和一些地方的解释仍然不够清楚，我会继续学习，然后继续把这份文档进一步完善。</li>
+<li>使用rust语言，对于当时刚学了一点rust感受到其优越性的我很有吸引力。</li>
+<li>RISC-V架构，能减少一些x64的繁琐带来的困扰。</li>
+<li>支持国内老师对于本科课程的改革。</li>
+</ul>
+<p>在暑假期间自学了一番并在秋冬季的训练营中靠着多学了两个月的优势在只有两周时间学习的同学们中获得了第一名））</p>
+<p>下面简单来说一下rCore的各个实验。</p>
+<h2 id="ch3"><a href="#ch3" class="headerlink" title="ch3"></a>ch3</h2><p>ch3的任务是实现获取taskinfo的syscall,总体来说还是比较简单的。<br>但是实现过程中遇到了一些问题，程序运行到最后卡住了无法结束，稍微有点棘手。（时间久远没有截图）<br>最后发现是由于内存出现了问题，直接使用桶计数的话内存会炸掉。<br>解决方法稍微有些投机取巧，由于ch3只有5个系统调用就分别映射到一个数组的0,1,2,3,4就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">match syscall_id &#123;</span><br><span class="line">            64 &#x3D;&gt; curr_task_tcb.syscall_times[0] +&#x3D; 1,</span><br><span class="line">            93 &#x3D;&gt; curr_task_tcb.syscall_times[1] +&#x3D; 1,</span><br><span class="line">            124 &#x3D;&gt; curr_task_tcb.syscall_times[2] +&#x3D; 1,</span><br><span class="line">            169 &#x3D;&gt; curr_task_tcb.syscall_times[3] +&#x3D; 1,</span><br><span class="line">            410 &#x3D;&gt; curr_task_tcb.syscall_times[4] +&#x3D; 1,</span><br><span class="line">            _ &#x3D;&gt; &#123;&#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过秋冬季看起来没有人和我遇到一样的问题，我自己重新再运行也没有什么问题，不知道当时是怎么回事。</p>
+<h2 id="ch4"><a href="#ch4" class="headerlink" title="ch4"></a>ch4</h2><p>ch4也稍微有些投机取巧了，我单独在<code>MemorySet</code>中添加了一个字段用来实现mmap,像是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pub struct MemorySet &#123;</span><br><span class="line">    page_table: PageTable,</span><br><span class="line">    areas: Vec&lt;MapArea&gt;,</span><br><span class="line">    mmap_frames: BTreeMap&lt;VirtPageNum, FrameTracker&gt;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>阅读代码理解SV39稍稍费了一些功夫，不过收获还是挺大的。<br>还有重写<code>sys_task_info</code>和<code>sys_get_time</code>，选择自己实现了一个函数来进行到物理地址的转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pub fn translate_ptr(token: usize, ptr: *const T) -&gt; *mut T</span><br></pre></td></tr></table></figure>
+
+<p>图简单没有使用官方提供的<code>translated_byte_buffer</code>。</p>
+<h2 id="ch5"><a href="#ch5" class="headerlink" title="ch5"></a>ch5</h2><p>ch5感觉上还是比较简单的，好像测试用例也不是很强的样子，听说有人没有实现都能过，不过应该会在线上测试被拦下来吧。</p>
+<h2 id="ch6"><a href="#ch6" class="headerlink" title="ch6"></a>ch6</h2><p>感觉按部就班地调用框架提供的函数就行，不算很难。</p>
+<h2 id="ch8"><a href="#ch8" class="headerlink" title="ch8"></a>ch8</h2><p>据选择做xv6的小伙伴说这是和xv6差别最大的而一个实验，确实也让我稍微费了一番功夫。<br>回头去看自己写的代码真是又臭又长啊……….<br>ch8的作业是实现银行家算法，在lock和unlock之前判断是否会造成死锁。<br>值得一提的点大概就是<code>sys_semaphore_create</code>函数只会在主线程中调用，因为银行家算法需要提前获知线程总的资源申请量，我的实现里面单独处理了线程id为0的情况，其他的还是比较简单的，就是几个向量加加减减的问题。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>使用gdb调试貌似很麻烦，源代码貌似不能很好地同步显示，不过也不怎么影响做完，用打log的方式解决了。<br>但是这让我的代码里面多了很多类似这样的东西：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">debug!(</span><br><span class="line">        &quot;kernel:pid[&#123;&#125;] tid[&#123;&#125;] sys_semaphore_create&quot;,</span><br><span class="line">        current_task().unwrap().process.upgrade().unwrap().getpid(),</span><br><span class="line">        current_task()</span><br><span class="line">            .unwrap()</span><br><span class="line">            .inner_exclusive_access()</span><br><span class="line">            .res</span><br><span class="line">            .as_ref()</span><br><span class="line">            .unwrap()</span><br><span class="line">            .tid</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>显得很臃肿。不过能解决问题就好。</p>
+<h2 id="总体感受"><a href="#总体感受" class="headerlink" title="总体感受"></a>总体感受</h2><p>rCore教程的叙事方式很有意思，从历史的角度来添加一个一个模块，看书的同时阅读源代码好像自己真的是当时的操作系统开发者，面对着一个一个的问题，提出各种解决方案。难度的曲线也比较平缓，作为一本操作系统入门的教材来说是非常非常优秀的。<br>缺点大概就是有点过于简单了（bushi）。在看ch5的时候还试着去看了一下rcore中关于多核的部分不过因为资料太少也搁置了（摸了）。<br>rcore的竞品（不知道这个词合适不合适），chcore有关于多核的部分，如果有同学看到这里并对多核感兴趣可以去看看。（虽然我摸了）。<br>感谢清华的老师和助教为中国计算机本科教学做出的贡献。国内外的计算机本科教育差距很大不过仍有老师和同学在努力弥补着。感谢他们做出的努力。（什么时候我们学校能引进啊）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/02/03/%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/02/03/%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">资源整理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-03 14:51:47" itemprop="dateCreated datePublished" datetime="2023-02-03T14:51:47+00:00">2023-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/resources/" itemprop="url" rel="index"><span itemprop="name">resources</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>外链资源</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/02/03/%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/02/02/%E5%91%A8%E6%8A%A52023-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/02/02/%E5%91%A8%E6%8A%A52023-02/" class="post-title-link" itemprop="url">周报2023-02</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-02 13:57:47" itemprop="dateCreated datePublished" datetime="2023-02-02T13:57:47+00:00">2023-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2023-02 OS小组的会议纪要</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/02/02/%E5%91%A8%E6%8A%A52023-02/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/02/01/%E7%BC%96%E8%AF%91Linux%E5%86%85%E6%A0%B8%E5%BC%80%E5%90%AFRust%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/02/01/%E7%BC%96%E8%AF%91Linux%E5%86%85%E6%A0%B8%E5%BC%80%E5%90%AFRust%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81/" class="post-title-link" itemprop="url">编译Linux内核开启Rust语言支持</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-01 09:57:25" itemprop="dateCreated datePublished" datetime="2023-02-01T09:57:25+00:00">2023-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>我是在Debian 11下进行编译的，相信在其它的Linux发行版操作应该也没有问题，但没试过。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/02/01/%E7%BC%96%E8%AF%91Linux%E5%86%85%E6%A0%B8%E5%BC%80%E5%90%AFRust%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/01/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-my-vegetable-has-exploded/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/01/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-my-vegetable-has-exploded/" class="post-title-link" itemprop="url">2022开源操作系统训练营第一阶段总结-my-vegetable-has-exploded</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-15 19:15:59" itemprop="dateCreated datePublished" datetime="2023-01-15T19:15:59+00:00">2023-01-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>感谢老师和助教们贡献了这么好的课程。回顾一下这段时间的学习历程，首先是感谢课程提供的良好的资源，推荐的资料阅读大有脾益，比如那本risv手册易懂又不失深刻。课程的lab结构是一点点增加模块拓展而来的，上手难度平缓，对简易操作系统实现的核心思想有了更进一步的了解。</p>
+<p>之前上杨力祥老师的操作系统课程，杨老师给我影响最深刻的一句话是要能够把系统结构画图花出来。 在阅读文档和代码过程中，感觉能把代码结构中的类之间的关联与作用机制、结构和内存磁盘等设备的作用原理搞清楚，能在脑袋里面建立一个大致的相互作用图景，对于理解操作系统非常有益。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/01/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-my-vegetable-has-exploded/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/01/13/%E5%91%A8%E6%8A%A52023-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/01/13/%E5%91%A8%E6%8A%A52023-01/" class="post-title-link" itemprop="url">周报2023-01</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-13 16:14:22" itemprop="dateCreated datePublished" datetime="2023-01-13T16:14:22+00:00">2023-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2023-01 OS小组会议纪要</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/01/13/%E5%91%A8%E6%8A%A52023-01/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2023/01/09/%E6%AC%A2%E8%BF%8E%E5%8F%82%E5%8A%A0Rust-For-Linux%E7%A0%94%E7%A9%B6%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2023/01/09/%E6%AC%A2%E8%BF%8E%E5%8F%82%E5%8A%A0Rust-For-Linux%E7%A0%94%E7%A9%B6%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%84/" class="post-title-link" itemprop="url">欢迎参加Rust_For_Linux研究学习小组</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-09 16:10:10" itemprop="dateCreated datePublished" datetime="2023-01-09T16:10:10+00:00">2023-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/announcements/" itemprop="url" rel="index"><span itemprop="name">announcements</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>不同操作系统内核可重用的Rust Crate设计与实现</strong></p>
+<p>Rust 是一种“多范式安全系统编程语言”，在开源领域呈现出滚雪球般的势头不断壮大。当前已经出现了多种基于Rust的实验型操作系统项目，而且也已经出现在主流的操作系统中。2022年12月12日，Linux 6.1 正式发布。Linux 6.1 的一个主要升级是把已经开发近一年多的Rust for Linux子系统加入主线，这是对 Rust 在Linux内核上的重要突破。今后将可以使用Rust开发操作系统内核模块，并用于不同操作系统中，而Rust化的实时优化Linux内核和Rust RTOS将成为重要新技术方向。</p>
+<p>本课程计划定期讨论和研究 <strong>“不同操作系统内核可重用的Rust Crate设计与实现”</strong> ，并基于Linux内核和Rust RTOS，着重开展以下三个研究子方向的技术工作：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2023/01/09/%E6%AC%A2%E8%BF%8E%E5%8F%82%E5%8A%A0Rust-For-Linux%E7%A0%94%E7%A9%B6%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%84/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/12/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-jiaxianhua/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/12/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-jiaxianhua/" class="post-title-link" itemprop="url">2022开源操作系统训练营第一阶段总结-jiaxianhua</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-15 21:53:50" itemprop="dateCreated datePublished" datetime="2022-12-15T21:53:50+00:00">2022-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h2><h3 id="2022-10-31"><a href="#2022-10-31" class="headerlink" title="2022/10/31"></a>2022/10/31</h3><p>2022年开源操作系统训练营</p>
+<ul>
+<li>主页：<a href="https://github.com/LearningOS/rust-based-os-comp2022" target="_blank" rel="noopener">https://github.com/LearningOS/rust-based-os-comp2022</a></li>
+<li>开源操作系统社区: <a href="https://os2edu.cn/" target="_blank" rel="noopener">https://os2edu.cn/</a></li>
+<li>课程培训：<a href="https://os2edu.cn/course/" target="_blank" rel="noopener">https://os2edu.cn/course/</a></li>
+<li>任务中心：<a href="http://tasks.os2edu.cn/" target="_blank" rel="noopener">http://tasks.os2edu.cn/</a></li>
+<li>学习博客：<a href="http://rcore-os.cn/blog/" target="_blank" rel="noopener">http://rcore-os.cn/blog/</a></li>
+<li>社区排行榜：<a href="https://os2edu.cn/ranking/" target="_blank" rel="noopener">https://os2edu.cn/ranking/</a></li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/09/10/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E9%BB%84%E6%96%87%E7%A6%B9/#more" rel="contents">
+              <a class="btn" href="/blog/2022/12/15/2022%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-jiaxianhua/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -816,7 +983,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2021/09/09/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E5%BC%82%E6%AD%A5%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E5%90%B4%E9%9D%9E%E5%87%A1/">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2022/12/13/2022%E5%B9%B4%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-kxxt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -830,7 +997,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/09/09/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E5%BC%82%E6%AD%A5%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E5%90%B4%E9%9D%9E%E5%87%A1/" class="post-title-link" itemprop="url">2021开源操作系统夏令营总结-异步系统调用-吴非凡</a>
+            <a href="/blog/2022/12/13/2022%E5%B9%B4%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-kxxt/" class="post-title-link" itemprop="url">2022年开源操作系统训练营第一阶段总结-kxxt</a>
         </h2>
 
         <div class="post-meta">
@@ -840,14 +1007,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-09-09 18:58:25" itemprop="dateCreated datePublished" datetime="2021-09-09T18:58:25+00:00">2021-09-09</time>
+              <time title="Created: 2022-12-13 22:39:43" itemprop="dateCreated datePublished" datetime="2022-12-13T22:39:43+00:00">2022-12-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
+                <time title="Modified: 2025-05-29 02:28:15" itemprop="dateModified" datetime="2025-05-29T02:28:15+00:00">2025-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -870,180 +1037,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>repo地址：<a href="https://github.com/KveinAxel/async-os" target="_blank" rel="noopener">https://github.com/KveinAxel/async-os</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/09/09/2021%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-%E5%BC%82%E6%AD%A5%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8-%E5%90%B4%E9%9D%9E%E5%87%A1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2021/09/06/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Rustsbi%E7%A7%BB%E6%A4%8D-yunfneg2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/09/06/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Rustsbi%E7%A7%BB%E6%A4%8D-yunfneg2/" class="post-title-link" itemprop="url">2021操作系统夏令营总结-Rustsbi移植-yunfneg2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-06 14:19:02" itemprop="dateCreated datePublished" datetime="2021-09-06T14:19:02+00:00">2021-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://github.com/ez4yunfeng2/rustsbi-nezha" target="_blank" rel="noopener">repo地址</a></p>
-<h3 id="最终成果"><a href="#最终成果" class="headerlink" title="最终成果"></a>最终成果</h3><p>移植了rustsbi的基本功能，已经能够成功在哪吒开发板上引导zcore</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/09/06/2021%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8F%E4%BB%A4%E8%90%A5%E6%80%BB%E7%BB%93-Rustsbi%E7%A7%BB%E6%A4%8D-yunfneg2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2021/09/04/aa1hshh-summary-secondstage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/09/04/aa1hshh-summary-secondstage/" class="post-title-link" itemprop="url">aa1hshh-summary-secondstage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-04 16:57:35" itemprop="dateCreated datePublished" datetime="2021-09-04T16:57:35+00:00">2021-09-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-05-18 00:49:27" itemprop="dateModified" datetime="2025-05-18T00:49:27+00:00">2025-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第二阶段总结"><a href="#第二阶段总结" class="headerlink" title="第二阶段总结"></a>第二阶段总结</h1><blockquote>
-<p>加油 从hello world 到 change world</p>
-</blockquote>
-<p>两个月时间很快就过去了。我在夏令营里边主要做了算是三件事情吧。</p>
+          <h1 id="整体感受"><a href="#整体感受" class="headerlink" title="整体感受"></a>整体感受</h1><p>这是我第一次参加这样的开源课程，也是我第一次深入的学习操作系统的相关知识<br>（之前学过 nand2tetris 不过学的比较浅）。整体的课程体验非常的好，这是我<br>第一次见到使用 GitHub Classroom 做为教学平台的国内课程。</p>
+<p>除此之外，整个实践过程非常符合开源软件的开发方式，<br>这让我这种习惯了开源软件开发流程的人感到十分的舒适:</p>
 <ul>
-<li>Rust入门</li>
-<li>rCore实验</li>
-<li>容器技术初步探索   简易容器Go代码学习&amp;&amp;Rust代码移植</li></ul>
+<li>所有资料都公开在 GitHub 上</li>
+<li>实验代码在提交之后有 CI 自动完成评测和分数上报</li>
+<li>学生可以给仓库发 PR 来为课程做改善（感觉合PR 的频率稍微有点低，后来我就直接给 rCore Tutorial 提 PR 了，rCore 这边合的很快）</li>
+<li>直接使用 GitHub Issues 做问答（虽然回复的人比较少）</li>
+<li>甚至用上了当时还在预览中的 Codespaces</li>
+</ul>
+<p>此外，课程的直播网站设计的也很棒，甚至在校园网的条件下比企鹅会议流畅。</p>
+<p>学习记录和各章节报告的 repo: <a href="https://github.com/kxxt-sduwh/rust-os-learning-record" target="_blank" rel="noopener">https://github.com/kxxt-sduwh/rust-os-learning-record</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/09/04/aa1hshh-summary-secondstage/#more" rel="contents">
+              <a class="btn" href="/blog/2022/12/13/2022%E5%B9%B4%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-kxxt/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1066,7 +1073,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/62/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/blog/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/68/">68</a><a class="extend next" rel="next" href="/blog/page/64/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/62/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/blog/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/72/">72</a><a class="extend next" rel="next" href="/blog/page/64/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
