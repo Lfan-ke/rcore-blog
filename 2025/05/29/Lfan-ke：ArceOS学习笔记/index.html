@@ -30,7 +30,7 @@
 <meta property="og:description" content="本笔记内容来源于：ArceOS&#x2F;rCore操作系统训练营、傲来二期操作系统训练营、YSYX学习计划、DeepSeek补充、底层补完计划、部分博客与第三方内容……">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-05-29T10:38:44.000Z">
-<meta property="article:modified_time" content="2025-06-08T08:56:00.707Z">
+<meta property="article:modified_time" content="2025-06-08T08:56:56.389Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="author:Lfan-ke">
 <meta property="article:tag" content="repo:https:&#x2F;&#x2F;github.com&#x2F;LearningOS&#x2F;2025s-arceos-Lfan-ke">
@@ -271,7 +271,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-06-08 08:56:00" itemprop="dateModified" datetime="2025-06-08T08:56:00+00:00">2025-06-08</time>
+                <time title="Modified: 2025-06-08 08:56:56" itemprop="dateModified" datetime="2025-06-08T08:56:56+00:00">2025-06-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -316,7 +316,7 @@
 
 
 <p>CPU对软件提供的接口：ISA - Instruction Set Architecture - 指令集架构 ：：： RV64、x86、mips、<a href="https://www.loongson.cn/system/loongarch" target="_blank" rel="noopener">LoongArch</a>等等。软硬件的分界线以及交互规范标准。</p>
-<p><a href="https://riscv.org/" target="_blank" rel="noopener">RISC-V</a>指令集 = 基础指令集 + 标准扩展指令集 + 用户自定义扩展指令集，比如RV32IM就是RV32的拥有整数以及乘除法指令的配置。RV64GC的G是一个省略书写，实际GC = IMAFD + C。RV32E是一个16个寄存器的嵌入式精简指令集。使用mabi指定应用程序二进制接口对应类型的字长，比如ilp指的是int/long/usize_t(void*ptr)为32位，lp64f指的是int32位，long/usize_t为64位，支持单精度浮点采用浮点寄存器传递，但是双精度浮点仍然采用栈传递（即硬件指令集得支持F/D扩展，不然你硬件只有整数寄存器，没有对应精度的浮点寄存器）。在gcc编译时使用<a href="https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html" target="_blank" rel="noopener">march</a>指定。在未支持的扩展，比如RV64I中书写乘法，则会以软件替代的形式出现，比如使用循环和移位的函数<a href="https://gcc.gnu.org/onlinedocs/gcc-3.4.0/gccint/Integer-library-routines.html" target="_blank" rel="noopener">__mulsi3</a>来替代（当然，如果target=RVxIM但是运行在RVxI，M系指令也会通过trap的形式硬件兜底执行，但是效率低，其他扩展类似）。2020年，RISC-V发展的优先级从体系结构驱动切换为<a href="https://open-src-soc.org/2022-05/media/slides/RISC-V-International-Day-2022-05-05-11h05-Calista-Redmond.pdf" target="_blank" rel="noopener">软件</a>驱动。</p>
+<p><a href="https://riscv.org/" target="_blank" rel="noopener">RISC-V</a>指令集 = 基础指令集 + 标准扩展指令集 + 用户自定义扩展指令集，比如RV32IM就是RV32的拥有整数以及乘除法指令的配置。RV64GC的G是一个省略书写，实际GC = IMAFD + C。RV32E是一个16个寄存器的嵌入式精简指令集。在gcc编译时使用<a href="https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html" target="_blank" rel="noopener">march</a>指定。使用mabi指定应用程序二进制接口对应类型的字长，比如ilp指的是int/long/usize_t(void*ptr)为32位，lp64f指的是int32位，long/usize_t为64位，支持单精度浮点采用浮点寄存器传递，但是双精度浮点仍然采用栈传递（即硬件指令集得支持F/D扩展，不然你硬件只有整数寄存器，没有对应精度的浮点寄存器）。在未支持的扩展，比如RV64I中书写乘法，则会以软件替代的形式出现，比如使用循环和移位的函数<a href="https://gcc.gnu.org/onlinedocs/gcc-3.4.0/gccint/Integer-library-routines.html" target="_blank" rel="noopener">__mulsi3</a>来替代（当然，如果target=RVxIM但是运行在RVxI，M系指令也会通过trap的形式硬件兜底执行，但是效率低，其他扩展类似）。2020年，RISC-V发展的优先级从体系结构驱动切换为<a href="https://open-src-soc.org/2022-05/media/slides/RISC-V-International-Day-2022-05-05-11h05-Calista-Redmond.pdf" target="_blank" rel="noopener">软件</a>驱动。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">riscv64-unknown-elf-gcc -march=rv32im -mabi=ilp32 -o program.elf program.c</span><br><span class="line">riscv64-unknown-elf-g++ -march=rv64gc -mabi=lp64 -o program.elf program.cpp</span><br><span class="line">rustc --target=riscv32imac-unknown-none-elf -C target-feature=+m,+a,+c program.rs</span><br><span class="line">GOOS=linux GOARCH=riscv64 go build -o program program.go</span><br><span class="line">tinygo build -target=riscv32-unknown-elf -o program.elf program.go</span><br><span class="line"><span class="meta">#</span><span class="bash"> cargo.toml：</span></span><br><span class="line">[build]</span><br><span class="line">target="riscv64gc-unknown-none-elf"</span><br><span class="line">[target.riscv64gc-unknown-none-elf]</span><br><span class="line">rustflags = [</span><br><span class="line">    "-C", "link-arg=-Tlink.x",              # 可选：自定义链接脚本</span><br><span class="line">    "-C", "target-feature=+m,+a,+f,+d,+c",  # 显式启用扩展</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>ISA包含：指令、寄存器等软件可见可操作的接口，从上到下切换的过程通常被称为陷入(trap)，比如S-sbicall-&gt;M/U-syscall-&gt;S/V&lt;-syscall-&gt;H都是ecall和trap。其中trap是由硬件监测的，比如检测到某些错误就陷入M-Mode：</p>
