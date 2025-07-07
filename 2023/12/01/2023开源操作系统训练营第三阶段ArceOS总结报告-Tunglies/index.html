@@ -30,11 +30,11 @@
 <meta property="og:description" content="练习一&amp;练习二在我的 build script 中，用 dd 链接多个应用到 apps.bin。偏移 1MB。 12dd if&#x3D;hello_app.bin of&#x3D;apps.bin bs&#x3D;1M conv&#x3D;notruncdd if&#x3D;another_app.bin of&#x3D;apps.bin bs&#x3D;1M seek&#x3D;1 conv&#x3D;notrunc  从 PLASH_START 开始搜索，每次新的搜索偏移">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-01T22:35:30.000Z">
-<meta property="article:modified_time" content="2025-07-01T09:36:37.961Z">
+<meta property="article:modified_time" content="2025-07-07T03:49:37.422Z">
 <meta property="article:author" content="rcore-os Group">
+<meta property="article:tag" content="author:Tunglies">
 <meta property="article:tag" content="2023秋冬季开源操作系统训练营">
 <meta property="article:tag" content="第三阶段总结报告">
-<meta property="article:tag" content="author:Tunglies">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://rcore-os.github.io/blog/2023/12/01/2023%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5ArceOS%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-Tunglies/">
@@ -192,7 +192,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">727</span>
+          <span class="site-state-item-count">729</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -272,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:37" itemprop="dateModified" datetime="2025-07-01T09:36:37+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -306,7 +306,7 @@
 <p>根据本地文件搜索，发现存在 <code>axstd::process::exit</code> 实现 OS 退出。模仿实验再次封装成 <code>fn abi</code> 接口即可。</p>
 <h1 id="练习五"><a href="#练习五" class="headerlink" title="练习五"></a>练习五</h1><p>感谢unikernel实习交流群小伙伴 dram🎀 提供思路以及小伙伴 一个短篇 转发TA的思路。hello_app 执行多次样例程序会重复操作地址引发 panic。看 LOG 发现 a7 会一直变化，结合两位小伙伴提供的思路，<code>clobber_abi(&quot;C&quot;)</code> 并额外用临时寄存器存放和加载 abi_table。</p>
 <h1 id="练习六"><a href="#练习六" class="headerlink" title="练习六"></a>练习六</h1><p>查手册 <code>git@github.com:riscv-non-isa/riscv-asm-manual.git</code> 存在指令能够返回调用地址。所有 app 不再调用 <code>wfi</code> 阻塞， 且 <code>_start()</code> 最后执行 <code>asm!(&quot;jalr ra&quot;)</code> 返回到 loader 。</p>
-<h1 id><a href="#" class="headerlink" title="?"></a>?</h1><p>DDL是第一生产力。—— Tunglies 2023.12.02</p>
+<h1 id=""><a href="#" class="headerlink" title="?"></a>?</h1><p>DDL是第一生产力。—— Tunglies 2023.12.02</p>
 
     </div>
 
@@ -316,9 +316,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/blog/tags/author-Tunglies/" rel="tag"># author:Tunglies</a>
               <a href="/blog/tags/2023%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5/" rel="tag"># 2023秋冬季开源操作系统训练营</a>
               <a href="/blog/tags/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" rel="tag"># 第三阶段总结报告</a>
-              <a href="/blog/tags/author-Tunglies/" rel="tag"># author:Tunglies</a>
           </div>
 
         

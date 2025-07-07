@@ -184,7 +184,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">727</span>
+          <span class="site-state-item-count">729</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -233,6 +233,408 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/28/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/28/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第三阶段总结-杨学聪</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-28 10:36:20" itemprop="dateCreated datePublished" datetime="2024-11-28T10:36:20+00:00">2024-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/summary/" itemprop="url" rel="index"><span itemprop="name">summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>After the 3rd stage of the 2024 autumn winter open source operating system training camp, I would like to share my experience and summary with you.</p>
+<p>There are three system structures to compare: </p>
+<ul>
+<li>Unikernel<ul>
+<li>Single-Privilege Physical-Address-Space Combination-of-Kernel-and-UserApps</li>
+</ul>
+</li>
+<li>Macrokernel Mode<ul>
+<li>Multi-Privilege Paging-Address-Space Isolation-between-Kernel-and-UserApps</li>
+</ul>
+</li>
+<li>Hypervisor (Virtual) Mode<ul>
+<li>Isolation-between-Host-and-Guest</li>
+</ul>
+</li>
+</ul>
+<p>The critical key to the Component-based design is the <code>Feature</code>. This can be configured in the Cargo.toml file and in the Makefile environment variable, which can decide which content to compile and link. It feels like a advanced <code>#if - #endif</code> switch option.</p>
+<h3 id="Unikernel"><a href="#Unikernel" class="headerlink" title="Unikernel"></a>Unikernel</h3><!-- U1 -->
+
+<p>We use 3 stages to express the system advancing from bare-metal program to a component-based system.</p>
+<ul>
+<li>Bare-metal program<ul>
+<li>Hardfirm + Bootloader</li>
+<li>Initialize the special registers</li>
+<li>Initialize MMU (for Paging)</li>
+<li>Initialize Stack</li>
+<li>Initialize Interrupt Vector </li>
+<li>Initialize Peripherals / Devices</li>
+<li>Transfer to <code>main</code> program</li>
+</ul>
+</li>
+<li>Layer / Hierarchy<ul>
+<li>Hardfirm + Bootloader (Layer)</li>
+<li><strong>Hardware Initialization</strong>(Layer): the special registers 、MMU(for Paging)、STACK、Interrupt Vector</li>
+<li>Peripherals (Layer)</li>
+<li>Transfer to <code>main</code> program (Layer)</li>
+</ul>
+</li>
+<li>Component-based<ul>
+<li>Hardfirm + Bootloader</li>
+<li><strong>Hardware Initialization</strong> (HAL)</li>
+<li>Runtime Environment (RTE)</li>
+<li>Transfer to <code>main</code> program</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Reset_Handler</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="function">__asm__ <span class="title">volatile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">".code 32                                         \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"CPSID   if                                      \n"</span><span class="comment">// Mask interrupts</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Put any cores other than 0 to sleep */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, R0, c0, c0, 5                   \n"</span>  <span class="comment">/* Read MPIDR */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ANDS    R0, R0, #3                              \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"goToSleep:                                      \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ITT  NE                                         \n"</span>  <span class="comment">/* Needed when in Thumb mode for following WFINE instruction */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"WFINE                                           \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BNE     goToSleep                               \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Reset SCTLR Settings */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, R0, c1, c0, 0                   \n"</span>  <span class="comment">/* Read CP15 System Control register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 12)                    \n"</span>  <span class="comment">/* Clear I bit 12 to disable I Cache */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt;  2)                    \n"</span>  <span class="comment">/* Clear C bit  2 to disable D Cache */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #0x1                            \n"</span>  <span class="comment">/* Clear M bit  0 to disable MMU */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 11)                    \n"</span>  <span class="comment">/* Clear Z bit 11 to disable branch prediction */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 13)                    \n"</span>  <span class="comment">/* Clear V bit 13 to disable hivecs */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BIC     R0, R0, #(0x1 &lt;&lt; 29)                    \n"</span>  <span class="comment">/* Clear AFE bit 29 to enable the full range of access permissions */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ORR     R0, R0, #(0x1 &lt;&lt; 30)                    \n"</span>  <span class="comment">/* Set TE bit to take exceptions in Thumb mode */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR     p15, 0, R0, c1, c0, 0                   \n"</span>  <span class="comment">/* Write value back to CP15 System Control register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ISB                                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Configure ACTLR */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MRC     p15, 0, r0, c1, c0, 1                   \n"</span>  <span class="comment">/* Read CP15 Auxiliary Control Register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ORR     r0, r0, #(1 &lt;&lt;  1)                      \n"</span>  <span class="comment">/* Enable L2 prefetch hint (UNK/WI since r4p1) */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR     p15, 0, r0, c1, c0, 1                   \n"</span>  <span class="comment">/* Write CP15 Auxiliary Control Register */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="comment">/* Set Vector Base Address Register (VBAR) to point to this application's vector table */</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"LDR    R0, =Vectors                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"MCR    p15, 0, R0, c12, c0, 0                   \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"ISB                                             \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  ...</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"CPSIE  if                                       \n"</span><span class="comment">// Unmask interrupts</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BL __libc_init_array \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="string">"BL     main                                     \n"</span></span></span></span><br><span class="line"><span class="function"><span class="params">  ...)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The above code selected from the HAL Code of STM32MP13, as the initialization and reset handler code, which will help initialize STACK, Interrupt-Vector and critical registers, and end up transferring to <code>main</code> program.<br>The code is followed similar logic as the rCore, and can help us have a better understanding of the MCU, MPU and CPU.</p>
+<hr>
+<!-- U2 -->
+
+<p>Like rCore, We need to provide implementation for the memory interfaces about heap operations, to avoid memory leaks and memory fragmentation.<br>This can help us manage memory more efficiently, and provide convenience for future expansion.</p>
+<p>There are 2 kinds of Memory Allocation Functions: One is based on Page (<code>palloc</code>), and the other is based on Byte (<code>balloc</code>), where the “ByteAlloc” is based on “PageAlloc”.</p>
+<blockquote>
+<p>If we take “PageAlloc” based on “ByteAlloc”, it will be difficult to align.</p>
+</blockquote>
+<p>Algorithm for Memory Allocation </p>
+<ul>
+<li>TLSF, Two-Level Segregated Fit</li>
+<li>Buddy</li>
+<li>Slab</li>
+<li>Bump</li>
+</ul>
+<hr>
+<!-- U3 -->
+
+<p>How to enable paging mechanism:</p>
+<ol>
+<li>Early in the kernel startup, use the ruled identity mapping part of memory<ul>
+<li><code>0xffff_ffc0_8000_0000 ~ 0xffff_ffc0_C000_FFFF</code> $\rightarrow$ <code>0x8000_0000~0xC000_0000</code></li>
+<li>Note that some address-related registers, such as SP, need to be changed to linear addresses</li>
+</ul>
+</li>
+<li>Then if paging feature specified, rebuild the complete paging reflect.</li>
+</ol>
+<hr>
+<!-- U4 -->
+
+<p><strong>Task switching</strong>:<br>Swaps the task currently being executed with a task in the ready queue.<br>For Single-core CPU, the form of multitasking can only be concurrent, but not parallel.</p>
+<p>State of Task</p>
+<ul>
+<li>Running<ul>
+<li>The number is equal to the number of processor cores</li>
+<li><strong>SWITCH-TO</strong>: Ready or Blocked or Exited</li>
+</ul>
+</li>
+<li>Ready<ul>
+<li>Is ready to be scheduled at any time</li>
+<li><strong>SWITCH-TO</strong>: Running</li>
+</ul>
+</li>
+<li>Blocked<ul>
+<li>Waiting for an event or resource satisfying a condition</li>
+<li><strong>SWITCH-TO</strong>: Ready</li>
+</ul>
+</li>
+<li>Exited<ul>
+<li>The task is finished and waiting to be recycled</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U5 -->
+
+<p>Task switching: Firsty, save the context of the current task. Then, restore the context of the new task. Finally, trandfer to switch tasks.<br>Note that the interrupt enable state of the processor switching the task, should be off during the switching process (CLI).<br>If neccessary, the <strong>Spinlock</strong> and <strong>Mutex</strong> are required to be used to avoid race conditions (SMP?).</p>
+<hr>
+<!-- U6 -->
+
+<p>There are usual preemption conditions: One is the time slice of the task is exhausted, and the other is the interrupt source, such as the clock (Timer). The privilege level may be used to determine the nested or re-entry of the traps.</p>
+<p>Algorithm of Scheduling</p>
+<ul>
+<li>Collaborative scheduling algorithm (FIFO, fair)</li>
+<li>Preemptive scheduling algorithm (Privileged)<ul>
+<li>ROUND_ROBIN</li>
+<li>CFS (Completely Fair Scheduler)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U7 -->
+
+<p>The DEVICEs are usually in the kinds of <code>net</code>, <code>block</code>, <code>display</code> and so on.</p>
+<p>How to <strong>discover and initialize devices</strong></p>
+<ul>
+<li>(axruntime at startup) discovers the device and initializes it with the appropriate driver</li>
+<li>axdriver Indicates the process of discovering and initializing devices<ul>
+<li>2-stage cyclic detection discovers the device<ul>
+<li><strong>Level 1</strong>: traverses all virtio_mmio address ranges, determined by the platform physical memory layout, and performs transition page mapping</li>
+<li><strong>Level 2</strong>: Enumerate devices with the for_each_drivers macro, and then probe each virtio device probe_mmio</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>probe discovers devices based on the bus, matches drivers one by one, and initializes them<ul>
+<li>Bus connecting with devices<ul>
+<li>PCI</li>
+<li>MMIO</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- U8 -->
+
+<p>A File System is a mechanism used in an operating system to manage files and data on computer storage devices such as hard disks, SSDS, flash memory, etc.<br>(In Linux, every device will also exist as one or more files)</p>
+<p>File System</p>
+<ul>
+<li>RAMFS: A memory-based virtual file system <ul>
+<li>For temporary data storage that is fast but easy to lose.</li>
+</ul>
+</li>
+<li>DEVFS: Device file system<ul>
+<li>For managing and accessing hardware devices, simplifying the development and access of device drivers.</li>
+</ul>
+</li>
+<li>ProcFS: process file system<ul>
+<li>Provides system process and status information for system monitoring and management.</li>
+</ul>
+</li>
+<li>SysFS: System file system <ul>
+<li>Exports kernel objects and properties for viewing and managing hardware devices and drivers.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Macro-kernel"><a href="#Macro-kernel" class="headerlink" title="Macro kernel"></a>Macro kernel</h3><p>More than before:</p>
+<ul>
+<li>Privilege Level</li>
+<li>Address space</li>
+</ul>
+<p>So we need</p>
+<ul>
+<li>Map user/kernel space (address space)<ul>
+<li>Usual method<ul>
+<li>The high end of the page table is used as kernel space</li>
+<li>The low end is used as user application space, because user programs mostly start from low addresses</li>
+</ul>
+</li>
+<li>Kernel space is shared and user space is used independently</li>
+</ul>
+</li>
+<li>Add system call (cross-privilege + address space)</li>
+</ul>
+<!-- M1 -->
+
+<p>The user applications toggle between two privilege levels:</p>
+<ul>
+<li>Task Context : User Level, execute application logic</li>
+<li>Trap Context : Kernel Level, handle system calls and exceptions</li>
+</ul>
+<hr>
+<!-- M2 -->
+
+<p>Address space Area mapping Back-end <code>Backend</code> maps specific areas in a space</p>
+<ul>
+<li><strong>Linear</strong><ul>
+<li><strong>case</strong> The target physical address space area already exists, and the mapping relationship is directly established</li>
+<li>It can be used for MMIO area mapping and special shared address area mapping</li>
+<li>Corresponding physical page frames must be <strong>consecutive</strong></li>
+</ul>
+</li>
+<li><strong>Alloc</strong> (Lazy)<ul>
+<li><strong>case</strong> Use missing page exception (亡羊补牢)</li>
+<li>Mapped by page, the corresponding physical page frames are usually <strong>discontinuous</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<!-- M3 -->
+
+<p>To compatible with Linux applications, we should implement the compatible system calls, file systems and other system resources. This asks us to follow the POSIX standard. </p>
+<p>POSIX allows developers to write applications using a standard set of apis without worrying about differences in the underlying operating system. </p>
+<p>Except <em>Windows</em>, many modern operating systems, such as <em>Linux</em>, <em>macOS</em> (based on <em>Unix</em>), and many embedded systems (RtOS ?) , are partially or fully POSIX compliant. This allows applications developed on these systems to run seamlessly on different platforms.</p>
+<p>When loading the ELF-formatted application, the <code>VirtAddr</code> and <code>MemSiz</code> are used to place the segment in the target virtual memory location. Beware that some segments like .bss are all zeros, so the actual data is not stored in the ELF file, but rather dynamically allocated space is requested.</p>
+<p>The important support to do is to implemwnt hosted-standing environment <code>main</code> function.<br>We should provide:</p>
+<ul>
+<li>Parameter information (<code>argc</code> and <code>argv</code>): parameter number, parameter string pointer array</li>
+<li>Environment information (<code>envv</code>): environment variable string pointer array</li>
+</ul>
+<h3 id="Hypervisor"><a href="#Hypervisor" class="headerlink" title="Hypervisor"></a>Hypervisor</h3><p>Each virtual machine has its own independent virtual machine hardware, based on the physical computer. Each virtual machine runs its own operating system, and the operating system believes that it is alone in the execution environment, and cannot distinguish whether the environment is a physical machine or a virtual machine. (ideal state)</p>
+<blockquote>
+<p>This is similar to virtualization software, like VMware ?</p>
+</blockquote>
+<blockquote>
+<p>Is the <strong>virtual 8086 mode</strong> on x86 the same or similar principle?</p>
+</blockquote>
+<p>The difference between a Hypervisor and an Emulator is <em>whether the architecture of the virtual running environment is the same as that of the physical running environment that supports it</em>.</p>
+<blockquote>
+<p>It Seems to have something to do with emulation KVM acceleration.</p>
+</blockquote>
+<p>Layers of resource objects supported by the Hypervisor:</p>
+<ul>
+<li>VM: manages the address space. </li>
+<li>vCPU: indicates the virtualization of computing resources and the flow of execution on VMS</li>
+<li>vMem: Memory virtualization based on the physical space layout of VMS</li>
+<li>vDevice: indicates device virtualization, including direct mapping and emulation</li>
+<li>vUtilities: interrupts virtualization and bus device operation</li>
+</ul>
+<p>Usually use below items to implement a Hypervisor:</p>
+<ul>
+<li><strong>run_guest</strong>  is responsible for entering Guest environment</li>
+<li><strong>guest_exit</strong> is responsible for exiting Guest environment</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/13/stage-2-ProerLoneW/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/13/stage-2-ProerLoneW/" class="post-title-link" itemprop="url">stage-2-ProerLoneW</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-13 23:33:51" itemprop="dateCreated datePublished" datetime="2024-11-13T23:33:51+00:00">2024-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rCore第二阶段总结报告"><a href="#rCore第二阶段总结报告" class="headerlink" title="rCore第二阶段总结报告"></a>rCore第二阶段总结报告</h1><h3 id="第二阶段回顾"><a href="#第二阶段回顾" class="headerlink" title="第二阶段回顾"></a>第二阶段回顾</h3><p>​    本以为第一阶段后将是一马平川，却不曾想第二阶段竟是噩梦的开始。本以为第二阶段也和第一阶段一样，只需断断续续抽出一周的零碎时间即可轻易完成，但只有亲身尝试过才会知道这种想法多么的错误，最后几乎是推掉了所有的学业任务，把一整周都投入在了rCore上才勉勉强强卡ddl写完了所有lab。</p>
+<p>​    第零章和到第二章可以说是第二阶段的环境配置和任务理解阶段，由于上一阶段仅仅是在mac电脑上轻松写代码，故在一开始的环境配置上还是耗费了小两天，在此过程中第一次接触到了windows的wsl，然后一步一步在实验指导书的指导下搭建了 <code>vscode + wsl + ubuntu20.02</code> 这样的开发环境，在阅读前面几章的文档内容后也对所学的知识、实验的相关方向有了大致的了解，并能够初步运行起来自己的rust-os。在第一章的学习过程中，我理解了应用程序的执行环境，对 <code>应用程序、函数调用、标准库、系统调用、操作系统、指令集和硬件平台</code> 这些概念又有了新的认识，有种学习汇编语言的感觉，另外也接触到了 <code>裸机编程、目标三元组</code> 这些比较新的东西。但也仅停留在有印象的层面，没能深入理解其中奥秘；第二章的内容比较全面，我了解到了应用程序执行过程和操作系统的特权级切换机制，了解了编写risc-v的链接脚本来控制内存布局、内嵌汇编、异常处理、上下文切换的实现，这些操作在代码中的实现，更是让我操作系统的课上所学映入了现实，第二章的批处理调度系统，也是一个很好的帮助我入门并理解整体的代码架构的案例。</p>
+<p>​    后面几章就没有那么多时间细细咀嚼了，通常都是扫两眼知识然后直奔作业，除了文件系统外，其他由于都在课上学过，因此在gpt的帮助下没有被卡住太久的时间。也很感谢用心设计该实验教程的学长/学姐，不仅让我们快速入门了os，还让我们快速了解了如何系统开发一个os的各个功能。</p>
+<p>​    在lab1实验就卡了很久——不会仔细品读知识中所蕴含的代码实现细节，也不会投机取巧地去看看测试用例和作业所给的提示，而仅仅是闭门造车，最终卡了许久才在群聊天记录中找到了问题的关键所在，也就是时间的记录问题，当然在写的过程中也遇到诸如生命周期等等问题，让语言基础不太牢固的我举步维艰。</p>
+<p>​    lab2是虚拟存储多级页表实验，虽然在课上老听说页表的神奇和重要性，但从没有像本次实验这样深刻地接触过操作系统中的页表，最初做的时候由于考虑的太多又无法实现便导致一度停滞不前，后来在发呆的时候又仔细重新阅读了一下题目的要求，发现需要实现的东西都还挺简单的，而且测试用例也给的非常宽松因此很快的做完了，并没有想象中那么复杂。</p>
+<p>​    lab3是有关进程的简单创建和调度，实现上并不困难，主要难度还是在于代码结构发生了较大变化，比如本来 <code>task_manager</code> 做的事情现在换成了 <code>process</code> 在做。</p>
+<p>​    lab4是最痛苦的一次实验，在把ch5的代码移植过来后发现仅需要过三个测试文件即可便觉得它很简单，但真正想要得心应手地写出来需要对文件系统和代码实现有详细的理解，最终还是在听了ddl前的讲解才恍然大悟：linkat和create略像前一章所提到的fork和spawn，否则将根本无从下手然后白白浪费时间并放弃之前的一切努力。在给 <code>inode</code> 加上 <code>inode_id</code> 相关的方法后很快完成了这次实验。</p>
+<p>​    lab5的内容相对比较熟悉，也是课上自认为十分简单的死锁检测问题，但代码框架阅读起来难度较大，最终将前面的 <code>sys_get_time</code> 搬过来后跟着题目的提示实现了资源分配图和死锁检测系统调用的实现</p>
+<h3 id="第二阶段收获"><a href="#第二阶段收获" class="headerlink" title="第二阶段收获"></a>第二阶段收获</h3><p>​    这次的第二阶段学习就像一场不断挑战极限的马拉松，让我既感到疲惫不堪，又充满了意想不到的收获。在本阶段的学习中，我获得了关于操作系统核心机制的更深入理解，体验到了真实操作系统开发的复杂性和细致入微的编程要求，特别是在进程管理、内存管理、以及文件系统的设计上有了全新的认识。</p>
+<p>​    首先，通过批处理调度系统的实现，我理解了特权级切换、上下文保存与恢复等机制。这种直接操控硬件资源的编程体验帮助我更好地理解了操作系统在管理硬件与应用间的角色。其次，在实现文件系统的过程中，我也是初次了解了文件路径解析、inode 管理和文件描述符等底层概念，这不仅让我理解了文件系统的设计精髓，也磨炼了抽象和模块化编程的能力。</p>
+<p>​    同时，在死锁检测的实验中，资源分配图的设计让我更深刻地理解了进程间的依赖关系和并发控制策略，学习知识的最好方式绝对是动手实践。</p>
+<p>​    总的来说，这一阶段的收获不止是技术上的进步，更让我体会到了系统开发的全局性思维和精确性要求。这不仅提升了我的编程能力，也让我更有信心面对后续操作系统开发中的复杂问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/13/stage-1-ProerLoneW/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -264,7 +666,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -341,7 +743,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:37" itemprop="dateModified" datetime="2025-07-01T09:36:37+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -424,7 +826,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:37" itemprop="dateModified" datetime="2025-07-01T09:36:37+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -508,7 +910,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -534,10 +936,10 @@
           <h1 id="记得恢复package-json"><a href="#记得恢复package-json" class="headerlink" title="记得恢复package.json"></a>记得恢复package.json</h1><h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><h2 id="组件化内核实验路线"><a href="#组件化内核实验路线" class="headerlink" title="组件化内核实验路线"></a>组件化内核实验路线</h2><ul>
 <li>第一周 组件化内核基础和Unikernel模式（以下4部分压缩合并到3次课）<br>内核组件化基本概念、思路和框架 (U.1)<br>内存管理 - 分页、地址空间(U.3)和动态内存分配(U.2)<br>任务调度 - 任务与运行队列(U.4)、协作式调度(U.5) 、 抢占式调度(U.6)<br>块设备驱动(U.7)和文件系统(U.8)</li>
 <li>第二周 宏内核扩展（其中第3次课由郑友捷老师讲，内容待定）<br>从Unikernel到宏内核的扩展 (M.1)<br>用户地址空间管理和页面异常(M.2)<br>进程和Linux应用支持(M.3)</li>
-<li>第三周 Hypervisor扩展<br>从Unikernel到宏内核的扩展 (H.1)<br>Guest地址空间管理(H.2)<br>VMExit各类情况处理与设备管理 (H.3)<br><img src="/blog/.io//Snipaste_2024-11-12_20-59-50.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_20-59-42.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_21-03-29.png" alt="alt text"><h2 id="ArceOS框架"><a href="#ArceOS框架" class="headerlink" title="ArceOS框架"></a>ArceOS框架</h2>除了运行需要的基本工具外，其他所有东西都可以以组件的形式添加到内核中，通过rust提供的feature，能够自行选择需要的组件，实现内核最小化运行。<br>axfeat是一个空的feature，用来汇聚所有的feature。<br><img src="/blog/.io//Snipaste_2024-11-12_21-18-34.png" alt="alt text"><br><img src="/blog/.io//Snipaste_2024-11-12_21-23-20.png" alt="alt text"></li>
+<li>第三周 Hypervisor扩展<br>从Unikernel到宏内核的扩展 (H.1)<br>Guest地址空间管理(H.2)<br>VMExit各类情况处理与设备管理 (H.3)<br><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_20-59-50.png" alt="alt text"><br><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_20-59-42.png" alt="alt text"><br><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_21-03-29.png" alt="alt text"><h2 id="ArceOS框架"><a href="#ArceOS框架" class="headerlink" title="ArceOS框架"></a>ArceOS框架</h2>除了运行需要的基本工具外，其他所有东西都可以以组件的形式添加到内核中，通过rust提供的feature，能够自行选择需要的组件，实现内核最小化运行。<br>axfeat是一个空的feature，用来汇聚所有的feature。<br><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_21-18-34.png" alt="alt text"><br><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_21-23-20.png" alt="alt text"></li>
 </ul>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><h3 id><a href="#" class="headerlink" title></a><img src="/blog/.io//Snipaste_2024-11-12_16-57-27.png" alt="alt text"></h3><p>在println!宏定义处添加颜色输出控制信息。</p>
-<h3 id="-1"><a href="#-1" class="headerlink" title></a><img src="/blog/.io//Snipaste_2024-11-12_17-11-06.png" alt="alt text"></h3><p>hashbrown有在no_std模式下使用的hashmap，在axstd文件夹下进行修改。<br>Cargo.toml中添加依赖<code>hashbrown = &quot;0.15&quot;</code><br>axstd/src/lib.rs 将原来的 alloc::collections删除<br>添加 mod collections<br>在src下创建文件夹collections，在mod.rs中添加如下代码，</p>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_16-57-27.png" alt="alt text"></h3><p>在println!宏定义处添加颜色输出控制信息。</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="./2024%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-%E4%BE%AF%E6%96%87%E6%AD%A6/Snipaste_2024-11-12_17-11-06.png" alt="alt text"></h3><p>hashbrown有在no_std模式下使用的hashmap，在axstd文件夹下进行修改。<br>Cargo.toml中添加依赖<code>hashbrown = &quot;0.15&quot;</code><br>axstd/src/lib.rs 将原来的 alloc::collections删除<br>添加 mod collections<br>在src下创建文件夹collections，在mod.rs中添加如下代码，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#[cfg(feature &#x3D; &quot;alloc&quot;)]</span><br><span class="line">#[doc(hidden)]</span><br><span class="line">pub use hashbrown::HashMap as HashMap;</span><br></pre></td></tr></table></figure>
 <p>需要为hashmap添加全局分配器，所以要引入alloc，否则会报出如下错误</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: no global memory allocator found but one is required; link to std or add &#96;#[global_allocator]&#96; to a static item that implements the GlobalAlloc trait</span><br></pre></td></tr></table></figure>
@@ -590,7 +992,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
 
           
@@ -678,7 +1080,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:37" itemprop="dateModified" datetime="2025-07-01T09:36:37+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -753,7 +1155,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
 
           
@@ -824,7 +1226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:37" itemprop="dateModified" datetime="2025-07-01T09:36:37+00:00">2025-07-01</time>
+                <time title="Modified: 2025-07-07 03:49:37" itemprop="dateModified" datetime="2025-07-07T03:49:37+00:00">2025-07-07</time>
               </span>
 
           
@@ -847,164 +1249,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/11/sevetis-%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2024/11/11/sevetis-%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5blog/" class="post-title-link" itemprop="url">sevetis-一二阶段blog</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-11-11 14:52:02" itemprop="dateCreated datePublished" datetime="2024-11-11T14:52:02+00:00">2024-11-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>一个大三学生, 偶然看到这个学习活动就来玩一下了. 之前学校操作系统课学了个寂寞, 正好来学多点补全知识, 并且练练rust.</li>
-</ul>
-<h2 id="rustling"><a href="#rustling" class="headerlink" title="rustling"></a>rustling</h2><ul>
-<li>这个还好, 以前有点点rust基础. 做着没什么困难, 顺便查漏补缺了一下.</li>
-</ul>
-<h2 id="rcore"><a href="#rcore" class="headerlink" title="rcore"></a>rcore</h2><ul>
-<li>二阶段开始, 内容一下多了起来, 文档看着也挺枯燥的, 有些地方感觉写得对小菜菜不太友好QAQ.</li>
-<li>lab1<ul>
-<li>翻翻文档, 翻到了ch3. 懒得再细看文档了, 直接写代码做实验!看了一下要求, 直接加点东西就一次过了, 开心.</li>
-</ul>
-</li>
-<li>lab2<ul>
-<li>ch4这个卡了我两周, 内存虚拟化这块真的很不会, 做着不明不白. 有点想摆烂了, 看了看群里聊天记录(光是看群聊信息都能学很多), 有点思路, 往大方向试了一试, 通过.(可能通过了还是不太明白)</li>
-</ul>
-</li>
-<li>lab3<ul>
-<li>ch5不是很难, stride调度算法出了点小错误稍微卡了一下, 很快就过了.</li>
-</ul>
-</li>
-<li>lab4<ul>
-<li>听很多人说ch6最难. 文件系统我也不太会,但我认真看了文档和代码, 试了几次也过了, 没感觉太难.</li>
-</ul>
-</li>
-<li>lab5<ul>
-<li>做得最痛苦的实验. 这个实验主要实现死锁检测, 本身不是很难. 但我遇到了一些玄学问题, 有<code>sleep_blocking</code>的测例会在sleep卡住超时过不了, 找来找去找不到原因, 加上DDL到了, 心态小崩. 最后垂死挣扎, 卸了qemu9, 把它换成qemu7, 不怎么抱期望地跑了一下, 通过了!(据说有一些人用qemu9也可以通过, 但不知道为什么我不行.)</li>
-</ul>
-</li>
-</ul>
-<h4 id="总的来说-第二阶段学到了很多东西-以前漏掉没学的操作系统知识被补上很多-但更感觉有更多的东西要学-同时有时做实验遇到困难怎么尝试都通过不了-最后再坚持一下通过了-很有成就感-感觉实验测例有点简单"><a href="#总的来说-第二阶段学到了很多东西-以前漏掉没学的操作系统知识被补上很多-但更感觉有更多的东西要学-同时有时做实验遇到困难怎么尝试都通过不了-最后再坚持一下通过了-很有成就感-感觉实验测例有点简单" class="headerlink" title="总的来说, 第二阶段学到了很多东西, 以前漏掉没学的操作系统知识被补上很多, 但更感觉有更多的东西要学. 同时有时做实验遇到困难怎么尝试都通过不了, 最后再坚持一下通过了, 很有成就感.(感觉实验测例有点简单..)"></a>总的来说, 第二阶段学到了很多东西, 以前漏掉没学的操作系统知识被补上很多, 但更感觉有更多的东西要学. 同时有时做实验遇到困难怎么尝试都通过不了, 最后再坚持一下通过了, 很有成就感.(感觉实验测例有点简单..)</h4>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/11/2024%E7%A7%8B%E5%86%AC%E8%AE%AD%E7%BB%83%E8%90%A5Blog-%E9%98%B6%E6%AE%B5%E4%BA%8C%E6%80%BB%E7%BB%93-%E5%AD%99%E5%AE%87%E8%88%AA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2024/11/11/2024%E7%A7%8B%E5%86%AC%E8%AE%AD%E7%BB%83%E8%90%A5Blog-%E9%98%B6%E6%AE%B5%E4%BA%8C%E6%80%BB%E7%BB%93-%E5%AD%99%E5%AE%87%E8%88%AA/" class="post-title-link" itemprop="url">2024秋冬训练营Blog-阶段二总结-孙宇航</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-11-11 12:55:40" itemprop="dateCreated datePublished" datetime="2024-11-11T12:55:40+00:00">2024-11-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-01 09:36:38" itemprop="dateModified" datetime="2025-07-01T09:36:38+00:00">2025-07-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="专业阶段"><a href="#专业阶段" class="headerlink" title="专业阶段"></a>专业阶段</h1><p>这个阶段给我最大的感受是学习，因为很多函数都被事先书写好了，这几个实验基本都是在已有的框架上进行相关的函数调用即可，在明白每个函数的实现逻辑以及每个lab实验要实现的功能即可完成实验。同时这个阶段给我的感受是有许多深层次的知识仍需要学习，有许多一知半解的知识需要实践，看到学习群里面大家对于实验的讨论的诸多见解，受益匪浅，完完全全的拓宽了我的眼界，许多从未听过的名词出现在我的面前，只感到纸上得来终觉浅，绝知此事要躬行。可惜时间所迫，没办法对于每个lab实验进行进一步的深究。<br>第二阶段我重点理会到了操作系统的一步步发展以及实现的功能，在进行每个实验的时候，感受到学校里面的讲解十分片面，并且浅薄（也是我没有认真学习的缘故，学校里面的课检验的只有期末突击而已）。<br>非常重要的一点是这次的理论和实践一起进行，让我极大的认识到了抽象和具体之间的联系，有时候理论上很复杂并且难以理解的东西，转化到实践上面竟然可能只是一个数组，一个函数栈而已，这让欠缺实践的我大开眼界。<br>非常期待第三阶段带来的挑战，也非常希望可以通过第三阶段（哈哈哈）。</p>
-
       
     </div>
 
