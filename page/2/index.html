@@ -184,20 +184,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">763</span>
+          <span class="site-state-item-count">769</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">690</span>
+        <span class="site-state-item-count">707</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -233,6 +233,1122 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">实习技术报告：StarryOS 内核模块按需加载与 FUSE 用户态文件系统驱动实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-04-25 13:41:50" itemprop="dateCreated datePublished" datetime="2026-04-25T13:41:50+00:00">2026-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" itemprop="url" rel="index"><span itemprop="name">实习总结报告</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>StarryOS 作为基于 Rust 的宏内核操作系统，已在前序工作中引入了可加载内核模块（LKM）基础设施，但彼时仅支持显式手动加载。本文在此基础之上，设计并实现了 <code>ondemand-kmod</code>——一个通用的 <code>#![no_std]</code> 按需加载内核模块框架，支持懒加载（lazy loading）与空闲超时自动卸载（idle unloading）。该框架将”何时加载”的策略与”怎么加载”的机制彻底解耦，形成一个可复用的独立库。</p>
+<p>随后，该框架深度集成进 StarryOS，先后实现了 procfs 与 FUSE 两个真实模块的按需加载。在 FUSE 方向，本文从零手写了内核侧驱动 <code>Starryfuse</code>，包含基础 FUSE 协议解析、字符设备通信、VFS 桥接与阻塞读/poll 多路复用支持；将其包装为 <code>fuse.ko</code> 可加载模块，并开发了三组用户态测试程序，在 QEMU/RISC-V 环境下验证了从首次 <code>open(&quot;/dev/fuse&quot;)</code> 触发加载到空闲卸载、内存回收的完整生命周期。</p>
+<p><strong>关键词</strong>：StarryOS；按需加载内核模块；FUSE；用户态文件系统；Rust；RISC-V</p>
+<hr>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><p>StarryOS 是一个基于 Rust 的宏内核操作系统，底层依托 ArceOS 的模块化架构。之前有同学为 StarryOS 引入了完整的 LKM 机制：内核能够在运行期动态加载 ELF 格式的 <code>.ko</code> 文件，完成重定位、符号解析并执行模块的 <code>init</code>/<code>exit</code> 函数。</p>
+<p>然而，当时的 LKM 仅支持显式手动加载（<code>insmod</code> 语义）。对于 <code>procfs</code>、<code>FUSE</code> 这类并非始终活跃的子系统，如果将其静态编译进内核，会造成启动时内存与体积的浪费；如果完全手动管理，又增加了系统管理员的负担。因此，有必要在 LKM 基础之上构建一套按需加载框架，使内核模块能够在首次被访问时自动装载，在空闲超时时自动卸载并回收资源。</p>
+<h3 id="1-2-设计目标"><a href="#1-2-设计目标" class="headerlink" title="1.2 设计目标"></a>1.2 设计目标</h3><p>围绕上述背景，本文工作围绕以下核心目标展开：</p>
+<ol>
+<li><strong>按需加载</strong>：当用户态首次访问某功能（如打开 <code>/dev/fuse</code> 或 <code>/proc/meminfo</code>）且 VFS 返回 <code>NotFound</code> 时，系统自动加载对应模块并重试。</li>
+<li><strong>自动卸载</strong>：模块在空闲（无引用、无打开文件描述符）超过设定时间后，自动卸载并释放物理内存。</li>
+<li><strong>策略与机制解耦</strong>：将”何时加载”的策略与”怎么加载”的机制分离，形成可复用的独立框架。</li>
+<li><strong>FUSE 完整闭环</strong>：实现内核侧 FUSE 驱动，支持标准 Linux FUSE ABI，使用户态守护进程能在 StarryOS 中挂载并操作虚拟文件系统。</li>
+</ol>
+<h3 id="1-3-报告结构"><a href="#1-3-报告结构" class="headerlink" title="1.3 报告结构"></a>1.3 报告结构</h3><p>本文剩余章节安排如下：第 2 节介绍相关工作与背景；第 3 节阐述 <code>ondemand-kmod</code> 框架与 FUSE 按需加载的系统架构；第 4 节详细描述实现细节；第 5 节介绍测试验证方案与结果；第 6 节总结全文并展望未来工作。</p>
+<hr>
+<h2 id="2-相关工作与背景"><a href="#2-相关工作与背景" class="headerlink" title="2. 相关工作与背景"></a>2. 相关工作与背景</h2><h3 id="2-1-StarryOS-的-LKM-基础设施"><a href="#2-1-StarryOS-的-LKM-基础设施" class="headerlink" title="2.1 StarryOS 的 LKM 基础设施"></a>2.1 StarryOS 的 LKM 基础设施</h3><p>前序工作为 StarryOS 引入了完整的 LKM 支持，包含 ELF 解析器、符号重定位器（<code>ksym</code>）以及模块加载器（<code>kmod-loader</code>）。内核能够在运行期读取 <code>.ko</code> 文件，将其映射到独立的虚拟地址空间，解析未定义符号并回填地址，最终调用模块入口函数。这一基础设施为按需加载提供了”怎么加载”的底层能力，但缺乏”何时加载”的自动化策略层。</p>
+<h3 id="2-2-已有按需加载实践"><a href="#2-2-已有按需加载实践" class="headerlink" title="2.2 已有按需加载实践"></a>2.2 已有按需加载实践</h3><p>AlloyStack:面向Serverless按需加载的库操作系统。该项目作为libos实现了模块按需自动加载，服务于云函数运行。</p>
+<p>本项目开发初期，对于StarryOS 的 <code>procfs</code> 文件系统也尝试过”懒挂载”（lazy mount）——在启动时注册挂载点工厂函数，首次访问时才真正挂载文件系统。后期因FUSE测试需要，将<code>procfs</code>重归静态加载。</p>
+<h3 id="2-3-StarryOS-面临的独特挑战"><a href="#2-3-StarryOS-面临的独特挑战" class="headerlink" title="2.3 StarryOS 面临的独特挑战"></a>2.3 StarryOS 面临的独特挑战</h3><p>与 Linux 相比，StarryOS 的按需加载面临若干独特挑战：</p>
+<ul>
+<li><strong>Rust <code>#![no_std]</code> 环境</strong>：无法使用 <code>std::sync::Mutex</code>、<code>std::thread</code> 等标准库设施，所有并发控制必须基于自旋锁和内核原语。</li>
+<li><strong>跨模块符号解析</strong>：模块与主内核之间的符号绑定通过 <code>KALLSYMS</code> 字典完成，需要处理 Rust Nightly 裁剪导致的符号缺失问题。</li>
+<li><strong>RISC-V QEMU 调试环境</strong>：物理内存固定，模块加载/卸载的内存行为需要可观测、可量化，以验证按需加载的实际收益。</li>
+<li><strong>VFS 上下文安全</strong>：动态加载的文件系统模块不能在中断上下文或持有全局锁时执行可能阻塞的操作。</li>
+<li><strong>缺乏现有 FUSE 内核态驱动 Rust 实现借鉴</strong>：现有 FUSE Rust 实现开源项目仓库均为用户态侧设计，为Linux系统适配。</li>
+</ul>
+<hr>
+<h2 id="3-系统架构与设计"><a href="#3-系统架构与设计" class="headerlink" title="3. 系统架构与设计"></a>3. 系统架构与设计</h2><h3 id="3-1-整体架构"><a href="#3-1-整体架构" class="headerlink" title="3.1 整体架构"></a>3.1 整体架构</h3><p>StarryOS 的按需加载系统组成部分：</p>
+<ol>
+<li><strong><code>ondemand-kmod</code></strong>：独立的 <code>#![no_std]</code> Rust 库，提供通用的模块生命周期管理。</li>
+<li><strong><code>api/src/kmod/ondemand.rs</code></strong>：StarryOS 内核集成层，桥接框架与现有 LKM 基础设施。</li>
+<li><strong><code>api/src/kmod/ondemand_builtin.rs</code></strong>: 负责具体模块注册加载卸载触发逻辑。</li>
+</ol>
+<p>当用户态程序访问某个路径（如 <code>/dev/fuse</code>）时，VFS 层通过 <code>with_ondemand()</code> 钩子捕获 <code>NotFound</code> 错误，触发 <code>ondemand-kmod</code> 加载对应的 <code>.ko</code> 文件；模块初始化完成后，VFS 操作自动重试。空闲时，后台监控任务通过三阶段卸载算法安全回收模块内存。</p>
+<p><strong>图 1</strong> 展示了按需加载系统的整体架构。图中上侧为用户态进程，下侧为内核态组件。用户态的首次访问沿 VFS 路径向下传播，若目标不存在则进入 <code>with_ondemand</code> 重试路径；框架层的 <code>registry</code> 与 <code>lifecycle</code> 负责状态转换；底层通过 <code>kmod-loader</code> 实际完成 ELF 加载。</p>
+<img src="/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/p1.png" class="" title="alt text">
+
+<p>如果图片显示失败，图片链接：<a href="https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p1.png" target="_blank" rel="noopener">https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p1.png</a></p>
+<h3 id="3-2-模块生命周期状态机"><a href="#3-2-模块生命周期状态机" class="headerlink" title="3.2 模块生命周期状态机"></a>3.2 模块生命周期状态机</h3><p><code>ondemand-kmod</code> 使用六状态有限状态机（FSM）描述模块的生命周期：</p>
+<ul>
+<li><strong><code>Unloaded</code></strong>：初始状态，模块尚未加载。</li>
+<li><strong><code>Loading</code></strong>：正在执行 ELF 加载与符号解析。</li>
+<li><strong><code>Loaded</code></strong>：模块已成功初始化，可供使用。</li>
+<li><strong><code>Active</code></strong>：模块正被使用（存在打开的文件描述符或挂载点引用）。</li>
+<li><strong><code>Idle</code></strong>：模块已加载但当前无活跃引用。</li>
+<li><strong><code>Unloading</code></strong>：正在执行模块退出函数并回收内存。</li>
+</ul>
+<p>状态转换遵循以下规则：</p>
+<ul>
+<li><code>Unloaded --(触发器/首次访问)--&gt; Loading</code></li>
+<li><code>Loading --(成功)--&gt; Loaded --&gt; Active</code></li>
+<li><code>Active --(最后一个引用释放)--&gt; Idle</code></li>
+<li><code>Idle --(超时 / 空闲时间达到阈值)--&gt; Unloading</code></li>
+<li><code>Idle --(新的访问请求)--&gt; Active</code></li>
+<li><code>Unloading --(完成)--&gt; Unloaded</code></li>
+</ul>
+<p><strong>图 2</strong> 为六状态生命周期状态机示意图。</p>
+<img src="/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/p2.png" class="" title="alt text">
+
+<p>如果图片显示失败，图片链接：<a href="https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p2.png" target="_blank" rel="noopener">https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p2.png</a></p>
+<h3 id="3-3-安全卸载的三阶段算法"><a href="#3-3-安全卸载的三阶段算法" class="headerlink" title="3.3 安全卸载的三阶段算法"></a>3.3 安全卸载的三阶段算法</h3><p>自动卸载是按需加载框架中最容易出错的环节，因为模块可能仍被内核数据结构间接引用。<code>ondemand-kmod</code> 采用三阶段卸载算法保证安全：</p>
+<ol>
+<li><strong>标记阶段（Mark）</strong>：将模块状态从 <code>Idle</code> 迁移到 <code>Unloading</code>，禁止新的引用获取。</li>
+<li><strong>等待阶段（Quiesce）</strong>：等待所有已存在的引用释放。对于 <code>procfs</code>，这意味着等待所有打开的 <code>/proc/xxx</code> 文件关闭；对于 FUSE，这意味着等待所有 <code>/dev/fuse</code> 文件描述符关闭以及 VFS 挂载点解除。</li>
+<li><strong>回收阶段（Teardown）</strong>：调用模块的 <code>exit</code> 函数，解除符号绑定，释放 ELF 占用的物理页，最终将状态迁移回 <code>Unloaded</code>。</li>
+</ol>
+<h3 id="3-4-VFS-层触发重试机制"><a href="#3-4-VFS-层触发重试机制" class="headerlink" title="3.4 VFS 层触发重试机制"></a>3.4 VFS 层触发重试机制</h3><p>为了避免在每个系统调用路径中手动插入加载逻辑，StarryOS 在 VFS 层引入了一个通用函数 <code>with_ondemand()</code>。当 VFS 操作（如 <code>lookup</code>、<code>open</code>、<code>read</code>）返回 <code>NotFound</code> 时，该函数会：</p>
+<ol>
+<li>检查失败路径是否匹配某个已注册的按需加载触发器（如 <code>/proc/*</code> 对应 <code>procfs.ko</code>，<code>/dev/fuse</code> 对应 <code>fuse.ko</code>）。</li>
+<li>若匹配，则调用 <code>ondemand-kmod::try_load()</code> 尝试加载。</li>
+<li>加载成功后，自动重试原始的 VFS 操作。</li>
+<li>若加载失败或重试后仍返回错误，则将错误返回给用户态。</li>
+</ol>
+<p>这种设计的关键优势在于：触发逻辑对上层完全透明，无论是用户态程序、libc 还是 Shell，都不需要任何修改。</p>
+<h3 id="3-5-Starryfuse-内核驱动架构"><a href="#3-5-Starryfuse-内核驱动架构" class="headerlink" title="3.5 Starryfuse 内核驱动架构"></a>3.5 Starryfuse 内核驱动架构</h3><p><code>Starryfuse</code> 是 StarryOS 中 FUSE 的内核侧实现，被包装为 <code>fuse.ko</code> 可加载模块。其内部采用四层架构：</p>
+<ul>
+<li><strong><code>abi</code> 层</strong>：FUSE 协议数据结构的 Rust 定义，严格对齐 Linux FUSE ABI（如 <code>fuse_in_header</code>、<code>fuse_out_header</code>、<code>fuse_init_in</code>、<code>fuse_init_out</code>）。</li>
+<li><strong><code>dev</code> 层</strong>：字符设备 <code>/dev/fuse</code> 的实现，负责内核与用户态守护进程之间的字节流传输。包含 <code>FuseDev</code> 结构体、<code>PollSet</code> 多路复用、以及 <code>WaitQueue</code> 阻塞/唤醒机制。</li>
+<li><strong><code>vfs</code> 层</strong>：VFS 桥接层，将 StarryOS 的 <code>axfs_vfs</code> 操作（<code>lookup</code>、<code>read</code>、<code>write</code>、<code>readdir</code> 等）翻译为 FUSE 请求，通过 <code>dev</code> 层发送给用户态守护进程，再将其响应翻译回 VFS 语义。</li>
+<li><strong><code>lib</code> 层</strong>：<code>starry_fuser</code> 用户态库，封装了与 <code>Starryfuse</code> 内核驱动的交互细节，使开发者能够像使用 <code>libfuse</code> 一样编写用户态文件系统。</li>
+</ul>
+<p><strong>图 3</strong> 展示了 FUSE 按需加载执行的完整时序。</p>
+<img src="/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/p3.png" class="" title="alt text">
+
+<p>如果图片显示失败，图片链接：<a href="https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p3.png" target="_blank" rel="noopener">https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p3.png</a></p>
+<p><strong>图 4</strong> 展示了 <code>Starryfuse</code> 内核驱动的分层架构。</p>
+<img src="/blog/2026/04/25/%E5%AE%9E%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%EF%BC%9AStarryOS-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E4%B8%8E-FUSE-%E7%94%A8%E6%88%B7%E6%80%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/p4.png" class="" title="alt text">
+
+<p>如果图片显示失败，图片链接：<a href="https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p4.png" target="_blank" rel="noopener">https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/report_figures/p4.png</a></p>
+<hr>
+<h2 id="4-实现细节"><a href="#4-实现细节" class="headerlink" title="4. 实现细节"></a>4. 实现细节</h2><h3 id="4-1-ondemand-kmod-框架实现"><a href="#4-1-ondemand-kmod-框架实现" class="headerlink" title="4.1 ondemand-kmod 框架实现"></a>4.1 <code>ondemand-kmod</code> 框架实现</h3><p><code>ondemand-kmod</code> 被设计为一个独立的 <code>#![no_std]</code> Rust crate，核心文件包括：</p>
+<ul>
+<li><strong><code>registry.rs</code></strong>：维护一个全局的模块注册表，记录每个模块的名称、触发器（路径前缀或设备号）、<code>.ko</code> 文件路径、超时阈值以及当前状态。</li>
+<li><strong><code>lifecycle.rs</code></strong>：定义六状态 FSM 的 <code>State</code> 枚举、<code>ModuleDesc</code> 模块描述符、<code>ModuleGuard</code> RAII 引用计数守卫以及 <code>ManagedModule</code> 运行时 bookkeeping 结构。状态转换的实际逻辑由 <code>registry.rs</code>（<code>on_access</code> 处理加载触发与状态迁移动作）和 <code>monitor.rs</code>（<code>tick</code> 中完成 <code>Active</code> → <code>Idle</code> 迁移及卸载决策）驱动。</li>
+<li><strong><code>monitor.rs</code></strong>：实现 <code>IdleMonitor::tick()</code> 三阶段卸载算法。Phase 1 持锁扫描注册表，将引用计数为零且空闲超时的模块从 <code>Idle</code> 标记为 <code>Unloading</code>；Phase 2 在无锁环境下调用 <code>ModuleLoader::unload()</code> 执行实际卸载；Phase 3 再次持锁将成功卸载的模块状态回写为 <code>Unloaded</code>。该函数由 <code>api/src/kmod/ondemand.rs</code> 的 <code>tick_ondemand()</code> 定期调用。</li>
+</ul>
+<p>框架通过 <code>ModuleLoader</code> trait 与具体的操作系统解耦，定义了 <code>load()</code>、<code>unload()</code> 等方法。StarryOS 在 <code>api/src/kmod/ondemand.rs</code> 中提供 <code>KmodOnDemandLoader</code> 结构体作为该 trait 的具体实现，其内部调用现有的 <code>kmod-loader</code> 与 <code>axalloc</code> 内存管理接口。</p>
+<h3 id="4-2-with-ondemand-VFS-集成"><a href="#4-2-with-ondemand-VFS-集成" class="headerlink" title="4.2 with_ondemand VFS 集成"></a>4.2 <code>with_ondemand</code> VFS 集成</h3><p><code>with_ondemand</code> 是一个泛型函数，其实现位于 <code>api/src/kmod/ondemand.rs</code>。以 <code>lookup</code> 为例：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">with_ondemand(&amp;path, || fs.resolve(&amp;path))</span><br></pre></td></tr></table></figure>
+
+<p>函数调用逻辑：</p>
+<ol>
+<li>首次调用闭包 <code>vfs.lookup(path)</code>。</li>
+<li>若返回 <code>Err(NotFound)</code>，提取路径中的前缀，查询 <code>registry</code> 是否有匹配。</li>
+<li>若有匹配，调用 <code>try_load()</code>；加载成功后继续下一次循环（重试）。</li>
+<li>若返回其他错误或连续重试次数超过上限，则直接返回错误。</li>
+</ol>
+<p>该函数被包裹在 <code>open</code>、<code>stat</code>、<code>chmod</code>、<code>chown</code> 等关键系统调用路径中，确保几乎所有文件系统操作都能触发按需加载。</p>
+<h3 id="4-3-FuseDev-的并发与同步重构"><a href="#4-3-FuseDev-的并发与同步重构" class="headerlink" title="4.3 FuseDev 的并发与同步重构"></a>4.3 <code>FuseDev</code> 的并发与同步重构</h3><p>早期的 <code>/dev/fuse</code> 实现使用单线程自旋锁保护整个设备状态，导致当守护进程阻塞在 <code>read</code> 等待请求时，其他线程无法并发写入新请求。为此，本文对 <code>FuseDev</code> 进行了并发重构：</p>
+<ul>
+<li><strong>引入 <code>PollSet</code></strong>：支持多线程同时 <code>poll</code>，<code>read</code> 通过 <code>WaitQueue</code> 串行服务，内核可以在任意线程上向 <code>PollSet</code> 投递可读/可写事件。</li>
+<li><strong>引入 <code>WaitQueue</code></strong>：当没有待处理请求时，<code>read</code> 调用将当前任务挂起到 <code>WaitQueue</code>；当有新的 VFS 请求到达时，由 <code>vfs</code> 层唤醒等待队列中的任务。</li>
+<li><strong>锁安全</strong>：调用文件系统函数时先短暂拿锁检查请求队列，无数据则立即释放锁，再通过外部 WaitQueue 安全阻塞睡眠，消除”持自旋锁睡眠”导致的死锁风险。</li>
+</ul>
+<h3 id="4-4-vfs-rs-的协议桥接"><a href="#4-4-vfs-rs-的协议桥接" class="headerlink" title="4.4 vfs.rs 的协议桥接"></a>4.4 <code>vfs.rs</code> 的协议桥接</h3><p><code>vfs.rs</code> 是 <code>Starryfuse</code> 中最复杂的模块，负责将 StarryOS VFS 的语义映射到 FUSE 协议。</p>
+<p><strong>Opcode 映射</strong>：<code>vfs.rs</code> 中所有 FUSE 请求的 opcode 均严格对照 Linux 内核头文件定义，确保与用户态守护进程的协议语义一致。例如 <code>FUSE_INIT</code> 使用 opcode <code>26</code>，与标准 FUSE ABI 对齐。</p>
+<p><strong>INIT 协议握手</strong>：<code>FuseFs::new()</code> 注册文件系统后，在独立内核线程中异步发起 <code>FUSE_INIT</code> 握手，避免阻塞 <code>sys_mount</code>。构造 <code>FuseInitIn</code> 请求体携带主版本号、次版本号与 <code>max_readahead</code> 等能力字段下发至用户态守护进程，解析返回的 <code>FuseInitOut</code> 完成协议版本确认。</p>
+<h3 id="4-5-用户态-starry-fuser-库"><a href="#4-5-用户态-starry-fuser-库" class="headerlink" title="4.5 用户态 starry_fuser 库"></a>4.5 用户态 <code>starry_fuser</code> 库</h3><p>对接<a href="https://github.com/cberner/fuser" target="_blank" rel="noopener">外部<code>fuse</code>用户侧驱动</a>，处于开发中。</p>
+<hr>
+<h2 id="5-测试与验证"><a href="#5-测试与验证" class="headerlink" title="5. 测试与验证"></a>5. 测试与验证</h2><h3 id="5-1-测试内容"><a href="#5-1-测试内容" class="headerlink" title="5.1 测试内容"></a>5.1 测试内容</h3><p>为验证按需加载与 FUSE 功能的正确性，本文设计了三组测试程序：</p>
+<ol>
+<li><strong><code>fuse_test</code></strong>：基础功能测试，验证 <code>/dev/fuse</code> 的按需加载、FUSE_INIT 握手、简单的 <code>lookup</code>/<code>read</code>/<code>readdir</code> 以及空闲卸载。</li>
+<li><strong><code>fuse_rw_test</code></strong>：读写功能测试，验证 <code>write</code> + <code>read</code> 闭环、文件截断覆盖、目录创建与遍历。</li>
+<li><strong><code>fuse_mem_test</code></strong>：内存与稳定性测试，通过单次加载/卸载 FUSE 模块并读取内核内存快照，观测内存占用是否回归基线，检测是否存在内存泄漏。</li>
+</ol>
+<h3 id="5-2-测试环境"><a href="#5-2-测试环境" class="headerlink" title="5.2 测试环境"></a>5.2 测试环境</h3><ul>
+<li><strong>目标平台</strong>：<code>riscv64gc-unknown-none-elf</code></li>
+<li><strong>运行环境</strong>：QEMU 7.2+ <code>virt</code> 机器</li>
+<li><strong>内核配置</strong>：开启 <code>KALLSYMS</code>、<code>LKM</code>、<code>ONDEMAND_KMOD</code>、<code>FUSE</code></li>
+<li><strong>测试方式</strong>：在 QEMU 中运行 StarryOS，启动测试程序，串口输出日志</li>
+</ul>
+<h3 id="5-3-测试结果"><a href="#5-3-测试结果" class="headerlink" title="5.3 测试结果"></a>5.3 测试结果</h3><h4 id="5-3-1-fuse-test"><a href="#5-3-1-fuse-test" class="headerlink" title="5.3.1 fuse_test"></a>5.3.1 <code>fuse_test</code></h4><p>注：空闲卸载触发时间：<strong>5</strong> s</p>
+<p><strong>测试日志</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[318.750672 0:11 kmod_loader::loader:354] Module(Some(<span class="string">"fuse"</span>)) loaded successfully!</span><br><span class="line">[318.806927 0:11 fuse:41] Fuse module loaded via on-demand mechanism.</span><br><span class="line">[318.808250 0:11 starry_api::kmod:164] Module(fuse) init returned: 0</span><br><span class="line">[318.810531 0:11 starry_api::kmod::ondemand:55] [memtest] after_load_fuse RustHeap=9388272 PageCache=806912 Pages=12970</span><br><span class="line">[318.814701 0:11 starry_api::kmod::ondemand:101] [ondemand] module <span class="string">'fuse'</span> loaded, handle=0x17c96ff18</span><br><span class="line">Opened /dev/fuse</span><br><span class="line">Mounted /mnt/fuse successfully</span><br><span class="line">About to fork self-test child...</span><br><span class="line">fork returned 13</span><br><span class="line">Spawned self-test child pid=13</span><br><span class="line">fork returned 0</span><br><span class="line">=== FUSE Self-Test Starting ===</span><br><span class="line">Received FUSE request: opcode=26, unique=1, nodeid=0</span><br><span class="line">Sent INIT response</span><br><span class="line">Received FUSE request: opcode=3, unique=2, nodeid=1</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=1</span><br><span class="line">[TEST] ls /mnt/fuse:</span><br><span class="line">Received FUSE request: opcode=28, unique=3, nodeid=1</span><br><span class="line">Sent READDIR response (offset=0, bytes=96)</span><br><span class="line">  test.txt</span><br><span class="line">Received FUSE request: opcode=28, unique=4, nodeid=1</span><br><span class="line">Sent READDIR response (offset=3, bytes=0)</span><br><span class="line">[TEST] ls /mnt/fuse: PASS</span><br><span class="line">Received FUSE request: opcode=1, unique=5, nodeid=1</span><br><span class="line">Sent LOOKUP response <span class="keyword">for</span> <span class="string">'test.txt'</span></span><br><span class="line">Received FUSE request: opcode=3, unique=6, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=3, unique=7, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=15, unique=8, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=0, req_size=13, bytes=13)</span><br><span class="line">Received FUSE request: opcode=15, unique=9, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=13, req_size=32, bytes=0)</span><br><span class="line">[TEST] <span class="built_in">read</span> test.txt: PASS (contents: <span class="string">"hello, fuse!\n"</span>)</span><br><span class="line">=== FUSE Self-Test Complete ===</span><br><span class="line">Self-test child exited, status=0</span><br><span class="line">Test complete, daemon exiting.</span><br><span class="line">starry:~<span class="comment"># [324.572559 0:6 starry_api::kmod::ondemand:113] [ondemand] unload handle=0x17c96ff18</span></span><br><span class="line">[324.589301 0:6 starry_api::kmod::ondemand:55] [memtest] before_unload_fuse RustHeap=8054592 PageCache=806912 Pages=12832</span><br><span class="line">[324.599847 0:6 kmod_loader::loader:122] Calling module <span class="built_in">exit</span> <span class="keyword">function</span>...</span><br><span class="line">[324.603021 0:6 fuse:53] Fuse module <span class="built_in">exit</span> called.</span><br><span class="line">[324.603687 0:6 starry_api::kmod:179] Module(fuse) exited</span><br><span class="line">[324.604724 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a3a000, num_pages=10</span><br><span class="line">[324.606940 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a44000, num_pages=5</span><br><span class="line">[324.608016 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x819e3000, num_pages=1</span><br><span class="line">[324.608835 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a49000, num_pages=1</span><br><span class="line">[324.610092 0:6 starry_api::kmod::ondemand:55] [memtest] after_unload_fuse RustHeap=8053164 PageCache=806912 Pages=12815</span><br><span class="line">starry:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-2-fuse-rw-test"><a href="#5-3-2-fuse-rw-test" class="headerlink" title="5.3.2 fuse_rw_test"></a>5.3.2 <code>fuse_rw_test</code></h4><p><strong>测试日志</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">[ 15.872268 0:11 kmod_loader::loader:354] Module(Some(<span class="string">"fuse"</span>)) loaded successfully!</span><br><span class="line">[ 15.891686 0:11 fuse:41] Fuse module loaded via on-demand mechanism.</span><br><span class="line">[ 15.892565 0:11 starry_api::kmod:164] Module(fuse) init returned: 0</span><br><span class="line">[ 15.896285 0:11 starry_api::kmod::ondemand:55] [memtest] after_load_fuse RustHeap=9387756 PageCache=806912 Pages=12973</span><br><span class="line">[ 15.951746 0:11 starry_api::kmod::ondemand:101] [ondemand] module <span class="string">'fuse'</span> loaded, handle=0x17c96ff18</span><br><span class="line">Opened /dev/fuse</span><br><span class="line">Mounted /mnt/fuse successfully</span><br><span class="line">About to fork self-test child...</span><br><span class="line">fork returned 13</span><br><span class="line">Spawned self-test child pid=13</span><br><span class="line">fork returned 0</span><br><span class="line">=== FUSE RW Self-Test Starting ===</span><br><span class="line">Received FUSE request: opcode=26, unique=1, nodeid=0</span><br><span class="line">Sent INIT response</span><br><span class="line">Received FUSE request: opcode=1, unique=2, nodeid=1</span><br><span class="line">Sent LOOKUP response <span class="keyword">for</span> <span class="string">'rw_test.txt'</span></span><br><span class="line">Received FUSE request: opcode=3, unique=3, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=3, unique=4, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=15, unique=5, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=0, req_size=19, bytes=19)</span><br><span class="line">Received FUSE request: opcode=15, unique=6, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=19, req_size=32, bytes=0)</span><br><span class="line">[TEST] initial <span class="built_in">read</span>: PASS (hello from rw <span class="built_in">test</span>!)</span><br><span class="line">Received FUSE request: opcode=1, unique=7, nodeid=1</span><br><span class="line">Sent LOOKUP response <span class="keyword">for</span> <span class="string">'rw_test.txt'</span></span><br><span class="line">Received FUSE request: opcode=4, unique=8, nodeid=100</span><br><span class="line">Sent SETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=3, unique=9, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=16, unique=10, nodeid=100</span><br><span class="line">Sent WRITE response (nodeid=100, offset=0, bytes=16)</span><br><span class="line">[TEST] write existing: PASS</span><br><span class="line">Received FUSE request: opcode=1, unique=11, nodeid=1</span><br><span class="line">Sent LOOKUP response <span class="keyword">for</span> <span class="string">'rw_test.txt'</span></span><br><span class="line">Received FUSE request: opcode=3, unique=12, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=3, unique=13, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=15, unique=14, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=0, req_size=16, bytes=16)</span><br><span class="line">Received FUSE request: opcode=15, unique=15, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=16, req_size=32, bytes=0)</span><br><span class="line">[TEST] <span class="built_in">read</span>-back: PASS (new file content)</span><br><span class="line">Received FUSE request: opcode=9, unique=16, nodeid=1</span><br><span class="line">Sent MKDIR response</span><br><span class="line">[TEST] mkdir: PASS</span><br><span class="line">Received FUSE request: opcode=1, unique=17, nodeid=1</span><br><span class="line">Received FUSE request: opcode=35, unique=18, nodeid=1</span><br><span class="line">Sent CREATE response <span class="keyword">for</span> <span class="string">'newfile.txt'</span></span><br><span class="line">Received FUSE request: opcode=4, unique=19, nodeid=200</span><br><span class="line">Sent SETATTR response <span class="keyword">for</span> nodeid=200</span><br><span class="line">Received FUSE request: opcode=3, unique=20, nodeid=200</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=200</span><br><span class="line">Received FUSE request: opcode=16, unique=21, nodeid=200</span><br><span class="line">Sent WRITE response (nodeid=200, offset=0, bytes=16)</span><br><span class="line">[TEST] create+write: PASS</span><br><span class="line">Received FUSE request: opcode=3, unique=22, nodeid=200</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=200</span><br><span class="line">Received FUSE request: opcode=3, unique=23, nodeid=200</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=200</span><br><span class="line">Received FUSE request: opcode=15, unique=24, nodeid=200</span><br><span class="line">Sent READ response (nodeid=200, offset=0, req_size=16, bytes=16)</span><br><span class="line">Received FUSE request: opcode=15, unique=25, nodeid=200</span><br><span class="line">Sent READ response (nodeid=200, offset=16, req_size=32, bytes=0)</span><br><span class="line">[TEST] <span class="built_in">read</span> newfile: PASS (new file content)</span><br><span class="line">Received FUSE request: opcode=3, unique=26, nodeid=1</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=1</span><br><span class="line">Received FUSE request: opcode=28, unique=27, nodeid=1</span><br><span class="line">Sent READDIR response (offset=0, bytes=176)</span><br><span class="line">Received FUSE request: opcode=28, unique=28, nodeid=1</span><br><span class="line">Sent READDIR response (offset=5, bytes=0)</span><br><span class="line">[TEST] readdir: entries=rw_test.txt,mydir,newfile.txt</span><br><span class="line">[TEST] readdir: PASS</span><br><span class="line">Received FUSE request: opcode=3, unique=29, nodeid=300</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=300</span><br><span class="line">Received FUSE request: opcode=28, unique=30, nodeid=300</span><br><span class="line">Sent READDIR response (offset=0, bytes=64)</span><br><span class="line">Received FUSE request: opcode=28, unique=31, nodeid=300</span><br><span class="line">Sent READDIR response (offset=2, bytes=0)</span><br><span class="line">[TEST] readdir mydir: entries=</span><br><span class="line">[TEST] readdir mydir: PASS</span><br><span class="line">=== FUSE RW Self-Test Complete ===</span><br><span class="line">Self-test child exited, status=0</span><br><span class="line">Test complete, daemon exiting.</span><br><span class="line">starry:~<span class="comment"># [ 21.648930 0:6 starry_api::kmod::ondemand:113] [ondemand] unload handle=0x17c96ff18</span></span><br><span class="line">[ 21.652581 0:6 starry_api::kmod::ondemand:55] [memtest] before_unload_fuse RustHeap=8054346 PageCache=806912 Pages=12832</span><br><span class="line">[ 21.654526 0:6 kmod_loader::loader:122] Calling module <span class="built_in">exit</span> <span class="keyword">function</span>...</span><br><span class="line">[ 21.656865 0:6 fuse:53] Fuse module <span class="built_in">exit</span> called.</span><br><span class="line">[ 21.657902 0:6 starry_api::kmod:179] Module(fuse) exited</span><br><span class="line">[ 21.659324 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a3d000, num_pages=10</span><br><span class="line">[ 21.662123 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a47000, num_pages=5</span><br><span class="line">[ 21.663854 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x819e9000, num_pages=1</span><br><span class="line">[ 21.665418 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a4c000, num_pages=1</span><br><span class="line">[ 21.667279 0:6 starry_api::kmod::ondemand:55] [memtest] after_unload_fuse RustHeap=8052918 PageCache=806912 Pages=12815</span><br><span class="line">starry:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-3-fuse-mem-test"><a href="#5-3-3-fuse-mem-test" class="headerlink" title="5.3.3 fuse_mem_test"></a>5.3.3 <code>fuse_mem_test</code></h4><p><strong>测试日志</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">[  8.163909 0:11 kmod_loader::loader:354] Module(Some(<span class="string">"fuse"</span>)) loaded successfully!</span><br><span class="line">[  8.168286 0:11 fuse:41] Fuse module loaded via on-demand mechanism.</span><br><span class="line">[  8.169185 0:11 starry_api::kmod:164] Module(fuse) init returned: 0</span><br><span class="line">[  8.170310 0:11 starry_api::kmod::ondemand:55] [memtest] after_load_fuse RustHeap=8862712 PageCache=806912 Pages=4779</span><br><span class="line">[  8.171749 0:11 starry_api::kmod::ondemand:101] [ondemand] module <span class="string">'fuse'</span> loaded, handle=0x17c96ff18</span><br><span class="line">Opened /dev/fuse</span><br><span class="line">Mounted /mnt/fuse successfully</span><br><span class="line">About to fork self-test child...</span><br><span class="line">fork returned 13</span><br><span class="line">Spawned self-test child pid=13</span><br><span class="line">fork returned 0</span><br><span class="line">=== FUSE Self-Test Starting ===</span><br><span class="line">Received FUSE request: opcode=26, unique=1, nodeid=0</span><br><span class="line">Sent INIT response</span><br><span class="line">Received FUSE request: opcode=3, unique=2, nodeid=1</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=1</span><br><span class="line">[TEST] ls /mnt/fuse:</span><br><span class="line">Received FUSE request: opcode=28, unique=3, nodeid=1</span><br><span class="line">Sent READDIR response (offset=0, bytes=96)</span><br><span class="line">  test.txt</span><br><span class="line">Received FUSE request: opcode=28, unique=4, nodeid=1</span><br><span class="line">Sent READDIR response (offset=3, bytes=0)</span><br><span class="line">[TEST] ls /mnt/fuse: PASS</span><br><span class="line">Received FUSE request: opcode=1, unique=5, nodeid=1</span><br><span class="line">Sent LOOKUP response <span class="keyword">for</span> <span class="string">'test.txt'</span></span><br><span class="line">Received FUSE request: opcode=3, unique=6, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=3, unique=7, nodeid=100</span><br><span class="line">Sent GETATTR response <span class="keyword">for</span> nodeid=100</span><br><span class="line">Received FUSE request: opcode=15, unique=8, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=0, req_size=13, bytes=13)</span><br><span class="line">Received FUSE request: opcode=15, unique=9, nodeid=100</span><br><span class="line">Sent READ response (nodeid=100, offset=13, req_size=32, bytes=0)</span><br><span class="line">[TEST] <span class="built_in">read</span> test.txt: PASS (contents: <span class="string">"hello, fuse!\n"</span>)</span><br><span class="line">=== FUSE Self-Test Complete ===</span><br><span class="line">Self-test child exited, status=0</span><br><span class="line">Test complete, daemon exiting.</span><br><span class="line">Unmounted /mnt/fuse</span><br><span class="line">FUSE device closed.</span><br><span class="line">Waiting 7s <span class="keyword">for</span> idle unload...</span><br><span class="line">[ 13.742596 0:6 starry_api::kmod::ondemand:113] [ondemand] unload handle=0x17c96ff18</span><br><span class="line">[ 13.746465 0:6 starry_api::kmod::ondemand:55] [memtest] before_unload_fuse RustHeap=8352536 PageCache=806912 Pages=4788</span><br><span class="line">[ 13.751490 0:6 kmod_loader::loader:122] Calling module <span class="built_in">exit</span> <span class="keyword">function</span>...</span><br><span class="line">[ 13.755245 0:6 fuse:53] Fuse module <span class="built_in">exit</span> called.</span><br><span class="line">[ 13.757140 0:6 starry_api::kmod:179] Module(fuse) exited</span><br><span class="line">[ 13.761513 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a3b000, num_pages=10</span><br><span class="line">[ 13.767803 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a45000, num_pages=5</span><br><span class="line">[ 13.770209 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x819e5000, num_pages=1</span><br><span class="line">[ 13.770881 0:6 starry_api::kmod:74] KmodMem::drop: Deallocating paddr=PA:0x81a4a000, num_pages=1</span><br><span class="line">[ 13.772583 0:6 starry_api::kmod::ondemand:55] [memtest] after_unload_fuse RustHeap=8351108 PageCache=806912 Pages=4771</span><br><span class="line">=== FUSE On-Demand Memory Test Results ===</span><br><span class="line"></span><br><span class="line">Table 1. Raw snapshots from kernel</span><br><span class="line">Phase                 RustHeap(B)    RustHeap(d)          Pages       Pages(d)</span><br><span class="line">----------------------------------------------------------------------------</span><br><span class="line">Before load               8315080              -           4762              -</span><br><span class="line">After load                8862712        +547632           4779            +17</span><br><span class="line">Before unload             8352536         +37456           4788            +26</span><br><span class="line">After unload              8351108         +36028           4771            -17</span><br><span class="line"></span><br><span class="line">Table 2. Memory contribution analysis</span><br><span class="line">Configuration                                               Size(KB)        Pages Contribution</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">A. Static baseline (fuse.ko + starryfuse resident)              1071            -     baseline</span><br><span class="line">   - fuse.ko (416 KB)                                            416            -            -</span><br><span class="line">   - starryfuse libs (655 KB)                                    655            -            -</span><br><span class="line">B. On-demand mapped pages (loader vmalloc)                        68           17  actual load</span><br><span class="line">D. Runtime overhead (mount/fork/VFS, unrelated)                    0            0    transient</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">Memory saving vs static baseline                                1071            - resident reduction</span><br><span class="line"></span><br><span class="line">Conclusion:</span><br><span class="line">  - Static linking would keep ~1071 KB of FUSE driver resident <span class="keyword">in</span> kernel memory.</span><br><span class="line">  - On-demand loading reduces this resident footprint to ~0 KB after unload.</span><br><span class="line">  - Actual memory saving = 1071 KB (all static baseline reclaimed after unload).</span><br><span class="line"></span><br><span class="line">Result: PASS  (on-demand loading saves 1071 KB of resident kernel memory)</span><br><span class="line">starry:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p>对日志中的内存数据整理如 <strong>表 1</strong> 与 <strong>表 2</strong> 所示。</p>
+<p><strong>表 1：内存快照原始数据</strong></p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>RustHeap (B)</th>
+<th>Δ RustHeap</th>
+<th>Pages</th>
+<th>Δ Pages</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Before load</td>
+<td>8,315,080</td>
+<td>—</td>
+<td>4,762</td>
+<td>—</td>
+</tr>
+<tr>
+<td>After load</td>
+<td>8,862,712</td>
+<td>+547,632</td>
+<td>4,779</td>
+<td>+17</td>
+</tr>
+<tr>
+<td>Before unload</td>
+<td>8,352,536</td>
+<td>+37,456</td>
+<td>4,788</td>
+<td>+26</td>
+</tr>
+<tr>
+<td>After unload</td>
+<td>8,351,108</td>
+<td>+36,028</td>
+<td>4,771</td>
+<td>−17</td>
+</tr>
+</tbody></table>
+<p><strong>表 2：内存占用构成分析</strong></p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Size (KB)</th>
+<th>Pages</th>
+<th>Contribution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Static baseline (fuse.ko + starryfuse resident)</td>
+<td>1,071</td>
+<td>—</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>‑ fuse.ko</td>
+<td>416</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>‑ starryfuse libs</td>
+<td>655</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>B. On-demand mapped pages (loader vmalloc)</td>
+<td>68</td>
+<td>17</td>
+<td>actual load</td>
+</tr>
+<tr>
+<td>D. Runtime overhead (mount/fork/VFS, transient)</td>
+<td>36</td>
+<td>9</td>
+<td>transient</td>
+</tr>
+<tr>
+<td><strong>Memory saving vs static baseline</strong></td>
+<td><strong>1,071</strong></td>
+<td>—</td>
+<td>resident reduction</td>
+</tr>
+</tbody></table>
+<p>从 <strong>表 1</strong> 可见，按需加载在 <code>After load</code> 阶段使内核页数增加了 17 页（约 68 KB），这是 <code>kmod-loader</code> 通过 <code>vmalloc</code> 映射 <code>.ko</code> 产生的实际内存开销。经过 FUSE 自测试验、卸载挂载点并等待 7 s 空闲超时后，模块进入 <code>Unloading</code> 状态，<code>KmodMem::drop</code> 逐页释放物理内存，最终 <code>After unload</code> 页数相比 <code>After load</code> 回落 17 页，证明模块占用的 ELF 内存被完全回收。</p>
+<p>测试前后页数从 4,762 增至 4,771（+9 页，约 36 KB），这部分增量属于 mount/fork/VFS 等运行时 transient 开销，并非模块泄漏。</p>
+<p><strong>表 2</strong> 进一步量化了按需加载的收益：若将 <code>fuse.ko</code>（416 KB）与 <code>starryfuse</code> 依赖库（655 KB）静态编译进内核，常驻内存开销约为 1,071 KB；而按需加载模式下，FUSE 模块卸载后常驻 footprint 降至约 0 KB，<strong>实际节省内核常驻内存 1,071 KB</strong>。</p>
+<hr>
+<h2 id="6-结论与未来工作"><a href="#6-结论与未来工作" class="headerlink" title="6. 结论与未来工作"></a>6. 结论与未来工作</h2><h3 id="6-1-工作总结"><a href="#6-1-工作总结" class="headerlink" title="6.1 工作总结"></a>6.1 工作总结</h3><p>本文设计并实现了 <code>ondemand-kmod</code>——一个面向 <code>#![no_std]</code> 环境的通用按需加载内核模块框架，并将其成功集成到 StarryOS 中。在此基础上，本文完成了 <code>procfs</code> 与 <code>FUSE</code> 的按需加载闭环。对于 FUSE，本文从零实现了内核侧驱动 <code>Starryfuse</code>，涵盖协议解析、字符设备通信、VFS 桥接与用户态库，支持了完整的 FUSE 文件系统生命周期。</p>
+<h3 id="6-2-未来工作"><a href="#6-2-未来工作" class="headerlink" title="6.2 未来工作"></a>6.2 未来工作</h3><ol>
+<li><strong>块设备文件系统按需加载</strong>：当前框架主要面向用户态文件系统与伪文件系统。未来可将其扩展至 <code>ext4</code>、<code>fat32</code> 等块设备文件系统。</li>
+<li><strong>完善 <code>starry_fuser</code> 功能集</strong>：补充 <code>FUSE_MKNOD</code>、<code>FUSE_IOCTL</code> 等高级操作码，提升与现有 <code>libfuse</code> 的兼容性。</li>
+<li><strong>vDSO 与系统调用优化</strong>：探索将部分 FUSE 请求路径通过 vDSO 优化，减少用户态/内核态切换次数。</li>
+</ol>
+<hr>
+<h2 id="7-相关链接"><a href="#7-相关链接" class="headerlink" title="7.相关链接"></a>7.相关链接</h2><p><a href="https://github.com/DINGBROK423/StarryOS/tree/ondemand" target="_blank" rel="noopener">项目工程仓库</a><br><a href="https://github.com/DINGBROK423/ondemand-kmod" target="_blank" rel="noopener">按需加载库</a><br><a href="https://github.com/DINGBROK423/ondemand-kmod/blob/main/doc/ppt/StarryOS%20%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0.pptx" target="_blank" rel="noopener">PPT 演示文件</a><br><a href="https://github.com/DINGBROK423/ondemand-kmod/issues" target="_blank" rel="noopener">问题日志</a><br><a href="https://dingbrok423.github.io/development_log.html" target="_blank" rel="noopener">开发日志仓库</a></p>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2026/04/25/%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F-%E4%B8%8E-EEVDF-%E8%B0%83%E5%BA%A6%E5%99%A8%E5%AE%9E%E4%B9%A0%E4%B8%89%E4%B8%AA%E6%9C%88%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2026/04/25/%E8%87%AA%E5%8A%A8%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F-%E4%B8%8E-EEVDF-%E8%B0%83%E5%BA%A6%E5%99%A8%E5%AE%9E%E4%B9%A0%E4%B8%89%E4%B8%AA%E6%9C%88%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">自动测试系统 与 EEVDF 调度器实习三个月技术总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-04-25 11:52:57" itemprop="dateCreated datePublished" datetime="2026-04-25T11:52:57+00:00">2026-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A/" itemprop="url" rel="index"><span itemprop="name">实习总结报告</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="自动测试系统-与-EEVDF-调度器实习三个月技术总结"><a href="#自动测试系统-与-EEVDF-调度器实习三个月技术总结" class="headerlink" title="自动测试系统 与 EEVDF 调度器实习三个月技术总结"></a>自动测试系统 与 EEVDF 调度器实习三个月技术总结</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本报告汇总实习三个月在测试系统和 EEVDF 调度算法的技术产出。测试工程方面：在 AxVisor 中推进 QEMU CI 稳定性，统一 ArceOS/Linux/NimbOS 环境准备脚本、补充中英文快速上手文档，并以 PTY 驱动 NimbOS 自动化与 <code>fail_regex</code> 等增强失败可观测性；在 <code>github-runners</code> 中基于 <code>flock</code> 建立多组织共享开发板的 per-board 硬件锁，迭代修复取消路径竞态与僵尸锁问题；在 <code>axci</code> 中设计规则驱动、依赖感知的自动测试目标选择，结合 <code>git diff</code>、反向依赖图与可配置规则缩小无关全量测试范围。内核方面：在 StarryOS 分支上实现 EEVDF 调度器（双索引、deadline 抢占、统计与文档/单测/演示脚本闭环），并完成 per-CPU 异构调度与 QEMU 下代表性延时与切换行为验证。</p>
+<h2 id="自动测试系统"><a href="#自动测试系统" class="headerlink" title="自动测试系统"></a>自动测试系统</h2><h3 id="1-AxVisor-QEMU-CI-稳定性改进"><a href="#1-AxVisor-QEMU-CI-稳定性改进" class="headerlink" title="1. AxVisor QEMU CI 稳定性改进"></a>1. AxVisor QEMU CI 稳定性改进</h3><ul>
+<li>链接：<a href="https://github.com/arceos-hypervisor/axvisor/pull/363" target="_blank" rel="noopener">PR #363</a></li>
+<li>合并状态：已合并（Merged）</li>
+<li>贡献规模：26 commits，18 个文件变更，<code>+678 / -19</code></li>
+</ul>
+<h4 id="背景问题"><a href="#背景问题" class="headerlink" title="背景问题"></a>背景问题</h4><p>在 AxVisor 的 QEMU 自动化测试中，存在以下痛点：</p>
+<ul>
+<li>不同 Guest（ArceOS / Linux / NimbOS）环境准备流程分散，维护成本高；</li>
+<li>NimbOS 场景依赖交互式输入，CI 中容易出现“测试通过但任务失败”的误报；</li>
+<li>失败信号不够明确，panic 等异常无法被尽早识别。</li>
+</ul>
+<h4 id="关键工作"><a href="#关键工作" class="headerlink" title="关键工作"></a>关键工作</h4><ol>
+<li>统一环境准备入口</li>
+</ol>
+<ul>
+<li>新增 <a href="https://github.com/arceos-hypervisor/axvisor/blob/master/scripts/setup_qemu.sh" target="_blank" rel="noopener">scripts/setup_qemu.sh</a>，统一支持 <code>arceos</code> / <code>linux</code> / <code>nimbos</code> 三类 Guest；</li>
+<li>自动执行镜像下载、配置 patch、rootfs 准备，减少手工步骤和路径错误。</li>
+</ul>
+<ol>
+<li>补齐文档与上手路径</li>
+</ol>
+<ul>
+<li>新增中英文 QEMU 快速上手文档：<a href="https://github.com/arceos-hypervisor/axvisor/blob/master/doc/qemu-quickstart.md" target="_blank" rel="noopener">doc/qemu-quickstart.md</a>、<a href="https://github.com/arceos-hypervisor/axvisor/blob/master/doc/qemu-quickstart_cn.md" target="_blank" rel="noopener">doc/qemu-quickstart_cn.md</a>，沉淀从依赖安装到三类 Guest 运行的完整流程；</li>
+<li>在 README 中增加快速入口：<a href="https://github.com/arceos-hypervisor/axvisor/blob/master/README.md" target="_blank" rel="noopener">README.md</a>、<a href="https://github.com/arceos-hypervisor/axvisor/blob/master/README_CN.md" target="_blank" rel="noopener">README_CN.md</a>，降低新成员接入成本。</li>
+</ul>
+<ol>
+<li>增强 NimbOS 测试可自动化能力</li>
+</ol>
+<ul>
+<li>新增 <a href="https://github.com/arceos-hypervisor/axvisor/blob/master/scripts/ci_run_qemu_nimbos.py" target="_blank" rel="noopener">scripts/ci_run_qemu_nimbos.py</a>，通过 PTY 方式启动子进程，保障 CI 环境下输入可正确透传；</li>
+<li>识别 shell 提示后自动触发 <code>usertests</code>，并在命中 <code>usertests passed!</code> 时返回正确退出码。</li>
+</ul>
+<ol start="2">
+<li>提升 CI 失败可观测性与可诊断性</li>
+</ol>
+<ul>
+<li>在 QEMU 配置中补充 <code>fail_regex</code>（如 <code>panicked at</code>），尽早暴露 guest panic；</li>
+<li>对 NimbOS 启动依赖（<code>axvm-bios.bin</code>）进行前置校验，避免隐式失败。</li>
+</ul>
+<h4 id="结果与价值"><a href="#结果与价值" class="headerlink" title="结果与价值"></a>结果与价值</h4><ul>
+<li>测试稳定性：修复了 NimbOS 在 CI 中的交互与退出码问题，显著降低误报失败；</li>
+<li>工程效率：统一 setup 脚本后，减少重复脚本与人工排障成本；</li>
+<li>可维护性：流程与文档标准化后，跨场景测试可复用性更高；</li>
+<li>团队协作：将经验固化为脚本与文档，便于后续同学复用与扩展。</li>
+</ul>
+<h3 id="2-多组织-GitHub-Runner-硬件锁机制建设（github-runners）"><a href="#2-多组织-GitHub-Runner-硬件锁机制建设（github-runners）" class="headerlink" title="2. 多组织 GitHub Runner 硬件锁机制建设（github-runners）"></a>2. 多组织 GitHub Runner 硬件锁机制建设（github-runners）</h3><ul>
+<li>PR 汇总入口：<a href="https://github.com/arceos-hypervisor/github-runners/pulls?q=is%3Apr+author%3Ayoinspiration+is%3Aclosed" target="_blank" rel="noopener">GitHub PR 列表</a></li>
+<li>合并成果：5 个 PR 已合并（<a href="https://github.com/arceos-hypervisor/github-runners/pull/2" target="_blank" rel="noopener">#2</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/3" target="_blank" rel="noopener">#3</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/4" target="_blank" rel="noopener">#4</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/11" target="_blank" rel="noopener">#11</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/13" target="_blank" rel="noopener">#13</a>）</li>
+</ul>
+<h4 id="背景问题-1"><a href="#背景问题-1" class="headerlink" title="背景问题"></a>背景问题</h4><p>在多组织共享开发板资源时，Runner 缺乏统一锁机制，容易出现并发抢占、取消后资源未释放、锁粒度不一致等问题，导致 CI 任务互相干扰、排队时间增加、故障定位困难。</p>
+<h4 id="实现原理（文件锁）"><a href="#实现原理（文件锁）" class="headerlink" title="实现原理（文件锁）"></a>实现原理（文件锁）</h4><ul>
+<li>方案基于 Linux 文件锁（<code>flock</code>）实现互斥：将每块开发板抽象为一个 lock file，同一时刻仅允许一个 Runner 持有该文件的独占锁；</li>
+<li>锁粒度为 per-board：同一块板上的任务互斥，不同开发板对应不同锁文件，可被不同 Runner 并行使用；</li>
+<li>任务启动时先尝试获取独占锁，获取成功后进入执行阶段，失败则等待或退出，避免多任务并发抢占同一硬件；</li>
+<li>在正常结束、失败或 Cancel 路径统一执行解锁与清理，降低异常中断后残留“僵尸锁”的概率。</li>
+</ul>
+<h4 id="关键工作（按迭代演进）"><a href="#关键工作（按迭代演进）" class="headerlink" title="关键工作（按迭代演进）"></a>关键工作（按迭代演进）</h4><ol>
+<li>建立锁包装能力（PR <a href="https://github.com/arceos-hypervisor/github-runners/pull/2" target="_blank" rel="noopener">#2</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/3" target="_blank" rel="noopener">#3</a>）</li>
+</ol>
+<ul>
+<li>为多组织共享硬件引入 runner-wrapper 锁包装能力（实现见 <a href="https://github.com/yoinspiration/github-runners/blob/feat/board-lock-watcher/runner-wrapper/runner-wrapper.sh" target="_blank" rel="noopener">runner-wrapper.sh</a>）；</li>
+<li>将锁能力集成进 <a href="https://github.com/yoinspiration/github-runners/blob/feat/board-lock-watcher/runner.sh" target="_blank" rel="noopener">runner.sh</a> 工作流，并补齐使用文档，形成可落地的基础方案。</li>
+</ul>
+<ol start="2">
+<li>标准化锁标识与隔离策略（PR <a href="https://github.com/arceos-hypervisor/github-runners/pull/4" target="_blank" rel="noopener">#4</a>）</li>
+</ol>
+<ul>
+<li>将板子锁 ID 收敛到 per-board 默认策略；</li>
+<li>将容器命名自动拼入 org/repo 维度，降低跨组织任务冲突概率。</li>
+</ul>
+<ol start="3">
+<li>修复并发竞态与取消场景（PR <a href="https://github.com/arceos-hypervisor/github-runners/pull/11" target="_blank" rel="noopener">#11</a>、<a href="https://github.com/arceos-hypervisor/github-runners/pull/13" target="_blank" rel="noopener">#13</a>）</li>
+</ol>
+<ul>
+<li>加固多组织 Runner 锁机制，修复 cancel 场景下的并行竞态问题；</li>
+<li>将 cancel watcher 与 <code>docker compose</code> 生命周期集成，随 Runner 一起启动/回收，对使用者基本无感；</li>
+<li>支持在 Cancel 路径自动释放开发板锁，减少“僵尸锁”导致的资源阻塞；</li>
+<li>持续补充文档，降低维护门槛并提升团队可复用性。</li>
+</ul>
+<h4 id="结果与价值-1"><a href="#结果与价值-1" class="headerlink" title="结果与价值"></a>结果与价值</h4><ul>
+<li>资源利用率：降低开发板被异常占用的概率，提升共享硬件可用性；</li>
+<li>流程鲁棒性：在取消、失败等非理想路径下也能保证锁释放；</li>
+<li>并发安全性：减少跨组织并行任务互相抢占与串扰；</li>
+<li>可运维性：锁策略、命名规范和文档沉淀后，问题定位更快、迁移成本更低。</li>
+</ul>
+<h3 id="3-axci-规则驱动自动目标选择与测试链路重构"><a href="#3-axci-规则驱动自动目标选择与测试链路重构" class="headerlink" title="3. axci 规则驱动自动目标选择与测试链路重构"></a>3. axci 规则驱动自动目标选择与测试链路重构</h3><ul>
+<li>链接：<a href="https://github.com/arceos-hypervisor/axci/pull/9" target="_blank" rel="noopener">PR #9</a></li>
+<li>当前状态：Open（待合并）</li>
+<li>变更规模：39 commits，21 个文件变更，<code>+4071 / -397</code></li>
+</ul>
+<h4 id="背景问题-2"><a href="#背景问题-2" class="headerlink" title="背景问题"></a>背景问题</h4><p>在 CI 全量测试模式下，存在“变更范围小但测试范围大”的问题，导致执行耗时长、资源利用率偏低；同时，测试脚本长期演进后出现结构耦合，扩展与维护成本上升。</p>
+<h4 id="实现原理（依赖感知自动选目标）"><a href="#实现原理（依赖感知自动选目标）" class="headerlink" title="实现原理（依赖感知自动选目标）"></a>实现原理（依赖感知自动选目标）</h4><ul>
+<li>基于 <code>git diff</code> 获取变更文件，并结合 <code>cargo metadata</code> 将变更路径映射到对应 workspace crate；</li>
+<li>从直接变更 crate 出发，在反向依赖图上做 BFS 扩散，得到受影响 crate 集合（<code>affected_crates</code>）；</li>
+<li>按规则文件（路径规则、crate 规则、全量触发规则）求值得到逻辑目标 key 列表（<code>targets</code>）；</li>
+<li>在 CI detect 阶段按 <code>target_key</code> 过滤预置候选矩阵，生成最终并行 job，避免无关目标全量执行。</li>
+</ul>
+<h4 id="接入方式（落地步骤）"><a href="#接入方式（落地步骤）" class="headerlink" title="接入方式（落地步骤）"></a>接入方式（落地步骤）</h4><ul>
+<li>引用方式：在组件仓库 workflow 中显式拉取 <code>arceos-hypervisor/axci</code>（固定分支或 commit），复用其 <code>axci-affected</code> 与规则处理逻辑；</li>
+<li>在仓库测试入口（如 <a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/tests.sh" target="_blank" rel="noopener">tests.sh</a>）接入 <code>--auto-target</code> 与 <code>--base-ref</code> 参数，支持按基线分支自动选择目标；</li>
+<li>在 workflow（如 <code>.github/workflows/test.yml</code>）增加 detect 阶段：先计算 <code>targets</code>，再按 <code>target_key</code> 过滤预置矩阵并输出 JSON；</li>
+<li>在执行阶段使用 <code>matrix.include: ${{ fromJson(...) }}</code> 并行运行目标任务，<code>skip_all</code> 时直接跳过无关 job；</li>
+<li>保留回退路径：<code>axci-affected</code> 不可用时回退到 shell 规则匹配，保证 CI 可用性与渐进迁移。</li>
+</ul>
+<h4 id="规则自定义（可配置能力）"><a href="#规则自定义（可配置能力）" class="headerlink" title="规则自定义（可配置能力）"></a>规则自定义（可配置能力）</h4><ul>
+<li>规则文件默认位于 <code>configs/test-target-rules.json</code>；组件仓库可在 <code>.github/axci-test-target-rules.json</code> 放置自定义规则，无需改动 axci 主仓代码；</li>
+<li>组件侧规则可按仓库测试拓扑覆盖目标映射（如新增/删除 target key、调整 <code>target_order</code>、补充路径或 crate 触发条件）；</li>
+<li>可按目录/文件模式定义 <code>selection_rules</code>，将路径变更映射到测试目标；</li>
+<li>可按 crate 维度定义 <code>crate_rules</code>（含 <code>direct_only</code>），区分仅直接变更还是包含依赖扩散影响；</li>
+<li>可通过 <code>run_all_patterns</code>、<code>run_all_crates</code> 定义“全量触发条件”，并用 <code>non_code</code> 规则跳过纯文档类变更；</li>
+<li>通过 <code>target_order</code> 统一目标输出顺序，保证选择结果稳定、可预期、便于回归对比。</li>
+</ul>
+<h4 id="关键工作-1"><a href="#关键工作-1" class="headerlink" title="关键工作"></a>关键工作</h4><ol>
+<li>合并模块化重构并统一测试入口</li>
+</ol>
+<ul>
+<li>保持 <a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/tests.sh" target="_blank" rel="noopener">tests.sh</a> 作为统一入口，兼容已有流程并提升后续可维护性。</li>
+</ul>
+<ol start="2">
+<li>引入规则驱动自动目标选择</li>
+</ol>
+<ul>
+<li>在 <a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/tests.sh" target="_blank" rel="noopener">tests.sh</a> 增加 <code>--auto-target</code>、<code>--base-ref</code> 能力；</li>
+<li>新增 <code>configs/test-target-rules.json</code>，将路径匹配与依赖规则配置化；</li>
+<li>优先使用 <code>axci-affected</code> 引擎做影响范围分析，失败时回退到 shell 规则匹配，保证可用性。</li>
+</ul>
+<ol start="3">
+<li>增强 CI 可观测性与稳定性</li>
+</ol>
+<ul>
+<li>在 <code>test.yml</code> 增加 <code>test_targets=auto</code> 相关输入与 <code>detect-targets</code> 检测链路；</li>
+<li>输出自动选择决策摘要（selection mode、auto reason、target list）到 <code>GITHUB_STEP_SUMMARY</code>；</li>
+<li>补充 git 网络抗抖动参数、checkout 超时与关键依赖检查，降低网络和环境抖动带来的不确定失败。</li>
+</ul>
+<ol start="4">
+<li>加固 Starry 测试链路</li>
+</ol>
+<ul>
+<li>在运行前增加 <code>disk.img</code> 检查与软链兜底逻辑，减少镜像路径问题导致的无效失败。</li>
+</ul>
+<h4 id="阶段性价值"><a href="#阶段性价值" class="headerlink" title="阶段性价值"></a>阶段性价值</h4><ul>
+<li>效率收益：为“按影响范围执行测试”打通主链路，预期可显著减少无关测试开销；</li>
+<li>工程收益：测试能力从脚本硬编码向“规则配置 + 引擎分析”演进；</li>
+<li>质量收益：自动选择过程具备可解释输出，便于排障与规则迭代；</li>
+<li>扩展收益：模块化后更便于后续新增 target、suite 与规则。</li>
+</ul>
+<h4 id="相关代码（速查）"><a href="#相关代码（速查）" class="headerlink" title="相关代码（速查）"></a>相关代码（速查）</h4><ul>
+<li>依赖感知引擎：<a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/axci-affected/src/engine.rs" target="_blank" rel="noopener">axci-affected/src/engine.rs</a></li>
+<li>回退脚本：<a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/scripts/affected_crates.sh" target="_blank" rel="noopener">scripts/affected_crates.sh</a></li>
+<li>规则配置：<a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/configs/test-target-rules.json" target="_blank" rel="noopener">configs/test-target-rules.json</a></li>
+<li>CI 检测与矩阵编排：<a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/.github/workflows/test.yml" target="_blank" rel="noopener">.github/workflows/test.yml</a></li>
+<li>测试入口与自动目标选择：<a href="https://github.com/yoinspiration/axci/blob/test/auto-target-regression/tests.sh" target="_blank" rel="noopener">tests.sh</a></li>
+</ul>
+<p>原理细节与端到端数据流可参考：<a href="docs/axci-工作原理.md">docs/axci-工作原理.md</a>。</p>
+<h2 id="EEVDF"><a href="#EEVDF" class="headerlink" title="EEVDF"></a>EEVDF</h2><h3 id="代表性成果：StarryOS-中-EEVDF-调度器实现与验证"><a href="#代表性成果：StarryOS-中-EEVDF-调度器实现与验证" class="headerlink" title="代表性成果：StarryOS 中 EEVDF 调度器实现与验证"></a>代表性成果：StarryOS 中 EEVDF 调度器实现与验证</h3><ul>
+<li>仓库链接：<a href="https://github.com/yoinspiration/StarryOS/tree/feat/eevdf-scheduler" target="_blank" rel="noopener">StarryOS feat/eevdf-scheduler</a></li>
+<li>当前状态：功能完成并形成文档、单测与演示脚本闭环</li>
+</ul>
+<h4 id="背景问题-3"><a href="#背景问题-3" class="headerlink" title="背景问题"></a>背景问题</h4><p>在操作系统调度中，需要同时满足两类目标：</p>
+<ul>
+<li>公平性：不同优先级任务应按权重获得合理 CPU 份额；</li>
+<li>响应性：交互任务应尽快获得服务，避免高负载下长尾延迟。</li>
+</ul>
+<p>传统仅按时间片轮转或仅按 vruntime 最小选择，难以同时兼顾“公平份额”与“截止期驱动响应”。因此在 StarryOS 上实现 EEVDF（Earliest Eligible Virtual Deadline First）调度器，验证其在可解释性、公平性和可观测性上的工程价值。</p>
+<h4 id="关键工作-2"><a href="#关键工作-2" class="headerlink" title="关键工作"></a>关键工作</h4><ol>
+<li>完成 per-task EEVDF 核心调度逻辑</li>
+</ol>
+<ul>
+<li>在 <code>crates/axsched/src/eevdf.rs</code> 中实现 <code>EevdfScheduler</code> 与 <code>EevdfEntity</code>；</li>
+<li>任务实体维护 <code>vruntime</code>、<code>deadline</code>、<code>nice</code>、<code>slice</code> 等关键元数据；</li>
+<li>采用 Linux 兼容 nice-&gt;weight 映射（-20..19）并据此计算 vruntime 增量与 deadline。</li>
+</ul>
+<ol start="2">
+<li>设计双索引结构，兼顾选择效率与资格判断</li>
+</ol>
+<ul>
+<li><code>ready_queue</code>：按 <code>(deadline, id)</code> 排序，快速获得最早 deadline 任务；</li>
+<li><code>vrt_set</code>：按 <code>(vruntime, id)</code> 排序，用于 <code>vruntime &lt;= V</code> 的 eligible 范围查询；</li>
+<li><code>id_to_deadline</code>：连接两套索引，保障在慢路径下仍可高效定位候选任务。</li>
+</ul>
+<ol start="3">
+<li>完成 EEVDF 选取与抢占策略</li>
+</ol>
+<ul>
+<li><code>pick_next_task</code>：优先走快路径（最早 deadline 且 eligible），否则走慢路径筛选 eligible 中 deadline 最小任务；</li>
+<li>当无 eligible 任务时启用 fallback（直接取最早 deadline）保证系统可推进；</li>
+<li><code>task_tick</code> 中实现 deadline 驱动抢占：若队首任务 eligible 且 deadline 更早，则触发抢占。</li>
+</ul>
+<ol start="4">
+<li>完成与运行队列集成及可观测性建设</li>
+</ol>
+<ul>
+<li>在 <code>crates/axtask/src/run_queue.rs</code> 接入 tick 调度与抢占路径；</li>
+<li>增加 EEVDF 统计项（picks、preempt、slice_expired、fallback）及周期日志输出；</li>
+<li>提供 <a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/demo-eevdf-stats.sh" target="_blank" rel="noopener">scripts/demo-eevdf-stats.sh</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/bench-regression-eevdf.sh" target="_blank" rel="noopener">scripts/bench-regression-eevdf.sh</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/parse-eevdf-stats-log.sh" target="_blank" rel="noopener">scripts/parse-eevdf-stats-log.sh</a>，形成“采集-解析-回归”自动化链路。</li>
+</ul>
+<ol start="5">
+<li>支持多 CPU 指定调度算法（per-CPU 异构调度）</li>
+</ol>
+<ul>
+<li>设计并实现调度器元数据分离，支持不同 CPU 绑定不同调度算法，避免全局单策略耦合；</li>
+<li>引入 <code>CPU_SCHED</code> 编译期配置，支持按 CPU 维度声明调度策略；</li>
+<li>补充跨调度器迁移路径的设计与验证要点，保证任务迁移过程的状态一致性与可预期行为。</li>
+<li>与 Linux 现状相比，当前方案仍以编译期静态指定为主：尚未覆盖运行时动态策略切换、成熟的跨 CPU 负载均衡协同以及更完整的调度域/拓扑感知能力。</li>
+</ul>
+<ol start="6">
+<li>补齐文档与验证闭环</li>
+</ol>
+<ul>
+<li>输出概念与实现文档：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/docs/starry-scheduling.md" target="_blank" rel="noopener">docs/starry-scheduling.md</a>；</li>
+<li>沉淀测试与演示报告：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/docs/report/eevdf-unit-tests-summary.md" target="_blank" rel="noopener">docs/report/eevdf-unit-tests-summary.md</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/docs/report/eevdf-nice-demo-summary.md" target="_blank" rel="noopener">docs/report/eevdf-nice-demo-summary.md</a>；</li>
+<li>给出从理论到实测的一体化说明，降低后续同学接手成本。</li>
+</ul>
+<h4 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h4><p>以下 QEMU 延时表与切换间隔估算为<strong>代表性一次测量</strong>；不同主机负载、<code>SAMPLES</code>/<code>LOAD</code> 与内核版本下数值会变化，结论以「base 与 nice19 的相对关系」及当次 <code>serial.log</code>、结果目录为准。</p>
+<ol>
+<li>单元测试结果</li>
+</ol>
+<ul>
+<li>等权重公平性测试：3 个 nice=0 任务长期运行后，CPU 占比误差控制在预期范围内；</li>
+<li>加权公平性测试：nice -5/0/+5 场景下，CPU 占比与权重比一致性良好；</li>
+<li>抢占与 deadline 修正测试：覆盖“时间片耗尽”和“提前抢占后剩余时间片重算”路径；</li>
+<li>fallback 场景测试：在强制无 eligible 条件下，兜底逻辑与统计计数行为符合预期。</li>
+</ul>
+<ol start="2">
+<li>QEMU 实测表现</li>
+</ol>
+<ul>
+<li>QEMU 下调度统计与现场压测结果一致：负载窗口内调度行为稳定且可解释，未观察到 <code>fallback</code> 退化，可用于后续回归比较与参数调优。</li>
+</ul>
+<ol start="3">
+<li>现场性能与任务切换延时数据（riscv64-qemu-virt，SMP=1）</li>
+</ol>
+<ul>
+<li><h2 id="前台延时对比（4-个后台-yes-压力任务）："><a href="#前台延时对比（4-个后台-yes-压力任务）：" class="headerlink" title="前台延时对比（4 个后台 yes 压力任务）："></a>前台延时对比（4 个后台 <code>yes</code> 压力任务）：</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>N</th>
+<th>p50</th>
+<th>p95</th>
+<th>p99</th>
+<th>max</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code></td>
+<td>50</td>
+<td>0.630s</td>
+<td>0.640s</td>
+<td>0.640s</td>
+<td>0.850s</td>
+</tr>
+<tr>
+<td><code>nice19</code></td>
+<td>50</td>
+<td>0.040s</td>
+<td>0.040s</td>
+<td>0.040s</td>
+<td>0.040s</td>
+</tr>
+</tbody></table>
+<ul>
+<li>结论：降低后台优先级后，前台命令 tail latency（<code>p95/p99</code>）约改善 <code>16x</code>（<code>0.64s -&gt; 0.04s</code>），最坏时延从 <code>0.85s</code> 降到 <code>0.04s</code>。</li>
+</ul>
+</li>
+<li><p>任务切换延时（EEVDF 周期统计日志）：</p>
+<ul>
+<li>观测窗口：<code>interval_ticks=256</code>，<code>ticks_per_sec=100</code>，单窗口时长 <code>2.56s</code></li>
+<li>负载阶段多窗口 <code>delta[picks]</code> 稳定在 <code>51</code> 左右（停压过渡窗口约 <code>45</code>）</li>
+<li>估算平均任务切换间隔：<code>2560 / 51 ≈ 50.2ms</code>（过渡窗口 <code>2560 / 45 ≈ 56.9ms</code>）</li>
+<li>对应切换频率约 <code>19.9Hz</code>（过渡窗口约 <code>17.6Hz</code>）</li>
+</ul>
+</li>
+<li><p>调度行为解释：</p>
+<ul>
+<li><code>slice_expired</code> 在负载窗口持续增长，说明切换主要由时间片驱动；</li>
+<li><code>preempt_by_deadline</code> 有触发但非主导路径；</li>
+<li><code>fallback_no_eligible=0</code>，未出现“无 eligible 任务”退化情况。</li>
+<li>小结：在持续负载下，EEVDF 调度表现为稳定的时间片主导切换（约 <code>50ms/次</code>），偶发 deadline 抢占，且无 fallback 退化，行为与设计预期一致。</li>
+</ul>
+</li>
+<li><p>测量方法（可复现）：</p>
+<ul>
+<li>环境：<code>riscv64-qemu-virt</code>，<code>release</code> 构建，<code>SMP=1</code>，<code>LOG=info</code>，启用 <code>eevdf-stats-demo</code>。</li>
+<li>负载与探针：后台启动 <code>4</code> 个 <code>yes &gt;/dev/null</code>，前台以 <code>ls</code> 作为短任务探针，采样次数 <code>N=50</code>。</li>
+<li>前台延时统计：使用 <code>/usr/bin/time -f &quot;%e&quot;</code> 记录每次 <code>ls</code> 的 wall time，按升序计算 <code>p50/p95/p99/max</code>。</li>
+<li>任务切换延时统计：读取 <code>eevdf stats</code> 日志中的 <code>delta[picks]</code>；窗口配置为 <code>interval_ticks=256</code>、<code>ticks_per_sec=100</code>（窗口时长 <code>2.56s</code>）；平均任务切换间隔按 <code>2560 / delta_picks (ms)</code> 估算，切换频率按其倒数换算为 <code>Hz</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="结果与价值-2"><a href="#结果与价值-2" class="headerlink" title="结果与价值"></a>结果与价值</h4><ul>
+<li>算法落地：将 EEVDF 从概念层落到可运行、可测试、可观测的内核实现；</li>
+<li>工程可维护性：双索引 + 统计设计使问题定位路径清晰，便于持续迭代；</li>
+<li>测试体系收益：建立了单测、演示、回归脚本三层验证，减少调度改动引入回归风险；</li>
+<li>团队协作收益：文档化沉淀完整，便于新成员快速理解调度设计与验证方法。</li>
+</ul>
+<h4 id="相关代码（速查）-1"><a href="#相关代码（速查）-1" class="headerlink" title="相关代码（速查）"></a>相关代码（速查）</h4><ul>
+<li>EEVDF 核心实现：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/crates/axsched/src/eevdf.rs" target="_blank" rel="noopener">crates/axsched/src/eevdf.rs</a></li>
+<li>调度器抽象与 per-CPU 支持：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/crates/axsched/src/per_cpu.rs" target="_blank" rel="noopener">crates/axsched/src/per_cpu.rs</a></li>
+<li>运行队列与调度接入：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/crates/axtask/src/run_queue.rs" target="_blank" rel="noopener">crates/axtask/src/run_queue.rs</a></li>
+<li>多 CPU 策略注入：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/axruntime-patched/build.rs" target="_blank" rel="noopener">axruntime-patched/build.rs</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/axruntime-patched/src/lib.rs" target="_blank" rel="noopener">axruntime-patched/src/lib.rs</a></li>
+<li>编译期配置触发：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/kernel/build.rs" target="_blank" rel="noopener">kernel/build.rs</a></li>
+<li>观测与回归脚本：<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/demo-eevdf-stats.sh" target="_blank" rel="noopener">scripts/demo-eevdf-stats.sh</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/bench-regression-eevdf.sh" target="_blank" rel="noopener">scripts/bench-regression-eevdf.sh</a>、<a href="https://github.com/yoinspiration/StarryOS/blob/feat/eevdf-scheduler/scripts/parse-eevdf-stats-log.sh" target="_blank" rel="noopener">scripts/parse-eevdf-stats-log.sh</a></li>
+</ul>
+<h4 id="经验复盘"><a href="#经验复盘" class="headerlink" title="经验复盘"></a>经验复盘</h4><ol>
+<li>调度算法实现不仅是“选下一个任务”，更关键是数据结构设计与状态一致性维护；</li>
+<li>可观测性应与算法实现同步建设，否则难以在真实负载下解释行为差异；</li>
+<li>对“无 eligible”这类边界路径提前设计 fallback 与测试，能显著降低线上不确定性；</li>
+<li>通过“文档 + 脚本 + 单测”三位一体沉淀，能让调度改动从个人经验升级为团队资产。</li>
+</ol>
+<h4 id="附录：关键复现命令"><a href="#附录：关键复现命令" class="headerlink" title="附录：关键复现命令"></a>附录：关键复现命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0) 串口落盘（host，在 StarryOS 仓库根目录；目录需事先存在）</span></span><br><span class="line">mkdir -p bench-results</span><br><span class="line">make ARCH=riscv64 run LOG=info FEATURES=eevdf-stats-demo 2&gt;&amp;1 | tee bench-results/serial.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1) 单元测试（host，可选）</span></span><br><span class="line">cargo <span class="built_in">test</span> -p axsched</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2) 运行前台延时回归（guest）</span></span><br><span class="line"><span class="comment"># 使用仓库 scripts/bench-regression-eevdf.sh（wget 到 /root/ 或自行拷贝）。</span></span><br><span class="line"><span class="comment"># StarryOS/busybox 下建议先建结果目录，并显式指定 RESULT_DIR，避免 mkdir 行为差异：</span></span><br><span class="line">mkdir /tmp/bench-results 2&gt;/dev/null || <span class="literal">true</span></span><br><span class="line"><span class="built_in">export</span> RESULT_DIR=/tmp/bench-results</span><br><span class="line"><span class="built_in">export</span> SAMPLES=<span class="string">'50,200'</span></span><br><span class="line"><span class="built_in">export</span> LOAD=4</span><br><span class="line">sh /root/bench-regression-eevdf.sh</span><br><span class="line"><span class="comment"># 结束后可检查：ls -la /tmp/bench-results 与 cat .../ls-latest-table.md</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3) 施加/停止 CPU 负载以观测 eevdf stats（guest）</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4; <span class="keyword">do</span> yes &gt;/dev/null &amp; <span class="keyword">done</span></span><br><span class="line">sleep 10</span><br><span class="line">killall yes 2&gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4) 解析串口日志（host；TICKS_PER_SEC 需与内核 tick 频率一致，否则毫秒类估算仅作相对参考）</span></span><br><span class="line">TICKS_PER_SEC=100 INTERVAL_TICKS=256 \</span><br><span class="line">  sh scripts/parse-eevdf-stats-log.sh ./bench-results/serial.log</span><br></pre></td></tr></table></figure>
+
+<p>说明：上文「实验结果」中的延时表与切换间隔估算来自<strong>代表性一次测量</strong>，不同 QEMU/主机负载下数值会波动；报告引用时建议以当次 <code>serial.log</code>、<code>/tmp/bench-results</code> 输出及解析脚本结果为准。</p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p>本节汇总与本报告对应的<strong>实习过程记录仓库</strong>、<strong>主要上游/个人源码仓库</strong>，以及周报、月报与部署类文档入口，便于对照 PR 与日常开发轨迹。</p>
+<h3 id="实习日志与过程文档（本仓库）"><a href="#实习日志与过程文档（本仓库）" class="headerlink" title="实习日志与过程文档（本仓库）"></a>实习日志与过程文档（本仓库）</h3><ul>
+<li>仓库根与索引：<a href="https://github.com/yoinspiration/os-internship-log" target="_blank" rel="noopener">os-internship-log</a>（开源社区实习日志；<code>README.md</code> 中含文档索引、周报与月报列表）</li>
+<li>按周记录：<code>logs/week1.md</code> … <code>logs/week12.md</code>（路径相对仓库根，例如 <a href="https://github.com/yoinspiration/os-internship-log/tree/main/logs" target="_blank" rel="noopener">logs/</a>）</li>
+<li>月报与技术报告：<code>技术报告2月.md</code>、<code>技术报告3月-贾一飞.md</code>；部署与实施说明见 <code>自动测试系统部署文档.md</code>、<code>多组织共享测试环境实施文档.md</code></li>
+</ul>
+<h3 id="源代码仓库（报告涉及的主要工程）"><a href="#源代码仓库（报告涉及的主要工程）" class="headerlink" title="源代码仓库（报告涉及的主要工程）"></a>源代码仓库（报告涉及的主要工程）</h3><table>
+<thead>
+<tr>
+<th>工程</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://github.com/arceos-hypervisor/axvisor/pull/363" target="_blank" rel="noopener">arceos-hypervisor/axvisor</a></td>
+<td>AxVisor QEMU CI 稳定性改进</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arceos-hypervisor/github-runners/pulls?q=is%3Apr+author%3Ayoinspiration+is%3Aclosed" target="_blank" rel="noopener">arceos-hypervisor/github-runners</a></td>
+<td>多组织共享 Runner 与开发板锁</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arceos-hypervisor/axci/pull/9" target="_blank" rel="noopener">arceos-hypervisor/axci</a></td>
+<td>组件 CI 与测试编排，自动目标选择相</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yoinspiration/StarryOS/tree/feat/eevdf-scheduler" target="_blank" rel="noopener">yoinspiration/StarryOS</a></td>
+<td>EEVDF 调度器实现与验证脚本所在个人分支</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2026/04/21/2026%E6%98%A5%E5%A4%8F%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2026/04/21/2026%E6%98%A5%E5%A4%8F%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E6%80%BB%E7%BB%93-%E6%9D%A8%E5%AD%A6%E8%81%AA/" class="post-title-link" itemprop="url">2026春夏开源操作系统训练营总结-杨学聪</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-04-21 15:58:24" itemprop="dateCreated datePublished" datetime="2026-04-21T15:58:24+00:00">2026-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/summary/" itemprop="url" rel="index"><span itemprop="name">summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>现在是我第5次参加操作系统训练营了。我第一次接触Rust和参加操作系统训练营是2024年初。经过漫长时间的学习和消化，我意识到了自己接受新事物的速度还是比较慢的。在学习的旅途中，我遇到了很多志同道合之人——有些人擅长理论推导，有些人喜欢折腾底层汇编，还有些人总能在我卡住的时候扔来一个关键链接。这种氛围让我觉得，慢一点也没关系，只要还在往前走。</p>
+<p>以下是我参加训练营的经历、感悟和收获。</p>
+<h2 id="Rust-and-Programming-Language"><a href="#Rust-and-Programming-Language" class="headerlink" title="Rust and Programming Language"></a>Rust and Programming Language</h2><p>在此之前，除了汇编语言，我只用过C系列的编程语言（C, C++ 和 C#）编写项目和代码。按照原理来说，很多编程语言都可以实现操作系统，至少只要实现了LLVM的前端，就能得到对应的后端二进制代码。但是近年来，使用Rust进行操作系统和嵌入式开发变成了新的趋势。</p>
+<p>最初，我无法想象“内存安全性”会是怎样的情况。毕竟C++的智能指针已经宣称解决了大部分问题，可实际项目里引用计数循环、悬垂指针照样防不胜防。但接触了Rust之后，我发现Rust不仅仅是一种简单的语言。Rust在编译时就能检查代码，考虑到多线程的使用、内存泄漏以及整体的优化等问题。它不是在运行时给你抛出一个段错误，而是在你保存文件的那一刻就告诉你：“这里有问题，而且我连怎么改都建议好了。”这种安全感，让人安心。在语法上，Rust的一些设计和Scala、C#非常相像，比如模式匹配、闭包的写法，还有那种“表达式无处不在”的风格，一开始不太习惯，但写了几周之后回头看C++的?:三目运算符，总觉得少了点灵活。</p>
+<p>第一点、Rust的标准库非常好。与标准C/C++库相比，Rust的标准库应用更加简洁，对字符串的支持非常省心。C等传统语言对Unicode编码的支持并不友好，也缺少统一的标准，而Rust则很好地解决了这个问题。我印象很深的一次经历：在做训练营的某个文件系统实验时，需要解析一个包含中文路径的用户输入。用C写的话，我得纠结是UTF-8还是GBK，还得手动处理字节长度；而在Rust里，std::path::Path和String直接就把这些事情理得清清楚楚。这种“不用自己造轮子，而且轮子还是圆的”的体验，大大降低了编写操作系统外围工具的心智负担。</p>
+<p>第二点、Rust在类型上有创新。例如切片和引用，切片不仅包含起始地址，还有数据长度，这让Rust函数在很多时候可以简化传参，例如，其他语言传递基址还需要包含一个尺寸量，像memset、memcpy这类函数，但是包含数据长度可以少传一个参数，直接当成“Array”使用。这样做有一个特点（不能说是缺点），就是Rust的字符串与C互操作时需要在末尾添加NULL终止符，否则无法正确解析ASCIZ字符串。我在写内核的串口驱动时，就经常需要做这种转换——Rust的&amp;str传到C的printf风格函数之前，得手动as_ptr()再加个\0，稍微有点啰嗦，但习惯了也就变成了肌肉记忆。默认，Rust变量和引用都是不可变的，这让我在写代码时更加注重变量的可写性。对于很大部分人而言，写代码的时候很少注意变量的可写性，导致以后想给一个接口的参数换为const的时候需要付出很多的修改。采用不可变性这一特性促使我在编写代码时声明更多的变量，从而使代码更具可读性。以前写C++的时候，我习惯把一个变量反复重用——一个int i既能当循环下标，又能存中间结果，最后还得存个标志位。现在回过头看，那简直就是“变量的一生被反复蹂躏”。Rust逼着我给每个新状态起一个新名字，代码反而变得像流水账一样清晰。</p>
+<p>第三点、unsafe关键字。与C#一样，Rust也有一个“unsafe”关键字，用于标记那些无法由编译器保证安全性的代码。这使我们能够插入特殊代码，解决可能存在的执行问题。在做操作系统训练营的过程中，我发现unsafe其实是一个很好的设计——它把“危险的角落”用高亮笔圈了出来。比如直接操作页表、读写外设寄存器、或者调用一段手写的汇编启动代码，这些必须放进unsafe块里。我在写内核的内存分配器时，整个模块只有三处unsafe：一处是操作裸指针，一处是调用内联汇编刷TLB，还有一处是绕过借用检查器来初始化静态变量。剩下的几百行代码都享受着编译器的保护。相比C++，Rust的unsafe就像是给你一张地图，上面标注了“此处有地雷”，你只要小心这几块区域，其他地方的草可以放心踩。</p>
+<p>第四点、Rust 有一种非常独特的所有权系统。与 C 系列语言有所不同。所有权系统能帮助我们避免内存泄漏或多重引用的问题。在其他语言中，我们可能会忘记考虑变量使用的相关机制。在内核的编写中，野指针是非常致命的存在。在长期的C++开发中，我已经屡次领教过野指针带来的问题，往往是忘记使用 memset 或者没有使用构造函数导致的问题。</p>
+<p>第五点、Rust 有着非常独特的trait。这种特性可以使代码更加灵活且可复用。我对这个特性的第一感觉是没有C++的虚表和继承的功能更方便。但是Rust提供的 impl 机制可以比较自由地增加方法，并且可以指定方法在哪个特性中实现。比C#中的partial 机制还要更美妙一些。受到Rust的影响，我在写C++代码时也用trait来命名一些公共接口。</p>
+<p>第六点、使用panic和Result处理异常。在C++的世界里，异常处理一直是个让人又爱又恨的话题，这个机制需要专门的开关支持，在内核编程基本没人用。noexcept又不够精细，导致你永远不知道一个函数到底会冒出什么幺蛾子。我见过不少C++项目，最后干脆禁用异常（-fno-exceptions），所有函数返回错误码，然后调用方用一堆if去判断。Rust的做法让我眼前一亮：它把“可能出错的操作”分成了两类。一类是“NMI型问题”，用<code>panic!</code>；另一类是“小问题，调用方可以处理”，用<code>Result&lt;T, E&gt;</code>。</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h2><p>我尝试在 x86, RISCV, ARM 架构上实现裸机程序。</p>
+<ul>
+<li>x86 算是现代计算机架构的鼻祖，也是目前使用最为广泛的架构。从我们身边的台式机、笔记本，到数据中心的服务器，x86 几乎无处不在。它的历史包袱很重，从16位的8086一路延伸到64位的x86_64，里面塞满了各种兼容模式、分段机制、中断描述符表的复杂规则。这是我从小接触的架构。</li>
+<li>RISCV 是一种开源的指令集架构，目前很多开源项目都在使用RISCV架构。</li>
+<li>ARM 是一种商业的指令集架构，在嵌入式单片机、移动设备手机平板等电子设备上使用广泛。</li>
+</ul>
+<p>我发现了RISCV有以下优势：</p>
+<p>第一、RISCV 是一种开源的指令集架构，注定了生产使用的成本更低。x86和ARM的授权费用高，而且还有各种专利壁垒。这种低成本不仅仅体现在钱上，更体现在试错成本上。我们可以在模拟器里随便改指令集，完全不用考虑商业兼容性。这对于我们这些写操作系统的人来说，意味着底层的行为是完全透明、可预期的。</p>
+<p>第二、RISC-V的32位与64位指令集架构高度相似。这一点，x86与ARM均未实现。RISC-V的32位（RV32）与64位（RV64）在分页机制上仅存在细微差异，而ARM的不同运行模式（如32位与64位）之间的分页技术则差异显著。x86的32位与64位架构在分段模型、寻址方式及指令使用等方面均表现出较大差异，导致跨位宽兼容的实现复杂度显著上升。这种相似性不仅体现在分页技术上，还贯穿于异常处理、控制状态寄存器（CSR）布局以及原子操作指令中。对于操作系统开发者而言，这意味着同一套内核代码可以通过条件编译（如根据 __riscv_xlen 宏）平滑地适配两种位宽，无需重写核心的页表遍历、上下文切换或系统调用入口逻辑。反观x86-64，其兼容32位模式时需要启用兼容子模式（compatibility mode），并且段寄存器、门描述符格式以及中断栈帧布局均与纯64位模式存在结构性差异，这迫使许多操作系统（如Linux）在x86上维护两套独立的低级入口代码。RISC-V通过设计上的统一性，显著降低了多平台内核的维护成本。</p>
+<p>第三、RISCV的M态陷入默认是关闭分页的。这一点设计真的很好，可以直接使用恒等映射，这样在内核态和用户态切换时，不需要做任何的映射操作，直接使用恒等映射即可。而x86和ARM则需要在用户态和内核态切换时想办法转到内核页面。但是，RISCV的S态陷入默认是开启分页的。M态关闭分页的特性使得最低特权级的固件（如引导加载程序或安全监视器）能够完全绕过虚拟地址转换，直接以物理地址访问内存。这一设计简化了启动阶段的早期初始化流程：在设置页表之前，M态代码即可完成内存检测、设备树解析或安全服务调用，无需预先建立任何地址映射。x86架构则缺乏类似的干净抽象——即使是在系统管理模式（SMM）下，处理器仍然处于实模式或保护模式的分页语境中，开发者必须小心处理段基址与分页的相互作用，稍有不慎便会引发三重故障。与之相对，RISC-V的S态默认开启分页则是为了保障常规操作系统的运行效率：内核与用户进程共享统一的虚拟地址空间，通过页表隔离权限。但这一设计也带来了额外的约束——在S态下直接访问未映射的物理地址需要临时切换页表或使用恒等映射区域，否则会触发页错误。</p>
+<h2 id="Experience-and-Another-Design"><a href="#Experience-and-Another-Design" class="headerlink" title="Experience and Another Design"></a>Experience and Another Design</h2><p>今年的训练营，给我的最大挑战的是ArceOS环境的配置。我试过调整Toolchain的版本，也试过修改单个依赖的版本，都失败了。最终，我决定采用最新的工具版本，针对其中的一些版本适配问题，我会将一些依赖的内容固定到仓库中。</p>
+<p>与之前几期相比，Rustlings 后又增加一个阶段。主要涉及了多线程下的Rust应用，功能很实用。rCore 的前几个章节有略微的改动。</p>
+<hr>
+<p><em><code>print_with_color</code>作业</em>：</p>
+<p>一开始要实现一个彩色打印功能，与rCore一开始实现的一样。原理都是 Linux 上面的终端支持。我实现的是绿色的，用这个颜色的原因是其他例程pass时也是用绿色输出的。</p>
+<p>这个终端颜色的原理也让我将其用作其他程序的Logging输出。</p>
+<p><em><code>sys_mmap</code>作业</em>：</p>
+<p>这个作业让我对内存管理有了更深的理解。将文件内容映射为内存页，这个设计很好。让我掌握到了匿名映射，按需分配等概念，以后可以自己从头实现试一试。</p>
+<p><em><code>support_hashmap, ramfs_rename</code>作业</em>：</p>
+<p>要注意到修改Cargo.toml文件里依赖和版本</p>
+<p>我使用 C++ 设计中另一个类组件化的微内核（mecocoa）。设计思路和经历如下</p>
+<h3 id="IO系统"><a href="#IO系统" class="headerlink" title="IO系统"></a>IO系统</h3><p>IO 系统是我最早着手实现的部分之一，也是经历重构次数最多的模块。最初只是想做一个能显示字符的文本控制台，后来逐步加入了图形界面、TTY 虚拟终端、键盘鼠标输入以及窗口管理。</p>
+<p>系统支持多个虚拟终端（VTTY），每个终端拥有自己的输入输出队列。当一个进程调用 INNC 等待键盘输入时，它的 PID 会被加入等待序列。主循环 serv_cons_loop 会轮询所有阻塞进程对应的 TTY 输入队列，一旦有字符到达就唤醒该进程并发送消息。这个设计简单直观，但轮询效率不高，而且没有优先级区分。</p>
+<p>键盘中断服务程序将扫描码转换成 keyboard_event_t 结构，然后调用 hand_kboard 放入当前焦点 TTY 的输入队列。鼠标消息同样经过 hand_mouse 处理。这种消息化设计使得输入源与消费端解耦，后续若要支持触摸屏或远程输入，只需增加对应的消息产生者即可。</p>
+<p>当前的消息轮询模型效率低下，未来要解决这些问题。</p>
+<h3 id="图形处理"><a href="#图形处理" class="headerlink" title="图形处理"></a>图形处理</h3><p>图形处理模块是 IO 系统的上层延伸，负责鼠标光标绘制、窗口图层管理、基本绘图原语以及双缓冲刷新。其设计围绕图层管理器与底层图形输出接口展开，实现了从像素绘制到窗口交互的初步功能。针对不同显存布局，实现了两种主要的图形输出类，分别处理 ARGB 与 ABGR 两种字节序。基本绘图接口（画点、画矩形、批量画点）直接操作显存地址，通过帧缓冲基址加坐标偏移计算目标位置。对于 24bpp RGB 格式也有实现。矩形绘制中尝试了批量写入优化，例如在地址对齐时使用 32 位宽赋值代替逐字节写入。</p>
+<p>图形子系统的图层管理。 LayerManager 管理多个 SheetTrait 对象，每个窗口或控件都是一个图层。我实现了双缓冲（enable_2buffer），通过后缓冲 sheet_buffer 减少显存直接操作带来的撕裂和闪烁。光标 Cursor 作为独立图层，可以响应鼠标移动事件并更新位置。此外还实现了简单的 Form 和控件（Label、TextBox），虽然功能简陋，但至少证明了窗口模型的可行性。双缓冲开启后，所有绘图操作先写入后缓冲（系统内存中的颜色数组），定期刷新函数检查“是否需要刷新”标志和“脏矩形”区域，将受影响的矩形区域通过真实的图形输出接口复制到显存。刷新频率由系统时钟控制。脏矩形坐标在刷新前会进行裁剪，防止越界。</p>
+<p>图形服务函数运行在单独的任务中，从图形消息队列中取出消息，目前只处理鼠标消息并调用上述鼠标处理函数。这种设计将图形输入与主控制台服务解耦。</p>
+<p>目前的局限性有：</p>
+<ul>
+<li>光标形状是固定尺寸的字符数组，无法动态加载不同光标样式（如箭头、手型）。</li>
+<li>每次鼠标移动或点击都遍历所有图层进行坐标命中测试，图层数量增加时开销线性增长。</li>
+<li>层管理器的事件回调仅实现了鼠标拖拽窗口（检测到左键按下时设置移动标志），但未处理窗口释放、边界限制、与其他控件的交互（如按钮点击）</li>
+</ul>
+<h3 id="任务管理与调度系统"><a href="#任务管理与调度系统" class="headerlink" title="任务管理与调度系统"></a>任务管理与调度系统</h3><p>调度系统是内核的核心组件之一，负责管理进程与线程的生命周期、优先级调度、同步与通信。经过多次重构，当前版本实现了一个 O(1) 优先级的混合调度器，据说是Linux 2.x用的是这个方案，区分实时任务与分时任务，并支持多核基础架构（多核部分尚未启用）。优势是基于位图的快速队列选择： 每个优先级对应一个就绪队列（双向链表）。调度器维护一个 32 位位图，每一位表示对应优先级队列是否非空。选择下一个任务时，通过 __builtin_ctz（数尾零指令）直接找到最高优先级的非空队列，然后取出队首线程。</p>
+<p>系统区分 ProcessBlock（进程）与 ThreadBlock（线程）。每个进程至少拥有一个主线程，可额外创建更多线程。进程拥有独立的页表、文件描述符表、堆区边界、TTY 焦点及图形窗口引用；线程则持有运行上下文、栈空间、优先级、时间片及阻塞原因。这种分离使得资源管理更加清晰，也为未来引入多线程应用打下了基础。</p>
+<p>系统提供了基于消息的进程间通信原语（msg_send / msg_recv），支持阻塞发送与接收。每个线程可记录等待的发送目标或接收来源，并挂起直到消息到达。</p>
+<p>关于M态会不会发生抢占，这个与架构有关。x86是可以的，但是 riscv 的  ecall 好像会自动关闭中断，对此我决定手动打开中断。所以M态是会发生抢占的。</p>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>内存管理模块承担了物理页分配、内核堆管理、页表映射及分段机制初始化等职责。该模块需要适配多种引导环境（BIOS、GRUB、UEFI）和不同架构（x86 32位、x86_64、RISC‑V），是系统底层的基础设施之一。</p>
+<p>系统预留一个覆盖 0 至 4G 物理地址空间的位图.位图结构支持标记页的占用与释放、查询连续空闲页以及设置可用范围。然后实现了一个简单内存池，内核启动后从物理页分配器获取一块连续内存（如 16KB），将其加入内存池作为初始堆空间。后续的 new/malloc 调用均通过默认分配器转发至该内存池。这种设计将内核自身的动态内存需求与物理页管理解耦。</p>
+<p>尽管当前内存管理模块尚不完善，它已经成功支持了内核启动、多进程创建、图形缓冲区分配等基本功能。能够正确解析 GRUB 的内存映射并分配出可用的页帧。</p>
+<p>用户堆功能当前尚未实现。</p>
+<h3 id="消息机制"><a href="#消息机制" class="headerlink" title="消息机制"></a>消息机制</h3><p>消息机制是进程间通信与硬件事件通知的核心基础设施。该模块分为两个层次：一是全局系统消息队列，用于处理来自中断的异步事件（键盘、鼠标、定时器、xHCI、帧缓冲刷新）；二是基于线程阻塞的同步进程间通信（IPC），支持任意进程间的消息发送与接收，并能够将硬件中断转化为特定线程的消息。</p>
+<p>系统维护一个全局的环形队列，专门存放由中断处理程序产生的硬件事件（如鼠标、键盘、定时器、xHCI、刷新）。独立的任务不断从此队列中取出消息并分发给对应的驱动或图形子系统。进程间的普通 IPC 则通过发送与接收系统调用实现，使用另一套基于线程控制块的阻塞队列机制。这种分离保证了硬件事件不会被进程间通信阻塞，降低了中断响应延迟。</p>
+<p>同步 IPC 基于线程阻塞与唤醒。 发送线程调用发送接口时，若接收线程当前正阻塞在接收接口上且匹配发送者或允许任意来源，则立即复制消息数据并唤醒接收线程；否则发送线程自身被阻塞，挂入接收线程的发送等待队列，同时标记阻塞原因为“等待发送”，并记录目标线程。接收线程调用接收接口时，若其发送队列非空且与指定的发送者匹配，则取出队首消息，复制数据后唤醒发送线程；否则接收线程阻塞，标记“等待接收”，记录期望的发送者。这种设计实现了内核中的同步消息传递，无需额外的共享内存。由于发送方和接收方可能位于不同的进程（拥有不同的页表），消息数据不能直接用指针访问。模块提供了跨页表复制函数，根据两个进程的页表将源虚拟地址转换为物理地址（或直接映射地址），再复制到目标虚拟地址。该函数在 RISC-V 与 x86 上分别适配了分页机制，并支持降级到内核页表。</p>
+<p>发送接口在阻塞前会检测发送等待链中是否存在循环等待（例如 A 等待 B，B 等待 C，C 等待 A）。若检测到潜在死锁，函数返回错误而不阻塞，避免了系统挂死。虽然检测算法简单（仅遍历单链），但对于单核场景下有限的通信深度已足够。</p>
+<h3 id="文件管理与虚拟文件系统"><a href="#文件管理与虚拟文件系统" class="headerlink" title="文件管理与虚拟文件系统"></a>文件管理与虚拟文件系统</h3><p>文件管理模块构建了一个虚拟文件系统（VFS）层，用于统一管理不同底层文件系统，并为进程提供标准的文件操作接口（打开、读写、关闭、删除等）。</p>
+<p>系统维护一个全局根目录项，所有文件和子目录均以双向链表形式组织在父目录项之下。路径解析时通过线性查找子目录项，命中则直接返回，未命中时触发底层文件系统的搜索回调，并在返回后动态创建新的目录项和索引节点加入缓存。这种“按需建立”的缓存策略减少了内存占用。</p>
+<p>系统实现了一个特殊的设备文件系统，并默认挂载在 /dev 目录下。该文件系统在初始化时自动创建 /dev/tty0 至 /dev/tty3 四个设备节点，其内部处理字段存储 TTY 索引号。读写操作通过 IPC 消息转发给对应的 TTY 服务进程，将文件接口转换为进程间通信。</p>
+<p>目前只适配了 FAT12/16/32 几种文件系统。</p>
+<h3 id="系统调用与处理程序"><a href="#系统调用与处理程序" class="headerlink" title="系统调用与处理程序"></a>系统调用与处理程序</h3><p>采用了一种通用简单的设计方案，限制是每个系统调用的参数数量不能大于3.</p>
+<p>支持 INT/GATE/SYSCALL/ECALL 指令导致的系统调用。</p>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2><p>我的操作系统开发之旅才刚刚开始，未来还有很长的路要走。从最初对Rust内存安全性的懵懂，到如今能在三种架构间对比分页与陷入行为，这五次训练营的经历让我逐渐摸到了系统编程的门槛。然而，每一次深入都揭示出更多未知的领域——异步运行时在内核中的整合、多核间的缓存一致性协议、实时调度算法的确定性验证，这些课题仍在远方等待。RISC-V的开源特性降低了实验门槛，但生态的成熟度尚需时日；x86的庞大兼容层虽令人敬畏，却也暴露出历史设计的沉重代价。前方的道路并非坦途，但正因如此，每一次编译通过、每一个页表正确遍历、每一次异常被精准捕获，都成为继续前行的理由。或许，<strong>操作系统的魅力就在于它永远无法被彻底“完成”</strong>。</p>
+<p>Dosconio,<br>21, April 2026.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/12/15/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%8F%B2%E5%96%86%E5%85%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/12/15/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%8F%B2%E5%96%86%E5%85%83/" class="post-title-link" itemprop="url">2025秋冬季开源操作系统训练营一二阶段总结-史喆元</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-15 16:20:37" itemprop="dateCreated datePublished" datetime="2025-12-15T16:20:37+00:00">2025-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第二次报名这个训练营但是相当于是第一次参加了,因为第一次报名是在2024年的秋冬季,那时候我刚大一刚刚接触到计算机,感觉很有意思就报名了但是那时候连使用Github对我来说都极其困难且刚进入大学没有适应繁多的课程,<br>我便决定先放弃,潜修一年有了些许微波的基础后再来试一试。我总是喜欢去了解一些东西的底层,所以我对操作系统算是有一总执念吧,让我再次来到这里。但由于本人比较愚笨,学习速度极慢,再加上早八到晚十的课程,所以进度相较于其他优秀学院慢了许多,但贵在坚持嘛……</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2025/12/15/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E5%8F%B2%E5%96%86%E5%85%83/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/16/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E9%83%91%E6%B3%89%E5%9F%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/11/16/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5-%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-%E9%83%91%E6%B3%89%E5%9F%8E/" class="post-title-link" itemprop="url">2025秋冬季开源操作系统训练营-第三阶段总结-郑泉城</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-11-16 19:26:30" itemprop="dateCreated datePublished" datetime="2025-11-16T19:26:30+00:00">2025-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="lab1-print-with-color"><a href="#lab1-print-with-color" class="headerlink" title="lab1: print_with_color"></a>lab1: print_with_color</h2><ul>
+<li>本实验比较较为简单, 修改 <code>arceos/exercises/print_with_color/src/main.rs</code> 文件, 为 <code>println</code> 添加 ANSI 转义码即可. ANSI 转义码用于在终端中控制光标位置、文本颜色、文本样式等, 其以 ESC (Escape) 字符开头.</li>
+<li>初次在 Rust 中使用 <code>\033[34m[WithColor]: Hello, Arceos!\033[0m</code> 形式的 ANSI 转义码, 发现其不奏效; 但是在 C/C++ 中却是正常. 查阅资料后得知, <code>\033</code> 是 C 语言的传统写法, 在 C/C++ 中使用较多. 在 Rust 中, 应该使用 <code>\x1b</code>, 即 <code>\x1b[34m[WithColor]: Hello, Arceos!\x1b[0m</code>. 本是上来说, <code>\033</code> 和 <code>\x1b</code> 是同一内容的不同表示.</li>
+</ul>
+<h2 id="lab2-support-hashmap"><a href="#lab2-support-hashmap" class="headerlink" title="lab2: support_hashmap"></a>lab2: support_hashmap</h2><ul>
+<li>本实验直接使用 <code>hashbrown</code> 来支持 <code>hashmap</code>. 在 <code>arceos/ulib/axstd/Cargo.toml</code> 中添加 <code>hashbrown</code> 依赖, 在 <code>axstd</code> 中添加 <code>collections</code> 模块, 并在 <code>arceos/ulib/axstd/Cargo.toml</code> 中声明 <code>pub mod collections;</code>. 在 <code>collections</code> 模块中, 使用 <code>pub use alloc::collections::*;</code>, 将 <code>alloc::collections</code> 的内容(比如 <code>BTreeMap</code>)导入当前的模块, 使用 <code>pub use hashbrown::*;</code> 将第三方库的 <code>HashMap</code> 等导入当前模块, 此时可以通过 <code>axstd::collections</code> 使用 <code>HashMap</code>(<code>hashbrown</code> 提供)、<code>BTreeMap</code>(<code>alloc::collections</code> 提供).</li>
+<li>还有一点要注意, 应该在启用 <code>alloc</code> feature 时才会声明并挂载 <code>collections</code> (#<code>[cfg(feature = &quot;alloc&quot;)]</code>), 若不加以控制, <code>print_with_color</code> 则会出现报错. 原因在于, 若 <code>collections</code> 的编译不被 <code>alloc</code> feature 控制, 其中的 <code>BTreeMap</code> 等会依赖全局内存分配器, 但是因没有启用 <code>alloc</code> feature, 故而找不到全局内存分配器. 应该启用 <code>alloc</code> feature 时才会编译 <code>collections</code>.</li>
+</ul>
+<h2 id="lab3-alt-alloc"><a href="#lab3-alt-alloc" class="headerlink" title="lab3: alt_alloc"></a>lab3: alt_alloc</h2><ul>
+<li>此实验是实现简单的内存分配器, 在 <code>arceos/modules/alt_axalloc/src/lib.rs</code> 中具体实现.</li>
+<li><code>arceos/exercises/alt_alloc/Cargo.toml</code> 声明依赖 <code>axstd</code>: <code>workspace = true</code> 表明 <code>axstd</code> 是工作区成员; <code>features = [&quot;alt_alloc&quot;]</code> 使 <code>axstd</code> 开启 <code>alt_alloc</code> 特性. 当 <code>axstd</code> 的 <code>alt_alloc</code> 特性被启用时, 其会继续将此传递下去, 还会根据 <code>[features]</code> 的 <code>alt_alloc = [&quot;arceos_api/alt_alloc&quot;, &quot;axfeat/alt_alloc&quot;]</code> 启用 <code>arceos_api</code> 中的 <code>alt_alloc</code> 特性和 <code>axfeat</code> 中的 <code>alt_alloc</code> 特性.</li>
+</ul>
+<h2 id="lab4-ramfs-rename"><a href="#lab4-ramfs-rename" class="headerlink" title="lab4: ramfs_rename"></a>lab4: ramfs_rename</h2><ul>
+<li>实验要求在 <code>arceos/axfs_ramfs</code> 中实现 <code>rename</code> 操作, 但 arceos 原本依赖远程仓库的版本, 故需要调整.</li>
+<li>可以采用 patch 方式让工程临时使用 <code>arceos/axfs_ramfs</code> 的本地组件仓库. 为方便起见, 直接在 <code>arceos/exercises/ramfs_rename/Cargo.toml</code> 中将 <code>axfs_ramfs = { version = &quot;0.1&quot;, optional = true }</code> 中的 <code>version = &quot;0.1&quot;</code> 替换为 <code>workspace = true</code>, 多次运行发现还是提示 <strong>Operation not supported</strong>. 然后对代码进行详细分析, 发现应用 <code>ramfs_rename</code> 会依赖 <code>axfs</code>(间接) 和 <code>axfs_ramfs</code>, <code>axfs</code> 还会依赖 <code>axfs_ramfs</code>, 此时 <code>ramfs_rename</code> 依赖的 <code>axfs_ramfs</code> 与 <code>axfs</code> 依赖的不同. 故还需将修改 <code>arceos/modules/axfs/Cargo.toml</code>, 替换 <code>version = &quot;0.1&quot;</code> 为 <code>workspace = true</code>.</li>
+<li>具体实现 rename 功能, 只需修改 <code>arceos/axfs_ramfs/src/dir.rs</code>. 阅读测试用例后发现, 文件重命名只在同一个目录下操作, 故在具体实现中只考虑此情况, 并未做特殊处理.</li>
+</ul>
+<h2 id="lab5-sys-map"><a href="#lab5-sys-map" class="headerlink" title="lab5: sys_map"></a>lab5: sys_map</h2><ul>
+<li>初次运行 <code>sys_map</code> 时, 发现运行结果与课件中展示的内容有很大出入, 课件显示 <code>not implement</code>, 而本地运行则会显示 <code>Cannot load app!</code>. 经排查, 发现未设置 <code>musl-libc</code>, 导致无法编译出 <code>mapfile</code> 可执行文件.</li>
+<li>实现 <code>sys_map</code> 时针对测试用例做了简化处理, 未考虑复杂的情况. 实现 <code>sys_mmap</code> 系统调用主要有 5 个步骤: 获取当前进程的地址空间, 并在此查找空闲内存区域, 再准备参数执行内存映射, 再读取文件内容到缓冲区 buf 并将其写入映射的内存区域, 最后返回映射起始位置. 实现过程中, 务必查找空闲的内存区域再映射, 否则会出现 <code>Mapping error: AlreadyExists</code>.</li>
+</ul>
+<h2 id="lab6-simple-hv"><a href="#lab6-simple-hv" class="headerlink" title="lab6: simple_hv"></a>lab6: simple_hv</h2><ul>
+<li>运行此实验代码, 发现QEMU会卡死. 经过仔细排查, 是由于 <code>payload</code> 构建失败导致的. 在外层 Makefile 中定义的 <code>RUSTFLAGS</code> 会被默认传递给 <code>make -C ./payload</code> 递归调用, 这会干扰编译 <code>payload</code> (尤其是 skernel). 故在 <code>payload</code> 的 <code>Makefile</code> 中添加 <code>unexport RUSTFLAGS</code> 来避免 RUSTFLAGS 变量的传播.</li>
+<li>正常运行后, 根据 <code>panic</code> 指示修改实现, 使测例通过即可. 在异常处理分支中, panic 改为 <code>ax_println</code>, 还要调整客户机的 <code>spec</code>, 即 <code>ctx.guest_regs.sepc += 4;</code>. 注意, 还要设置 <code>A0</code> 寄存器的值为 <code>0x6688</code>, <code>A1</code> 寄存器的值为 <code>0x1234</code>.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/16/2025fall-stage3-summary-ljy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2025/11/16/2025fall-stage3-summary-ljy/" class="post-title-link" itemprop="url">2025fall-stage3-summary-ljy</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-11-16 17:54:25" itemprop="dateCreated datePublished" datetime="2025-11-16T17:54:25+00:00">2025-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>对 rcore 早有耳闻，曾报名了 23 年秋冬的训练营，但是当前初学 rust、初学 riscv 等缺少了一种毅力，25 年秋冬重新报名参加，有所学、有所获。</p>
+<p>虽然我是虚拟化方向的研究生，但是对于操作系统中的很多概念等停留在理论阶段，尤其在接触到了 rcore 之后，发现本科学的操作系统只是浮在表面的那一层，如今接触 rcore，做了一些实验，进一步加深了对操作系统的敬仰。</p>
+<p>虽然走到了这里，但是对于 rcore 的很多非实验的部分的理解还不够，还需要好好地梳理，这里对 stage-3 arceos 实验进行总结。</p>
+</blockquote>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>实验涉及 unikernel、宏内核、hypervisor，但是明显感觉到 stage3 实验更多得是对组件化操作系统的上手。</p>
+<p>其中很多实验并不像 rcore 中的那样复杂，比如 print_color、simple_hv，可能一点点代码就能通过测例，更重要的是理解其组件化的思想，可以快速构建异构内核的能力，unikernel、宏内核、hypervisor，把他们的共同点抽离出来，封装成一个个组件，可以实现快速的内核定制。</p>
+<p>下面说一下遇到的一些问题：</p>
+<h4 id="hashmap"><a href="#hashmap" class="headerlink" title="hashmap"></a>hashmap</h4><p>起初，我通过 hashbrown 引入第三方的实现，发现并未涉及视频中提到的随机数，通过查找资料以及翻阅 std 下的 hash_map 实现。最终决定使用 hashbrown 下的 HashMap::with_hasher，并选择 foldhash 下的 FixedState::with_seed 提供一个哈希计算，其中 seed 通过 axhal 下的 random 生成。</p>
+<h4 id="ramfs-rename"><a href="#ramfs-rename" class="headerlink" title="ramfs_rename"></a>ramfs_rename</h4><p>最开始，发现怎么改动都不生效，arceos 的实验使用了 workspace，这个在之前我从未接触，最终发现是 ramfs_rename 对应的这个内核的 Cargo.toml 文件依赖的不是 workspace 中的 axfs_ramfs 导致。<br>除此之外，还有修改 axfs 下的 Cargo.toml。</p>
+<h4 id="sys-mmap"><a href="#sys-mmap" class="headerlink" title="sys_mmap"></a>sys_mmap</h4><p>从文件中映射到内存中，分三步走，在虚拟地址空间找一个空闲虚拟页，借助 uspace.find_free_area，借助 uspace.map_alloc 进行预填充的分配，即完成虚实映射，然后将文件读到改页。<br>如果使用刚刚分配的虚拟地址可以读，但是会出现异常，比如权限不足，需要转到内核虚拟地址进行读写，这里通过 phys_to_virt 将物理地址转到内核到虚拟地址，随后通过 sys_read 这个 api 完成文件的读取。</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>自我感觉对于 rcore 的掌握还不到家，目前仅仅是通过了测例而已。</p>
+<p>rcore 的文档和代码常读常新，能加深操作系统的理解。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/16/%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -264,7 +1380,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
               </span>
 
           
@@ -339,7 +1455,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
               </span>
 
           
@@ -445,7 +1561,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
               </span>
 
           
@@ -515,7 +1631,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
+                <time title="Modified: 2026-06-28 03:57:31" itemprop="dateModified" datetime="2026-06-28T03:57:31+00:00">2026-06-28</time>
               </span>
 
           
@@ -550,689 +1666,6 @@
 </ol>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>操作系统是一个很神奇的东西，每一次学习都有新的收获，在里面能找到很多数据库，web开发共通的思想。操作系统导论也是一本很好的书，虽然我还没看完内存部分，但是通过结合实践，理解的更深刻了。</p>
 <p>学习操作系统就像爬山，每一步都需要扎实，每一步都很困难，但每一步都离顶峰更近，踏一步就有一步的收获。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/10/os-camp-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/10/os-camp-blog/" class="post-title-link" itemprop="url">os-camp-blog</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-10 16:04:18" itemprop="dateCreated datePublished" datetime="2025-11-10T16:04:18+00:00">2025-11-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="rust编程语言"><a href="#rust编程语言" class="headerlink" title="rust编程语言"></a>rust编程语言</h3><p>第一阶段由于原先有C/C++的编程基础，基础语法上手还是比较快的，但在rust语言在内存管理方面的特性还是需要适应一段时间。但学习rust的经历中，也是能学到很多，能看到很多其他编程语言的影子，但也有rust自身的特性，如内存管理方面。多方面多语言融会贯通，收获颇丰。</p>
-<h2 id="rcore"><a href="#rcore" class="headerlink" title="rcore"></a>rcore</h2><p>由于在操作系统方面是0基础，在进入第二阶段的学习之前，我先去学习了Mit的xv6课程，有了这方面的基础，后续的学习会简单很多。</p>
-<p>在实验上第一次尝试用rust写内核，体验挺奇妙的，在内存管理上给人与C语言完全不同的体验。</p>
-<ol>
-<li>ch3 熟悉系统调用</li>
-<li>ch4 内存映射出问题，调试比较麻烦</li>
-<li>ch5 熟悉进程调度算法</li>
-<li>ch6 挺麻烦的要自己实现一些接口</li>
-<li>ch8 死锁检测，耗费时间比较多，走了一些弯路，好在最后调试发现问题所在</li>
-</ol>
-<h2 id="arceos"><a href="#arceos" class="headerlink" title="arceos"></a>arceos</h2><p>作业难度比上一阶段简单一些，但模块化的设计思路很巧妙，体验比较新奇。</p>
-<p>在实验上</p>
-<ol>
-<li>[print_with_color] 仿照原有代码的color包装即可完成</li>
-<li>[alt_alloc_bump] 内存分配算法 这里的测试文件是不很全部</li>
-<li>[ramfs_rename] 动手实现一个处理函数</li>
-<li>[sys_map] 花费的时间比较多，后续调试才发现是访问权限的问题</li>
-<li>[simple_hv] 解析指令，修改上下文即可</li>
-</ol>
-<h3 id="综上"><a href="#综上" class="headerlink" title="综上"></a>综上</h3><p>总的来说，训练营的学习收获还是挺多的，也尝试了用rust编写内核，这是我从未涉猎的领域，希望在后续的学习中能学的更多，后续希望能写出自己的内核，尝试在操作系统中加入自己的想法。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/09/%E9%98%B6%E6%AE%B53%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93-%E7%9F%B3%E5%AE%B6%E8%AA%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/09/%E9%98%B6%E6%AE%B53%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93-%E7%9F%B3%E5%AE%B6%E8%AA%89/" class="post-title-link" itemprop="url">阶段3学习总结-石家誉</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-09 20:28:52" itemprop="dateCreated datePublished" datetime="2025-11-09T20:28:52+00:00">2025-11-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/2025-%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5/" itemprop="url" rel="index"><span itemprop="name">2025 秋冬季开源操作系统训练营</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h3 id="UniKernel"><a href="#UniKernel" class="headerlink" title="UniKernel"></a>UniKernel</h3><h4 id="实验1：print-with-color"><a href="#实验1：print-with-color" class="headerlink" title="实验1：print_with_color"></a>实验1：print_with_color</h4><p>在该实验中，我原来是在<code>__print_impl</code>中进行实现（因为不懂宏），后来在实验二中输出pass后测评脚本没找到<code>support_hashmap pass</code>，问ai是因为我的实现在行末有个换行导致没识别上，最后还是选择修改格式化输出宏。</p>
-<h4 id="实验2：-support-hashmap"><a href="#实验2：-support-hashmap" class="headerlink" title="实验2： support_hashmap"></a>实验2： support_hashmap</h4><p>在<code>axstd</code>中实现了<code>collections</code>并添加了<code>HashMap</code>。第一次的时候没有将原<code>collections</code>中的数据结构导入到新的<code>collections</code>中，卡了一小段时间。<br>最开始是使用递归形式写的，没有注意数据量，运行一半卡死了，最后修改成循环写法，修改后才顺利通过。</p>
-<h4 id="实验3：alt-alloc"><a href="#实验3：alt-alloc" class="headerlink" title="实验3：alt_alloc"></a>实验3：alt_alloc</h4><p>自感难度不大。</p>
-<h4 id="实验4：ramfs-rename"><a href="#实验4：ramfs-rename" class="headerlink" title="实验4：ramfs_rename"></a>实验4：ramfs_rename</h4><p>在修改dependencies卡了半天，一直没有调用自己实际写的（对rust的依赖之类的还是不太熟悉，经常不知道该怎么导入）。最开始把问题想太简单了，后续修改才真正pass。</p>
-<h3 id="Monolithic-Kernel"><a href="#Monolithic-Kernel" class="headerlink" title="Monolithic Kernel"></a>Monolithic Kernel</h3><h4 id="实验5：sys-mmap"><a href="#实验5：sys-mmap" class="headerlink" title="实验5：sys_mmap"></a>实验5：sys_mmap</h4><p>最开始直接使用<code>sys_read</code>将内容写入用户内存空间的地址，没想到内核态没有实现处理这种缺页问题，看着<code>Page Fault</code>一脸懵逼，排查半天发现在<code>read</code>这一行，后续用ai排查才知道是这个原因，最后先写入缓冲区，再将缓冲区写入用户地址空间。</p>
-<h4 id="page-fault"><a href="#page-fault" class="headerlink" title="page_fault"></a>page_fault</h4><p>自己写的时候开了个头就没想法了。（可能是因为答案就在边上）</p>
-<h3 id="Hypervisor"><a href="#Hypervisor" class="headerlink" title="Hypervisor"></a>Hypervisor</h3><h4 id="实验6：simple-hv"><a href="#实验6：simple-hv" class="headerlink" title="实验6：simple_hv"></a>实验6：simple_hv</h4><p>本来以为会很难，看视频的时候云里雾里的，实际写起来发现还好。</p>
-<h2 id="个人总结"><a href="#个人总结" class="headerlink" title="个人总结"></a>个人总结</h2><p>自我感觉第三阶段的任务要比第二阶段简单一些，可能是第二阶段刚开始接触kernel，加上代码量比较大，当时一个实验要卡好久，第三阶段感觉主要是底部实现已经比较完善了，所以好写一些。</p>
-<p>经过这两个阶段对kernel的学习，我感觉我在文件系统方面还是有一点云里雾里，可能是第二阶段学习的时候比较仓促，不太扎实。同时rust编程方面也不算非常熟悉，看懂没有太大的问题，但是实际上手写总是因为语法问题而有卡顿，同时在包，模块的引用，<code>cargo.toml</code>的编写修改还是不太熟悉（以前就简单学过c和cpp，不太关注这种问题）。</p>
-<p>离训练营结束还有一个多月，希望可以解决这些问题，继续学习，拿下通过学员证书，尽量争取一下优秀学员证书。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/07/stage3-arceos-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/07/stage3-arceos-learning/" class="post-title-link" itemprop="url">stage3-arceos-learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-07 10:25:57" itemprop="dateCreated datePublished" datetime="2025-11-07T10:25:57+00:00">2025-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="第三阶段blog"><a href="#第三阶段blog" class="headerlink" title="第三阶段blog"></a>第三阶段blog</h2><p>总体上 我对arceos的认识可以概括为接口，框架，算法。</p>
-<ul>
-<li>接口关心下面的框架是什么，算法是什么，关心功能， 只需要调用框架提供的api。提供给用户程序</li>
-<li>框架就是为了实现这个组件而需要的各种数据结构和在这些数据结构上面实现的一些<code>trait</code></li>
-<li>算法是对于框架的不同实现，通过指定不同的<code>feature</code>，对同一个<code>框架</code>采取不同的实现</li>
-</ul>
-<h3 id="print-with-color"><a href="#print-with-color" class="headerlink" title="print_with_color"></a>print_with_color</h3><p>通过在<code>arceos/exercises/print_with_color/src/main.rs</code> 中 <code>use axstd::println</code>, 并且在print_with_color中没有实现<code>axstd.rs</code> 或者是<code>axstd/mod.rs</code>于是便到<code>arceos/print_with_color/Cargo.toml</code>中寻找<br>发现这一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axstd &#x3D; &#123; workspace &#x3D; true, optional &#x3D; true &#125;</span><br></pre></td></tr></table></figure>
-<p>意思是当前目录的配置直接继承了根目录的配置, 于是便到<code>arceos/Cargo.toml</code>中去求证</p>
-<p>在<code>members</code>中，发现了以下这一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;exercises&#x2F;print_with_color&quot;,</span><br></pre></td></tr></table></figure>
-<p>说明确实继承了根目录的配置</p>
-<p>因此直接在<code>arceos/Cargo.toml</code>中寻找axstd</p>
-<p>发现了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axstd &#x3D; &#123; path &#x3D; &quot;ulib&#x2F;axstd&quot; &#125;</span><br></pre></td></tr></table></figure>
-<p>于是便到<code>ulib/axstd</code>中寻找最后在<code>arceos/ulib/axstd/src/macros.rs</code><br>中找到了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macro_rules! println</span><br></pre></td></tr></table></figure>
-<p>直接修改具体的实现即可</p>
-<p>根据提示修改axhal能够修改ArceOS的颜色 到<code>axruntime</code>中找到打印符号的逻辑，使用的是<code>ax_println</code>那么直接修改该功能的实现，便实现了符号颜色的改变</p>
-<h3 id="support-hashmap"><a href="#support-hashmap" class="headerlink" title="support_hashmap"></a>support_hashmap</h3><ul>
-<li>在 <code>ulib/axstd/Cargo.toml</code>的 `[dependencies]中加入<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axhal &#x3D; &#123; workspace &#x3D; true &#125;</span><br></pre></td></tr></table></figure>
-实现对axhal模块中的<code>random</code>函数的调用</li>
-</ul>
-<ul>
-<li>哈希函数的选取方面在<code>axstd/Cargo.toml</code>中, 我加入了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[dependencies.xxhash-rust]</span><br><span class="line">version &#x3D; &quot;0.8.12&quot;</span><br><span class="line">features &#x3D; [&quot;xxh3&quot;, &quot;const_xxh3&quot;]</span><br></pre></td></tr></table></figure>
-来导入该哈希函数<br>哈希表的数据结构包括存储键值对和发生冲突时的步长。对内部存储键值对我直接用了数组来实现，存储的是<code>Optino&lt;(key, value)&gt;</code>键值对，全部初始化为<code>None</code>，表明下标处没有存储元素<br>对于每一个插入操作，先通过将输入通过<code>core::slice::from_raw_parts</code>将输入的键hash得到一个下标，如果该下标对应的键值对是<code>None</code>，<br>那么就将键值对放入这个下标处，否则就将hash得到值不断加上步长，直到找到<code>None</code>为止。</li>
-</ul>
-<p>我并没有实现删除和查找的功能，只是通过了测试用例，实现的并不完善。</p>
-<h3 id="alt-alloc"><a href="#alt-alloc" class="headerlink" title="alt_alloc"></a>alt_alloc</h3><p>对一段连续的内存左侧用以字节分配，右侧用于页面分配即可实现<br>通过这个实验的学习,了解到了初始阶段的内存分配器可以通过直接操作物理地址来支持早期的库和函数</p>
-<h3 id="sys-map"><a href="#sys-map" class="headerlink" title="sys_map"></a>sys_map</h3><p>通过<code>find_free_area</code>找到用户空闲的虚拟地址空间，建立地址映射，将通过<code>sys_read</code>得到的文件内容写入物理地址中，最后返回虚拟地址的开头。</p>
-<h3 id="simple-hv"><a href="#simple-hv" class="headerlink" title="simple_hv"></a>simple_hv</h3><p>执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">riscv64-linux-gnu-objdump -d ./target/riscv64gc-unknown-none-elf/release/skernel2</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffffffc080200000:       f14025f3                csrr    a1,mhartid</span><br><span class="line">ffffffc080200004:       04003503                ld      a0,64(zero) # 40 &lt;_percpu_load_end+0x40&gt;</span><br></pre></td></tr></table></figure>
-<p>通过这两行可得出指令<code>csrr    a1,mhartid</code>长度为4</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffffffc080200004:       04003503                ld      a0,64(zero) # 40 &lt;_percpu_load_end+0x40&gt;</span><br><span class="line">ffffffc080200008:       48a1                    li      a7,8</span><br></pre></td></tr></table></figure>
-<p>这两行可知指令<code>ld      a0,64(zero)</code> 长度为4<br>因此需要在<br><code>vmexit_handler</code>中对<code>Exception::IllegalInstruction</code>和<code>Exception::LoadGuestPageFault</code>的处理中，将<code>sepc</code>的值加上4。<br>然后通过观察<code>Exception::VirtualSupervisorEnvCall</code>的处理分别设置寄存器<code>a1</code>和寄存器<code>a0</code>的数值即可。</p>
-<p>通过对hypervisor 的初步学习 加深了程序就是状态机的理解，程序的状态有寄存器和内存，对最简单的<code>Guest OS</code>的初始化无非就是对寄存器和内存的初始化</p>
-<h3 id="ramfs-rename"><a href="#ramfs-rename" class="headerlink" title="ramfs_rename"></a>ramfs_rename</h3><p>折腾了半天发现rename一直不会是当前工作区的实现<br>于是就在<code>arceos/exercises/ramfs_rename/Cargo.toml</code>中将</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axfs_ramfs &#x3D; &#123; version &#x3D; &quot;0.1&quot;, optional &#x3D; true &#125;</span><br></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axfs_ramfs &#x3D; &#123; workspace &#x3D; true, optional &#x3D; true &#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后发现还是不行</p>
-<p>发现由于<code>rename</code>是被<code>axfs</code>模块中的<code>rename</code>调用的，就将<code>axfs</code>的<code>Cargo.toml</code>也修改了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axfs_ramfs &#x3D; &#123; workspace &#x3D; true, optional &#x3D; true &#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后就可以了</p>
-<p>实现上来说就是需要通过<code>split_path</code>分离出路径，必须在相同的路径下才能修改名字</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/07/wyd-basic-stage-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/07/wyd-basic-stage-summary/" class="post-title-link" itemprop="url">项目基础阶段通过总结概述</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-07 07:10:51" itemprop="dateCreated datePublished" datetime="2025-11-07T07:10:51+00:00">2025-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="项目基础阶段通过总结概述"><a href="#项目基础阶段通过总结概述" class="headerlink" title="项目基础阶段通过总结概述"></a>项目基础阶段通过总结概述</h1><p>春季营因为忙于实验室项目没有完成训练营全部内容，秋季一定要弥补遗憾，通过训练营，善始善终。</p>
-<h2 id="Rust-编程阶段"><a href="#Rust-编程阶段" class="headerlink" title="Rust 编程阶段"></a>Rust 编程阶段</h2><p>这个阶段时间比较短，自己只是匆匆过了遍语法基础就去刷rustlings，之后有时间还要常复习。<br>没接触系统内核类项目之前，对rust语言没有太深感觉，只知道它比c++多些安全检查以及借用等特性，但是当真正在实战中用到这些特性才发现其厉害之处，尤其是编译阶段检测，这个会让开发者避开很多写代码时难以发现的错误（内存泄漏），以及锁的诸多包装，所有权控制等等。</p>
-<h2 id="OS-设计与实现"><a href="#OS-设计与实现" class="headerlink" title="OS 设计与实现"></a>OS 设计与实现</h2><ol>
-<li>ch3就是熟悉一下相关接口，会调用，加个系统syscall计数就行</li>
-<li>ch4 难点在于检查是否有未映射的页以及页对齐问题</li>
-<li>ch5 Systrace跨页遍历，需要特殊处理。另外就是记得引用模块要注意是否public，否则需要自己写一个让外部访问的接口函数。</li>
-<li>ch6 文件系统处理，最难的一个，需要自己补充很多文件系统的调用，比如inode相关方法，文件链接建立。</li>
-<li>ch8 死锁检测，实在太繁琐了这个接口层层调用。</li>
-</ol>
-<h2 id="组件化操作系统"><a href="#组件化操作系统" class="headerlink" title="组件化操作系统"></a>组件化操作系统</h2><p>我在写我们实验室项目 AlloyStack 时曾研究过arceos和ruxos，对模块化操作系统还是比较熟悉的。不过自己从裸机实现hello world到unikernel组件层层编译实现再到支持虚拟化（unikernel+guestkernel）。过一遍这个流程还是很有收获的，形成了更加清晰的组件化操作系统开发思路（可惜实验都是打打补丁，实现部分接口，主要还是看ppt一步步实现）。</p>
-<p>不过 Hypervisor实现在同一进程下还要在unikernel和guestkernel反复地址空间切换，感觉很影响性能，如果做到能统一编址（实现一个统一编址器）感觉会有很大性能提升。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>自我感觉操作系统内核之所以难写，是因为庞杂的系统调用以及层层嵌套的接口，要想在里面加些什么功能先要把调用逻辑链搞清楚，明白已知哪些信息，要用这些信息和手动实现算法组合出一个新模块，再像插插座一样把模块嵌入到这个内核当中。真的需要极大的耐心，幸运的是在agent时代，利用ai分析调用很方便，明确需求再让ai辅助去实现，轻松了不少，真的佩服那些真正一行行手搓内核的前辈，他们是计算机系统伟大的奠基人。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/06/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-Dirinkbottle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/06/2025%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E4%BA%8C%E9%98%B6%E6%AE%B5%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93%E6%8A%A5%E5%91%8A-Dirinkbottle/" class="post-title-link" itemprop="url">2025秋冬季开源操作系统训练营第一二阶段实验总结报告-Dirinkbottle</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-06 17:01:05" itemprop="dateCreated datePublished" datetime="2025-11-06T17:01:05+00:00">2025-11-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基础阶段-Rust编程"><a href="#基础阶段-Rust编程" class="headerlink" title="基础阶段-Rust编程"></a>基础阶段-Rust编程</h2><p><strong>难点：</strong> 从自由的C转向Rust的学习是一个比较艰难的过程，尤其是所有权系统。对我来说，习惯了C语言写代码后，所有权是Rust的第一个难点，不能再用C这么自由的内存管理了，需要仔细处理所有权问题，也是我学Rust最艰难的一段时期——和编译器斗智斗勇。</p>
-<p>但是Rust的所有权优点显而易见：</p>
-<ul>
-<li>Rust会自动管理内存，防止一些C普遍遗留的内存泄漏</li>
-<li>在系统编程中使用Rust可以完全避免悬垂指针等问题</li>
-<li>性能好，不逊于C</li>
-</ul>
-<p>Rust拥有好的工程管理工具Cargo，这对于系统开发有着减少大量工作量的作用，也利于实现之后的组件化操作系统Unikernel。</p>
-<p>在完成Rustling的练习之后，我的Rust编程能力得到很大的提升，为专业阶段的OS设计与实现打下了坚实的基础。</p>
-<h2 id="专业阶段-OS设计与实现"><a href="#专业阶段-OS设计与实现" class="headerlink" title="专业阶段-OS设计与实现"></a>专业阶段-OS设计与实现</h2><p>到了最喜欢的阶段了，OS的每个模块都深深地吸引着我。我花了10天的时间学完并且完成了rCore-Tutorial-Guide-2025S、rCore-Tutorial-Book-v3的大多数实验。我将rCore-Tutorial-Book-v3当作理论知识教学书，rCore-Tutorial-Guide-2025S当作实验手册。</p>
-<p><strong>令我印象最深的：</strong> 地址空间。依靠MMU给应用创建了一个虚拟的地址空间，应用本身以为拥有全世界，其实尽在操作系统的掌控之内！</p>
-<p>这个阶段也是我运用理论知识进行实践的一个开始。在完成大部分实验之后，我不满足在现有的框架内翻找API，并且希望更深一步地理解rCore。然后我打算学着rCore的思想自己写一个操作系统内核。那晚我开启了GitHub仓库，并且给我这个OS kernel命名为<strong>BlueStarOS</strong>！ 在此贴上链接<a href="https://github.com/Dirinkbottle/BlueStarOS" target="_blank" rel="noopener">https://github.com/Dirinkbottle/BlueStarOS</a></p>
-<p>我改装了rCore的Makefile快速搭建起了依赖和基础框架，基于RustSBI开始着手内核开发。在自己动手完成内核时，我才知道自己实现需要解决大量的问题。</p>
-<p><strong>碰到的最大难点：</strong> 调试困难，内核的小bug较难排查。</p>
-<p>遇到的问题：</p>
-<ul>
-<li>在我建立内核地址空间时，我错误地把PageTable的页号×页大小直接当作页表指针（也可能是当时脑袋发昏），导致之后切换页表后无法翻译内核地址空间的数据</li>
-<li>Rust中的编译优化导致的玄学问题，例如特意的占位符会被优化掉</li>
-<li>内存屏障问题…</li>
-</ul>
-<p>在此期间，我学会了如何快速使用QEMU配合GDB进行调试，GDB帮了大忙。之后我一直开发这个内核，到了目前基本完成了：</p>
-<ul>
-<li>内存管理</li>
-<li>系统调用</li>
-<li>陷阱处理</li>
-<li>大部分任务调度</li>
-<li>内存文件系统</li>
-</ul>
-<p>这些实现都是最小化的，利于我理解和学习。</p>
-<h2 id="项目基础阶段-组件化操作系统"><a href="#项目基础阶段-组件化操作系统" class="headerlink" title="项目基础阶段-组件化操作系统"></a>项目基础阶段-组件化操作系统</h2><p>得益于Rust高效便捷的包管理系统，组件化操作系统可以方便地实现。在这一阶段我主要学到了内核开发中组件化的思想。</p>
-<p><strong>组件化的优势：</strong></p>
-<ul>
-<li>不用手动造轮子实现每个组件，例如内存管理模块，这部分内核之间基本通用</li>
-<li>Unikernel的组件化赋予了它极其灵活的特性，既可以针对单个应用进行定制，让整个操作系统内核全部针对这个应用来设计</li>
-<li>不仅提高了应用的运行性能，而且还提升了应用的安全性</li>
-<li>Unikernel可以最小化组建应用的执行环境和运行环境然后快速上线</li>
-<li>去除了冗余功能和不必要的模块，正如一些文章所说，”我都没有shell你拿啥反弹”</li>
-<li>Unikernel也可以扩展为宏内核，拥有功能完备的操作系统所有该有的模块</li>
-</ul>
-<p><strong>这一阶段的实验难点：</strong> 项目文件比较大，系统结构较rCore有很大不同。我花了几天时间合理利用AI来帮助理解Unikernel的构建思想和分层以及一些小语法。在实验过程中我也对Unikernel的设计思想理解更深一步！</p>
-<p><strong>遇到的问题：</strong> 今天遇到了一个棘手的小问题，在simple-hv实验中完成实验后本地运行测试会卡住。这期间我修改了很多次代码依然如此。经过问题排查得知是QEMU的事件型驱动出的岔子，在用管道传递运行结果时大部分时间会卡住。调整了一下脚本就解决了问题。</p>
-<hr>
-<p>马上将要进入真正的项目阶段，我满怀期待，希望在项目阶段能学到更多的操作系统的知识！</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2025/11/04/arceOS-%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2025/11/04/arceOS-%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">arceOS 学习总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-04 06:28:59" itemprop="dateCreated datePublished" datetime="2025-11-04T06:28:59+00:00">2025-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-05-03 13:22:22" itemprop="dateModified" datetime="2026-05-03T13:22:22+00:00">2026-05-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/2025-%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5/" itemprop="url" rel="index"><span itemprop="name">2025 秋冬季开源操作系统训练营</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="arceOS-学习总结"><a href="#arceOS-学习总结" class="headerlink" title="arceOS 学习总结"></a>arceOS 学习总结</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>arceOS 是一个用 Rust 编写的模块化操作系统，与 rcore 相比，arceOS 采用了更加模块化的设计思路。</p>
-<p>这次学习 arceOS 的练习，我花了不少时间。虽然之前做过 rcore 的实验，但 arceOS 的模块化设计和实现方式还是让我遇到了不少挑战。特别是在虚拟化部分，两级地址转换机制让我困惑了很久，好在最后通过看源码和调试还有网站上的博客，终于理解了。</p>
-<p>这篇博客主要记录我在完成这些练习过程中的学习体会、遇到的问题以及解决思路。内核的学习实际上最重要的部分可能更是在于解决问题，也就是在针对特定问题的排查思路上。</p>
-<h2 id="练习概览"><a href="#练习概览" class="headerlink" title="练习概览"></a>练习概览</h2><p>本次学习完成了以下练习：</p>
-<ol>
-<li><strong>print_with_color</strong> - 带颜色的控制台输出</li>
-<li><strong>alt_alloc</strong> - 备用分配器测试</li>
-<li><strong>ramfs_rename</strong> - 文件系统重命名功能</li>
-<li><strong>support_hashmap</strong> - 内存管理测试</li>
-<li><strong>sys_map</strong> - 系统调用映射实现</li>
-<li><strong>simple_hv</strong> - 简单虚拟化器实现</li>
-</ol>
-<p>其中 <code>simple_hv</code> 是最复杂的，花了我最多时间。其他练习相对简单，但每个练习都让我对 arceOS 的设计有了更深入的理解。</p>
-<hr>
-<h2 id="练习一：print-with-color"><a href="#练习一：print-with-color" class="headerlink" title="练习一：print_with_color"></a>练习一：print_with_color</h2><h3 id="学习过程"><a href="#学习过程" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习看似简单，但一开始我也遇到了一些困惑。在无标准库（no_std）的环境下，如何实现带颜色的输出？我之前在 Linux 上用过 ANSI 转义序列，但在 Rust 的字符串字面量中如何表示 ESC 字符？</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>最终实现的代码很简单：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#![cfg_attr(feature = <span class="meta-string">"axstd"</span>, no_std)]</span></span><br><span class="line"><span class="meta">#![cfg_attr(feature = <span class="meta-string">"axstd"</span>, no_main)]</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[cfg(feature = <span class="meta-string">"axstd"</span>)]</span></span><br><span class="line"><span class="keyword">use</span> axstd::println;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[cfg_attr(feature = <span class="meta-string">"axstd"</span>, no_mangle)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="comment">// ANSI color code: \u&#123;1B&#125;[32m for green</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"\u&#123;1B&#125;[32m[WithColor]: Hello, Arceos!\u&#123;1B&#125;[m"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>关键点：</p>
-<ul>
-<li>使用<code>no_std</code>特性，不依赖标准库</li>
-<li>使用<code>axstd::println!</code>宏而不是标准库的<code>println!</code></li>
-<li>ANSI 转义序列使用 Unicode 转义<code>\u{1B}</code>表示 ESC 字符</li>
-</ul>
-<p>通过查看 arceOS 源码，我发现 arceOS 的打印系统（<code>axlog</code>模块）已经内置了对 ANSI 转义序列的支持，但<code>with_color!</code>宏是模块内部的私有宏，无法在外部直接使用。所以直接使用 ANSI 转义序列是合理的选择。</p>
-<h3 id="遇到的问题和解决方案"><a href="#遇到的问题和解决方案" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><h4 id="问题-1：Unicode-转义序列的写法"><a href="#问题-1：Unicode-转义序列的写法" class="headerlink" title="问题 1：Unicode 转义序列的写法"></a>问题 1：Unicode 转义序列的写法</h4><p><strong>问题</strong>：最初尝试使用<code>\x1B</code>但编译失败。</p>
-<p><strong>原因</strong>：Rust 中字符串字面量需要使用 Unicode 转义序列<code>\u{1B}</code>而不是十六进制转义<code>\x1B</code>。</p>
-<p><strong>解决</strong>：使用<code>\u{1B}</code>来表示 ESC 字符。</p>
-<h4 id="问题-2：颜色代码的理解"><a href="#问题-2：颜色代码的理解" class="headerlink" title="问题 2：颜色代码的理解"></a>问题 2：颜色代码的理解</h4><p><strong>问题</strong>：不清楚不同颜色对应的 ANSI 代码。</p>
-<p><strong>学习</strong>：</p>
-<ul>
-<li>30-37：标准颜色（黑、红、绿、黄、蓝、品红、青、白）</li>
-<li>90-97：亮色（高亮版本）</li>
-<li>32：绿色（本练习使用）</li>
-</ul>
-<h4 id="问题-3：终端是否支持颜色"><a href="#问题-3：终端是否支持颜色" class="headerlink" title="问题 3：终端是否支持颜色"></a>问题 3：终端是否支持颜色</h4><p><strong>问题</strong>：在某些终端中，ANSI 转义序列可能被过滤或不被支持。</p>
-<p><strong>解决</strong>：测试脚本会检查输出中是否实际包含 ANSI 转义序列，确保不仅输出了文本，还输出了颜色控制码。</p>
-<h3 id="学习感悟"><a href="#学习感悟" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>这个练习虽然简单，但让我理解了 arceOS 的模块化设计。即使是简单的功能，也需要考虑底层实现。另外，在 Rust 中表示特殊字符需要使用 Unicode 转义，这也是一个小的知识点。</p>
-<hr>
-<h2 id="练习二：alt-alloc"><a href="#练习二：alt-alloc" class="headerlink" title="练习二：alt_alloc"></a>练习二：alt_alloc</h2><h3 id="学习过程-1"><a href="#学习过程-1" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习主要是测试备用分配器（bump allocator）的功能。虽然代码很简单，但让我理解了 arceOS 的模块化设计——可以通过 feature 标志在编译时选择不同的分配器实现。</p>
-<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#![cfg_attr(feature &#x3D; &quot;axstd&quot;, no_std)]</span><br><span class="line">#![cfg_attr(feature &#x3D; &quot;axstd&quot;, no_main)]</span><br><span class="line"></span><br><span class="line">#[macro_use]</span><br><span class="line">#[cfg(feature &#x3D; &quot;axstd&quot;)]</span><br><span class="line">extern crate axstd as std;</span><br><span class="line">extern crate alloc;</span><br><span class="line"></span><br><span class="line">use alloc::vec::Vec;</span><br><span class="line"></span><br><span class="line">#[cfg_attr(feature &#x3D; &quot;axstd&quot;, no_mangle)]</span><br><span class="line">fn main() &#123;</span><br><span class="line">    println!(&quot;Running bump tests...&quot;);</span><br><span class="line"></span><br><span class="line">    const N: usize &#x3D; 3_000_000;</span><br><span class="line">    let mut v &#x3D; Vec::with_capacity(N);</span><br><span class="line">    for i in 0..N &#123;</span><br><span class="line">        v.push(i);</span><br><span class="line">    &#125;</span><br><span class="line">    v.sort();</span><br><span class="line">    for i in 0..N - 1 &#123;</span><br><span class="line">        assert!(v[i] &lt;&#x3D; v[i + 1]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println!(&quot;Bump tests run OK!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题和解决方案-1"><a href="#遇到的问题和解决方案-1" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><p><strong>问题</strong>：在分配 300 万个元素时，程序偶尔会崩溃。</p>
-<p><strong>原因</strong>：bump allocator 是线性分配器，在内存不足时会失败。</p>
-<p><strong>解决</strong>：通过查看 <code>alt_axalloc</code> 的源码，理解了 bump allocator 的工作原理。它从内存池的一端开始分配，只能向前推进，不能释放单个分配。这让我理解了为什么需要不同的分配器策略。</p>
-<h3 id="学习感悟-1"><a href="#学习感悟-1" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>这个练习虽然简单，但让我看到了 arceOS 模块化设计的优势。通过 feature 标志，可以在编译时选择不同的实现，这种设计非常灵活。</p>
-<hr>
-<h2 id="练习三：ramfs-rename"><a href="#练习三：ramfs-rename" class="headerlink" title="练习三：ramfs_rename"></a>练习三：ramfs_rename</h2><h3 id="学习过程-2"><a href="#学习过程-2" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习主要是实现文件系统重命名功能。一开始我以为会很简单，但实际做起来发现需要理解 arceOS 的文件系统抽象。特别是 <code>ramfs.rs</code> 的实现，让我理解了文件系统接口的设计。</p>
-<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">fn create_file(fname: &amp;str, text: &amp;str) -&gt; io::Result&lt;()&gt; &#123;</span><br><span class="line">    println!(&quot;Create &#39;&#123;&#125;&#39; and write [&#123;&#125;] ...&quot;, fname, text);</span><br><span class="line">    let mut file &#x3D; File::create(fname)?;</span><br><span class="line">    file.write_all(text.as_bytes())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Only support rename, NOT move.</span><br><span class="line">fn rename_file(src: &amp;str, dst: &amp;str) -&gt; io::Result&lt;()&gt; &#123;</span><br><span class="line">    println!(&quot;Rename &#39;&#123;&#125;&#39; to &#39;&#123;&#125;&#39; ...&quot;, src, dst);</span><br><span class="line">    fs::rename(src, dst)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn print_file(fname: &amp;str) -&gt; io::Result&lt;()&gt; &#123;</span><br><span class="line">    let mut buf &#x3D; [0; 1024];</span><br><span class="line">    let mut file &#x3D; File::open(fname)?;</span><br><span class="line">    loop &#123;</span><br><span class="line">        let n &#x3D; file.read(&amp;mut buf)?;</span><br><span class="line">        if n &gt; 0 &#123;</span><br><span class="line">            print!(&quot;Read &#39;&#123;&#125;&#39; content: [&quot;, fname);</span><br><span class="line">            io::stdout().write_all(&amp;buf[..n])?;</span><br><span class="line">            println!(&quot;] ok!&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return Ok(());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn process() -&gt; io::Result&lt;()&gt; &#123;</span><br><span class="line">    create_file(&quot;&#x2F;tmp&#x2F;f1&quot;, &quot;hello&quot;)?;</span><br><span class="line">    &#x2F;&#x2F; Just rename, NOT move.</span><br><span class="line">    &#x2F;&#x2F; So this must happen in the same directory.</span><br><span class="line">    rename_file(&quot;&#x2F;tmp&#x2F;f1&quot;, &quot;&#x2F;tmp&#x2F;f2&quot;)?;</span><br><span class="line">    print_file(&quot;&#x2F;tmp&#x2F;f2&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题和解决方案-2"><a href="#遇到的问题和解决方案-2" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><p><strong>问题</strong>：最初不理解为什么需要 <code>ramfs.rs</code> 这个文件，以及它和主代码的关系。</p>
-<p><strong>原因</strong>：arceOS 使用 trait 来抽象文件系统，需要实现 <code>MyFileSystemIf</code> trait。</p>
-<p><strong>解决</strong>：通过查看 <code>ramfs.rs</code> 的代码，理解了文件系统接口的设计。它使用 <code>crate_interface::impl_interface</code> 来实现接口，这是 arceOS 模块化设计的一部分。</p>
-<h3 id="学习感悟-2"><a href="#学习感悟-2" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>通过这个练习，我理解了 arceOS 文件系统的抽象设计。虽然实现简单，但背后的设计理念很清晰。在 no_std 环境下实现类似标准库的 API，这种设计很优雅。</p>
-<hr>
-<h2 id="练习四：support-hashmap"><a href="#练习四：support-hashmap" class="headerlink" title="练习四：support_hashmap"></a>练习四：support_hashmap</h2><h3 id="学习过程-3"><a href="#学习过程-3" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习主要是测试 arceOS 对集合类型（BTreeMap）的支持。虽然代码很简单，但让我理解了 arceOS 如何在 no_std 环境下提供标准库的替代实现。</p>
-<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">fn test_hashmap() &#123;</span><br><span class="line">    const N: u32 &#x3D; 50_000;</span><br><span class="line">    let mut m &#x3D; BTreeMap::new();</span><br><span class="line">    for value in 0..N &#123;</span><br><span class="line">        let key &#x3D; format!(&quot;key_&#123;value&#125;&quot;);</span><br><span class="line">        m.insert(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">    for (k, v) in m.iter() &#123;</span><br><span class="line">        if let Some(k) &#x3D; k.strip_prefix(&quot;key_&quot;) &#123;</span><br><span class="line">            assert_eq!(k.parse::&lt;u32&gt;().unwrap(), *v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    println!(&quot;test_hashmap() OK!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题和解决方案-3"><a href="#遇到的问题和解决方案-3" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><p><strong>问题</strong>：在插入大量数据时，程序运行时间较长。</p>
-<p><strong>原因</strong>：BTreeMap 使用 B 树实现，插入操作需要维护树结构。</p>
-<p><strong>解决</strong>：通过测试，理解了 BTreeMap 的性能特征。虽然插入较慢，但查找和遍历操作比较高效。</p>
-<h3 id="学习感悟-3"><a href="#学习感悟-3" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>这个练习让我理解了 arceOS 如何提供标准库的替代实现。在 no_std 环境下，需要自己实现这些数据结构，但这种设计让系统更加可控。</p>
-<hr>
-<h2 id="练习五：sys-map"><a href="#练习五：sys-map" class="headerlink" title="练习五：sys_map"></a>练习五：sys_map</h2><h3 id="学习过程-4"><a href="#学习过程-4" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习比较复杂，涉及系统调用的实现。一开始我对用户程序加载和地址空间管理不太理解，特别是 <code>sys_mmap</code> 的实现，花了我不少时间。</p>
-<h3 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h3><p>这个练习主要包括：</p>
-<ol>
-<li>用户程序加载：从文件系统加载 ELF 文件到用户地址空间</li>
-<li>系统调用处理：实现 <code>mmap</code>、<code>open</code>、<code>read</code>、<code>write</code>、<code>exit</code> 等系统调用</li>
-<li>内存映射：实现 <code>sys_mmap</code>，支持匿名映射和文件映射</li>
-</ol>
-<h3 id="关键实现-sys-mmap"><a href="#关键实现-sys-mmap" class="headerlink" title="关键实现 - sys_mmap"></a>关键实现 - sys_mmap</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#[allow(unused_variables)]</span><br><span class="line">fn sys_mmap(</span><br><span class="line">    addr: *mut usize,</span><br><span class="line">    length: usize,</span><br><span class="line">    prot: i32,</span><br><span class="line">    flags: i32,</span><br><span class="line">    fd: i32,</span><br><span class="line">    _offset: isize,</span><br><span class="line">) -&gt; isize &#123;</span><br><span class="line">    syscall_body!(sys_mmap, &#123;</span><br><span class="line">        &#x2F;&#x2F; Get the user space address space</span><br><span class="line">        let curr &#x3D; current();</span><br><span class="line">        let task_ext &#x3D; curr.task_ext();</span><br><span class="line">        let mut aspace &#x3D; task_ext.aspace.lock();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Parse flags</span><br><span class="line">        let mmap_flags &#x3D; MmapFlags::from_bits_truncate(flags);</span><br><span class="line">        let mmap_prot &#x3D; MmapProt::from_bits_truncate(prot);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Align address and size to page boundaries first</span><br><span class="line">        let aligned_length &#x3D; (length + PAGE_SIZE_4K - 1) &amp; !(PAGE_SIZE_4K - 1);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Allocate virtual address if addr is NULL</span><br><span class="line">        let aligned_vaddr &#x3D; if !addr.is_null() &#123;</span><br><span class="line">            VirtAddr::from(addr as usize).align_down_4k()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            &#x2F;&#x2F; Find a suitable virtual address below stack</span><br><span class="line">            &#x2F;&#x2F; Stack is at [aspace.end() - USER_STACK_SIZE, aspace.end())</span><br><span class="line">            &#x2F;&#x2F; So we place mmap at aspace.end() - USER_STACK_SIZE - aligned_length</span><br><span class="line">            (aspace.end() - USER_STACK_SIZE - aligned_length).align_down_4k()</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; Map the memory</span><br><span class="line">        let mapping_flags &#x3D; MappingFlags::from(mmap_prot) | MappingFlags::USER;</span><br><span class="line">        aspace.map_alloc(aligned_vaddr, aligned_length, mapping_flags, true)?;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; If it&#39;s a file mapping, read the file and write to the mapped memory</span><br><span class="line">        if !mmap_flags.contains(MmapFlags::MAP_ANONYMOUS) &amp;&amp; fd &gt;&#x3D; 0 &#123;</span><br><span class="line">            &#x2F;&#x2F; Read from file</span><br><span class="line">            let mut data &#x3D; vec![0u8; aligned_length];</span><br><span class="line">            let mut read_count &#x3D; 0;</span><br><span class="line">            while read_count &lt; length &#123;</span><br><span class="line">                let buf &#x3D; &amp;mut data[read_count..];</span><br><span class="line">                let n &#x3D; api::sys_read(fd, buf.as_mut_ptr() as *mut c_void, buf.len());</span><br><span class="line">                if n &lt;&#x3D; 0 &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                read_count +&#x3D; n as usize;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; Write to mapped memory</span><br><span class="line">            aspace.write(aligned_vaddr, &amp;data[..read_count])?;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Ok(aligned_vaddr.as_usize())</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遇到的问题和解决方案-4"><a href="#遇到的问题和解决方案-4" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><p><strong>问题 1</strong>：<code>sys_mmap</code> 的地址对齐问题</p>
-<p><strong>原因</strong>：内存映射需要按页对齐，但用户传入的地址和长度可能不对齐。</p>
-<p><strong>解决</strong>：使用 <code>align_down_4k()</code> 和按页对齐长度：<code>(length + PAGE_SIZE_4K - 1) &amp; !(PAGE_SIZE_4K - 1)</code></p>
-<p><strong>问题 2</strong>：文件映射的实现</p>
-<p><strong>问题</strong>：如何将文件内容映射到内存？</p>
-<p><strong>解决</strong>：先读取文件内容到缓冲区，然后使用 <code>aspace.write()</code> 写入映射的内存区域。</p>
-<p><strong>问题 3</strong>：虚拟地址分配</p>
-<p><strong>问题</strong>：当 <code>addr</code> 为 NULL 时，如何选择合适的虚拟地址？</p>
-<p><strong>解决</strong>：在栈下方分配，计算 <code>aspace.end() - USER_STACK_SIZE - aligned_length</code>，确保不与栈冲突。</p>
-<h3 id="学习感悟-4"><a href="#学习感悟-4" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>这个练习让我深入理解了系统调用的实现机制。特别是地址空间管理和内存映射，让我对操作系统内核有了更深入的理解。在实现过程中，需要仔细处理地址对齐、权限等问题，这些都是系统编程中需要注意的细节。</p>
-<hr>
-<h2 id="练习六：simple-hv"><a href="#练习六：simple-hv" class="headerlink" title="练习六：simple_hv"></a>练习六：simple_hv</h2><h3 id="学习过程-5"><a href="#学习过程-5" class="headerlink" title="学习过程"></a>学习过程</h3><p>这个练习是最复杂的，花了我最多时间。一开始我对虚拟化的概念不太理解，特别是两级地址转换机制，让我困惑了很久。看了很多资料，包括 RISC-V 虚拟化扩展规范，才慢慢理解了。</p>
-<p>后来在调试过程中，遇到了很多问题，比如 <code>htinst</code> 寄存器不可用、地址转换错误等。好在最后通过看源码和调试，终于理解了。</p>
-<h3 id="实现-5"><a href="#实现-5" class="headerlink" title="实现"></a>实现</h3><p>这个练习涉及虚拟化技术的多个核心方面：</p>
-<ol>
-<li><strong>客户机镜像加载</strong>：从文件系统加载 ELF 或二进制格式的客户机镜像</li>
-<li><strong>地址转换</strong>：实现两级地址转换（GVA → GPA → HPA）</li>
-<li><strong>虚拟 CPU 管理</strong>：保存和恢复虚拟 CPU 的寄存器状态</li>
-<li><strong>陷阱处理</strong>：处理客户机产生的陷阱，包括非法指令、页面错误、环境调用等</li>
-</ol>
-<p>关键点：</p>
-<ul>
-<li>使用身份映射（GPA = HPA）简化实现</li>
-<li>禁用 VSATP，让客户机直接使用 GPA</li>
-<li>通过指令模拟实现特权指令的功能</li>
-</ul>
-<h3 id="遇到的问题和解决方案-5"><a href="#遇到的问题和解决方案-5" class="headerlink" title="遇到的问题和解决方案"></a>遇到的问题和解决方案</h3><h4 id="问题-1：地址转换的复杂性"><a href="#问题-1：地址转换的复杂性" class="headerlink" title="问题 1：地址转换的复杂性"></a>问题 1：地址转换的复杂性</h4><p><strong>问题</strong>：最初不理解两级地址转换的工作原理，特别是 VSATP 和 HGATP 的关系。</p>
-<p><strong>原因</strong>：RISC-V H 扩展的地址转换机制比较复杂，需要理解：</p>
-<ul>
-<li>VSATP 将 GVA 转换为 GPA</li>
-<li>HGATP 将 GPA 转换为 HPA</li>
-<li>两者需要配合工作</li>
-</ul>
-<p><strong>解决</strong>：</p>
-<ul>
-<li>通过阅读 RISC-V 虚拟化扩展规范理解地址转换流程</li>
-<li>使用身份映射简化实现</li>
-<li>在代码中添加详细注释说明地址转换过程</li>
-</ul>
-<h4 id="问题-2：htinst-寄存器不可用"><a href="#问题-2：htinst-寄存器不可用" class="headerlink" title="问题 2：htinst 寄存器不可用"></a>问题 2：htinst 寄存器不可用</h4><p><strong>问题</strong>：当 VSATP 禁用时，<code>htinst</code> 寄存器可能为 0，无法获取导致非法指令异常的指令。</p>
-<p><strong>原因</strong>：<code>htinst</code> 寄存器在某些情况下（如 VSATP 禁用）可能不包含有效信息。</p>
-<p><strong>解决</strong>：</p>
-<ul>
-<li>检查 <code>htinst</code> 是否为 0</li>
-<li>如果为 0，从 <code>sepc</code> 指定的物理地址读取指令</li>
-<li>使用内核的直接映射将 GPA 转换为 KVA 后读取</li>
-</ul>
-<h4 id="问题-3：身份映射的必要性"><a href="#问题-3：身份映射的必要性" class="headerlink" title="问题 3：身份映射的必要性"></a>问题 3：身份映射的必要性</h4><p><strong>问题</strong>：不理解为什么需要为 GPA 创建身份映射。</p>
-<p><strong>原因</strong>：HGATP 使用 GPA 作为虚拟地址来访问页表，因此需要将 GPA 映射到 HPA（在身份映射中，GPA = HPA）。</p>
-<p><strong>解决</strong>：</p>
-<ul>
-<li>理解 HGATP 的地址转换机制</li>
-<li>为页表根和入口地址创建身份映射</li>
-<li>确保 HGATP 可以正确访问页表页面</li>
-</ul>
-<h3 id="学习感悟-5"><a href="#学习感悟-5" class="headerlink" title="学习感悟"></a>学习感悟</h3><p>通过这个练习，我深入理解了虚拟化技术的核心原理。特别是两级地址转换机制，让我对 RISC-V H 扩展有了更深入的理解。</p>
-<p>在调试过程中，我学会了如何排查虚拟化相关的问题，包括地址转换错误、寄存器状态错误等。这些经验对我理解操作系统内核非常有帮助。</p>
-<p>虽然这个练习很复杂，但完成后的成就感也很强。虚拟化是操作系统中最复杂的技术之一，通过这个练习，我对操作系统有了更深入的理解。</p>
-<hr>
-<h2 id="总体学习收获"><a href="#总体学习收获" class="headerlink" title="总体学习收获"></a>总体学习收获</h2><p>通过完成这些练习，我学到了很多：</p>
-<ol>
-<li><p><strong>模块化设计</strong>：arceOS 的模块化设计让我印象深刻。通过 feature 标志，可以在编译时选择不同的实现，这种设计非常灵活。</p>
-</li>
-<li><p><strong>no_std 环境编程</strong>：理解了在无标准库环境下如何实现常用功能。虽然代码量增加了，但这种设计让系统更加可控。</p>
-</li>
-<li><p><strong>底层系统编程</strong>：深入理解了操作系统核心机制，包括内存管理、进程管理、虚拟化等。这些知识对我理解操作系统内核非常有帮助。</p>
-</li>
-<li><p><strong>问题解决能力</strong>：在调试过程中，我学会了如何排查系统级问题。特别是通过看源码和调试，理解了很多之前不理解的概念。</p>
-</li>
-<li><p><strong>Rust 系统编程</strong>：通过实践加深了对 Rust 在系统编程中的应用理解。Rust 的所有权系统和类型安全，让系统编程更加安全。</p>
-</li>
-</ol>
-<h2 id="后续思考"><a href="#后续思考" class="headerlink" title="后续思考"></a>后续思考</h2><p>arceOS 的模块化设计给我留下了深刻印象。即使是简单的功能，也需要考虑底层实现。这种设计使得每个组件都可以独立测试和替换，为系统开发和调试带来了极大的便利。</p>
-<p>通过这次学习，我不仅掌握了操作系统的基本原理，还深入理解了 Rust 在系统编程中的优势。内核的学习实际上最重要的部分可能更是在于解决问题，也就是在针对特定问题的排查思路上。</p>
-<p>很感谢这次训练营的主办方，给了这么好的学习机会。虽然学习过程中遇到了很多困难，但完成后的成就感也很强。未来如果有机会，我还会继续深入学习操作系统内核。</p>
 
       
     </div>
@@ -1348,6 +1781,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
