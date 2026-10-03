@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"rcore-os.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="相当于写给刚接触编译内核的萌新，以及附带一些常用的基本工具...">
+  <meta name="description" content="写给刚接触编译&#x2F;内核的初学者，附带一些常用基本工具...">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lfan-ke: 动态链接 静态链接 ELF文件 EXE文件">
 <meta property="og:url" content="http://rcore-os.github.io/blog/2025/07/10/Lfan-ke%EF%BC%9A%E5%8A%A8%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="rcore-os Blog">
-<meta property="og:description" content="相当于写给刚接触编译内核的萌新，以及附带一些常用的基本工具...">
+<meta property="og:description" content="写给刚接触编译&#x2F;内核的初学者，附带一些常用基本工具...">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-10T01:01:01.000Z">
-<meta property="article:modified_time" content="2026-06-28T04:03:07.415Z">
+<meta property="article:modified_time" content="2026-10-03T16:56:14.714Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="repo:https:&#x2F;&#x2F;github.com&#x2F;Lfan-ke">
 <meta property="article:tag" content="author:唤星">
@@ -178,7 +178,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-从-hello-c-到能跑，到底经历了什么"><span class="nav-number">1.</span> <span class="nav-text">0. 从 hello.c 到能跑，到底经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-编译四阶段-——-别把”编译”和”汇编”并成一步"><span class="nav-number">2.</span> <span class="nav-text">1. 编译四阶段 —— 别把”编译”和”汇编”并成一步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-停在-o-vs-一路到可执行-——-差的就是「链接」"><span class="nav-number">2.1.</span> <span class="nav-text">-c 停在 .o vs 一路到可执行 —— 差的就是「链接」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插曲：crt1-o-vs-Scrt1-o（crt-全家）"><span class="nav-number">2.1.1.</span> <span class="nav-text">插曲：crt1.o vs Scrt1.o（crt 全家）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-文件类型全家谱（Linux-↔-Windows）"><span class="nav-number">3.</span> <span class="nav-text">2. 文件类型全家谱（Linux ↔ Windows）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-o-为什么自己不能跑"><span class="nav-number">4.</span> <span class="nav-text">3. .o 为什么自己不能跑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-静态-vs-动态链接（核心）"><span class="nav-number">5.</span> <span class="nav-text">4. 静态 vs 动态链接（核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-ELF-文件结构详解"><span class="nav-number">6.</span> <span class="nav-text">5. ELF 文件结构详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态链接专用-section-详解（ld-so-的工作底图）"><span class="nav-number">6.1.</span> <span class="nav-text">动态链接专用 section 详解（ld.so 的工作底图）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-跳转表在哪-动态链接机制"><span class="nav-number">7.</span> <span class="nav-text">6. 跳转表在哪 + 动态链接机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用-RISC-V-交叉编译看真汇编（对应上面的-mermaid）"><span class="nav-number">7.1.</span> <span class="nav-text">用 RISC-V 交叉编译看真汇编（对应上面的 mermaid）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-内核如何-load-ld-so-如何-link-程序如何-run"><span class="nav-number">8.</span> <span class="nav-text">7. 内核如何 load + ld.so 如何 link + 程序如何 run</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-so-是怎么被多进程共享的"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 .so 是怎么被多进程共享的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-ld-so-找库的顺序-加载步骤"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 ld.so 找库的顺序 + 加载步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-深入：-so-怎么进到「公共映射页」（page-cache-mmap）"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 深入：.so 怎么进到「公共映射页」（page cache + mmap）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#再往下钻：缺页那一刻，内核到底做了什么"><span class="nav-number">8.3.1.</span> <span class="nav-text">再往下钻：缺页那一刻，内核到底做了什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-实例：两程序两库，看「共享」与「私有」"><span class="nav-number">8.4.</span> <span class="nav-text">7.4 实例：两程序两库，看「共享」与「私有」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态地址回填：一步步看-ld-so-怎么填-GOT"><span class="nav-number">8.4.1.</span> <span class="nav-text">动态地址回填：一步步看 ld.so 怎么填 GOT</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-dlopen：运行中手动加载（插件机制）"><span class="nav-number">8.5.</span> <span class="nav-text">7.5 dlopen：运行中手动加载（插件机制）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-交叉编译与目标三元组"><span class="nav-number">9.</span> <span class="nav-text">8. 交叉编译与目标三元组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-工具链全家"><span class="nav-number">10.</span> <span class="nav-text">9. 工具链全家</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-构建系统-——-别手敲-gcc"><span class="nav-number">11.</span> <span class="nav-text">10. 构建系统 —— 别手敲 gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-速查-坑清单"><span class="nav-number">12.</span> <span class="nav-text">11. 速查 + 坑清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-思考题"><span class="nav-number">13.</span> <span class="nav-text">12. 思考题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考答案"><span class="nav-number">13.1.</span> <span class="nav-text">参考答案</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-从-hello-c-到能跑，到底经历了什么"><span class="nav-number">1.</span> <span class="nav-text">0. 从 hello.c 到能跑，到底经历了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-编译四阶段-——-别把”编译”和”汇编”并成一步"><span class="nav-number">2.</span> <span class="nav-text">1. 编译四阶段 —— 别把”编译”和”汇编”并成一步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-停在-o-vs-一路到可执行-——-差的就是「链接」"><span class="nav-number">2.1.</span> <span class="nav-text">-c 停在 .o vs 一路到可执行 —— 差的就是「链接」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插曲：crt1-o-vs-Scrt1-o（crt-全家）"><span class="nav-number">2.1.1.</span> <span class="nav-text">插曲：crt1.o vs Scrt1.o（crt 全家）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-文件类型全家谱（Linux-↔-Windows）"><span class="nav-number">3.</span> <span class="nav-text">2. 文件类型全家谱（Linux ↔ Windows）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-o-为什么自己不能跑"><span class="nav-number">4.</span> <span class="nav-text">3. .o 为什么自己不能跑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-静态-vs-动态链接（核心）"><span class="nav-number">5.</span> <span class="nav-text">4. 静态 vs 动态链接（核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-ELF-文件结构详解"><span class="nav-number">6.</span> <span class="nav-text">5. ELF 文件结构详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态链接专用-section-详解（ld-so-的工作底图）"><span class="nav-number">6.1.</span> <span class="nav-text">动态链接专用 section 详解（ld.so 的工作底图）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-跳转表在哪-动态链接机制"><span class="nav-number">7.</span> <span class="nav-text">6. 跳转表在哪 + 动态链接机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用-RISC-V-交叉编译看真汇编（对应上面的-mermaid）"><span class="nav-number">7.1.</span> <span class="nav-text">用 RISC-V 交叉编译看真汇编（对应上面的 mermaid）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-内核如何-load-ld-so-如何-link-程序如何-run"><span class="nav-number">8.</span> <span class="nav-text">7. 内核如何 load + ld.so 如何 link + 程序如何 run</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-so-是怎么被多进程共享的"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 .so 是怎么被多进程共享的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-ld-so-找库的顺序-加载步骤"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 ld.so 找库的顺序 + 加载步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-深入：-so-怎么进到「公共映射页」（page-cache-mmap）"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 深入：.so 怎么进到「公共映射页」（page cache + mmap）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进一步深入：缺页那一刻，内核到底做了什么"><span class="nav-number">8.3.1.</span> <span class="nav-text">进一步深入：缺页那一刻，内核到底做了什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-实例：两程序两库，看「共享」与「私有」"><span class="nav-number">8.4.</span> <span class="nav-text">7.4 实例：两程序两库，看「共享」与「私有」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态地址回填：一步步看-ld-so-怎么填-GOT"><span class="nav-number">8.4.1.</span> <span class="nav-text">动态地址回填：一步步看 ld.so 怎么填 GOT</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-dlopen：运行中手动加载（插件机制）"><span class="nav-number">8.5.</span> <span class="nav-text">7.5 dlopen：运行中手动加载（插件机制）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-交叉编译与目标三元组"><span class="nav-number">9.</span> <span class="nav-text">8. 交叉编译与目标三元组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-工具链全家"><span class="nav-number">10.</span> <span class="nav-text">9. 工具链全家</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-构建系统-——-别手敲-gcc"><span class="nav-number">11.</span> <span class="nav-text">10. 构建系统 —— 别手敲 gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-速查-坑清单"><span class="nav-number">12.</span> <span class="nav-text">11. 速查 + 坑清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-思考题"><span class="nav-number">13.</span> <span class="nav-text">12. 思考题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考答案"><span class="nav-number">13.1.</span> <span class="nav-text">参考答案</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -192,20 +192,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">777</span>
+          <span class="site-state-item-count">792</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">240</span>
+        <span class="site-state-item-count">298</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">721</span>
+        <span class="site-state-item-count">770</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -272,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-06-28 04:03:07" itemprop="dateModified" datetime="2026-06-28T04:03:07+00:00">2026-06-28</time>
+                <time title="Modified: 2026-10-03 16:56:14" itemprop="dateModified" datetime="2026-10-03T16:56:14+00:00">2026-10-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,40 +280,40 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/" itemprop="url" rel="index"><span itemprop="name">Leo Cheng</span></a>
+                  <a href="/blog/categories/Lfan-ke/" itemprop="url" rel="index"><span itemprop="name">Lfan-ke</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/" itemprop="url" rel="index"><span itemprop="name">Beginner</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/" itemprop="url" rel="index"><span itemprop="name">Beginner</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">常用知识</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">常用知识</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/" itemprop="url" rel="index"><span itemprop="name">o/obj</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/" itemprop="url" rel="index"><span itemprop="name">o/obj</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/" itemprop="url" rel="index"><span itemprop="name">a/lib</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/" itemprop="url" rel="index"><span itemprop="name">a/lib</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/" itemprop="url" rel="index"><span itemprop="name">so/dll</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/" itemprop="url" rel="index"><span itemprop="name">so/dll</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/ko-sys/" itemprop="url" rel="index"><span itemprop="name">ko/sys</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/ko-sys/" itemprop="url" rel="index"><span itemprop="name">ko/sys</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/ko-sys/elf-exe/" itemprop="url" rel="index"><span itemprop="name">elf/exe</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/o-obj/a-lib/so-dll/ko-sys/elf-exe/" itemprop="url" rel="index"><span itemprop="name">elf/exe</span></a>
                 </span>
             </span>
 
           
-            <div class="post-description">相当于写给刚接触编译内核的萌新，以及附带一些常用的基本工具...</div>
+            <div class="post-description">写给刚接触编译/内核的初学者，附带一些常用基本工具...</div>
 
         </div>
       </header>
@@ -327,11 +327,11 @@
         <a id="more"></a>
 
 <blockquote>
-<p>接上篇《烧镜像挂载》——那篇我们见了 ELF 的 <code>vmlinux</code>、以及能被 UEFI 当 PE 加载的 <code>Image</code>、还提了 <code>.ko</code>（内核模块/驱动）。这篇回答：<strong>这些文件是怎么从源码生出来的，又怎么拼到一起跑起来的</strong>。以 Linux/ELF 为主线，Windows 侧随手对照。</p>
+<p>ELF 的 <code>vmlinux</code>、能被 UEFI 当 PE 加载的 <code>Image</code>、以及 <code>.ko</code>（内核模块/驱动）这些文件，<strong>是怎么从源码生出来、又怎么拼到一起跑起来的</strong>？以 Linux/ELF 为说明对象，Windows 侧对照。</p>
 </blockquote>
 <h2 id="0-从-hello-c-到能跑，到底经历了什么"><a href="#0-从-hello-c-到能跑，到底经历了什么" class="headerlink" title="0. 从 hello.c 到能跑，到底经历了什么"></a>0. 从 <code>hello.c</code> 到能跑，到底经历了什么</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    C[&quot;hello.c&quot;] --&gt;|预处理 cpp| I[&quot;hello.i&quot;]</span><br><span class="line">    I --&gt;|编译 cc1| S[&quot;hello.s 汇编文本&quot;]</span><br><span class="line">    S --&gt;|汇编 as| O[&quot;.o 目标文件&quot;]</span><br><span class="line">    O --&gt;|链接 ld| E[&quot;可执行 ELF&quot;]</span><br><span class="line">    A[&quot;.a &#x2F; 库.o&quot;] -. 静态链接·塞进去 .-&gt; E</span><br><span class="line">    SO[&quot;.so 动态库&quot;] -. 运行时·ld.so 加载 .-&gt; E</span><br></pre></td></tr></table></figure>
 
-<p>一句话：<strong>编译把”人话”翻成”机器话”，链接把”一堆零件”拼成”一个整机”。</strong> 下面逐段拆。</p>
+<p>一句话：<strong>编译把源码翻成机器码，链接把一堆零件拼成一台整机。</strong></p>
 <hr>
 <h2 id="1-编译四阶段-——-别把”编译”和”汇编”并成一步"><a href="#1-编译四阶段-——-别把”编译”和”汇编”并成一步" class="headerlink" title="1. 编译四阶段 —— 别把”编译”和”汇编”并成一步"></a>1. 编译四阶段 —— 别把”编译”和”汇编”并成一步</h2><table>
 <thead>
@@ -370,9 +370,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i     <span class="comment"># 只预处理 → 看宏展开后长啥样</span></span><br><span class="line">gcc -S hello.c -o hello.s     <span class="comment"># 停在汇编(.s 是文本,能读)</span></span><br><span class="line">gcc -c hello.c -o hello.o     <span class="comment"># 停在目标文件(.o)</span></span><br><span class="line">gcc    hello.c -o hello       <span class="comment"># 一路到可执行</span></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>编译</strong>出的是<strong>汇编文本</strong> <code>.s</code>（可读），<strong>汇编器</strong> <code>as</code> 才把它变 <code>.o</code> 机器码——这俩是两步（<code>gcc -S</code> vs <code>gcc -c</code> 一眼分得开）。</li>
+<li><strong>编译</strong>出的是<strong>汇编文本</strong> <code>.s</code>（可读），<strong>汇编器</strong> <code>as</code> 才把它变 <code>.o</code> 机器码——这俩是两步（<code>gcc -S</code> vs <code>gcc -c</code> 可清楚区分）。</li>
 <li><strong>链接</strong>做两件事：① 把各 <code>.o</code> 里”欠的符号”（如 <code>puts</code>）找到定义；② 按<strong>链接脚本</strong>给各段分配最终地址（哪段进代码区、哪段进数据区；嵌入式里还指定 flash/ram 地址）。</li>
-<li><code>objcopy -O binary</code> 再把 ELF 的多余段/符号去掉 → <strong>裸二进制</strong>（PC 一路递增即可执行）——这正是上篇的 <code>Image</code>！</li>
+<li><code>objcopy -O binary</code> 再把 ELF 的多余段/符号去掉 → <strong>裸二进制</strong>（PC 一路递增即可执行）——这正是裸二进制 <code>Image</code>！</li>
 </ul>
 <h3 id="c-停在-o-vs-一路到可执行-——-差的就是「链接」"><a href="#c-停在-o-vs-一路到可执行-——-差的就是「链接」" class="headerlink" title="-c 停在 .o vs 一路到可执行 —— 差的就是「链接」"></a><code>-c</code> 停在 <code>.o</code> vs 一路到可执行 —— 差的就是「链接」</h3><p>对照那两条命令的产物：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c hello.c -o hello.o   →  hello.o    1488 字节   nm: T main &#x2F; U puts        (没有 _start!)</span><br><span class="line">gcc    hello.c -o hello     →  hello     15960 字节   nm: T _start &#x2F; T main &#x2F; U __libc_start_main</span><br></pre></td></tr></table></figure>
@@ -392,7 +392,7 @@
 <p>真实输出（截关键两行，路径已省略）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cc1 ... hello.c ... -o &#x2F;tmp&#x2F;cc*.s                              ← ① 编译器,产汇编</span><br><span class="line">collect2 ... Scrt1.o crti.o crtbeginS.o hello.o -lc crtendS.o crtn.o   ← ② 链接器,拼 crt 启动文件+你的.o+libc</span><br></pre></td></tr></table></figure>
 
-<p>第 ② 行一眼看穿链接到底干了啥：把 <strong>crt 启动文件</strong>（<code>Scrt1.o</code>/<code>crti.o</code>/<code>crtbeginS.o</code>/<code>crtendS.o</code>/<code>crtn.o</code>）+ <strong>你的 <code>hello.o</code></strong> + <strong>libc（<code>-lc</code>）</strong> 拼成一个完整可执行。也能手动分两步：</p>
+<p>第 ② 行可看出链接到底干了啥：把 <strong>crt 启动文件</strong>（<code>Scrt1.o</code>/<code>crti.o</code>/<code>crtbeginS.o</code>/<code>crtendS.o</code>/<code>crtn.o</code>）+ <strong>你的 <code>hello.o</code></strong> + <strong>libc（<code>-lc</code>）</strong> 拼成一个完整可执行。也能手动分两步：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c hello.c -o hello.o   <span class="comment"># 只编译,出半成品 .o</span></span><br><span class="line">gcc    hello.o -o hello     <span class="comment"># 纯链接,把启动文件+libc 拼上去</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="插曲：crt1-o-vs-Scrt1-o（crt-全家）"><a href="#插曲：crt1-o-vs-Scrt1-o（crt-全家）" class="headerlink" title="插曲：crt1.o vs Scrt1.o（crt 全家）"></a>插曲：<code>crt1.o</code> vs <code>Scrt1.o</code>（crt 全家）</h4><p>这些 <code>crt</code>（C RunTime）启动文件都干同一件事——提供入口 <code>_start</code>，准备好后调 <code>__libc_start_main(main, …)</code>。区别在<strong>给哪种可执行用</strong>：</p>
@@ -476,12 +476,12 @@
 <td>内核模块</td>
 <td><code>.ko</code></td>
 <td><code>.sys</code></td>
-<td>（一嘴）特殊目标文件，用 <code>insmod</code> 链进<strong>内核地址空间</strong>（不走 ld.so、不含 libc、直接调内核 API），详见驱动篇</td>
+<td>特殊目标文件，用 <code>insmod</code> 链进<strong>内核地址空间</strong>（不走 ld.so、不含 libc、直接调内核 API）</td>
 </tr>
 </tbody></table>
 <ul>
 <li><code>.a</code> = <code>ar rcs libfoo.a a.o b.o</code>（其实就是个 <code>.o</code> 的归档包）。</li>
-<li><code>.so</code> = <code>gcc -shared -fPIC foo.c -o libfoo.so</code>（<code>-fPIC</code>=位置无关代码，下面讲为什么）。</li>
+<li><code>.so</code> = <code>gcc -shared -fPIC foo.c -o libfoo.so</code>（<code>-fPIC</code>=位置无关代码）。</li>
 <li>Windows 的 <code>.lib</code> 有<strong>两种身份</strong>：要么是<strong>静态库</strong>（含真代码），要么是某个 <code>.dll</code> 的<strong>导入库</strong>（只含跳转桩）——名字一样，看用途。</li>
 </ul>
 <hr>
@@ -491,7 +491,7 @@
 <p>两个细节：</p>
 <ol>
 <li><code>T main</code> = 本文件<strong>定义</strong>了 <code>main</code>；<code>U puts</code> = <strong>未定义</strong>，链接时才去 libc 里找。<strong><code>.o</code> 跑不了的根本原因是它的 ELF 类型是 <code>ET_REL</code>（可重定位）——内核直接拒绝执行</strong>（<code>chmod +x x.o; ./x.o</code> 会报 <code>cannot execute binary file: Exec format error</code>），它既没入口 <code>_start</code>、也没 <code>PT_LOAD</code>/<code>PT_INTERP</code>。<code>U puts</code> 是<strong>额外</strong>的：还得<strong>链接</strong>才能补上外部符号。所以门槛是<strong>链接</strong>（编译期），不是”缺动态库”（哪怕全静态，也得先链接）。</li>
-<li>我源码写的是 <code>printf(&quot;hi\n&quot;)</code>，<code>nm</code> 却显示欠 <code>puts</code>！<strong>编译器把”常量串+换行+无格式参数的 printf 优化成了 puts”</strong>（更便宜）。你写的 ≠ 最终调的——这是编译器优化的活教材。</li>
+<li>我源码写的是 <code>printf(&quot;hi\n&quot;)</code>，<code>nm</code> 却显示欠 <code>puts</code>！<strong>编译器把”常量串+换行+无格式参数的 printf 优化成了 puts”</strong>（更便宜）。你写的 ≠ 最终调的——这是编译器优化的典型示例。</li>
 </ol>
 <hr>
 <h2 id="4-静态-vs-动态链接（核心）"><a href="#4-静态-vs-动态链接（核心）" class="headerlink" title="4. 静态 vs 动态链接（核心）"></a>4. 静态 vs 动态链接（核心）</h2><p>同一个 <code>hello.c</code>，两种链法，差距惊人：</p>
@@ -532,7 +532,7 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p>现实例子：Windows 上 360 之类老打”系统安全补丁补 DLL”——就是动态库的优势，<strong>改一个 <code>.dll</code>，所有用它的程序一起修好</strong>。反过来，静态链接的程序要修同一个漏洞，得逐个重编。</p>
+<p>现实例子：安全软件向系统推送补丁、替换某个有漏洞的 DLL——就是动态库的优势，<strong>改一个 <code>.dll</code>，所有用它的程序一起修好</strong>。反过来，静态链接的程序要修同一个漏洞，得逐个重编。</p>
 </blockquote>
 <hr>
 <h2 id="5-ELF-文件结构详解"><a href="#5-ELF-文件结构详解" class="headerlink" title="5. ELF 文件结构详解"></a>5. ELF 文件结构详解</h2><p>ELF 有<strong>两副面孔</strong>：</p>
@@ -668,7 +668,7 @@
 
 <p><strong>对应 mermaid 走一遍</strong>：<code>main</code> <code>jal puts@plt</code>（call）→ <code>auipc/ld</code> 载入 GOT 槽（查 .got.plt）→ <code>jalr</code> 跳过去。<strong>首次</strong>：槽指向 PLT[0] → <code>_dl_runtime_resolve</code>(ld.so) → 算出 puts 真地址 → <strong>回填 GOT 槽</strong>；<strong>之后</strong>：<code>ld</code> 直接载入真地址 → <code>jalr</code> 直跳。</p>
 <blockquote>
-<p><strong>RV vs x86 的味道</strong>：x86 一条 <code>jmp *0x2fb6(%rip)</code> 就能”间接跳过 GOT 槽”（CISC 有内存间接跳转）；RISC-V 必须 <code>auipc</code>+<code>ld</code>+<code>jalr</code> <strong>三条</strong>——先把地址 <code>ld</code> 进寄存器，再 <code>jalr</code> 跳（RISC 没有”经内存间接跳转”这种复杂寻址）。这就是 RISC 哲学的一个缩影。</p>
+<p><strong>RV 与 x86 的差异</strong>：x86 一条 <code>jmp *0x2fb6(%rip)</code> 就能”间接跳过 GOT 槽”（CISC 有内存间接跳转）；RISC-V 必须 <code>auipc</code>+<code>ld</code>+<code>jalr</code> <strong>三条</strong>——先把地址 <code>ld</code> 进寄存器，再 <code>jalr</code> 跳（RISC 没有”经内存间接跳转”这种复杂寻址）。这就是 RISC 哲学的一个缩影。</p>
 </blockquote>
 <hr>
 <h2 id="7-内核如何-load-ld-so-如何-link-程序如何-run"><a href="#7-内核如何-load-ld-so-如何-link-程序如何-run" class="headerlink" title="7. 内核如何 load + ld.so 如何 link + 程序如何 run"></a>7. 内核如何 load + <code>ld.so</code> 如何 link + 程序如何 run</h2><p>一个最该澄清的点：<strong>动态链接不是内核干的，是用户态的 <code>ld.so</code>（<code>ld-linux-*.so</code> / <code>ld-musl-*.so</code>）干的</strong>。全流程：</p>
@@ -720,7 +720,7 @@
 <p>真实佐证（<code>/proc/self/maps</code> 里 <code>libc.so.6</code> 的几段）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...  r--p  &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6   ← ELF头&#x2F;只读</span><br><span class="line">...  r-xp  &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6   ← 代码段(多进程共享同一物理页!)</span><br><span class="line">...  rw-p  &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6   ← 数据段(私有 COW)</span><br></pre></td></tr></table></figure>
 
-<h4 id="再往下钻：缺页那一刻，内核到底做了什么"><a href="#再往下钻：缺页那一刻，内核到底做了什么" class="headerlink" title="再往下钻：缺页那一刻，内核到底做了什么"></a>再往下钻：缺页那一刻，内核到底做了什么</h4><p><strong>涉及的内核数据结构</strong>：</p>
+<h4 id="进一步深入：缺页那一刻，内核到底做了什么"><a href="#进一步深入：缺页那一刻，内核到底做了什么" class="headerlink" title="进一步深入：缺页那一刻，内核到底做了什么"></a>进一步深入：缺页那一刻，内核到底做了什么</h4><p><strong>涉及的内核数据结构</strong>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    PA[&quot;进程A 页表&quot;] --&gt; PG[&quot;同一物理页&lt;br&#x2F;&gt;(page cache 里)&quot;]</span><br><span class="line">    PB[&quot;进程B 页表&quot;] --&gt; PG</span><br><span class="line">    VMA[&quot;VMA(vm_area_struct)&lt;br&#x2F;&gt;vm_file→libc.so.6 +offset&quot;] -. 描述映射 .-&gt; PA</span><br><span class="line">    PG --&gt; AS[&quot;address_space&lt;br&#x2F;&gt;&#x3D; inode 的 page cache&quot;]</span><br><span class="line">    AS --&gt; INODE[&quot;inode: libc.so.6&quot;]</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -764,7 +764,7 @@
 </tr>
 <tr>
 <td>建 VMA</td>
-<td><code>mm/mmap.c</code> <code>vm_mmap()</code></td>
+<td><code>mm/util.c</code> <code>vm_mmap()</code>（真正建 VMA 的是 <code>mm/mmap.c</code> 的 <code>mmap_region()</code>）</td>
 </tr>
 <tr>
 <td>文件缺页 → page cache</td>
@@ -783,7 +783,7 @@
 <ul>
 <li><strong>「公共映射页没有、但磁盘上有 → 载入?」</strong>：<code>ld.so</code> 不查”公共映射页”，它查<strong>磁盘</strong>。<code>mmap</code> 后那页若没缓存（冷）→ 首次访问从盘读进 page cache；若别的进程已缓存（热）→ 直接复用。<strong>「载入公共映射页」= 缺页时填 page cache，自动发生。</strong></li>
 <li><strong>「所有文件夹都没找到 → 报错?」</strong>：是。<code>ld.so</code> 找不到 → <code>error while loading shared libraries: libXXX.so.N: cannot open shared object file</code> → 程序<strong>根本启动不了</strong>（<code>dlopen</code> 则返回 NULL，<code>dlerror()</code> 拿原因）。</li>
-<li><strong>机制一句话</strong>：<code>ld.so</code> 只管”按名字在<strong>磁盘</strong>找到 + <code>mmap</code>“；<strong>跨进程共享是内核 page cache（按 inode）白送的</strong>，<code>ld.so</code> 全程不知道别的进程存在。</li>
+<li><strong>机制一句话</strong>：<code>ld.so</code> 只管”按名字在<strong>磁盘</strong>找到 + <code>mmap</code>“；<strong>跨进程共享是内核 page cache（按 inode）自动提供的</strong>，<code>ld.so</code> 全程不知道别的进程存在。</li>
 </ul>
 <h3 id="7-4-实例：两程序两库，看「共享」与「私有」"><a href="#7-4-实例：两程序两库，看「共享」与「私有」" class="headerlink" title="7.4 实例：两程序两库，看「共享」与「私有」"></a>7.4 实例：两程序两库，看「共享」与「私有」</h3><p>自己造一个公共函数的<code>.c</code>编译： <code>libmath.so</code>（<code>square()</code>）+ 两个程序 <code>progA</code>(<code>square(7)</code>)、<code>progB</code>(<code>square(9)</code>)，都链接它和 libc，同时跑，看 <code>/proc/PID/maps</code>理解多文件公用多动态库的场景：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">progA(PID 100785): libc @0x7481_34228000 r-xp   libmath @0x7481_34503000 r-xp</span><br><span class="line">progB(PID 100786): libc @0x715e_bc428000 r-xp   libmath @0x715e_bc6b6000 r-xp</span><br><span class="line">ls -i:  libmath.so&#x3D;inode 7628755 · libc.so.6&#x3D;inode 2507420   ← 同一文件</span><br></pre></td></tr></table></figure>
@@ -802,9 +802,9 @@
 <li><strong><code>ld.so</code>（musl <code>ldso/dynlink.c</code>）= 解析那一半</strong>：<code>do_relocs()</code>(:379) 遍历重定位 → <code>R_TYPE(rel[1])</code>(:405) 取类型 → <code>find_sym()</code>(:345) 按名字找到 <code>square</code> 真实地址 → <strong>写进本进程 GOT 槽</strong>（这就是”回填 GOT”在源码里的样子；lazy 时由首调触发的 <code>_dl_runtime_resolve</code> 来做）。</li>
 </ul>
 <blockquote>
-<p><strong>一句话</strong>：两程序<strong>共享</strong> libmath/libc 的只读代码物理页（内核 page cache 白送），但各有<strong>私有 GOT</strong>（COW），由 <code>ld.so</code> 按各自 ASLR 基址把 <code>square</code>/<code>puts</code> 真实地址填进去——<strong>代码一份共享、地址各自私有</strong>。</p>
+<p><strong>一句话</strong>：两程序<strong>共享</strong> libmath/libc 的只读代码物理页（内核 page cache 自动提供），但各有<strong>私有 GOT</strong>（COW），由 <code>ld.so</code> 按各自 ASLR 基址把 <code>square</code>/<code>puts</code> 真实地址填进去——<strong>代码一份共享、地址各自私有</strong>。</p>
 </blockquote>
-<h4 id="动态地址回填：一步步看-ld-so-怎么填-GOT"><a href="#动态地址回填：一步步看-ld-so-怎么填-GOT" class="headerlink" title="动态地址回填：一步步看 ld.so 怎么填 GOT"></a>动态地址回填：一步步看 <code>ld.so</code> 怎么填 GOT</h4><p>以 progA 首次 <code>call square</code> 为例（lazy 路径），把 §6 mermaid 里”<code>ld.so</code> 解析器”那个框拆开：</p>
+<h4 id="动态地址回填：一步步看-ld-so-怎么填-GOT"><a href="#动态地址回填：一步步看-ld-so-怎么填-GOT" class="headerlink" title="动态地址回填：一步步看 ld.so 怎么填 GOT"></a>动态地址回填：一步步看 <code>ld.so</code> 怎么填 GOT</h4><p>以 progA 首次 <code>call square</code> 为例（概念走查 lazy 路径；progA 默认 now-binding，此处按 lazy 机制讲解），把 §6 mermaid 里”<code>ld.so</code> 解析器”那个框拆开：</p>
 <ol>
 <li><code>call square@plt</code> → 跳 <code>square@plt</code> 跳板。</li>
 <li>跳板跳 <code>*GOT[square]</code>，但该槽<strong>初值</strong>指向”跳板的下一条”（还不是真地址）。</li>
@@ -821,10 +821,10 @@
 <li><strong>之后再 call</strong>：跳板 <code>jmp *GOT[square]</code> 此刻已是真地址 → 直接跳，不再进 <code>ld.so</code>。</li>
 </ol>
 <p><code>now binding</code> 版：load 时对<strong>所有</strong>重定位一次性做完第 5 步，再把 GOT 标只读（RELRO），运行时不再回填。</p>
-<p><strong>源码实锤</strong>（musl <code>ldso/dynlink.c</code> 的 <code>do_relocs</code>，第 379–470 行）：</p>
+<p><strong>源码佐证</strong>（musl <code>ldso/dynlink.c</code> 的 <code>do_relocs</code>，第 379–470 行）：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type    = R_TYPE(rel[<span class="number">1</span>]);                       <span class="comment">// 重定位类型(REL_PLT=JUMP_SLOT…)</span></span><br><span class="line">name    = strings + sym-&gt;st_name;               <span class="comment">// 符号名(.dynstr)</span></span><br><span class="line">def     = find_sym(ctx, name, type==REL_PLT);   <span class="comment">// 符号查找 → 找到定义在哪个库(dso)</span></span><br><span class="line">sym_val = laddr(def.dso, def.sym-&gt;st_value);    <span class="comment">// 真实地址 = def.dso-&gt;base(库基址) + 库内偏移</span></span><br><span class="line">*reloc_addr = sym_val + addend;                 <span class="comment">// ← 回填:写进 GOT 槽(reloc_addr)</span></span><br></pre></td></tr></table></figure>
 
-<p>一眼看穿：<strong><code>真实地址 = 库基址 + 库内偏移</code>，写进 <code>reloc_addr</code>（GOT 槽）</strong>。各进程 <code>def.dso-&gt;base</code> 因 ASLR 不同 → 同一个 <code>square</code>，各进程 GOT 里填的值不同。</p>
+<p>可看出：<strong><code>真实地址 = 库基址 + 库内偏移</code>，写进 <code>reloc_addr</code>（GOT 槽）</strong>。各进程 <code>def.dso-&gt;base</code> 因 ASLR 不同 → 同一个 <code>square</code>，各进程 GOT 里填的值不同。</p>
 <h3 id="7-5-dlopen：运行中手动加载（插件机制）"><a href="#7-5-dlopen：运行中手动加载（插件机制）" class="headerlink" title="7.5 dlopen：运行中手动加载（插件机制）"></a>7.5 <code>dlopen</code>：运行中手动加载（插件机制）</h3><p>上面是<strong>启动时</strong>自动加载（<code>DT_NEEDED</code>）。程序还能<strong>运行中手动</strong>加载某个库：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *h  = dlopen(<span class="string">"libfoo.so"</span>, RTLD_NOW);  <span class="comment">// 运行时把库装进来</span></span><br><span class="line"><span class="keyword">void</span> (*f)() = dlsym(h, <span class="string">"do_work"</span>);          <span class="comment">// 按名字取函数地址</span></span><br><span class="line">f();                                         <span class="comment">// 调用</span></span><br><span class="line">dlclose(h);                                  <span class="comment">// 卸载</span></span><br></pre></td></tr></table></figure>
 
@@ -901,7 +901,7 @@
 <li>三元组一选，就定了<strong>用哪套 libc、哪个 crt 启动文件、默认链接脚本、ABI（软/硬浮点）</strong>——选错 = 错的 syscall/ABI/libc，编出来跑不了。</li>
 </ul>
 <blockquote>
-<p>引申：裸机 <code>-elf</code> 工具链就是编 SBI/bootloader 用的（见本系列《穿越系统之前》）；<code>-linux-gnu</code> 是编用户态程序用的（见《穿越系统之后》libc 篇）。</p>
+<p>引申：裸机 <code>-elf</code> 工具链用于编 SBI/bootloader；<code>-linux-gnu</code> 用于编用户态程序（链 glibc/musl）。</p>
 </blockquote>
 <hr>
 <h2 id="9-工具链全家"><a href="#9-工具链全家" class="headerlink" title="9. 工具链全家"></a>9. 工具链全家</h2><p><strong>GNU binutils</strong>（配 GCC）：</p>
@@ -1047,7 +1047,7 @@
 </ol>
 <hr>
 <blockquote>
-<p><strong>小结</strong>：编译四阶段把源码变 <code>.o</code>，链接把一堆 <code>.o</code>/库拼成可执行；静态是”塞进去、单文件、重编修漏洞”，动态是”共享、小巧、换 <code>.so</code> 打补丁”。ELF 用 section（链接视角）/segment（执行视角）两副面孔组织自己，靠 <code>.plt</code>/<code>.got</code> 跳转表 + 用户态 <code>ld.so</code> 在运行时把外部函数地址补齐。内核只负责 load ELF + 拉起解释器，真正的动态链接在用户态。下一站——这些可执行/库怎么被打进 rootfs、装进发行版，见《穿越系统之后》。</p>
+<p><strong>小结</strong>：编译四阶段把源码变 <code>.o</code>，链接把一堆 <code>.o</code>/库拼成可执行；静态是”塞进去、单文件、重编修漏洞”，动态是”共享、小巧、换 <code>.so</code> 打补丁”。ELF 用 section（链接视角）/segment（执行视角）两副面孔组织自己，靠 <code>.plt</code>/<code>.got</code> 跳转表 + 用户态 <code>ld.so</code> 在运行时把外部函数地址补齐。内核只负责 load ELF + 拉起解释器，真正的动态链接在用户态。</p>
 </blockquote>
 
     </div>

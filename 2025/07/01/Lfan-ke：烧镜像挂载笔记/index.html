@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"rcore-os.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="相当于写给烧写板子刚入门的萌新，以及附带一些常用的基本工具...">
+  <meta name="description" content="写给烧写板子刚入门的初学者，附带一些常用基本工具...">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lfan-ke: 镜像 烧录 设备 挂载 共享 映射 挂载">
 <meta property="og:url" content="http://rcore-os.github.io/blog/2025/07/01/Lfan-ke%EF%BC%9A%E7%83%A7%E9%95%9C%E5%83%8F%E6%8C%82%E8%BD%BD%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="rcore-os Blog">
-<meta property="og:description" content="相当于写给烧写板子刚入门的萌新，以及附带一些常用的基本工具...">
+<meta property="og:description" content="写给烧写板子刚入门的初学者，附带一些常用基本工具...">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-01T10:10:10.000Z">
-<meta property="article:modified_time" content="2026-06-28T04:03:07.415Z">
+<meta property="article:modified_time" content="2026-10-03T16:56:14.714Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="author:逸仙">
 <meta property="article:tag" content="repo:https:&#x2F;&#x2F;github.com&#x2F;Lfan-ke">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-先破一个执念：「二进制」≠「无结构」"><span class="nav-number">1.</span> <span class="nav-text">0. 先破一个执念：「二进制」≠「无结构」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-文件的「大小」是怎么回事-——-稀疏文件（sparse）"><span class="nav-number">2.</span> <span class="nav-text">1. 文件的「大小」是怎么回事 —— 稀疏文件（sparse）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-touch-vs-truncate-vs-fallocate"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 touch vs truncate vs fallocate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-三个「大小」别搞混：ls-l-du-df"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 三个「大小」别搞混：ls -l &#x2F; du &#x2F; df</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-写时分配（allocate-on-write）"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 写时分配（allocate-on-write）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-稀疏的代价：碎片、overcommit-与稀疏感知传输"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 稀疏的代价：碎片、overcommit 与稀疏感知传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-在镜像里造文件系统-——-mkfs-家族"><span class="nav-number">3.</span> <span class="nav-text">2. 在镜像里造文件系统 —— mkfs.* 家族</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-让”文件”变成”设备”-——-loop-设备（回环设备）"><span class="nav-number">4.</span> <span class="nav-text">3. 让”文件”变成”设备” —— loop 设备（回环设备）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-为什么需要它"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 为什么需要它</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-一个真实的坑：umount-≠-losetup-d"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 一个真实的坑：umount ≠ losetup -d</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-烧录的真相-——-dd、page-cache-与-sync"><span class="nav-number">5.</span> <span class="nav-text">4. 烧录的真相 —— dd、page cache 与 sync</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-dd-不是”底层直写”，dd-vs-cp-到底差在哪"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 dd 不是”底层直写”，dd vs cp 到底差在哪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-最毒的坑：dd-跑完-≠-落盘（page-cache-sync）"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 最毒的坑：dd 跑完 ≠ 落盘（page cache + sync）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-把镜像真正送上板子（跨平台-burn）"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 把镜像真正送上板子（跨平台 burn）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-WSL2-怎么烧卡：usbipd-win（USB-IP-直通）"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 WSL2 怎么烧卡：usbipd-win（USB&#x2F;IP 直通）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-镜像的分层结构-——-为什么-dd-整盘能启动、cp-文件不能"><span class="nav-number">6.</span> <span class="nav-text">5. 镜像的分层结构 —— 为什么 dd 整盘能启动、cp 文件不能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-三层抽象"><span class="nav-number">6.1.</span> <span class="nav-text">5.1 三层抽象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-LBA0-不是-GPT！是-Protective-MBR（实验眼见为实）"><span class="nav-number">6.2.</span> <span class="nav-text">5.2 LBA0 不是 GPT！是 Protective MBR（实验眼见为实）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文件的「身份证」——-魔数与-file-命令"><span class="nav-number">7.</span> <span class="nav-text">6. 文件的「身份证」—— 魔数与 file 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-file-怎么判类型"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 file 怎么判类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-想让-file-认你自己的格式？——-别-PR-到-Linux！"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 想让 file 认你自己的格式？—— 别 PR 到 Linux！</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-内核镜像家族-——-穿越系统的主角"><span class="nav-number">8.</span> <span class="nav-text">7. 内核镜像家族 —— 穿越系统的主角</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-加工流水线（x86-ARM-RISC-V-三线，RV-为主）"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 加工流水线（x86&#x2F;ARM&#x2F;RISC-V 三线，RV 为主）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-“裸二进制也有头部？”——实拆一个-RISC-V-Image"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 “裸二进制也有头部？”——实拆一个 RISC-V Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-顺带订正几个-RISC-V-启动地址的说法"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 顺带订正几个 RISC-V 启动地址的说法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-速查表（跨平台命令对照）"><span class="nav-number">9.</span> <span class="nav-text">8. 速查表（跨平台命令对照）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8b-格式化-分区-烧录-命令大全（2026-最新最常用）"><span class="nav-number">10.</span> <span class="nav-text">8b. 格式化 &#x2F; 分区 &#x2F; 烧录 命令大全（2026 最新最常用）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-——-分区-→-格式化-→-烧录-全流程"><span class="nav-number">10.1.</span> <span class="nav-text">Linux —— 分区 → 格式化 → 烧录 全流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-——-2026-推荐-PowerShell-Storage-模块（diskpart-仍可用）"><span class="nav-number">10.2.</span> <span class="nav-text">Windows —— 2026 推荐 PowerShell Storage 模块（diskpart 仍可用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS-——-diskutil（2026-默认-APFS）"><span class="nav-number">10.3.</span> <span class="nav-text">macOS —— diskutil（2026 默认 APFS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统选型矩阵（跨平台支持）"><span class="nav-number">10.4.</span> <span class="nav-text">文件系统选型矩阵（跨平台支持）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-常见坑清单（血泪）"><span class="nav-number">11.</span> <span class="nav-text">9. 常见坑清单（血泪）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-思考题"><span class="nav-number">12.</span> <span class="nav-text">10. 思考题</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-先破一个执念：「二进制」≠「无结构」"><span class="nav-number">1.</span> <span class="nav-text">0. 先破一个执念：「二进制」≠「无结构」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-文件的「大小」是怎么回事-——-稀疏文件（sparse）"><span class="nav-number">2.</span> <span class="nav-text">1. 文件的「大小」是怎么回事 —— 稀疏文件（sparse）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-touch-vs-truncate-vs-fallocate"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 touch vs truncate vs fallocate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-三个「大小」别搞混：ls-l-du-df"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 三个「大小」别搞混：ls -l &#x2F; du &#x2F; df</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-写时分配（allocate-on-write）"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 写时分配（allocate-on-write）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-稀疏的代价：碎片、overcommit-与稀疏感知传输"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 稀疏的代价：碎片、overcommit 与稀疏感知传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-在镜像里造文件系统-——-mkfs-家族"><span class="nav-number">3.</span> <span class="nav-text">2. 在镜像里造文件系统 —— mkfs.* 家族</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-让”文件”变成”设备”-——-loop-设备（回环设备）"><span class="nav-number">4.</span> <span class="nav-text">3. 让”文件”变成”设备” —— loop 设备（回环设备）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-为什么需要它"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 为什么需要它</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-一个真实的坑：umount-≠-losetup-d"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 一个真实的坑：umount ≠ losetup -d</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-烧录的真相-——-dd、page-cache-与-sync"><span class="nav-number">5.</span> <span class="nav-text">4. 烧录的真相 —— dd、page cache 与 sync</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-dd-不是”底层直写”，dd-vs-cp-到底差在哪"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 dd 不是”底层直写”，dd vs cp 到底差在哪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-最易忽视的坑：dd-跑完-≠-落盘（page-cache-sync）"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 最易忽视的坑：dd 跑完 ≠ 落盘（page cache + sync）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-把镜像真正送上板子（跨平台-burn）"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 把镜像真正送上板子（跨平台 burn）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-WSL2-怎么烧卡：usbipd-win（USB-IP-直通）"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 WSL2 怎么烧卡：usbipd-win（USB&#x2F;IP 直通）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-镜像的分层结构-——-为什么-dd-整盘能启动、cp-文件不能"><span class="nav-number">6.</span> <span class="nav-text">5. 镜像的分层结构 —— 为什么 dd 整盘能启动、cp 文件不能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-三层抽象"><span class="nav-number">6.1.</span> <span class="nav-text">5.1 三层抽象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-LBA0-不是-GPT！是-Protective-MBR（实验眼见为实）"><span class="nav-number">6.2.</span> <span class="nav-text">5.2 LBA0 不是 GPT！是 Protective MBR（实验眼见为实）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文件的「身份证」——-魔数与-file-命令"><span class="nav-number">7.</span> <span class="nav-text">6. 文件的「身份证」—— 魔数与 file 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-file-怎么判类型"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 file 怎么判类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-想让-file-认你自己的格式？——-别-PR-到-Linux！"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 想让 file 认你自己的格式？—— 别 PR 到 Linux！</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-内核镜像家族"><span class="nav-number">8.</span> <span class="nav-text">7. 内核镜像家族</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-加工流水线（x86-ARM-RISC-V-三线）"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 加工流水线（x86 &#x2F; ARM &#x2F; RISC-V 三线）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-“裸二进制也有头部？”——实拆一个-RISC-V-Image"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 “裸二进制也有头部？”——实拆一个 RISC-V Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-顺带订正几个-RISC-V-启动地址的说法"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 顺带订正几个 RISC-V 启动地址的说法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-速查表（跨平台命令对照）"><span class="nav-number">9.</span> <span class="nav-text">8. 速查表（跨平台命令对照）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8b-格式化-分区-烧录-命令大全（2026-最新最常用）"><span class="nav-number">10.</span> <span class="nav-text">8b. 格式化 &#x2F; 分区 &#x2F; 烧录 命令大全（2026 最新最常用）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-——-分区-→-格式化-→-烧录-全流程"><span class="nav-number">10.1.</span> <span class="nav-text">Linux —— 分区 → 格式化 → 烧录 全流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-——-2026-推荐-PowerShell-Storage-模块（diskpart-仍可用）"><span class="nav-number">10.2.</span> <span class="nav-text">Windows —— 2026 推荐 PowerShell Storage 模块（diskpart 仍可用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS-——-diskutil（2026-默认-APFS）"><span class="nav-number">10.3.</span> <span class="nav-text">macOS —— diskutil（2026 默认 APFS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统选型矩阵（跨平台支持）"><span class="nav-number">10.4.</span> <span class="nav-text">文件系统选型矩阵（跨平台支持）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-常见坑清单（常见错误）"><span class="nav-number">11.</span> <span class="nav-text">9. 常见坑清单（常见错误）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-思考题"><span class="nav-number">12.</span> <span class="nav-text">10. 思考题</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -191,20 +191,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">777</span>
+          <span class="site-state-item-count">792</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">240</span>
+        <span class="site-state-item-count">298</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">721</span>
+        <span class="site-state-item-count">770</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -271,7 +271,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-06-28 04:03:07" itemprop="dateModified" datetime="2026-06-28T04:03:07+00:00">2026-06-28</time>
+                <time title="Modified: 2026-10-03 16:56:14" itemprop="dateModified" datetime="2026-10-03T16:56:14+00:00">2026-10-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,84 +279,84 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/" itemprop="url" rel="index"><span itemprop="name">Leo Cheng</span></a>
+                  <a href="/blog/categories/Lfan-ke/" itemprop="url" rel="index"><span itemprop="name">Lfan-ke</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/" itemprop="url" rel="index"><span itemprop="name">Beginner</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/" itemprop="url" rel="index"><span itemprop="name">Beginner</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">常用知识</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">常用知识</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/" itemprop="url" rel="index"><span itemprop="name">usbipd-win</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/" itemprop="url" rel="index"><span itemprop="name">usbipd-win</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/" itemprop="url" rel="index"><span itemprop="name">mount</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/" itemprop="url" rel="index"><span itemprop="name">mount</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/" itemprop="url" rel="index"><span itemprop="name">dd</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/" itemprop="url" rel="index"><span itemprop="name">dd</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/" itemprop="url" rel="index"><span itemprop="name">fs.ext4</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/" itemprop="url" rel="index"><span itemprop="name">fs.ext4</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/" itemprop="url" rel="index"><span itemprop="name">fs.fat</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/" itemprop="url" rel="index"><span itemprop="name">fs.fat</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/" itemprop="url" rel="index"><span itemprop="name">win32diskimager</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/" itemprop="url" rel="index"><span itemprop="name">win32diskimager</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/" itemprop="url" rel="index"><span itemprop="name">sdcard</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/" itemprop="url" rel="index"><span itemprop="name">sdcard</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/" itemprop="url" rel="index"><span itemprop="name">truncate</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/" itemprop="url" rel="index"><span itemprop="name">truncate</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/" itemprop="url" rel="index"><span itemprop="name">sparse</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/" itemprop="url" rel="index"><span itemprop="name">sparse</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/" itemprop="url" rel="index"><span itemprop="name">vmlinux</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/" itemprop="url" rel="index"><span itemprop="name">vmlinux</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/" itemprop="url" rel="index"><span itemprop="name">image</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/" itemprop="url" rel="index"><span itemprop="name">zimage</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/" itemprop="url" rel="index"><span itemprop="name">zimage</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/" itemprop="url" rel="index"><span itemprop="name">bzimg</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/" itemprop="url" rel="index"><span itemprop="name">bzimg</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/" itemprop="url" rel="index"><span itemprop="name">uimage</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/" itemprop="url" rel="index"><span itemprop="name">uimage</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/fitimg/" itemprop="url" rel="index"><span itemprop="name">fitimg</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/fitimg/" itemprop="url" rel="index"><span itemprop="name">fitimg</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/fitimg/rootfs/" itemprop="url" rel="index"><span itemprop="name">rootfs</span></a>
+                  <a href="/blog/categories/Lfan-ke/Beginner/%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86/usbipd-win/mount/dd/fs-ext4/fs-fat/win32diskimager/sdcard/truncate/sparse/vmlinux/image/zimage/bzimg/uimage/fitimg/rootfs/" itemprop="url" rel="index"><span itemprop="name">rootfs</span></a>
                 </span>
             </span>
 
           
-            <div class="post-description">相当于写给烧写板子刚入门的萌新，以及附带一些常用的基本工具...</div>
+            <div class="post-description">写给烧写板子刚入门的初学者，附带一些常用基本工具...</div>
 
         </div>
       </header>
@@ -370,7 +370,7 @@
         <a id="more"></a>
 
 <blockquote>
-<p>这篇从”一个 <code>.img</code> 文件到底是什么”开始，一路走到”它怎么变成能让板子启动的 SD 卡”。<strong>以 RISC-V/Linux 为主线</strong>，x86/ARM/Windows/macOS 的对应物随手科普+知识面完善。</p>
+<p>从”一个 <code>.img</code> 文件到底是什么”讲到”它怎么变成能让板子启动的 SD 卡”。以 RISC-V/Linux 为例，并对照 x86/ARM/Windows/macOS。</p>
 </blockquote>
 <h2 id="0-先破一个执念：「二进制」≠「无结构」"><a href="#0-先破一个执念：「二进制」≠「无结构」" class="headerlink" title="0. 先破一个执念：「二进制」≠「无结构」"></a>0. 先破一个执念：「二进制」≠「无结构」</h2><p>很多人（包括我）一开始以为：纯二进制 = <code>*.bin</code> = 一堆没有结构的 data。<strong>错。</strong></p>
 <blockquote>
@@ -516,11 +516,11 @@
 <li><code>bs=</code> 控制每次 <code>write()</code> 的块大小：<code>bs=4M</code> 一次写 4MB；<code>bs=1</code> 每字节一次系统调用 → <strong>最慢</strong>（上下文切换开销 ≫ 数据搬运），不是”最精确”。</li>
 <li>对齐/地址是<strong>块层和文件系统</strong>的事，跟应用层 <code>write()</code> 无关。</li>
 </ul>
-<p><strong>那为什么烧卡传统用 <code>dd</code>？</strong> 真实原因是 <code>dd</code> 有 <strong><code>skip= / seek= / count= / conv= / oflag=</code></strong> 精细控制——尤其 <code>seek=</code> <strong>偏移写</strong>（把 SPL/bootloader 烧到卡的特定偏移，<code>cp</code> 根本做不到，把XXX精确搬到里面的(x: , y: , z: )和把东西丢到里面就行还是有区别的）。系统调用层面二者没区别。</p>
+<p><strong>那为什么烧卡传统用 <code>dd</code>？</strong> 真实原因是 <code>dd</code> 有 <strong><code>skip= / seek= / count= / conv= / oflag=</code></strong> 精细控制——尤其 <code>seek=</code> <strong>偏移写</strong>——能把数据精确放到目标偏移（把 SPL/bootloader 烧到卡的特定偏移），而 <code>cp</code> 只能把整个文件丢进文件系统，二者语义不同。系统调用层面二者并无谁更底层。</p>
 <blockquote>
-<p>补一刀（整盘 vs 分区）：<code>/dev/sdX</code>（如 <code>/dev/sda</code>）是<strong>整块盘</strong>——一整条裸扇区，开头放分区表、里面才切出分区，它本身不是 ext4/FAT。你 <code>mkfs</code> 格式化、<code>mount</code> 挂载的，是其中的<strong>分区</strong> <code>/dev/sdX1</code>（如 <code>/dev/sda1</code>）。所以 <code>dd … of=/dev/sdX</code> 是往<strong>裸盘</strong>直接灌字节（块层只搬运、不按文件系统规则解释），才能把一个<strong>自带分区表 + 内部文件系统</strong>的完整镜像整盘烧进去。</p>
+<p>补充（整盘 vs 分区）：<code>/dev/sdX</code>（如 <code>/dev/sda</code>）是<strong>整块盘</strong>——一整条裸扇区，开头放分区表、里面才切出分区，它本身不是 ext4/FAT。你 <code>mkfs</code> 格式化、<code>mount</code> 挂载的，是其中的<strong>分区</strong> <code>/dev/sdX1</code>（如 <code>/dev/sda1</code>）。所以 <code>dd … of=/dev/sdX</code> 是往<strong>裸盘</strong>直接灌字节（块层只搬运、不按文件系统规则解释），才能把一个<strong>自带分区表 + 内部文件系统</strong>的完整镜像整盘烧进去。</p>
 </blockquote>
-<h3 id="4-2-最毒的坑：dd-跑完-≠-落盘（page-cache-sync）"><a href="#4-2-最毒的坑：dd-跑完-≠-落盘（page-cache-sync）" class="headerlink" title="4.2 最毒的坑：dd 跑完 ≠ 落盘（page cache + sync）"></a>4.2 最毒的坑：dd 跑完 ≠ 落盘（page cache + sync）</h3><p>你以为 <code>dd</code> 进度条满了数据就安全了？<strong>没有。数据还在 page cache（脏页）里</strong>，必须 <code>sync</code>（或 <code>dd conv=fsync</code> / <code>oflag=direct</code>）才落盘。看着完成了，拔卡即丢。</p>
+<h3 id="4-2-最易忽视的坑：dd-跑完-≠-落盘（page-cache-sync）"><a href="#4-2-最易忽视的坑：dd-跑完-≠-落盘（page-cache-sync）" class="headerlink" title="4.2 最易忽视的坑：dd 跑完 ≠ 落盘（page cache + sync）"></a>4.2 最易忽视的坑：dd 跑完 ≠ 落盘（page cache + sync）</h3><p>你以为 <code>dd</code> 进度条满了数据就安全了？<strong>没有。数据还在 page cache（脏页）里</strong>，必须 <code>sync</code>（或 <code>dd conv=fsync</code> / <code>oflag=direct</code>）才落盘。看着完成了，拔卡即丢。</p>
 <p>（<code>/proc/meminfo</code> 的 <code>Dirty</code> = 待写回的脏页量）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">基线                          Dirty 很小</span><br><span class="line">dd 200M (不 fsync)            Dirty 飙向 ~200M   ← 数据还没落盘!</span><br><span class="line">sync                         Dirty 掉回近 0      ← 强制回写</span><br><span class="line">dd 200M oflag&#x3D;direct         Dirty 基本不涨      ← O_DIRECT 绕开 page cache 直接 DMA</span><br></pre></td></tr></table></figure>
 
@@ -564,6 +564,12 @@
 
 <blockquote>
 <p>不想折腾直通，就在 Windows 侧直接用 Win32 Disk Imager / Rufus 烧——殊途同归。</p>
+</blockquote>
+<blockquote>
+<p>📷 <strong>待截图@Win11</strong>：PowerShell 跑 <code>usbipd list</code> → <code>usbipd attach --wsl --busid X-Y</code> 的输出（看到设备 State 变 Attached）</p>
+<!-- 替换为: ![usbipd-win 直通](images/win-usbipd.png) -->
+<p>📷 <strong>待截图@WSL2</strong>（可选）：直通后 WSL 里 <code>lsblk</code> 看到 <code>/dev/sdX</code> 的截图</p>
+<!-- 替换为: ![WSL2 lsblk](images/wsl-lsblk.png) -->
 </blockquote>
 <hr>
 <h2 id="5-镜像的分层结构-——-为什么-dd-整盘能启动、cp-文件不能"><a href="#5-镜像的分层结构-——-为什么-dd-整盘能启动、cp-文件不能" class="headerlink" title="5. 镜像的分层结构 —— 为什么 dd 整盘能启动、cp 文件不能"></a>5. 镜像的分层结构 —— 为什么 <code>dd</code> 整盘能启动、<code>cp</code> 文件不能</h2><h3 id="5-1-三层抽象"><a href="#5-1-三层抽象" class="headerlink" title="5.1 三层抽象"></a>5.1 三层抽象</h3><p>一个可启动镜像不是”一个文件系统”，而是<strong>三层套娃</strong>：</p>
@@ -653,16 +659,16 @@
 <p>比如你给自己的固件 / 镜像定个格式，写几行 <code>~/.magic</code> 就能让 <code>file</code> 认出 “MyOS image, version 3”。</p>
 </blockquote>
 <hr>
-<h2 id="7-内核镜像家族-——-穿越系统的主角"><a href="#7-内核镜像家族-——-穿越系统的主角" class="headerlink" title="7. 内核镜像家族 —— 穿越系统的主角"></a>7. 内核镜像家族 —— 穿越系统的主角</h2><h3 id="7-1-加工流水线（x86-ARM-RISC-V-三线，RV-为主）"><a href="#7-1-加工流水线（x86-ARM-RISC-V-三线，RV-为主）" class="headerlink" title="7.1 加工流水线（x86/ARM/RISC-V 三线，RV 为主）"></a>7.1 加工流水线（x86/ARM/RISC-V 三线，RV 为主）</h3><p><strong>共同起点</strong>：<code>vmlinux</code> = <strong>ELF</strong> 格式、未压缩、带调试符号的完整内核。<strong>为什么不能直接烧/跳</strong>？它是 ELF（有头/段表/符号表），bootloader 要的是”裸的、放到内存某地址就能跑的二进制”。所以：</p>
+<h2 id="7-内核镜像家族"><a href="#7-内核镜像家族" class="headerlink" title="7. 内核镜像家族"></a>7. 内核镜像家族</h2><h3 id="7-1-加工流水线（x86-ARM-RISC-V-三线）"><a href="#7-1-加工流水线（x86-ARM-RISC-V-三线）" class="headerlink" title="7.1 加工流水线（x86 / ARM / RISC-V 三线）"></a>7.1 加工流水线（x86 / ARM / RISC-V 三线）</h3><p><strong>共同起点</strong>：<code>vmlinux</code> = <strong>ELF</strong> 格式、未压缩、带调试符号的完整内核。<strong>为什么不能直接烧/跳</strong>？它是 ELF（有头/段表/符号表），bootloader 要的是”裸的、放到内存某地址就能跑的二进制”。所以：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    V[&quot;vmlinux&lt;br&#x2F;&gt;(ELF,带符号)&quot;] --&gt;|objcopy -O binary&lt;br&#x2F;&gt;剥掉 ELF 外壳| I[&quot;Image&lt;br&#x2F;&gt;(裸二进制)&quot;]</span><br><span class="line">    I --&gt;|x86| BZ[&quot;bzImage&lt;br&#x2F;&gt;&#39;big zImage&#39;&quot;]</span><br><span class="line">    I --&gt;|ARM32| Z[&quot;zImage&lt;br&#x2F;&gt;(自解压 stub)&quot;]</span><br><span class="line">    I --&gt;|RISC-V&#x2F;ARM64| GZ[&quot;Image.gz&lt;br&#x2F;&gt;(标准 gzip)&quot;]</span><br><span class="line">    BZ &amp; Z &amp; GZ -.-&gt;|mkimage 外贴 64B 头| U[&quot;uImage&lt;br&#x2F;&gt;(legacy U-Boot)&quot;]</span><br><span class="line">    BZ &amp; Z &amp; GZ -.-&gt;|打包| F[&quot;fitImage .itb&lt;br&#x2F;&gt;(kernel+dtb+ramdisk+多签名)&quot;]</span><br></pre></td></tr></table></figure>
 
 <table>
 <thead>
 <tr>
 <th></th>
-<th><strong>x86（科普）</strong></th>
-<th><strong>ARM（科普）</strong></th>
-<th><strong>RISC-V（主场）</strong></th>
+<th><strong>x86</strong></th>
+<th><strong>ARM</strong></th>
+<th><strong>RISC-V</strong></th>
 </tr>
 </thead>
 <tbody><tr>
@@ -781,7 +787,7 @@
 <h2 id="8b-格式化-分区-烧录-命令大全（2026-最新最常用）"><a href="#8b-格式化-分区-烧录-命令大全（2026-最新最常用）" class="headerlink" title="8b. 格式化 / 分区 / 烧录 命令大全（2026 最新最常用）"></a>8b. 格式化 / 分区 / 烧录 命令大全（2026 最新最常用）</h2><blockquote>
 <p>经验法则（2026）：跨平台交换大文件首选 <strong>exFAT</strong>（Linux 内核 5.4+ 原生 + <code>exfatprogs</code>，Win/mac 原生）；EFI 启动分区必须 <strong>FAT32</strong>；Linux 根盘 <strong>ext4</strong>（保守）或 <strong>btrfs/f2fs</strong>（新）；只读固件镜像 <strong>squashfs(zstd)</strong>。</p>
 </blockquote>
-<h3 id="Linux-——-分区-→-格式化-→-烧录-全流程"><a href="#Linux-——-分区-→-格式化-→-烧录-全流程" class="headerlink" title="Linux —— 分区 → 格式化 → 烧录 全流程"></a>Linux —— 分区 → 格式化 → 烧录 全流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ① 看 &amp; 清旧签名（换盘重做前）</span></span><br><span class="line">lsblk -f                          <span class="comment"># 看现有分区+fs+UUID（最常用）</span></span><br><span class="line">sudo wipefs -a /dev/sdX           <span class="comment"># 抹掉旧的分区表/fs 魔数，避免残留误判</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ② 建分区表（三选一）</span></span><br><span class="line">sudo fdisk /dev/sdX               <span class="comment"># 交互式（经典）</span></span><br><span class="line">sudo cfdisk /dev/sdX              <span class="comment"># TUI 图形化（新手友好）</span></span><br><span class="line">sudo parted -s /dev/sdX mklabel gpt \</span><br><span class="line">     mkpart ESP   fat32 1MiB  513MiB \</span><br><span class="line">     mkpart root  ext4  513MiB 100%  <span class="built_in">set</span> 1 esp on</span><br><span class="line">sudo sgdisk -n 1:0:+512M -t 1:ef00 -c 1:ESP \</span><br><span class="line">            -n 2:0:0     -t 2:8300 -c 2:root /dev/sdX   <span class="comment"># 脚本化首选</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ③ 格式化（mkfs 家族，2026 常用）</span></span><br><span class="line">sudo mkfs.vfat -F 32 -n BOOT /dev/sdX1        <span class="comment"># ESP/启动分区（UEFI 只认 FAT32）</span></span><br><span class="line">sudo mkfs.ext4 -L root /dev/sdX2              <span class="comment"># Linux 根盘主流</span></span><br><span class="line">sudo mkfs.exfat -n DATA /dev/sdX2             <span class="comment"># 跨平台大文件（exfatprogs）</span></span><br><span class="line">sudo mkfs.btrfs -L data /dev/sdX2            <span class="comment"># CoW/快照/压缩</span></span><br><span class="line">sudo mkfs.xfs  -L data /dev/sdX2             <span class="comment"># 大文件/高并发</span></span><br><span class="line">sudo mkfs.f2fs -l flash /dev/sdX2            <span class="comment"># SD/eMMC/UFS 闪存友好</span></span><br><span class="line">sudo mkswap /dev/sdX3 &amp;&amp; sudo swapon /dev/sdX3   <span class="comment"># 交换分区</span></span><br><span class="line">mksquashfs rootfs/ ro.img -comp zstd          <span class="comment"># 只读压缩镜像（嵌入式/initramfs）</span></span><br><span class="line"><span class="comment"># 通用写法：sudo mkfs -t ext4 /dev/sdX2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ④ 烧整盘镜像</span></span><br><span class="line">sudo dd <span class="keyword">if</span>=os.img of=/dev/sdX bs=4M conv=fsync status=progress &amp;&amp; sync</span><br><span class="line">sudo bmaptool copy os.img.gz /dev/sdX         <span class="comment"># 2026 快烧：只写有效块(Yocto/RPi 用)，比 dd 快数倍</span></span><br></pre></td></tr></table></figure>
+<h3 id="Linux-——-分区-→-格式化-→-烧录-全流程"><a href="#Linux-——-分区-→-格式化-→-烧录-全流程" class="headerlink" title="Linux —— 分区 → 格式化 → 烧录 全流程"></a>Linux —— 分区 → 格式化 → 烧录 全流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ① 看 &amp; 清旧签名（换盘重做前）</span></span><br><span class="line">lsblk -f                          <span class="comment"># 看现有分区+fs+UUID（最常用）</span></span><br><span class="line">sudo wipefs -a /dev/sdX           <span class="comment"># 抹掉旧的分区表/fs 魔数，避免残留误判</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ② 建分区表（三选一）</span></span><br><span class="line">sudo fdisk /dev/sdX               <span class="comment"># 交互式（经典）</span></span><br><span class="line">sudo cfdisk /dev/sdX              <span class="comment"># TUI 图形化（新手友好）</span></span><br><span class="line">sudo parted -s /dev/sdX mklabel gpt \</span><br><span class="line">     mkpart ESP   fat32 1MiB  513MiB \</span><br><span class="line">     mkpart root  ext4  513MiB 100%  <span class="built_in">set</span> 1 esp on</span><br><span class="line">sudo sgdisk -n 1:0:+512M -t 1:ef00 -c 1:ESP \</span><br><span class="line">            -n 2:0:0     -t 2:8300 -c 2:root /dev/sdX   <span class="comment"># 脚本化首选</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ③ 格式化（mkfs 家族，2026 常用）</span></span><br><span class="line">sudo mkfs.vfat -F 32 -n BOOT /dev/sdX1        <span class="comment"># ESP/启动分区（UEFI 只认 FAT32）</span></span><br><span class="line">sudo mkfs.ext4 -L root /dev/sdX2              <span class="comment"># Linux 根盘主流</span></span><br><span class="line">sudo mkfs.exfat -L DATA /dev/sdX2             <span class="comment"># 跨平台大文件（exfatprogs）</span></span><br><span class="line">sudo mkfs.btrfs -L data /dev/sdX2            <span class="comment"># CoW/快照/压缩</span></span><br><span class="line">sudo mkfs.xfs  -L data /dev/sdX2             <span class="comment"># 大文件/高并发</span></span><br><span class="line">sudo mkfs.f2fs -l flash /dev/sdX2            <span class="comment"># SD/eMMC/UFS 闪存友好</span></span><br><span class="line">sudo mkswap /dev/sdX3 &amp;&amp; sudo swapon /dev/sdX3   <span class="comment"># 交换分区</span></span><br><span class="line">mksquashfs rootfs/ ro.img -comp zstd          <span class="comment"># 只读压缩镜像（嵌入式/initramfs）</span></span><br><span class="line"><span class="comment"># 通用写法：sudo mkfs -t ext4 /dev/sdX2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ④ 烧整盘镜像</span></span><br><span class="line">sudo dd <span class="keyword">if</span>=os.img of=/dev/sdX bs=4M conv=fsync status=progress &amp;&amp; sync</span><br><span class="line">sudo bmaptool copy os.img.gz /dev/sdX         <span class="comment"># 2026 快烧：只写有效块(Yocto/RPi 用)，比 dd 快数倍</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>现代图形/封装：GNOME <strong>Disks</strong>（<code>gnome-disks</code>）、<code>udisksctl</code>、systemd 的 <code>systemd-repart</code>（声明式分区）。</p>
 </blockquote>
@@ -789,6 +795,22 @@
 <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">:: —— diskpart（经典交互，老脚本仍在用）——</span><br><span class="line">diskpart</span><br><span class="line">  list disk</span><br><span class="line">  select disk <span class="number">2</span></span><br><span class="line">  clean</span><br><span class="line">  <span class="built_in">convert</span> gpt</span><br><span class="line">  create partition primary size=<span class="number">512</span></span><br><span class="line">  <span class="built_in">format</span> <span class="built_in">fs</span>=fat32 quick <span class="built_in">label</span>=BOOT</span><br><span class="line">  assign</span><br><span class="line">:: —— <span class="built_in">cmd</span> 单卷快速格式化 ——</span><br><span class="line"><span class="built_in">format</span> X: /<span class="built_in">FS</span>:exFAT /Q /V:DATA</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>烧录镜像工具（2026 最常用，图形化最稳）：<strong>Raspberry Pi Imager</strong> / <strong>balenaEtcher</strong> / <strong>Rufus</strong> / <strong>Win32 Disk Imager</strong>；命令行 <code>dd for Windows</code>（<code>of=\\.\PhysicalDriveN</code>）。图形磁盘管理：<code>diskmgmt.msc</code>。</p>
+</blockquote>
+<blockquote>
+<p>📷 <strong>待截图@Win11</strong>：磁盘管理 <code>diskmgmt.msc</code> 的分区视图（新建简单卷 / 格式化 / 分配盘符）</p>
+<!-- 替换为: ![Win11 磁盘管理](images/win-diskmgmt.png) -->
+</blockquote>
+<blockquote>
+<p>📷 <strong>待截图@Win11</strong>：右键卷 → 「格式化」对话框（文件系统下拉 FAT32/exFAT/NTFS + 卷标 + 快速格式化）</p>
+<!-- 替换为: ![Win11 格式化对话框](images/win-format-dialog.png) -->
+</blockquote>
+<blockquote>
+<p>📷 <strong>待截图@Win11</strong>：用 <strong>Win32 Disk Imager</strong>（或 Rufus / Raspberry Pi Imager）把 <code>.img</code> 烧到 SD 卡的界面</p>
+<!-- 替换为: ![Win32 Disk Imager 烧录](images/win-win32diskimager.png) -->
+</blockquote>
+<blockquote>
+<p>📷 <strong>待截图@Win11</strong>（可选）：PowerShell 跑 <code>Get-Disk</code> / <code>Initialize-Disk</code> / <code>Format-Volume</code> 的实际输出</p>
+<!-- 替换为: ![PowerShell Storage 格式化](images/win-powershell-format.png) -->
 </blockquote>
 <h3 id="macOS-——-diskutil（2026-默认-APFS）"><a href="#macOS-——-diskutil（2026-默认-APFS）" class="headerlink" title="macOS —— diskutil（2026 默认 APFS）"></a>macOS —— <code>diskutil</code>（2026 默认 APFS）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">diskutil list                                         <span class="comment"># 看 /dev/diskN</span></span><br><span class="line">diskutil eraseDisk APFS  MyName        /dev/disk4      <span class="comment"># 整盘 APFS（mac 原生默认）</span></span><br><span class="line">diskutil eraseDisk MS-DOS BOOT MBR     /dev/disk4      <span class="comment"># 整盘 FAT32（MS-DOS=FAT）</span></span><br><span class="line">diskutil eraseDisk ExFAT  DATA  GPT    /dev/disk4      <span class="comment"># 跨平台大文件</span></span><br><span class="line">diskutil partitionDisk /dev/disk4 GPT \</span><br><span class="line">         FAT32 BOOT 512MB  APFS ROOT R                 <span class="comment"># 一条命令分区+格式化</span></span><br><span class="line"><span class="comment"># 底层：newfs_msdos / newfs_apfs / newfs_hfs；烧录 dd of=/dev/rdiskN 或 balenaEtcher</span></span><br></pre></td></tr></table></figure>
 
@@ -853,14 +875,14 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="9-常见坑清单（血泪）"><a href="#9-常见坑清单（血泪）" class="headerlink" title="9. 常见坑清单（血泪）"></a>9. 常见坑清单（血泪）</h2><ol>
+<h2 id="9-常见坑清单（常见错误）"><a href="#9-常见坑清单（常见错误）" class="headerlink" title="9. 常见坑清单（常见错误）"></a>9. 常见坑清单（常见错误）</h2><ol>
 <li><strong><code>dd</code> 跑完没 <code>sync</code> 就拔卡 → 数据丢</strong>（还在 page cache）。</li>
 <li><strong><code>of=</code> 写错盘 → 抹掉系统盘</strong>。烧前 <code>lsblk</code> 三确认，<code>/dev/sdX</code> 不是 <code>/dev/sdX1</code>。</li>
 <li><strong><code>umount</code> 后 loop 没解绑</strong>（手动 <code>losetup</code> 无 autoclear）→ loop 设备泄漏，<code>losetup -a</code> 查、<code>-d</code> 清。</li>
 <li><strong><code>mount -o loop failed to setup loop device</code> → 先查文件路径</strong>（不存在也报这个）。</li>
 <li><strong>bzImage 的 <code>bz</code> 当 bzip2</strong> → 是 “big zImage”。</li>
 <li><strong>以为 LBA0 是 GPT</strong> → 是 Protective MBR，GPT header 在 LBA1。</li>
-<li><strong>拿 <code>mkfs.ext4</code> 往裸 NAND flash 上招呼</strong> → 裸 flash 用 ubifs/jffs2（mtd），不是块 fs。</li>
+<li><strong>拿 <code>mkfs.ext4</code> 直接格式化裸 NAND flash</strong> → 裸 flash 用 ubifs/jffs2（mtd），不是块 fs。</li>
 <li><strong>ESP 用了 ext4</strong> → UEFI 只认 FAT32。</li>
 <li><strong><code>/tmp</code> 是 tmpfs 时做 Dirty 实验失真</strong> → 写真盘路径。</li>
 </ol>
@@ -872,7 +894,7 @@
 </ol>
 <hr>
 <blockquote>
-<p><strong>小结</strong>：穿越系统之前，先把”镜像 = 裸字节布局（容器→分区表→文件系统三层）”、”loop = 文件伪装块设备”、”dd 走 page cache 必须 sync”、”内核镜像家族是一条 vmlinux→Image→封装的加工流水线”这四件事吃透，后面上板子、调 bootloader、做 rootfs 就都有地基了。下一篇《穿越系统之前》接着讲 BIOS/SPL/SBI/Bootloader 怎么把这些镜像接力送进内核。</p>
+<p><strong>小结</strong>：在系统真正跑起来之前，先把”镜像 = 裸字节布局（容器→分区表→文件系统三层）”、”loop = 文件伪装块设备”、”dd 走 page cache 必须 sync”、”内核镜像家族是一条 vmlinux→Image→封装的加工流水线”这四件事吃透，后面上板子、调 bootloader、做 rootfs 就都有地基了。再往上，就是 BIOS/SPL/SBI/Bootloader 如何把这些镜像接力送进内核。</p>
 </blockquote>
 
     </div>

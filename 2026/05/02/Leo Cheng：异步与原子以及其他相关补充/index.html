@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="rcore-os Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-05-02T21:43:45.000Z">
-<meta property="article:modified_time" content="2026-06-28T04:03:07.405Z">
+<meta property="article:modified_time" content="2026-10-03T16:56:14.705Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="author:heke1228">
 <meta property="article:tag" content="repo:https:&#x2F;&#x2F;cnb.cool&#x2F;heke_learning&#x2F;oscamp-base-experiment">
@@ -189,20 +189,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">777</span>
+          <span class="site-state-item-count">792</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">240</span>
+        <span class="site-state-item-count">298</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">721</span>
+        <span class="site-state-item-count">770</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -269,7 +269,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-06-28 04:03:07" itemprop="dateModified" datetime="2026-06-28T04:03:07+00:00">2026-06-28</time>
+                <time title="Modified: 2026-10-03 16:56:14" itemprop="dateModified" datetime="2026-10-03T16:56:14+00:00">2026-10-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -383,7 +383,7 @@
 <a id="more"></a>
 
 <blockquote>
-<p><strong>本篇两条主线</strong>：<strong>异步</strong>——怎么让一个线程交错跑很多任务（协程 / 纤程 / 生成器 / 运行时）；<strong>原子</strong>——多核共享数据时怎么保证”不可分割”，以及建在其上的锁与无锁结构。以 Rust / Zig 为主轴，旁及 Go / Python / C++20 / Kotlin / JS，逐点给跨语言写法对照。</p>
+<p><strong>两条主线</strong>：<strong>异步</strong>——怎么让一个线程交错跑很多任务（协程 / 纤程 / 生成器 / 运行时）；<strong>原子</strong>——多核共享数据时怎么保证”不可分割”，以及建在其上的锁与无锁结构。覆盖 Rust / Zig / Go / Python / C++20 / Kotlin / JS，逐点给跨语言写法对照。</p>
 </blockquote>
 <hr>
 <h2 id="1-四组最容易混的概念"><a href="#1-四组最容易混的概念" class="headerlink" title="1. 四组最容易混的概念"></a>1. 四组最容易混的概念</h2><p>并发的讨论，先把这四组概念分清，后续才不致混淆。</p>
@@ -421,7 +421,7 @@
 <li><strong>抢占式（preemptive）</strong>：调度器靠<strong>时钟中断</strong>强行把当前任务切走，任务自己不知情。OS 线程、Go goroutine（带抢占点）属此类。好处：一个任务死循环也饿不死别人；代价：随时可能被打断，共享数据必须加锁。</li>
 <li><strong>协作式（cooperative）</strong>：任务<strong>自己显式让出</strong>（<code>yield</code> / <code>await</code> / <code>suspend</code>）才切。绝大多数协程（Rust async、Python async、Lua coroutine）属此类。好处：让出点明确、单线程内无需锁；代价：一个任务不让出就卡死整个调度器。</li>
 </ul>
-<h3 id="1-4-贯穿全篇的核心判断"><a href="#1-4-贯穿全篇的核心判断" class="headerlink" title="1.4 贯穿全篇的核心判断"></a>1.4 贯穿全篇的核心判断</h3><p>协程 / 纤程之所以比线程”轻”，根因只有一句：<strong>切换时要保存 / 恢复的东西更少，且不进内核</strong>。线程切换要换页表（<code>satp</code>）、刷 TLB、过特权级；协程切换只在用户态存几个寄存器（有栈），甚至什么都不存（无栈，只改状态机的当前状态）。下一节用一张谱系图说明。</p>
+<h3 id="1-4-贯穿全篇的核心判断"><a href="#1-4-贯穿全篇的核心判断" class="headerlink" title="1.4 贯穿全篇的核心判断"></a>1.4 贯穿全篇的核心判断</h3><p>协程 / 纤程之所以比线程”轻”，根因只有一句：<strong>切换时要保存 / 恢复的东西更少，且不进内核</strong>。线程切换要换页表（<code>satp</code>）、刷 TLB、过特权级；协程切换只在用户态存几个寄存器（有栈），甚至什么都不存（无栈，只改状态机的当前状态）。</p>
 <hr>
 <h2 id="2-执行流载体全景：从进程到生成器"><a href="#2-执行流载体全景：从进程到生成器" class="headerlink" title="2. 执行流载体全景：从进程到生成器"></a>2. 执行流载体全景：从进程到生成器</h2><p>把”能独立推进的执行流”按<strong>从重到轻</strong>排成一条谱系：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    P[&quot;进程 process&lt;br&#x2F;&gt;独立地址空间&quot;] --&gt; T[&quot;线程 thread&lt;br&#x2F;&gt;共享地址空间&quot;]</span><br><span class="line">    T --&gt; G[&quot;green thread &#x2F; goroutine&lt;br&#x2F;&gt;runtime 调度的用户态线程&quot;]</span><br><span class="line">    G --&gt; SF[&quot;纤程 &#x2F; 有栈协程 fiber&lt;br&#x2F;&gt;用户态调度器 + 独立栈&quot;]</span><br><span class="line">    SF --&gt; SL[&quot;无栈协程 async&lt;br&#x2F;&gt;编译成状态机，无独立栈&quot;]</span><br><span class="line">    SL --&gt; GEN[&quot;生成器 generator&lt;br&#x2F;&gt;受限协程，只能 yield 值&quot;]</span><br><span class="line">    style P fill:#e8e8e8</span><br><span class="line">    style GEN fill:#e8f0ff</span><br></pre></td></tr></table></figure>
@@ -488,7 +488,7 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>核心洞察</strong>：这张表从上到下，”切换”这件事从”内核换页表刷 TLB”一路退化到”改一个状态机枚举的当前值”。有栈协程的切换本质就是<strong>用户态的上下文切换</strong>——和 OS 切线程的机制几乎一样（存恢复 SP + 寄存器），只是发生在用户态、没有内核参与、没有页表切换。无栈协程更彻底：连栈都不切，编译器把函数拆成一段段状态，<code>poll</code> 一次推进一段。后面会把这两条路各自拆到汇编 / 源码级。</p>
+<p><strong>核心洞察</strong>：这张表从上到下，”切换”这件事从”内核换页表刷 TLB”一路退化到”改一个状态机枚举的当前值”。有栈协程的切换本质就是<strong>用户态的上下文切换</strong>——和 OS 切线程的机制几乎一样（存恢复 SP + 寄存器），只是发生在用户态、没有内核参与、没有页表切换。无栈协程更彻底：连栈都不切，编译器把函数拆成一段段状态，<code>poll</code> 一次推进一段。</p>
 </blockquote>
 <hr>
 <h2 id="3-原子操作与内存模型"><a href="#3-原子操作与内存模型" class="headerlink" title="3. 原子操作与内存模型"></a>3. 原子操作与内存模型</h2><p>异步讲的是”一个核怎么交错跑多个任务”；一旦任务摊到<strong>多个核</strong>真并行，就绕不开”共享数据怎么不打架”——这就是原子与内存模型的地盘，也是后面一切锁与无锁结构的地基。</p>
@@ -553,7 +553,7 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p>Go 的原子默认即最强序（顺序一致），不开放内存序选择；Rust / Zig / C++ 均要求显式指定内存序——这正引出下一节。</p>
+<p>Go 的原子默认即最强序（顺序一致），不开放内存序选择；Rust / Zig / C++ 均要求显式指定内存序。</p>
 </blockquote>
 <h3 id="3-3-五种内存序（memory-ordering）"><a href="#3-3-五种内存序（memory-ordering）" class="headerlink" title="3.3 五种内存序（memory ordering）"></a>3.3 五种内存序（memory ordering）</h3><p>光”原子”还不够：编译器和 CPU 都会<strong>重排指令</strong>提速，多核下重排会让别的核看到”不该看到的顺序”。内存序就是你给原子操作附加的排序约束，编译器据此生成对应的<strong>内存屏障</strong>挡住重排。从弱到强：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Relaxed —— 只管原子，不管顺序</span></span><br><span class="line">counter.fetch_add(<span class="number">1</span>, Ordering::Relaxed);</span><br><span class="line"><span class="comment">// √ 保证：操作本身原子（不被打断、不撕裂）</span></span><br><span class="line"><span class="comment">// × 不保证：与其它变量的先后顺序、跨线程可见性时机</span></span><br><span class="line"><span class="comment">// 用：纯计数器（只要最终总数对，不关心中间顺序）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Release —— "写完才能发布"</span></span><br><span class="line">data = <span class="number">42</span>;</span><br><span class="line">ready.store(<span class="literal">true</span>, Ordering::Release);</span><br><span class="line"><span class="comment">// √ 保证：本线程在此 store 之前的所有写，对"用 Acquire 读到这个值"的线程可见</span></span><br><span class="line"><span class="comment">//        —— ready 翻 true 这一刻，data=42 一定已经写好</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. Acquire —— "读到才能往下看"</span></span><br><span class="line"><span class="keyword">if</span> ready.load(Ordering::Acquire) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"&#123;&#125;"</span>, data);   <span class="comment">// 一定看到 42</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// √ 保证：此 load 之后的读，不会被重排到 load 之前</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. AcqRel —— 读改写合一（给 fetch_xxx 这类 RMW 用）</span></span><br><span class="line"><span class="keyword">let</span> old = counter.fetch_add(<span class="number">1</span>, Ordering::AcqRel);</span><br><span class="line"><span class="comment">// = 读那一半 Acquire + 写那一半 Release，原子地一起做</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. SeqCst —— 全局单一顺序</span></span><br><span class="line">counter.store(<span class="number">42</span>, Ordering::SeqCst);</span><br><span class="line"><span class="comment">// √ 保证：所有线程看到的所有 SeqCst 操作排成同一个全局顺序（最直觉、最安全、也最慢）</span></span><br></pre></td></tr></table></figure>
@@ -892,7 +892,7 @@
 <p><strong>路二 · Zig 的 <code>io</code> 注入</strong>（0.15+）：把”是否异步”从函数类型里挪出来，改成一个普通参数 <code>io</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 普通函数，只是多收一个 io 参数；同步还是异步由传进来的 io 决定</span><br><span class="line">fn fetch(io: std.Io, url: []const u8) ![]u8 &#123;</span><br><span class="line">    return io.http.get(url);   &#x2F;&#x2F; 单线程 io → 顺序；线程池 &#x2F; 事件循环 io → 并发</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>函数本身中性、不染色——但<strong>调用链仍要一路把 <code>io</code> 传下去</strong>。还记得 §4.2 的 <code>std.Io.Mutex.lock(io)</code> 吗？连加锁都收 <code>io</code>，正是这套思路的延续。</p>
+<p>函数本身中性、不染色——但<strong>调用链仍要一路把 <code>io</code> 传下去</strong>。§4.2 的 <code>std.Io.Mutex.lock(io)</code> 连加锁都收 <code>io</code>，正是这套思路的延续。</p>
 <blockquote>
 <p>进一步看：Zig 这招<strong>没有真正消灭染色，只是把它从”类型传染”换成”参数传染”、把决定权推迟到调用方</strong>——决定用哪种 <code>io</code> 后端的那一刻，颜色就定了。区别在于：<code>io</code> 是普通参数、函数类型不变，所以不需要异步的中间函数可以不收 <code>io</code>、可运行时换后端，比”编译期钉死在类型上”灵活。</p>
 </blockquote>
@@ -1003,7 +1003,7 @@
 <h3 id="7-2-就绪式-vs-完成式-I-O"><a href="#7-2-就绪式-vs-完成式-I-O" class="headerlink" title="7.2 就绪式 vs 完成式 I/O"></a>7.2 就绪式 vs 完成式 I/O</h3><p>运行时怎么向内核要 I/O，分两大流派：</p>
 <ul>
 <li><strong>就绪式（readiness，epoll / kqueue）</strong>：内核说”fd 可读了”→ 你再 <code>read()</code> → 内核把数据<strong>从内核缓冲拷到你的 buf</strong>。tokio 走这条。</li>
-<li><strong>完成式（completion，io_uring / IOCP）</strong>：你<strong>提交 read 请求 + buf</strong> → 内核异步执行 → 完成时通知你”buf 已填好”（少一次拷贝）。monoio 走这条。</li>
+<li><strong>完成式（completion，io_uring / IOCP）</strong>：你<strong>提交 read 请求 + buf</strong> → 内核异步执行 → 完成时通知你”buf 已填好”（提交即异步执行，省去每次 <code>read</code> 系统调用与上下文切换；配合注册缓冲可进一步零拷贝）。monoio 走这条。</li>
 </ul>
 <p>完成式代价是<strong>所有权模型不同</strong>：buf 在内核处理期间不能碰，得交出所有权：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file.read(&amp;<span class="keyword">mut</span> buf).<span class="keyword">await</span>?;                    <span class="comment">// tokio（就绪式）：&amp;mut buf 借用即可</span></span><br><span class="line"><span class="keyword">let</span> (res, buf) = file.read_exact(buf).<span class="keyword">await</span>;   <span class="comment">// monoio（完成式）：buf 移进去、完成后移回来</span></span><br></pre></td></tr></table></figure>
@@ -1035,7 +1035,7 @@
 <tr>
 <td align="center"><strong>async-std</strong></td>
 <td align="center">多线程</td>
-<td align="center">同 tokio</td>
+<td align="center">async-io（同 smol，epoll/kqueue）</td>
 <td align="center">API 镜像 std，迁移友好</td>
 </tr>
 <tr>
@@ -1046,7 +1046,7 @@
 </tr>
 </tbody></table>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tokio：spawn(类 goroutine) + join!(并发等) + select!(等第一个) + mpsc channel</span></span><br><span class="line"><span class="meta">#[tokio::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> h1 = tokio::spawn(<span class="keyword">async</span> &#123; <span class="number">1u32</span> &#125;);</span><br><span class="line">    <span class="keyword">let</span> h2 = tokio::spawn(<span class="keyword">async</span> &#123; <span class="number">2u32</span> &#125;);</span><br><span class="line">    <span class="keyword">let</span> (a, b) = tokio::join!(h1, h2);          <span class="comment">// join!：并发等多个</span></span><br><span class="line">    <span class="keyword">let</span> _ = (a, b);</span><br><span class="line">    tokio::<span class="built_in">select!</span> &#123;                            <span class="comment">// select!：等最先完成的那个</span></span><br><span class="line">        v = <span class="keyword">async</span> &#123; <span class="number">42u32</span> &#125; =&gt; &#123; <span class="keyword">let</span> _ = v; &#125;</span><br><span class="line">        _ = tokio::time::sleep(std::time::Duration::from_millis(<span class="number">10</span>)) =&gt; &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// smol：最小执行器，吃透它就懂"执行器怎么驱动 Future"</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    smol::block_on(<span class="keyword">async</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> h = smol::spawn(<span class="keyword">async</span> &#123; <span class="number">42u32</span> &#125;);</span><br><span class="line">        <span class="built_in">assert_eq!</span>(h.<span class="keyword">await</span>, <span class="number">42</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// smol：最小执行器，读懂它就懂"执行器怎么驱动 Future"</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    smol::block_on(<span class="keyword">async</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> h = smol::spawn(<span class="keyword">async</span> &#123; <span class="number">42u32</span> &#125;);</span><br><span class="line">        <span class="built_in">assert_eq!</span>(h.<span class="keyword">await</span>, <span class="number">42</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="7-4-Zig-的并发：没有”运行时生态”，只有-io-后端"><a href="#7-4-Zig-的并发：没有”运行时生态”，只有-io-后端" class="headerlink" title="7.4 Zig 的并发：没有”运行时生态”，只有 io 后端"></a>7.4 Zig 的并发：没有”运行时生态”，只有 io 后端</h3><p>Zig 没有 tokio 那样的第三方运行时生态，并发由 <strong><code>std.Io</code> 后端</strong> + 几条路拼出来：</p>
 <table>
@@ -1192,7 +1192,7 @@
 <p>本质是两种并发哲学（§5 染色）。Rust 的锁阻塞的是 <strong>OS 线程</strong>（陷入内核 futex 睡眠），锁本身不关心运行时。Zig 0.17 把”等锁”接进了 <code>io</code>：传哪种 <code>io</code>，就决定等锁时是自旋、是 futex 挂起线程、还是<strong>让出当前异步任务</strong>——锁与调度器解耦、由调用方注入。代价是 <code>io</code> 一路传下去（参数传染），好处是同一把锁能适配线程 / 协程 / 异步多种后端。</p>
 </blockquote>
 <hr>
-<h2 id="10-其他相关补充：把异步推进到内核与硬件"><a href="#10-其他相关补充：把异步推进到内核与硬件" class="headerlink" title="10. 其他相关补充：把异步推进到内核与硬件"></a>10. 其他相关补充：把异步推进到内核与硬件</h2><p>前面的异步都在<strong>用户态</strong>（协程、运行时、生成器）。本地资源里还有一批，把”异步”这套思路推进到<strong>内核结构</strong>乃至<strong>硬件中断</strong>——这是异步的前沿，也是本篇标题里”其他相关补充”所指。</p>
+<h2 id="10-其他相关补充：把异步推进到内核与硬件"><a href="#10-其他相关补充：把异步推进到内核与硬件" class="headerlink" title="10. 其他相关补充：把异步推进到内核与硬件"></a>10. 其他相关补充：把异步推进到内核与硬件</h2><p>前面的异步都在<strong>用户态</strong>（协程、运行时、生成器）。还有一批工作，把”异步”这套思路推进到<strong>内核结构</strong>乃至<strong>硬件中断</strong>——这是异步的前沿。</p>
 <h3 id="10-1-异步内核：把-future-协程搬进内核"><a href="#10-1-异步内核：把-future-协程搬进内核" class="headerlink" title="10.1 异步内核：把 future / 协程搬进内核"></a>10.1 异步内核：把 future / 协程搬进内核</h3><p>长期以来，Linux 等主流内核仍是同步线程模型，异步只存在于用户态。近年的研究尝试把 future / 协程作为<strong>内核自身的执行单位</strong>，按”异步如何进入内核”可分四派：</p>
 <table>
 <thead>
@@ -1229,7 +1229,7 @@
 <h3 id="10-3-给-async-加抢占：embassy-preempt"><a href="#10-3-给-async-加抢占：embassy-preempt" class="headerlink" title="10.3 给 async 加抢占：embassy_preempt"></a>10.3 给 async 加抢占：embassy_preempt</h3><p>§1.3 区分过协作式与抢占式，也指出绝大多数协程是协作式（任务不让出即卡死调度器）。embassy_preempt 在 embassy（§7.5 的裸机 async 运行时）之上引入 uC/OS-II 式抢占，让 async 任务也能被时钟中断抢占——在 async 的省内存与抢占式的实时性之间取得折中。</p>
 <hr>
 <blockquote>
-<p><strong>回望全篇</strong>：从”四组概念 + 执行流载体”起步，向下抵达”原子 + 内存模型 + 同步原语”的硬件地基，向上延伸到”协程（有栈 / 无栈）+ 染色 + 运行时 + 生成器”的异步上层，最后以 oscamp 练习对照。一条主线贯穿始终：<strong>并发的种种机制，要么在解决”如何高效切换执行流”（协程谱系），要么在解决”如何安全共享内存”（原子谱系）</strong>——Rust 以类型系统将安全约束固化在编译期，Zig 以显式与 io 注入将控制权交还给开发者，各有取舍。</p>
+<p><strong>回望</strong>：并发的种种机制，要么在解决”如何高效切换执行流”（协程谱系），要么在解决”如何安全共享内存”（原子谱系）——Rust 以类型系统将安全约束固化在编译期，Zig 以显式与 io 注入将控制权交还给开发者，各有取舍。</p>
 </blockquote>
 
     </div>
