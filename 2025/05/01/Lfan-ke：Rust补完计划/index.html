@@ -30,7 +30,7 @@
 <meta property="og:description" content="Rust补完计划src：rust官网，rust官文，rust官仓，crates.io，rust-wiki，卡狗圣经 ​    Rust可看作一个在语法层面（编译时）具有严格检查和限制的C语言上位。且扩展了面向对象的便捷方法绑定。编译和运行方式类似于C&#x2F;C++，可以rustc xxx.rs编译，.&#x2F;xxx运行。有约定的项目目录格式，可使用Cargo配置toml进行包管理、编译、运行、测试等等。包资源">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-05-01T12:00:28.000Z">
-<meta property="article:modified_time" content="2026-10-10T06:48:03.411Z">
+<meta property="article:modified_time" content="2026-10-10T08:56:36.745Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="补完计划">
 <meta property="article:tag" content="author:Lfan-ke">
@@ -193,20 +193,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">795</span>
+          <span class="site-state-item-count">792</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">962</span>
+        <span class="site-state-item-count">948</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -273,7 +273,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 06:48:03" itemprop="dateModified" datetime="2026-10-10T06:48:03+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,6 +300,8 @@
 <p>​    Rust可看作一个在语法层面（编译时）具有严格检查和限制的C语言上位。且扩展了面向对象的便捷方法绑定。编译和运行方式类似于C/C++，可以<code>rustc xxx.rs</code>编译，<code>./xxx</code>运行。有约定的项目目录格式，可使用<code>Cargo</code>配置<code>toml</code>进行包管理、编译、运行、测试等等。包资源网站为<code>CratesIO</code>，见<code>src↑</code>。支持通过<code>std::ops</code>系列 trait 进行运算符重载，支持多态。其中语句为：<code>表达式+;</code>，语句的值是<code>()</code>。</p>
 <p>​    为了安全，几乎所有的方法/变量/属性都是私有的，除非使用<code>pub</code>进行显式公用声明。</p>
 <p>​    说到底，编程语言就是人类用来快速生成机器码以便于执行的模板引擎，有的语法层面(编译时/解释时)有强约束，有的仅仅是把特定字符串替换成另外的字符串或二进制，属于弱约束或者无约束。所有你在编程语言所看到的抽象，在机器码的层面本来就是一场幻月楼阁。比如你在编程语言层面，继承多态面向对象权限生命周期搞的花里胡哨的，但是在机器码看来，就仅仅是把PC变一下，或者某数据/指针变一下而已，甚至你一系列花里胡哨的操作仅仅是为了过编译器/解释器的语法检查，实际上到了汇编或者字节码你会发现可能一行没变或者只是改了个指针，你所关心的语法层面，语义特性，都是高层编译时/解释时的语法约束。这些约束让你写正确的高级语法的同时，最重要的是保证执行的结果符合预期。所以学底层的，一定要层层解耦，梳理层层抽象！</p>
+<a id="more"></a>
+
 <h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
 
@@ -369,7 +371,6 @@
 
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.rs / mod.rs</span></span><br><span class="line"><span class="keyword">mod</span> method;						<span class="comment">// '0</span></span><br><span class="line"><span class="keyword">use</span> method::*;					<span class="comment">// '0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">use</span> method::func;			<span class="comment">// pub use使得导入此包的也可以被别的包从此包导入'1 'export</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">use</span> crate::method::func;	<span class="comment">// crate表示从包的根目录进行相对路径索引'2 'export</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有main，则在main内：</span></span><br><span class="line">func();</span><br><span class="line">method::func();</span><br><span class="line">crate::method::func();</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 
 <h2 id="特殊部分"><a href="#特殊部分" class="headerlink" title="特殊部分"></a>特殊部分</h2><h3 id="所有权机制"><a href="#所有权机制" class="headerlink" title="所有权机制"></a>所有权机制</h3><p>​    在其他语言中，变量的赋值一向秉持：<code>常用量固定地址，简单变量直接复制，复杂变量或引用复制指针不复制本体</code>的弯弯绕绕，导致很多编程语言新手写出一堆堆耐人寻味的bug。Rust引入的所有权机制将这种不同语言独具特性的弯弯绕绕统一划分为了两类：实现了<code>Copy Trait</code>的类型和未实现<code>CT</code>$$^{笔记中出现过一次的全名在下次出现若无歧义将直接采用首字母缩写}$$的类型。前者赋值操作会执行<code>.clone()</code>，后者则是所有权的移交，这样子保证了数据的访问安全。</p>
 <p>​    如何理解所有权呢？对于未实现<code>CT</code>的类型：</p>

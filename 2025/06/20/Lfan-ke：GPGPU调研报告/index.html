@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://rcore-os.github.io/blog/2025/06/20/Lfan-ke%EF%BC%9AGPGPU%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A/gpu-above-sm.png">
 <meta property="og:image" content="http://rcore-os.github.io/blog/2025/06/20/Lfan-ke%EF%BC%9AGPGPU%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A/gpu-below-sm.png">
 <meta property="article:published_time" content="2025-06-20T13:07:00.000Z">
-<meta property="article:modified_time" content="2026-10-10T06:48:03.409Z">
+<meta property="article:modified_time" content="2026-10-10T08:56:36.741Z">
 <meta property="article:author" content="rcore-os Group">
 <meta property="article:tag" content="AsyncOS">
 <meta property="article:tag" content="author:heke">
@@ -211,20 +211,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">795</span>
+          <span class="site-state-item-count">792</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">962</span>
+        <span class="site-state-item-count">948</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -291,7 +291,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 06:48:03" itemprop="dateModified" datetime="2026-10-10T06:48:03+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,6 +319,8 @@
 <blockquote>
 <p>本阶段从理解与熟悉Rust异步编程开始，探究内核态的<code>GPU/GPGPU</code>资源管理与异步操作系统的结合方案。</p>
 </blockquote>
+<a id="more"></a>
+
 <h2 id="Rust异步编程"><a href="#Rust异步编程" class="headerlink" title="Rust异步编程"></a>Rust异步编程</h2><p>异步协程/纤程/微线程/绿色线程/虚拟线程/Future/Fiber/Promise/Coroutine/Goroutine/GreenTask/GreenThread/Microthread……名字各异（下文统一称：协程），但是表述的都是轻量级的用户态线程，挂起和恢复不涉及系统调用，开销小且灵活。使用方式在不同语言环境中大同小异，但是在实现上多多少少有不同。</p>
 <p>Python的协程使用：</p>
 <p>2006年通过PEP 342引入，利用生成器<code>yield</code>实现协程，Py3.4正式引入<code>asyncio</code>库，Py3.5正式协程标准化。到目前[2025.06.20 Py3.13]为止，Py协程仍然在不断发展，比如Py3.7引入的<code>asyncio.run/create_task</code>、Py3.11引入的<code>async with asyncio.TaskGroup() as tg</code>方法等等。</p>
@@ -393,7 +395,6 @@ https://docs.qq.com/aio/DSFBEZ1pJY0VaWVBU?electronTabTitle=ES6%E8%A1%A5%E5%AE%8C
 <p>其中Embassy的大卖点是异步框架：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#![no_std]</span></span><br><span class="line"><span class="meta">#![no_main]</span></span><br><span class="line"><span class="meta">#![feature(type_alias_impl_trait)]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> embassy_executor::Spawner;</span><br><span class="line"><span class="keyword">use</span> embassy_stm32::exti::ExtiInput;</span><br><span class="line"><span class="keyword">use</span> embassy_stm32::gpio::&#123;Input, Level, Output, Pull, Speed&#125;;</span><br><span class="line"><span class="keyword">use</span> &#123;defmt_rtt <span class="keyword">as</span> _, panic_probe <span class="keyword">as</span> _&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[embassy_executor::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>(_spawner: Spawner) &#123;</span><br><span class="line">    <span class="keyword">let</span> p = embassy_stm32::init(<span class="built_in">Default</span>::default());</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> led = Output::new(p.PB14, Level::Low, Speed::VeryHigh);</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> button = ExtiInput::new(Input::new(p.PC13, Pull::Up), p.EXTI13);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        button.wait_for_any_edge().<span class="keyword">await</span>;</span><br><span class="line">        <span class="keyword">if</span> button.is_low() &#123;</span><br><span class="line">            led.set_high();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            led.set_low();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 
 <p>补充内容：</p>
 <img src="/blog/2025/06/20/Lfan-ke%EF%BC%9AGPGPU%E8%B0%83%E7%A0%94%E6%8A%A5%E5%91%8A/nrf-hal-peripherals.png" class="" title="nRF 系列由 HAL 实现的外设">
