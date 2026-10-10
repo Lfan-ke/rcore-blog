@@ -22,18 +22,75 @@
     var CONFIG = {"hostname":"rcore-os.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="0. 引言：内核如何立起来并持续运行内核拿到 CPU 的第一条指令后，要在裸硬件上把自己立起来、并持续运行下去：建立调度、管理内存、接管中断与异常、驱动设备、提供文件系统与进程间通信，最终把用户程序跑起来。 承担这套职责的系统软件并非只有一种形态。从只有几 KB、任务与调度都极简的实时内核（RTOS），到把异步运行时直接当作调度框架的裸机方案，再到结构完整的宏内核、微内核、组件化内核、外核与">
+  <meta name="description" content="AI4OSE 期间，我们与 Agent 协作学习各项知识，并且 Agent 出题 讲解 以及 苏格拉底式 的阶梯式学习法。所以最后也有 Agent 自动插入笔记的问题和自己的回答，如果答案不充分，则我的作答还会有 Agent 协调补充的内容。相关提示词：如果我有疏漏，给我补充，且讲解充分后继续向我提问查缺补漏，最后一同沉淀到我们的笔记中！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leo Cheng: RTOS 异步运行时 单微宏外库框 虚拟化+监视器 - 穿越系统之时">
 <meta property="og:url" content="http://rcore-os.github.io/blog/2026/05/04/Leo%20Cheng%EF%BC%9ARTOS%20%E5%BC%82%E6%AD%A5%E8%BF%90%E8%A1%8C%E6%97%B6%20%E5%8D%95%E5%BE%AE%E5%AE%8F%E5%A4%96%E6%A1%86%20%E8%99%9A%E6%8B%9F%E5%8C%96+%E7%9B%91%E8%A7%86%E5%99%A8%20-%20%E7%A9%BF%E8%B6%8A%E7%B3%BB%E7%BB%9F%E4%B9%8B%E6%97%B6/index.html">
 <meta property="og:site_name" content="rcore-os Blog">
-<meta property="og:description" content="0. 引言：内核如何立起来并持续运行内核拿到 CPU 的第一条指令后，要在裸硬件上把自己立起来、并持续运行下去：建立调度、管理内存、接管中断与异常、驱动设备、提供文件系统与进程间通信，最终把用户程序跑起来。 承担这套职责的系统软件并非只有一种形态。从只有几 KB、任务与调度都极简的实时内核（RTOS），到把异步运行时直接当作调度框架的裸机方案，再到结构完整的宏内核、微内核、组件化内核、外核与">
+<meta property="og:description" content="AI4OSE 期间，我们与 Agent 协作学习各项知识，并且 Agent 出题 讲解 以及 苏格拉底式 的阶梯式学习法。所以最后也有 Agent 自动插入笔记的问题和自己的回答，如果答案不充分，则我的作答还会有 Agent 协调补充的内容。相关提示词：如果我有疏漏，给我补充，且讲解充分后继续向我提问查缺补漏，最后一同沉淀到我们的笔记中！">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-05-04T21:43:45.000Z">
-<meta property="article:modified_time" content="2026-10-03T16:56:26.913Z">
+<meta property="article:modified_time" content="2026-10-10T06:48:03.405Z">
 <meta property="article:author" content="rcore-os Group">
+<meta property="article:tag" content="rCore">
+<meta property="article:tag" content="StarryOS">
+<meta property="article:tag" content="RTOS">
 <meta property="article:tag" content="author:逸仙">
 <meta property="article:tag" content="repo:https:&#x2F;&#x2F;cnb.cool&#x2F;heke_learning&#x2F;ArceOS-Tutorial-2026S">
+<meta property="article:tag" content="Async Runtime">
+<meta property="article:tag" content="ArceOS">
+<meta property="article:tag" content="FreeRTOS">
+<meta property="article:tag" content="embassy">
+<meta property="article:tag" content="RTT">
+<meta property="article:tag" content="Unikernel">
+<meta property="article:tag" content="rt-thread">
+<meta property="article:tag" content="μC-OS">
+<meta property="article:tag" content="uC-OS2">
+<meta property="article:tag" content="uC-OS3">
+<meta property="article:tag" content="RVM1.5">
+<meta property="article:tag" content="axvisor">
+<meta property="article:tag" content="bao-hypervisor">
+<meta property="article:tag" content="hypocaust">
+<meta property="article:tag" content="hypocaust-2">
+<meta property="article:tag" content="kvmtool">
+<meta property="article:tag" content="rHyper">
+<meta property="article:tag" content="rcore-vmm">
+<meta property="article:tag" content="rust-hypervisor-firmware">
+<meta property="article:tag" content="rustyvisor">
+<meta property="article:tag" content="rvvm">
+<meta property="article:tag" content="tg-rcore">
+<meta property="article:tag" content="DragonOS">
+<meta property="article:tag" content="NoAxiomOS">
+<meta property="article:tag" content="Theseus">
+<meta property="article:tag" content="TornadoOS">
+<meta property="article:tag" content="Zircon">
+<meta property="article:tag" content="Asterinas">
+<meta property="article:tag" content="JOS">
+<meta property="article:tag" content="libos">
+<meta property="article:tag" content="HermitOS">
+<meta property="article:tag" content="MirageOS">
+<meta property="article:tag" content="TenonOS">
+<meta property="article:tag" content="rumprun">
+<meta property="article:tag" content="seL4">
+<meta property="article:tag" content="unikraft">
+<meta property="article:tag" content="xv6">
+<meta property="article:tag" content="zCore">
+<meta property="article:tag" content="aCore">
+<meta property="article:tag" content="Bare-metal Runtime">
+<meta property="article:tag" content="Monolithic Kernel">
+<meta property="article:tag" content="Microkernel">
+<meta property="article:tag" content="Macro Kernel">
+<meta property="article:tag" content="Exokernel">
+<meta property="article:tag" content="Library OS">
+<meta property="article:tag" content="Framekernel">
+<meta property="article:tag" content="SASOS">
+<meta property="article:tag" content="Component Kernel">
+<meta property="article:tag" content="Async Kernel">
+<meta property="article:tag" content="Virtualization">
+<meta property="article:tag" content="Hypervisor">
+<meta property="article:tag" content="Type1">
+<meta property="article:tag" content="Type2">
+<meta property="article:tag" content="Type1.5">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://rcore-os.github.io/blog/2026/05/04/Leo%20Cheng%EF%BC%9ARTOS%20%E5%BC%82%E6%AD%A5%E8%BF%90%E8%A1%8C%E6%97%B6%20%E5%8D%95%E5%BE%AE%E5%AE%8F%E5%A4%96%E6%A1%86%20%E8%99%9A%E6%8B%9F%E5%8C%96+%E7%9B%91%E8%A7%86%E5%99%A8%20-%20%E7%A9%BF%E8%B6%8A%E7%B3%BB%E7%BB%9F%E4%B9%8B%E6%97%B6/">
@@ -177,7 +234,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-引言：内核如何立起来并持续运行"><span class="nav-number">1.</span> <span class="nav-text">0. 引言：内核如何立起来并持续运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-实时内核：从库式极简内核到完整-RTOS"><span class="nav-number">2.</span> <span class="nav-text">1. 实时内核：从库式极简内核到完整 RTOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-FreeRTOS：库式-RTOS-的极简范本"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 FreeRTOS：库式 RTOS 的极简范本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用"><span class="nav-number">2.1.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写"><span class="nav-number">2.1.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点与自造"><span class="nav-number">2.1.3.</span> <span class="nav-text">特点与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-μC-OS-II-与-μC-OS-III：认证级与教科书级"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 μC&#x2F;OS-II 与 μC&#x2F;OS-III：认证级与教科书级</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#μC-OS-II（1992）：极简之美"><span class="nav-number">2.2.1.</span> <span class="nav-text">μC&#x2F;OS-II（1992）：极简之美</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#μC-OS-III（2009）：工业升级版"><span class="nav-number">2.2.2.</span> <span class="nav-text">μC&#x2F;OS-III（2009）：工业升级版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移植与自造"><span class="nav-number">2.2.3.</span> <span class="nav-text">移植与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-RT-Thread：国产完整-RTOS"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 RT-Thread：国产完整 RTOS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点与自造-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">特点与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-专题：优先级反转与三种对策"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 专题：优先级反转与三种对策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-三者横向对比与统一造轮子路径"><span class="nav-number">2.5.</span> <span class="nav-text">1.5 三者横向对比与统一造轮子路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-异步运行时充当调度框架：embassy"><span class="nav-number">3.</span> <span class="nav-text">2. 异步运行时充当调度框架：embassy</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写-2"><span class="nav-number">3.0.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ariel-os-与-RIOT-对照"><span class="nav-number">3.0.3.</span> <span class="nav-text">ariel-os 与 RIOT 对照</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#何时用异步运行时、何时用传统-RTOS"><span class="nav-number">3.0.4.</span> <span class="nav-text">何时用异步运行时、何时用传统 RTOS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-各类内核的源码拆解"><span class="nav-number">4.</span> <span class="nav-text">3. 各类内核的源码拆解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-宏内核：一个地址空间装下整个内核"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 宏内核：一个地址空间装下整个内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-组件化内核与框内核：编译期拆分的可组装内核"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 组件化内核与框内核：编译期拆分的可组装内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-微内核：把一切都赶出内核"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 微内核：把一切都赶出内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-外核、单地址空间内核与-Unikernel：减法路线"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 外核、单地址空间内核与 Unikernel：减法路线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-异步内核：把-Future-放进内核"><span class="nav-number">4.5.</span> <span class="nav-text">3.5 异步内核：把 Future 放进内核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-子系统横向（一）：调度器"><span class="nav-number">5.</span> <span class="nav-text">4. 子系统横向（一）：调度器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-子系统横向（二）：内存管理"><span class="nav-number">6.</span> <span class="nav-text">5. 子系统横向（二）：内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-子系统横向（三）：陷入与系统调用"><span class="nav-number">7.</span> <span class="nav-text">6. 子系统横向（三）：陷入与系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-子系统横向（四）：驱动模型"><span class="nav-number">8.</span> <span class="nav-text">7. 子系统横向（四）：驱动模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-子系统横向（五）：文件系统与进程间通信"><span class="nav-number">9.</span> <span class="nav-text">8. 子系统横向（五）：文件系统与进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统（作为组件的浅层定位）"><span class="nav-number">9.1.</span> <span class="nav-text">文件系统（作为组件的浅层定位）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信"><span class="nav-number">9.2.</span> <span class="nav-text">进程间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-子系统横向（六）：网络协议栈"><span class="nav-number">10.</span> <span class="nav-text">9. 子系统横向（六）：网络协议栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-单微宏外库框：内核范式坐标系与衍生"><span class="nav-number">11.</span> <span class="nav-text">10. 单微宏外库框：内核范式坐标系与衍生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-范式不是一条线，而是几条正交的轴"><span class="nav-number">11.1.</span> <span class="nav-text">10.1 范式不是一条线，而是几条正交的轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-厘清几个高频混淆的术语"><span class="nav-number">11.2.</span> <span class="nav-text">10.2 厘清几个高频混淆的术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-外核、LibOS-与-Unikernel-的层次"><span class="nav-number">11.3.</span> <span class="nav-text">10.3 外核、LibOS 与 Unikernel 的层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-六字坐标：把本地项目对号入座"><span class="nav-number">11.4.</span> <span class="nav-text">10.4 六字坐标：把本地项目对号入座</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-5-衍生：一棵内核如何长出另一棵"><span class="nav-number">11.5.</span> <span class="nav-text">10.5 衍生：一棵内核如何长出另一棵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-虚拟化：概念与硬件基础"><span class="nav-number">12.</span> <span class="nav-text">11. 虚拟化：概念与硬件基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器"><span class="nav-number">12.1.</span> <span class="nav-text">11.1 概念辨析：Hypervisor、VMM、Type-1&#x2F;1.5&#x2F;2 与模拟器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-rv-H-扩展：虚拟化的硬件底座"><span class="nav-number">12.2.</span> <span class="nav-text">11.2 rv H 扩展：虚拟化的硬件底座</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-虚拟化：各实现的源码拆解"><span class="nav-number">13.</span> <span class="nav-text">12. 虚拟化：各实现的源码拆解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-rv-教学三件：从无-H-到自带固件"><span class="nav-number">13.1.</span> <span class="nav-text">12.1 rv 教学三件：从无 H 到自带固件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-组件化：axvisor-如何从-ArceOS-衍生"><span class="nav-number">13.2.</span> <span class="nav-text">12.2 组件化：axvisor 如何从 ArceOS 衍生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-Type-1-5：RVM1-5-把运行中的-Linux-降级"><span class="nav-number">13.3.</span> <span class="nav-text">12.3 Type-1.5：RVM1.5 把运行中的 Linux 降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-4-工业-Type-1：xen、bao、acrn"><span class="nav-number">13.4.</span> <span class="nav-text">12.4 工业 Type-1：xen、bao、acrn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-5-KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm"><span class="nav-number">13.5.</span> <span class="nav-text">12.5 KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-6-rust-vmm-crates：三大-VMM-的共享地基"><span class="nav-number">13.6.</span> <span class="nav-text">12.6 rust-vmm crates：三大 VMM 的共享地基</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-7-模拟器三家：rvvm、machina、qemu"><span class="nav-number">13.7.</span> <span class="nav-text">12.7 模拟器三家：rvvm、machina、qemu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-8-横向小结"><span class="nav-number">13.8.</span> <span class="nav-text">12.8 横向小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-按生态位精读：一条动手路线"><span class="nav-number">14.</span> <span class="nav-text">13. 按生态位精读：一条动手路线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-词典"><span class="nav-number">15.</span> <span class="nav-text">14. 词典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-思考题"><span class="nav-number">16.</span> <span class="nav-text">15. 思考题</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言：内核如何立起来并持续运行"><span class="nav-number">1.</span> <span class="nav-text">引言：内核如何立起来并持续运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实时内核：从库式极简内核到完整-RTOS"><span class="nav-number">2.</span> <span class="nav-text">实时内核：从库式极简内核到完整 RTOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FreeRTOS：库式-RTOS-的极简范本"><span class="nav-number">2.1.</span> <span class="nav-text">FreeRTOS：库式 RTOS 的极简范本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用"><span class="nav-number">2.1.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写"><span class="nav-number">2.1.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点与自造"><span class="nav-number">2.1.3.</span> <span class="nav-text">特点与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#μC-OS-II-与-μC-OS-III：认证级与教科书级"><span class="nav-number">2.2.</span> <span class="nav-text">μC&#x2F;OS-II 与 μC&#x2F;OS-III：认证级与教科书级</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#μC-OS-II（1992）：极简之美"><span class="nav-number">2.2.1.</span> <span class="nav-text">μC&#x2F;OS-II（1992）：极简之美</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#μC-OS-III（2009）：工业升级版"><span class="nav-number">2.2.2.</span> <span class="nav-text">μC&#x2F;OS-III（2009）：工业升级版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移植与自造"><span class="nav-number">2.2.3.</span> <span class="nav-text">移植与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RT-Thread：国产完整-RTOS"><span class="nav-number">2.3.</span> <span class="nav-text">RT-Thread：国产完整 RTOS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点与自造-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">特点与自造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#专题：优先级反转与三种对策"><span class="nav-number">2.4.</span> <span class="nav-text">专题：优先级反转与三种对策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三者横向对比与统一造轮子路径"><span class="nav-number">2.5.</span> <span class="nav-text">三者横向对比与统一造轮子路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步运行时充当调度框架：embassy"><span class="nav-number">3.</span> <span class="nav-text">异步运行时充当调度框架：embassy</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会用-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">会用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会写-2"><span class="nav-number">3.0.2.</span> <span class="nav-text">会写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ariel-os-与-RIOT-对照"><span class="nav-number">3.0.3.</span> <span class="nav-text">ariel-os 与 RIOT 对照</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#何时用异步运行时、何时用传统-RTOS"><span class="nav-number">3.0.4.</span> <span class="nav-text">何时用异步运行时、何时用传统 RTOS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各类内核的源码拆解"><span class="nav-number">4.</span> <span class="nav-text">各类内核的源码拆解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#宏内核：一个地址空间装下整个内核"><span class="nav-number">4.1.</span> <span class="nav-text">宏内核：一个地址空间装下整个内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件化内核与框内核：编译期拆分的可组装内核"><span class="nav-number">4.2.</span> <span class="nav-text">组件化内核与框内核：编译期拆分的可组装内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微内核：把一切都赶出内核"><span class="nav-number">4.3.</span> <span class="nav-text">微内核：把一切都赶出内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外核、单地址空间内核与-Unikernel：减法路线"><span class="nav-number">4.4.</span> <span class="nav-text">外核、单地址空间内核与 Unikernel：减法路线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步内核：把-Future-放进内核"><span class="nav-number">4.5.</span> <span class="nav-text">异步内核：把 Future 放进内核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（一）：调度器"><span class="nav-number">5.</span> <span class="nav-text">子系统横向（一）：调度器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（二）：内存管理"><span class="nav-number">6.</span> <span class="nav-text">子系统横向（二）：内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（三）：陷入与系统调用"><span class="nav-number">7.</span> <span class="nav-text">子系统横向（三）：陷入与系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（四）：驱动模型"><span class="nav-number">8.</span> <span class="nav-text">子系统横向（四）：驱动模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（五）：文件系统与进程间通信"><span class="nav-number">9.</span> <span class="nav-text">子系统横向（五）：文件系统与进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统"><span class="nav-number">9.1.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信"><span class="nav-number">9.2.</span> <span class="nav-text">进程间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统横向（六）：网络协议栈"><span class="nav-number">10.</span> <span class="nav-text">子系统横向（六）：网络协议栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单微宏外库框：内核范式坐标系与衍生"><span class="nav-number">11.</span> <span class="nav-text">单微宏外库框：内核范式坐标系与衍生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#范式不是一条线，而是几条正交的轴"><span class="nav-number">11.1.</span> <span class="nav-text">范式不是一条线，而是几条正交的轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#厘清几个高频混淆的术语"><span class="nav-number">11.2.</span> <span class="nav-text">厘清几个高频混淆的术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外核、LibOS-与-Unikernel-的层次"><span class="nav-number">11.3.</span> <span class="nav-text">外核、LibOS 与 Unikernel 的层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六字坐标：把本地项目对号入座"><span class="nav-number">11.4.</span> <span class="nav-text">六字坐标：把本地项目对号入座</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#衍生：一棵内核如何长出另一棵"><span class="nav-number">11.5.</span> <span class="nav-text">衍生：一棵内核如何长出另一棵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟化：概念与硬件基础"><span class="nav-number">12.</span> <span class="nav-text">虚拟化：概念与硬件基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器"><span class="nav-number">12.1.</span> <span class="nav-text">概念辨析：Hypervisor、VMM、Type-1&#x2F;1.5&#x2F;2 与模拟器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rv-H-扩展：虚拟化的硬件底座"><span class="nav-number">12.2.</span> <span class="nav-text">rv H 扩展：虚拟化的硬件底座</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟化：各实现的源码拆解"><span class="nav-number">13.</span> <span class="nav-text">虚拟化：各实现的源码拆解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rv-教学三件：从无-H-到自带固件"><span class="nav-number">13.1.</span> <span class="nav-text">rv 教学三件：从无 H 到自带固件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件化：axvisor-如何从-ArceOS-衍生"><span class="nav-number">13.2.</span> <span class="nav-text">组件化：axvisor 如何从 ArceOS 衍生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-1-5：RVM1-5-把运行中的-Linux-降级"><span class="nav-number">13.3.</span> <span class="nav-text">Type-1.5：RVM1.5 把运行中的 Linux 降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工业-Type-1：xen、bao、acrn"><span class="nav-number">13.4.</span> <span class="nav-text">工业 Type-1：xen、bao、acrn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm"><span class="nav-number">13.5.</span> <span class="nav-text">KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rust-vmm-crates：三大-VMM-的共享地基"><span class="nav-number">13.6.</span> <span class="nav-text">rust-vmm crates：三大 VMM 的共享地基</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟器三家：rvvm、machina、qemu"><span class="nav-number">13.7.</span> <span class="nav-text">模拟器三家：rvvm、machina、qemu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#横向小结"><span class="nav-number">13.8.</span> <span class="nav-text">横向小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按生态位精读：一条动手路线"><span class="nav-number">14.</span> <span class="nav-text">按生态位精读：一条动手路线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词典"><span class="nav-number">15.</span> <span class="nav-text">词典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考题"><span class="nav-number">16.</span> <span class="nav-text">思考题</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -191,20 +248,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">778</span>
+          <span class="site-state-item-count">795</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">298</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">721</span>
+        <span class="site-state-item-count">962</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -271,7 +328,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-03 16:56:26" itemprop="dateModified" datetime="2026-10-03T16:56:26+00:00">2026-10-03</time>
+                <time title="Modified: 2026-10-10 06:48:03" itemprop="dateModified" datetime="2026-10-10T06:48:03+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,242 +337,6 @@
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Leo-Cheng/" itemprop="url" rel="index"><span itemprop="name">Leo Cheng</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/" itemprop="url" rel="index"><span itemprop="name">RTOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/" itemprop="url" rel="index"><span itemprop="name">rtos</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/" itemprop="url" rel="index"><span itemprop="name">FreeRTOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/" itemprop="url" rel="index"><span itemprop="name">embassy</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/" itemprop="url" rel="index"><span itemprop="name">RTT</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/" itemprop="url" rel="index"><span itemprop="name">Unikernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/" itemprop="url" rel="index"><span itemprop="name">rt-thread</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/" itemprop="url" rel="index"><span itemprop="name">μC-OS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/" itemprop="url" rel="index"><span itemprop="name">uC-OS2</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/" itemprop="url" rel="index"><span itemprop="name">uC-OS3</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/" itemprop="url" rel="index"><span itemprop="name">RVM1.5</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/" itemprop="url" rel="index"><span itemprop="name">axvisor</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/" itemprop="url" rel="index"><span itemprop="name">bao-hypervisor</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/" itemprop="url" rel="index"><span itemprop="name">hypocaust</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/" itemprop="url" rel="index"><span itemprop="name">hypocaust-2</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/" itemprop="url" rel="index"><span itemprop="name">kvmtool</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/" itemprop="url" rel="index"><span itemprop="name">rHyper</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/" itemprop="url" rel="index"><span itemprop="name">rcore-vmm</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/" itemprop="url" rel="index"><span itemprop="name">rust-hypervisor-firmware</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/" itemprop="url" rel="index"><span itemprop="name">rustyvisor</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/" itemprop="url" rel="index"><span itemprop="name">rvvm</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/" itemprop="url" rel="index"><span itemprop="name">tg-rcore</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/" itemprop="url" rel="index"><span itemprop="name">DragonOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/" itemprop="url" rel="index"><span itemprop="name">NoAxiomOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/" itemprop="url" rel="index"><span itemprop="name">StarryOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/" itemprop="url" rel="index"><span itemprop="name">Theseus</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/" itemprop="url" rel="index"><span itemprop="name">TornadoOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/" itemprop="url" rel="index"><span itemprop="name">Zircon</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/" itemprop="url" rel="index"><span itemprop="name">ArceOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/" itemprop="url" rel="index"><span itemprop="name">Asterinas</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/" itemprop="url" rel="index"><span itemprop="name">JOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/" itemprop="url" rel="index"><span itemprop="name">libos</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/" itemprop="url" rel="index"><span itemprop="name">HermitOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/" itemprop="url" rel="index"><span itemprop="name">MirageOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/" itemprop="url" rel="index"><span itemprop="name">TenonOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/" itemprop="url" rel="index"><span itemprop="name">rumprun</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/" itemprop="url" rel="index"><span itemprop="name">seL4</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/" itemprop="url" rel="index"><span itemprop="name">tg-rcore</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/" itemprop="url" rel="index"><span itemprop="name">unikraft</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/" itemprop="url" rel="index"><span itemprop="name">xv6</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/" itemprop="url" rel="index"><span itemprop="name">zCore</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/" itemprop="url" rel="index"><span itemprop="name">aCore</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/" itemprop="url" rel="index"><span itemprop="name">rCore</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/" itemprop="url" rel="index"><span itemprop="name">Async Runtime</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/" itemprop="url" rel="index"><span itemprop="name">Bare-metal Runtime</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/" itemprop="url" rel="index"><span itemprop="name">Monolithic Kernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/" itemprop="url" rel="index"><span itemprop="name">Microkernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/" itemprop="url" rel="index"><span itemprop="name">Macro Kernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/" itemprop="url" rel="index"><span itemprop="name">Exokernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/" itemprop="url" rel="index"><span itemprop="name">Library OS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/" itemprop="url" rel="index"><span itemprop="name">Framekernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/" itemprop="url" rel="index"><span itemprop="name">SASOS</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/" itemprop="url" rel="index"><span itemprop="name">Component Kernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/" itemprop="url" rel="index"><span itemprop="name">Async Kernel</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/Virtualization/" itemprop="url" rel="index"><span itemprop="name">Virtualization</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/Virtualization/Hypervisor/" itemprop="url" rel="index"><span itemprop="name">Hypervisor</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/Virtualization/Hypervisor/Type1/" itemprop="url" rel="index"><span itemprop="name">Type1</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/Virtualization/Hypervisor/Type1/Type2/" itemprop="url" rel="index"><span itemprop="name">Type2</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Leo-Cheng/RTOS/rtos/FreeRTOS/embassy/RTT/Unikernel/rt-thread/%CE%BCC-OS/uC-OS2/uC-OS3/RVM1-5/axvisor/bao-hypervisor/hypocaust/hypocaust-2/kvmtool/rHyper/rcore-vmm/rust-hypervisor-firmware/rustyvisor/rvvm/tg-rcore/DragonOS/NoAxiomOS/StarryOS/Theseus/TornadoOS/Zircon/ArceOS/Asterinas/JOS/libos/HermitOS/MirageOS/TenonOS/rumprun/seL4/tg-rcore/unikraft/xv6/zCore/aCore/rCore/Async-Runtime/Bare-metal-Runtime/Monolithic-Kernel/Microkernel/Macro-Kernel/Exokernel/Library-OS/Framekernel/SASOS/Component-Kernel/Async-Kernel/Virtualization/Hypervisor/Type1/Type2/Type1-5/" itemprop="url" rel="index"><span itemprop="name">Type1.5</span></a>
                 </span>
             </span>
 
@@ -530,11 +351,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
+        <blockquote>
+<p>AI4OSE 期间，我们与 Agent 协作学习各项知识，并且 Agent 出题 讲解 以及 苏格拉底式 的阶梯式学习法。所以最后也有 Agent 自动插入笔记的问题和自己的回答，如果答案不充分，则我的作答还会有 Agent 协调补充的内容。相关提示词：如果我有疏漏，给我补充，且讲解充分后继续向我提问查缺补漏，最后一同沉淀到我们的笔记中！</p>
+</blockquote>
+<a id="more"></a>
 
-<h2 id="0-引言：内核如何立起来并持续运行"><a href="#0-引言：内核如何立起来并持续运行" class="headerlink" title="0. 引言：内核如何立起来并持续运行"></a>0. 引言：内核如何立起来并持续运行</h2><p>内核拿到 CPU 的第一条指令后，要在裸硬件上把自己立起来、并持续运行下去：建立调度、管理内存、接管中断与异常、驱动设备、提供文件系统与进程间通信，最终把用户程序跑起来。</p>
+<h2 id="引言：内核如何立起来并持续运行"><a href="#引言：内核如何立起来并持续运行" class="headerlink" title="引言：内核如何立起来并持续运行"></a>引言：内核如何立起来并持续运行</h2><p>内核拿到 CPU 的第一条指令后，要在裸硬件上把自己立起来、并持续运行下去：建立调度、管理内存、接管中断与异常、驱动设备、提供文件系统与进程间通信，最终把用户程序跑起来。</p>
 <p>承担这套职责的系统软件并非只有一种形态。从只有几 KB、任务与调度都极简的实时内核（RTOS），到把异步运行时直接当作调度框架的裸机方案，再到结构完整的宏内核、微内核、组件化内核、外核与 Unikernel，直至在一套内核之上再并置多套内核的虚拟化层——它们构成一条由简到繁的谱系。而同一组问题——谁来调度、内存怎么管、设备怎么接、系统调用怎么进、文件与网络栈怎么搭——在这条谱系的每一处都有不同的回答。把这些回答的源码逐一剖开，就触到了操作系统内核的全部骨架。</p>
-<h2 id="1-实时内核：从库式极简内核到完整-RTOS"><a href="#1-实时内核：从库式极简内核到完整-RTOS" class="headerlink" title="1. 实时内核：从库式极简内核到完整 RTOS"></a>1. 实时内核：从库式极简内核到完整 RTOS</h2><p>谱系的起点是实时内核（RTOS）。这里的”实时”不指”快”，而指”确定”——在规定的时间窗内一定完成响应，最坏情况延迟有上界且可分析。为换取这种确定性，RTOS 通常放弃通用 OS 的许多机制：没有 MMU 与多地址空间，内核与应用同处一个特权级、链接成同一个可执行文件；调度严格按优先级抢占，而非追求吞吐的公平分时。</p>
+<h2 id="实时内核：从库式极简内核到完整-RTOS"><a href="#实时内核：从库式极简内核到完整-RTOS" class="headerlink" title="实时内核：从库式极简内核到完整 RTOS"></a>实时内核：从库式极简内核到完整 RTOS</h2><p>谱系的起点是实时内核（RTOS）。这里的”实时”不指”快”，而指”确定”——在规定的时间窗内一定完成响应，最坏情况延迟有上界且可分析。为换取这种确定性，RTOS 通常放弃通用 OS 的许多机制：没有 MMU 与多地址空间，内核与应用同处一个特权级、链接成同一个可执行文件；调度严格按优先级抢占，而非追求吞吐的公平分时。</p>
 <p>正因结构极简，RTOS 是理解内核机理的最佳样本：一条 <code>reset → start.S → main → 启动调度器</code> 的直线，没有 SBI、设备树、SMP、分页的干扰，却已包含调度、上下文切换、进程间通信（IPC）、优先级反转处理这四件内核最核心的事。把它的源码读穿，后面的宏内核、微内核不过是在同一批问题上叠加地址空间与特权边界。</p>
 <p>按”内核之外还附带多少系统设施”，可把 RTOS 分作两档：</p>
 <ul>
@@ -542,7 +366,7 @@
 <li><strong>完整 RTOS（full RTOS）</strong>：在内核之外自带设备框架、文件系统、网络栈、shell、libc、包管理与大量板级支持。代表是 RT-Thread、Zephyr、RIOT。它已接近一个小型通用 OS 的工程规模。</li>
 </ul>
 <p>下面以 FreeRTOS（库式极简）、μC/OS-II 与 μC/OS-III（认证级与教科书级）、RT-Thread（国产完整 RTOS）三条线，逐个从<strong>会用</strong>（如何配置、编程、移植、集成进启动链）与<strong>会写</strong>（源码级看清数据结构与算法，进而能自造一个同生态位的内核）两个角度剖开。</p>
-<h3 id="1-1-FreeRTOS：库式-RTOS-的极简范本"><a href="#1-1-FreeRTOS：库式-RTOS-的极简范本" class="headerlink" title="1.1 FreeRTOS：库式 RTOS 的极简范本"></a>1.1 FreeRTOS：库式 RTOS 的极简范本</h3><p>FreeRTOS 由 Richard Barry 于 2003 年创建，2017 年起由 AWS 接管维护并改用 MIT 协议，是 MCU 上使用最广的 RTOS。内核主体（<code>tasks.c</code> / <code>queue.c</code> / <code>list.c</code> / <code>timers.c</code> / <code>event_groups.c</code> / <code>stream_buffer.c</code> 加 <code>portable/</code> 移植层）约九千行 C，编译后内核本体仅约 10 KB。</p>
+<h3 id="FreeRTOS：库式-RTOS-的极简范本"><a href="#FreeRTOS：库式-RTOS-的极简范本" class="headerlink" title="FreeRTOS：库式 RTOS 的极简范本"></a>FreeRTOS：库式 RTOS 的极简范本</h3><p>FreeRTOS 由 Richard Barry 于 2003 年创建，2017 年起由 AWS 接管维护并改用 MIT 协议，是 MCU 上使用最广的 RTOS。内核主体（<code>tasks.c</code> / <code>queue.c</code> / <code>list.c</code> / <code>timers.c</code> / <code>event_groups.c</code> / <code>stream_buffer.c</code> 加 <code>portable/</code> 移植层）约九千行 C，编译后内核本体仅约 10 KB。</p>
 <h4 id="会用"><a href="#会用" class="headerlink" title="会用"></a>会用</h4><p><strong>建任务。</strong> 动态创建用 <code>xTaskCreate</code>，内核自行分配栈与任务控制块（TCB）：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BaseType_t <span class="title">xTaskCreate</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    TaskFunction_t pxCode,           <span class="comment">// 任务入口函数</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">const</span> <span class="keyword">char</span> *pcName,              <span class="comment">// 调试名</span></span></span></span><br><span class="line"><span class="function"><span class="params">    configSTACK_DEPTH_TYPE usDepth,  <span class="comment">// 栈深度，单位是“字”而非字节</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">void</span> *pvParameters,              <span class="comment">// 传给任务的参数</span></span></span></span><br><span class="line"><span class="function"><span class="params">    UBaseType_t uxPriority,          <span class="comment">// 优先级：数字越大优先级越高</span></span></span></span><br><span class="line"><span class="function"><span class="params">    TaskHandle_t *pxCreatedTask)</span></span>;    <span class="comment">// 回填任务句柄</span></span><br></pre></td></tr></table></figure>
 
@@ -571,7 +395,7 @@
 <p>TCB 的第一个字段刻意是 <code>pxTopOfStack</code>，便于上下文切换汇编直接通过 <code>[pxCurrentTCB]</code> 取栈顶。队列 <code>Queue_t</code> 是环形缓冲加两条等待链表（等待发送、等待接收），满/空时把任务挂到等待链并按优先级唤醒。互斥量在二值信号量基础上记录持有者，获取不到且持有者优先级更低时调用 <code>xTaskPriorityInherit</code> 临时抬升持有者优先级、释放时 <code>xTaskPriorityDisinherit</code> 降回——这便是 PIP。软件定时器由守护任务加命令队列实现，应用调用 <code>xTimerStart</code> 实为向命令队列发命令，守护任务串行处理，从而无需为定时器表加锁。</p>
 <h4 id="特点与自造"><a href="#特点与自造" class="headerlink" title="特点与自造"></a>特点与自造</h4><p>FreeRTOS 的设计哲学是极小与一致：所有同步原语归约到队列一种结构；只实现 PIP 而不实现优先级天花板（PCP），且 PIP 只防一层、不处理链式反转。它非完整 RTOS，文件系统、shell 需另配；无 MMU 多地址空间（仅 ARMv7-M 上有基于 MPU 的 FreeRTOS-MPU）；调度器极简，不支持 EDF、RM 这类基于截止期的算法。它的价值在极小、可移植（三十余种架构移植）、工业验证充分、生态齐全与协议宽松。</p>
 <p>自造一个同生态位的库式 RTOS，路径清晰：① 先写 O(1) 双向链表（尾插、有序插、摘除、轮转游标），这是地基；② 定义 TCB，把栈顶指针放在首字段，内嵌进就绪/延时表与事件等待表的两个链表节点，并预留 <code>uxBasePriority</code> 给 PIP；③ 就绪表用”每优先级一链表 + 位图”，选最高优先级先写递减版再上 CLZ 版；④ 写移植三件套（<code>portmacro.h</code> 宏 / <code>port.c</code> 伪造首次切换的初始栈帧加启动调度器 / <code>portASM.S</code> 陷阱处理），先在 QEMU virt rv 上用 CLINT <code>mtimecmp</code> 当节拍运行起来；⑤ 节拍驱动延时表与时间片；⑥ 统一调度入口 <code>vTaskSwitchContext</code>；⑦ 以队列为唯一阻塞原语，信号量、互斥量作为其特例；⑧ 上层定时器、事件组、任务通知作薄封装；⑨ 用 <code>configUSE_xxx</code> / <code>INCLUDE_xxx</code> 宏做编译期裁剪。</p>
-<h3 id="1-2-μC-OS-II-与-μC-OS-III：认证级与教科书级"><a href="#1-2-μC-OS-II-与-μC-OS-III：认证级与教科书级" class="headerlink" title="1.2 μC/OS-II 与 μC/OS-III：认证级与教科书级"></a>1.2 μC/OS-II 与 μC/OS-III：认证级与教科书级</h3><p>μC/OS 系列由 Jean J. Labrosse 创建，配有同名权威著作（《MicroC/OS：The Real-Time Kernel》），以代码可读性与安全关键认证（航空 DO-178B/C、工业 IEC 61508、医疗 IEC 62304）著称；2020 年 2 月，版权持有者 Silicon Labs（2016 年收购 Micrium）将 μC/OS 全系开源为 Apache-2.0 协议，原 Micrium 团队组建的 Weston Embedded Solutions 成为其官方维护方。两代之间的演进，恰好是一部”极简内核如何长成工业内核”的对照样本。</p>
+<h3 id="μC-OS-II-与-μC-OS-III：认证级与教科书级"><a href="#μC-OS-II-与-μC-OS-III：认证级与教科书级" class="headerlink" title="μC/OS-II 与 μC/OS-III：认证级与教科书级"></a>μC/OS-II 与 μC/OS-III：认证级与教科书级</h3><p>μC/OS 系列由 Jean J. Labrosse 创建，配有同名权威著作（《MicroC/OS：The Real-Time Kernel》），以代码可读性与安全关键认证（航空 DO-178B/C、工业 IEC 61508、医疗 IEC 62304）著称；2020 年 2 月，版权持有者 Silicon Labs（2016 年收购 Micrium）将 μC/OS 全系开源为 Apache-2.0 协议，原 Micrium 团队组建的 Weston Embedded Solutions 成为其官方维护方。两代之间的演进，恰好是一部”极简内核如何长成工业内核”的对照样本。</p>
 <h4 id="μC-OS-II（1992）：极简之美"><a href="#μC-OS-II（1992）：极简之美" class="headerlink" title="μC/OS-II（1992）：极简之美"></a>μC/OS-II（1992）：极简之美</h4><p>它的核心约定是<strong>任务 ID 即优先级</strong>——每个优先级只能有一个任务，最多 64（或扩展到 254）个优先级，因此同优先级不存在、也就没有时间片轮转，是纯优先级抢占。</p>
 <p>会用上，<code>OSInit()</code> 初始化后用 <code>OSTaskCreate(task, p_arg, &amp;Stk[STK_SIZE-1], prio)</code> 建任务（栈顶传高地址，因栈向下生长），<code>OSStart()</code> 启动。延时 <code>OSTimeDly(ticks)</code> / <code>OSTimeDlyHMSM(h,m,s,ms)</code>。同步原语共用一个<strong>事件控制块</strong> <code>OS_EVENT</code>：信号量 <code>OSSemCreate</code> / <code>OSSemPend</code> / <code>OSSemPost</code>、消息队列 <code>OSQCreate</code>、邮箱 <code>OSMboxCreate</code>、事件标志组 <code>OSFlagCreate</code>，均从编译期静态数组池分配，无动态 <code>malloc</code>。裁剪通过 <code>os_cfg.h</code> 的 0/1 宏整模块开关。</p>
 <p>会写上，最精彩的是<strong>无 CLZ 指令的 O(1) 选最高优先级</strong>：用两级位图 <code>OSRdyGrp</code>（8 位，标记哪几组有就绪任务）加 <code>OSRdyTbl[]</code>（每字节代表一组 8 个优先级），每个 TCB 预存好 <code>OSTCBY=prio&gt;&gt;3</code>、<code>OSTCBX=prio&amp;7</code> 与对应掩码，置就绪即 <code>OSRdyGrp |= BitY; OSRdyTbl[Y] |= BitX</code>。选最高优先级靠一张 256 项常量表 <code>OSUnMapTbl[]</code>（索引为 8 位位模式，值为最低置位位号）：<code>y = OSUnMapTbl[OSRdyGrp]; prio = (y&lt;&lt;3) + OSUnMapTbl[OSRdyTbl[y]]</code>——在没有硬件 CLZ 的 8 位 MCU 上也能 O(1)，这是那个时代的经典发明。其代价在节拍处理：<code>OSTimeTick()</code> 每个节拍从头遍历整条 TCB 链表递减延时，开销随任务数线性增长（O(N)）。优先级反转上，μC/OS-II 的互斥量用 PCP，但实现方式是”占用一个空闲的天花板优先级槽”——创建互斥量时必须预留一个高于所有用户、且空闲的优先级供提升时占用，是一种受约束的实现。</p>
@@ -584,7 +408,7 @@
 <p>此外 μC/OS-III 把所有阻塞抽象成统一的 <code>OS_Pend</code> / <code>OS_Post</code>（基于公共的 <code>OS_PEND_OBJ</code> 与按优先级排序的等待链），信号量、互斥量、队列、事件标志组复用同一套；消息体统一从全局 <code>OS_MSG</code> 池借还，与任务解耦；还提供任务内建信号量与队列、CPU 时间戳与可选的动态节拍（tickless）低功耗。</p>
 <h4 id="移植与自造"><a href="#移植与自造" class="headerlink" title="移植与自造"></a>移植与自造</h4><p>与 FreeRTOS 把移植层混入内核目录不同，μC/OS 的移植独立在 <code>Ports/&lt;arch&gt;/&lt;toolchain&gt;/</code> 三件套：<code>os_cpu.h</code>（类型、临界区方法、<code>OS_TASK_SW</code> 宏、栈生长方向）、<code>os_cpu_a.S</code>（汇编 <code>OSStartHighRdy</code> / <code>OSCtxSw</code> / <code>OSIntCtxSw</code>）、<code>os_cpu_c.c</code>（<code>OSTaskStkInit</code> 伪造初始栈帧加各钩子）。内核 <code>.c</code> 完全与架构无关，移植到新核只动这三件。rv 上一个值得记的范式：<code>OSCtxSw</code> 并不直接切换，而是写 CLINT/PRCI 的 <code>MSIP</code> 寄存器触发一次软件中断，真正的保存恢复在 <code>Software_IRQHandler</code> 里完成——以软件中断承载切换，正对应 Cortex-M 上的 PendSV。</p>
 <p>自造时，调度数据结构可二选一：要在无 CLZ 的小 MCU 上跑、且每优先级单任务，用 μC/OS-II 式两级位图加 256 项常量表；要支持 N:1 与轮转、且目标核有 CLZ，用 μC/OS-III 式按字宽切分的位图加每优先级双向链表。优先级反转优先选 μC/OS-III 的真 PIP 而非 μC/OS-II 的占槽方案。</p>
-<h3 id="1-3-RT-Thread：国产完整-RTOS"><a href="#1-3-RT-Thread：国产完整-RTOS" class="headerlink" title="1.3 RT-Thread：国产完整 RTOS"></a>1.3 RT-Thread：国产完整 RTOS</h3><p>RT-Thread 由熊谱翔（Bernard Xiong）于 2006 年发起，上海睿赛德与社区共同维护，Apache-2.0 协议，当前 v5.x。它是”完整 RTOS”的代表：内核（<code>src</code>，约两万行）之外，自带设备框架、DFS 文件系统、lwIP 网络栈、SAL 套接字抽象、finsh/msh shell、libc 与 pthread 子集、四百余个软件包生态、上百个板级支持包与十九种架构移植。其设计大量借鉴 Linux：对象基类做面向对象继承、设备模型仿 Linux 设备模型、DFS 仿 VFS、分级自动初始化仿 Linux 的 initcall、slab 分配器仿 Linux SLAB。</p>
+<h3 id="RT-Thread：国产完整-RTOS"><a href="#RT-Thread：国产完整-RTOS" class="headerlink" title="RT-Thread：国产完整 RTOS"></a>RT-Thread：国产完整 RTOS</h3><p>RT-Thread 由熊谱翔（Bernard Xiong）于 2006 年发起，上海睿赛德与社区共同维护，Apache-2.0 协议，当前 v5.x。它是”完整 RTOS”的代表：内核（<code>src</code>，约两万行）之外，自带设备框架、DFS 文件系统、lwIP 网络栈、SAL 套接字抽象、finsh/msh shell、libc 与 pthread 子集、四百余个软件包生态、上百个板级支持包与十九种架构移植。其设计大量借鉴 Linux：对象基类做面向对象继承、设备模型仿 Linux 设备模型、DFS 仿 VFS、分级自动初始化仿 Linux 的 initcall、slab 分配器仿 Linux SLAB。</p>
 <h4 id="会用-1"><a href="#会用-1" class="headerlink" title="会用"></a>会用</h4><p><strong>线程。</strong> 动态用 <code>rt_thread_create(name, entry, param, stack_size, priority, tick)</code>，静态用 <code>rt_thread_init</code>（栈与 TCB 由用户提供）。优先级<strong>数字越小越高</strong>；<code>tick</code> 是同优先级时间片，必须非零。线程创建后处于挂起态，必须 <code>rt_thread_startup(tid)</code> 才进就绪队列。</p>
 <p><strong>六类 IPC。</strong> 信号量 <code>rt_sem_*</code>、互斥量 <code>rt_mutex_*</code>（自带 PIP，并通过 <code>rt_mutex_setprioceiling</code> 暴露 PCP 天花板）、消息队列 <code>rt_mq_*</code>（值拷贝传递）、邮箱 <code>rt_mb_*</code>（只传一个机器字，常用于传指针，比消息队列轻）、事件集 <code>rt_event_*</code>（32 位标志的与/或组合）、软件定时器 <code>rt_timer_*</code>（可选硬定时器在节拍中断上下文跑回调，或软定时器在定时器线程上下文跑、可阻塞）。创建时的 <code>flag</code> 选 <code>RT_IPC_FLAG_FIFO</code> 或 <code>RT_IPC_FLAG_PRIO</code> 决定等待者唤醒顺序。</p>
 <p><strong>设备框架。</strong> 统一的五件套 I/O 抽象，体验接近 Linux 的 <code>/dev</code>：<code>rt_device_find(&quot;uart0&quot;)</code> 找到设备，<code>rt_device_open</code>、<code>rt_device_read</code> / <code>rt_device_write</code> / <code>rt_device_control</code>、<code>rt_device_close</code>；异步收发用 <code>rt_device_set_rx_indicate</code> 注册回调。串口、I2C、SPI、引脚、RTC、SDIO、CAN 等所有外设都走这套抽象。</p>
@@ -598,7 +422,7 @@
 <p>调度器拆成三个文件：<code>scheduler_up.c</code>（单核主体）、<code>scheduler_mp.c</code>（SMP 多核）、<code>scheduler_comm.c</code>（单多核共用逻辑），编译期由 <code>RT_USING_SMP</code> 选择，共用代码不重写。就绪表是 <code>rt_thread_priority_table[]</code>（每优先级一条 FIFO 双向链表）加 <code>rt_thread_ready_priority_group</code> 位图，选最高优先级用 <code>__rt_ffs(group)</code> 找最低置位位 O(1)，超过 32 个优先级时加一张二级表。抢占唯一入口 <code>rt_schedule()</code>：关中断、查调度锁、选最高就绪、与当前运行线程比较（更高或同级未让出则不切），需切则回插旧线程、摘除新线程、调 <code>rt_hw_context_switch</code>。</p>
 <p>优先级反转处理是三者中最完整的：互斥量同时实现 PIP 与 PCP，且支持<strong>链式传播</strong>——<code>_thread_update_priority</code> 在被阻塞线程又阻塞于另一个互斥量时，沿持有者链递归抬升优先级，解开嵌套反转。软件定时器用跳表（skip list）多级链加速有序插入。rv 上下文切换在 <code>libcpu/risc-v/common64/context_gcc.S</code>：首次启动的 <code>rt_hw_context_switch_to</code> 只恢复不保存，常规 <code>rt_hw_context_switch</code> 先压旧线程上下文存其栈指针、再载新线程；新线程的初始栈帧由 <code>rt_hw_stack_init</code> 预造，<code>ra</code> 指向统一入口，使首次切入与常规切换走同一条恢复路径。</p>
 <h4 id="特点与自造-1"><a href="#特点与自造-1" class="headerlink" title="特点与自造"></a>特点与自造</h4><p>完整 RTOS 的代价是规模与复杂度，收益是开箱即用与工程化（Kconfig 裁剪、scons 构建、包管理）。RT-Thread 的 RT-Smart（lwp）还可选启用基于 MMU 的用户态多地址空间，介于纯 RTOS 与宏内核之间。自造一个完整 RTOS，与库式的不同在于要先立对象模型（统一的对象基类是可统一管理一切内核对象的根），再在调度器上叠加设备框架（统一 ops 表的 <code>find/open/read/write</code>）、链接段驱动的自动初始化与 shell 命令注册——这套”链接段 + 分级宏”的工程手法，是从教学原型内核走向规模化 BSP 与组件生态的分水岭。</p>
-<h3 id="1-4-专题：优先级反转与三种对策"><a href="#1-4-专题：优先级反转与三种对策" class="headerlink" title="1.4 专题：优先级反转与三种对策"></a>1.4 专题：优先级反转与三种对策</h3><p>优先级反转是 RTOS 绕不开的正确性问题：高优先级任务 H 需要一把被低优先级任务 L 持有的锁而被迫等待，此时一个中优先级任务 M 就绪并抢占了 L，使 L 迟迟无法释放锁，H 被 M 间接无限期阻塞。1997 年火星探路者号着陆后的反复重启，根因正是此。三种对策：</p>
+<h3 id="专题：优先级反转与三种对策"><a href="#专题：优先级反转与三种对策" class="headerlink" title="专题：优先级反转与三种对策"></a>专题：优先级反转与三种对策</h3><p>优先级反转是 RTOS 绕不开的正确性问题：高优先级任务 H 需要一把被低优先级任务 L 持有的锁而被迫等待，此时一个中优先级任务 M 就绪并抢占了 L，使 L 迟迟无法释放锁，H 被 M 间接无限期阻塞。1997 年火星探路者号着陆后的反复重启，根因正是此。三种对策：</p>
 <ul>
 <li><strong>优先级继承（PIP，Priority Inheritance Protocol）</strong>：H 等 L 持有的锁时，临时把 L 的优先级抬到 H，使 M 无法抢占 L，L 尽快放锁后再降回。实现简单，按需触发。</li>
 <li><strong>优先级天花板（PCP，Priority Ceiling Protocol）</strong>：每把锁预设一个”天花板优先级”（等于所有可能用它的任务中的最高优先级），任务一旦持有锁，其优先级立即升到天花板。可防死锁、抖动小，但要预先静态分析出天花板，较死板。</li>
@@ -643,8 +467,8 @@
 <td align="center">三者中最完整，PCP 经 <code>rt_mutex_setprioceiling</code> 暴露给应用</td>
 </tr>
 </tbody></table>
-<p>是否实现优先级继承，是工业级 RTOS 与教学原型内核的一道分水岭（RIOT 即明确选择不做 PIP，详见 §2 的对照，靠”互斥临界区足够短”的设计约束规避）。</p>
-<h3 id="1-5-三者横向对比与统一造轮子路径"><a href="#1-5-三者横向对比与统一造轮子路径" class="headerlink" title="1.5 三者横向对比与统一造轮子路径"></a>1.5 三者横向对比与统一造轮子路径</h3><table>
+<p>是否实现优先级继承，是工业级 RTOS 与教学原型内核的一道分水岭（RIOT 即明确选择不做 PIP，详见 「异步运行时充当调度框架：embassy」 的对照，靠”互斥临界区足够短”的设计约束规避）。</p>
+<h3 id="三者横向对比与统一造轮子路径"><a href="#三者横向对比与统一造轮子路径" class="headerlink" title="三者横向对比与统一造轮子路径"></a>三者横向对比与统一造轮子路径</h3><table>
 <thead>
 <tr>
 <th align="center">维度</th>
@@ -727,7 +551,7 @@
 </tr>
 </tbody></table>
 <p>把三者的经验归并，自造一个 RTOS 的统一路径是：<strong>对象与数据结构 → 就绪表与选优先级 → 移植层与上下文切换 → 节拍与时间片 → 统一调度入口 → IPC 抽象 → 优先级反转 → 上层对象 → 编译期裁剪</strong>。其中库式内核可省去对象基类直接用句柄，完整 RTOS 则应先立统一对象模型，再在其上叠加设备框架、文件系统与 shell 的链接段注册机制。这条路径具有普适性——异步运行时把”上下文切换”换成”轮询 Future”，宏内核在”统一调度入口”之上加地址空间，骨架不变。</p>
-<h2 id="2-异步运行时充当调度框架：embassy"><a href="#2-异步运行时充当调度框架：embassy" class="headerlink" title="2. 异步运行时充当调度框架：embassy"></a>2. 异步运行时充当调度框架：embassy</h2><p>RTOS 用”每任务一栈 + 抢占切换”实现并发。还有一条截然不同的路：把异步运行时（async runtime）直接当作内核的调度框架，让协作式的 Future 取代抢占式的线程。协程与 <code>async</code>/<code>await</code> 的语言机制本身（状态机生成、<code>Future</code>/<code>Waker</code>、<code>Pin</code>、无栈协程）此处不展开，只看一件事——当异步运行时被用作裸机上的”内核”时，调度、内核对象、移植这些问题各自有了什么新答案。embassy 是这条路最成熟的代表。</p>
+<h2 id="异步运行时充当调度框架：embassy"><a href="#异步运行时充当调度框架：embassy" class="headerlink" title="异步运行时充当调度框架：embassy"></a>异步运行时充当调度框架：embassy</h2><p>RTOS 用”每任务一栈 + 抢占切换”实现并发。还有一条截然不同的路：把异步运行时（async runtime）直接当作内核的调度框架，让协作式的 Future 取代抢占式的线程。协程与 <code>async</code>/<code>await</code> 的语言机制本身（状态机生成、<code>Future</code>/<code>Waker</code>、<code>Pin</code>、无栈协程）此处不展开，只看一件事——当异步运行时被用作裸机上的”内核”时，调度、内核对象、移植这些问题各自有了什么新答案。embassy 是这条路最成熟的代表。</p>
 <p>embassy 由 Dario Nieuwenhuis（Dirbaio）于 2020 年发起，是第一个生产可用的嵌入式异步 Rust 运行时，自带 HAL 全家桶，MIT/Apache 双协议；核心 <code>embassy-executor</code> 仅约两千行。它的自我定位很激进：官方称其”免去传统 RTOS 内核上下文切换的需要，且比 RTOS 更快、更小”。</p>
 <h4 id="会用-2"><a href="#会用-2" class="headerlink" title="会用"></a>会用</h4><p><strong>入口与任务。</strong> 一个最小的 embassy 程序：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[embassy_executor::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>(spawner: Spawner) &#123;</span><br><span class="line">    <span class="keyword">let</span> p = embassy_stm32::init(<span class="built_in">Default</span>::default());</span><br><span class="line">    spawner.spawn(blink(p.PB7.into())).unwrap();   <span class="comment">// 投入一个任务</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> led = Output::new(p.PB14, Level::High, Speed::Low);</span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        led.set_high();</span><br><span class="line">        Timer::after_millis(<span class="number">300</span>).<span class="keyword">await</span>;             <span class="comment">// 唯一的让出点</span></span><br><span class="line">        led.set_low();</span><br><span class="line">        Timer::after_millis(<span class="number">300</span>).<span class="keyword">await</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[embassy_executor::task]</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">fn</span> <span class="title">blink</span></span>(pin: Peri&lt;<span class="symbol">'static</span>, AnyPin&gt;) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> led = Output::new(pin, Level::High, Speed::Low);</span><br><span class="line">    <span class="keyword">loop</span> &#123; led.toggle(); Timer::after_millis(<span class="number">500</span>).<span class="keyword">await</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -751,7 +575,7 @@
 <p><strong>自造一个最小异步运行时</strong>，核心抽象与 RTOS 完全不同——不要 TCB 与栈，要”Future 包在静态存储里 + 一个就绪队列 + 一个轮询循环 + <code>Waker</code>“，约一千行可跑：① 定义 <code>#[repr(C)]</code> 的”任务头 + Future”存储，类型擦除成裸任务指针；② 写两位原子状态机（派生、入队），保证不重复入队；③ 写无锁就绪队列（CAS 入队、原子取整批），无原子指针的小核退化为临界区包普通栈；④ 写 <code>Waker</code>，其数据字段塞任务指针，<code>wake</code> 即入队加通知；⑤ 写平台 <code>__pender</code> 钩子解耦运行时与硬件唤醒，主循环 <code>poll</code> 后 <code>wfe</code>/<code>wfi</code> 省电；⑥ 用过程宏把 async 函数变成返回 spawn 令牌的函数（校验约束、声明静态任务池、就地写入 Future 避免栈拷贝）；⑦ 定时器走 trait + 链接期注入而非泛型（保证全局唯一时基，时刻可比较）；⑧ 同步原语全用 <code>Future + Waker</code>，不造内核对象，<code>RawMutex</code> 做成泛型选型；⑨ 抢占用多执行器加中断优先级，可选有序链表做软优先级或 EDF。</p>
 <h4 id="ariel-os-与-RIOT-对照"><a href="#ariel-os-与-RIOT-对照" class="headerlink" title="ariel-os 与 RIOT 对照"></a>ariel-os 与 RIOT 对照</h4><p>embassy 是运行时，不是完整 OS——没有文件系统、shell、包管理。补齐这一层有两个相关项目，恰好代表”在异步之上叠加传统抢占”与”纯传统抢占”两端：</p>
 <p><strong>ariel-os</strong>（2024，前身 Riot-rs，柏林自由大学 + Inria，MIT/Apache）建在 embassy、esp-hal、defmt、probe-rs 之上：复用 <code>embassy_executor::Executor</code> 的异步部分，再自己叠加一层基于 <code>ariel-os-threads</code> 的抢占式多线程调度器与可移植外设 API、网络与安全、laze 元构建。<code>#[ariel_os::main]</code> 起异步任务，<code>#[ariel_os::thread(autostart, priority=2)]</code> 声明真正的抢占式线程，二者共生：异步任务跑 IO 密集逻辑，抢占线程跑硬实时或 CPU 密集逻辑。它的抢占调度器是 RIOT 经典 bitcache 调度器的 Rust const-generic 重写——位图加每优先级环形链表、<code>ffs</code> 选最高优先级，但用编译期常量泛型定优先级数与线程数，比 C 的宏更类型安全。概括而言，ariel-os 是 RIOT 思想用 Rust、由同一批人重做。</p>
-<p><strong>RIOT</strong>（2013，柏林自由大学 + Inria，LGPLv2.1）是学术界主导的成熟完整 IoT RTOS，走传统抢占式路线：真 TCB 加每线程栈、真上下文切换。它是唯一同时覆盖 8/16/32 位三档的 RTOS（五十余个 CPU 系列、近三百块板子）。内核极小（约两千行 C），其余全在系统库、驱动与外部包（总量近两百万行）。调度器 <code>sched_run()</code> 用 <code>bitarithm_msb</code>（一条 CLZ）从位图找最高优先级就绪队列，真正的寄存器保存与切栈在各架构的 <code>thread_arch.c</code>（rv 用 <code>mret</code> 加保存寄存器、Cortex-M 用 PendSV）。它的 IPC 哲学是”消息优先于互斥”，首选 <code>msg_send</code>/<code>msg_receive</code> 这套类 RPC 的消息传递；其互斥量刻意不实现 PIP，靠”临界区足够短”的设计约束规避优先级反转——这正与 §1.4 三个工业 RTOS 的选择形成对照。RIOT 自研的 GNRC 网络栈是 6LoWPAN、RPL、CoAP、OSCORE、SUIT 等一整套 IETF 协议的开源参考实现，常被 IETF 草案引用。</p>
+<p><strong>RIOT</strong>（2013，柏林自由大学 + Inria，LGPLv2.1）是学术界主导的成熟完整 IoT RTOS，走传统抢占式路线：真 TCB 加每线程栈、真上下文切换。它是唯一同时覆盖 8/16/32 位三档的 RTOS（五十余个 CPU 系列、近三百块板子）。内核极小（约两千行 C），其余全在系统库、驱动与外部包（总量近两百万行）。调度器 <code>sched_run()</code> 用 <code>bitarithm_msb</code>（一条 CLZ）从位图找最高优先级就绪队列，真正的寄存器保存与切栈在各架构的 <code>thread_arch.c</code>（rv 用 <code>mret</code> 加保存寄存器、Cortex-M 用 PendSV）。它的 IPC 哲学是”消息优先于互斥”，首选 <code>msg_send</code>/<code>msg_receive</code> 这套类 RPC 的消息传递；其互斥量刻意不实现 PIP，靠”临界区足够短”的设计约束规避优先级反转——这正与 「专题：优先级反转与三种对策」 三个工业 RTOS 的选择形成对照。RIOT 自研的 GNRC 网络栈是 6LoWPAN、RPL、CoAP、OSCORE、SUIT 等一整套 IETF 协议的开源参考实现，常被 IETF 草案引用。</p>
 <table>
 <thead>
 <tr>
@@ -811,14 +635,14 @@
 </tr>
 </tbody></table>
 <h4 id="何时用异步运行时、何时用传统-RTOS"><a href="#何时用异步运行时、何时用传统-RTOS" class="headerlink" title="何时用异步运行时、何时用传统 RTOS"></a>何时用异步运行时、何时用传统 RTOS</h4><p>异步运行时省 RAM（无 N 份栈，任务状态紧凑存于静态存储）、低功耗（自动 <code>wfe</code>/<code>wfi</code>）、天然适合 IO 密集并发（一个任务写一条 TCP/USB/BLE 连接的 <code>await</code> 链）、并借 Rust 所有权在编译期挡住外设双重占用与 <code>!Send</code> 误用；代价是单执行器无真抢占、CPU 密集任务会饿死同伴、生态尚不及传统 RTOS 完整、RV32 暂不支持中断执行器。传统抢占式 RTOS 则在硬实时确定性、CPU 密集与混合负载、成熟生态上更稳。二者并非互斥——ariel-os 的缝合方式给出了实践答案：用异步执行器承载 IO 密集任务，用抢占线程承载硬实时与 CPU 密集任务。</p>
-<h2 id="3-各类内核的源码拆解"><a href="#3-各类内核的源码拆解" class="headerlink" title="3. 各类内核的源码拆解"></a>3. 各类内核的源码拆解</h2><p>RTOS 与异步运行时之后，谱系进入”结构完整的内核”地带：宏内核、微内核、组件化（框）内核、外核与 Unikernel、异步内核。对这些内核，重点不在”如何使用”，而在<strong>拆源码、提方法论、抓特点</strong>。原因很直接：RTOS 是拿来即用的成品，而这些通用内核是我们要亲手再造的对象，要的是看清它”有什么、是什么、为何如此、如何实现”，从而能写出一个同生态位甚至更优的替代，而非学会做它的用户。</p>
-<p>拆解之前先立一条共性主线。无论何种范式，一个内核从加电到跑起用户程序，都走同一条骨架：<code>_start 汇编（清 BSS、设栈、建初始页表）→ 主入口（一串 init 调用）→ 创建第一个用户进程 → 进入调度主循环</code>。范式之间的全部分歧，落在这条骨架的若干维度上——语言、是否兼容 Linux ABI、调度算法、HAL 抽象厚薄、组件自造还是复用、特权边界划在哪里。下面逐类剖开，最后在 §10 把它们归入”单微宏外库框”的范式坐标系。</p>
-<h3 id="3-1-宏内核：一个地址空间装下整个内核"><a href="#3-1-宏内核：一个地址空间装下整个内核" class="headerlink" title="3.1 宏内核：一个地址空间装下整个内核"></a>3.1 宏内核：一个地址空间装下整个内核</h3><p>宏内核（monolithic kernel）把调度、内存、文件系统、网络栈、驱动全部放进同一个内核地址空间、同一特权级，子系统之间是直接函数调用。它是 Linux、传统 Unix 走的路，性能好（无跨域开销），代价是任一处的缺陷都可能拖垮整个内核。这里选取的六个宏内核恰好铺出一条从教学到工业的完整光谱。</p>
+<h2 id="各类内核的源码拆解"><a href="#各类内核的源码拆解" class="headerlink" title="各类内核的源码拆解"></a>各类内核的源码拆解</h2><p>RTOS 与异步运行时之后，谱系进入”结构完整的内核”地带：宏内核、微内核、组件化（框）内核、外核与 Unikernel、异步内核。对这些内核，重点不在”如何使用”，而在<strong>拆源码、提方法论、抓特点</strong>。原因很直接：RTOS 是拿来即用的成品，而这些通用内核是我们要亲手再造的对象，要的是看清它”有什么、是什么、为何如此、如何实现”，从而能写出一个同生态位甚至更优的替代，而非学会做它的用户。</p>
+<p>拆解之前先立一条共性主线。无论何种范式，一个内核从加电到跑起用户程序，都走同一条骨架：<code>_start 汇编（清 BSS、设栈、建初始页表）→ 主入口（一串 init 调用）→ 创建第一个用户进程 → 进入调度主循环</code>。范式之间的全部分歧，落在这条骨架的若干维度上——语言、是否兼容 Linux ABI、调度算法、HAL 抽象厚薄、组件自造还是复用、特权边界划在哪里。下面逐类剖开，最后在 「单微宏外库框：内核范式坐标系与衍生」 把它们归入”单微宏外库框”的范式坐标系。</p>
+<h3 id="宏内核：一个地址空间装下整个内核"><a href="#宏内核：一个地址空间装下整个内核" class="headerlink" title="宏内核：一个地址空间装下整个内核"></a>宏内核：一个地址空间装下整个内核</h3><p>宏内核（monolithic kernel）把调度、内存、文件系统、网络栈、驱动全部放进同一个内核地址空间、同一特权级，子系统之间是直接函数调用。它是 Linux、传统 Unix 走的路，性能好（无跨域开销），代价是任一处的缺陷都可能拖垮整个内核。这里选取的六个宏内核恰好铺出一条从教学到工业的完整光谱。</p>
 <p><strong>xv6——参照系。</strong> MIT 6.828 教学内核，约 6500 行 C 全部平铺在顶层、不分子目录，二十一个系统调用，每个文件对应教材一个概念。它的价值在于把内核机理压到最赤裸：启动序列 <code>main.c:18</code> 把十四个 init 一字排开；调度器 <code>proc.c:323</code> 是每 CPU 一个 <code>for(;;)</code> 遍历全局进程表找 RUNNABLE 再 <code>swtch</code> 进去的最朴素轮转；而整个内核最该单独读的是 <code>swtch.S</code> 那约十行——保存四个被调用者保存寄存器、<code>movl %esp,(%eax)</code> 存旧栈、<code>movl %edx,%esp</code> 换新栈、<code>ret</code>，一句话道破<strong>线程切换的本质就是两次寄存器装填夹一个 <code>ret</code></strong>。它的物理分配器 <code>kalloc.c</code> 更是零开销的典范：空闲链表的节点就是空闲页本身，<code>next</code> 指针直接写在那页开头。文件系统是六层叠放（fd → 路径 → 目录 → inode → 日志 → 缓冲 → 磁盘），其中 <code>log.c</code> 的崩溃可恢复日志是理解 ext4 jbd2、xfs log 的入门样本。xv6 无 HAL（单架构）、一文件一驱动无统一框架、自定义二十一个系统调用而不兼容 Linux——它是后面一切的参照系。</p>
 <p><strong>tg-rcore——Rust 重讲 xv6 + 渐进式。</strong> 清华 rCore-Tutorial 衍生，约一万四千行 Rust，双维结构：章节维（ch1–ch8 各是独立可运行的 cargo crate，逐章加功能）加组件维（sbi/console/syscall/kernel-vm/easy-fs 等横切复用 crate）。它的调度主循环用 Rust 枚举模式匹配陷阱原因——<code>match scause::read().cause()</code> 区分 <code>SupervisorTimer</code>（时钟切任务）与 <code>UserEnvCall</code>（处理系统调用），比 C 的 <code>switch(scause)</code> 类型安全。最值得借鉴的是它的<strong>双面系统调用 crate</strong>：同一个 crate 经 cargo feature 切两面——编进用户程序时给出调用号与内联 <code>ecall</code>，编进内核时给出 <code>trait</code> 让内核实现，并用 <code>compile_error!</code> 守护两个 feature 互斥。用户态与内核态共享同一套编号定义，从根上杜绝了编号漂移。</p>
 <p><strong>DragonOS——Linux ABI 兼容的工业宏内核。</strong> 国产，约十九万行 Rust 加六万行 C，约四分之一 Linux 兼容，目标是生产环境的 Linux 替代，是六个样本里唯一含 BPF、cgroup、namespace、overlayfs、KVM 的非教学内核。它的复杂度对标 Linux 本体：启动 <code>init/init.rs:56 do_start_kernel()</code> 是十九段以上的 init 链（对照 xv6 的十四、tg-rcore 的五）；进程控制块 <code>process/mod.rs:1132 ProcessControlBlock</code> 直接镜像 Linux <code>task_struct</code>，含 tgid（线程组）、nsproxy（命名空间代理）、pid_links，<code>process/</code> 目录二十五个文件实现 <code>clone()</code>/<code>wait4()</code>/<code>setns()</code>/<code>unshare()</code> 全语义；调度器 <code>sched/</code> 完整复刻 Linux CFS 体系，连 <code>pelt.rs</code>（Per-Entity Load Tracking）都有；系统调用 <code>syscall/mod.rs</code> 双层分发（先查动态注册的 syscall 表、再落 legacy match），编号直接 mirror Linux；驱动 <code>driver/base/</code> 完整复刻 Linux 的 kobject/kset/bus/class/device 设备模型。要造一个兼容 Linux 的内核，DragonOS 是首选拆解对象。</p>
-<p><strong>StarryOS——站在 ArceOS 肩上的薄宏内核。</strong> 本体仅约一万四千行 Rust，因为内存、驱动、调度、HAL 全在 ArceOS 的 crate 里——它是宏内核与组件化的杂交，是 ArceOS”宏内核人格”的一个实例化。其 <code>Cargo.toml</code> 把 axalloc/axfs/axhal/axmm/axsync/axtask 全列为依赖，进程模型直接用外部的 <code>starry-process</code> crate，自己只写 fork/exec/syscall/fd 这层宏内核语义。它的用户任务主循环是灵魂：<code>uctx.run()</code> 进入用户态，返回一个结构化的 <code>ReturnReason</code> 枚举，<code>match</code> 它分发系统调用、缺页、中断、异常——ArceOS 把”进入用户态”抽象成”返回一个 <code>ReturnReason</code>“，与 tg-rcore 的”execute + match scause”同模式而更简。系统调用用 <code>syscalls</code> crate 的 <code>Sysno</code> 枚举，编号自动对齐 Linux，这是它能直接跑 busybox/musl 的关键。StarryOS 是”组件化拼装宏内核”的范本（其衍生脉络见 §10）。</p>
-<p><strong>NoAxiomOS——异步无栈协程宏内核。</strong> 杭电团队作品，约四万行 Rust，自研 RV64 与 la64 双 HAL。它最大的招牌是<strong>系统调用本身是 <code>async fn</code></strong>：<code>syscall/syscall.rs</code> 的 <code>async fn syscall_inner</code> 里 <code>SYS_READ =&gt; self.sys_read(...).await</code>，整个系统调用处理程序是一个 Future，遇 I/O 阻塞就直接 <code>.await</code> 让出当前任务；内核里跑着一个 future 执行器（<code>sched/runtime.rs</code> 的 <code>RUNTIME</code>），某个系统调用 Future 阻塞时就调度下一个任务。传统宏内核的系统调用同步阻塞、让整个线程睡眠等待，NoAxiomOS 则用无栈协程实现非阻塞内核，效果等价于”内核态的 io_uring/epoll”却用 Rust async 写成。它是造异步内核的拆解对象（与下文 §3.5 的另两条异步路线对照）。</p>
+<p><strong>StarryOS——站在 ArceOS 肩上的薄宏内核。</strong> 本体仅约一万四千行 Rust，因为内存、驱动、调度、HAL 全在 ArceOS 的 crate 里——它是宏内核与组件化的杂交，是 ArceOS”宏内核人格”的一个实例化。其 <code>Cargo.toml</code> 把 axalloc/axfs/axhal/axmm/axsync/axtask 全列为依赖，进程模型直接用外部的 <code>starry-process</code> crate，自己只写 fork/exec/syscall/fd 这层宏内核语义。它的用户任务主循环是灵魂：<code>uctx.run()</code> 进入用户态，返回一个结构化的 <code>ReturnReason</code> 枚举，<code>match</code> 它分发系统调用、缺页、中断、异常——ArceOS 把”进入用户态”抽象成”返回一个 <code>ReturnReason</code>“，与 tg-rcore 的”execute + match scause”同模式而更简。系统调用用 <code>syscalls</code> crate 的 <code>Sysno</code> 枚举，编号自动对齐 Linux，这是它能直接跑 busybox/musl 的关键。StarryOS 是”组件化拼装宏内核”的范本（其衍生脉络见 「单微宏外库框：内核范式坐标系与衍生」）。</p>
+<p><strong>NoAxiomOS——异步无栈协程宏内核。</strong> 杭电团队作品，约四万行 Rust，自研 RV64 与 la64 双 HAL。它最大的招牌是<strong>系统调用本身是 <code>async fn</code></strong>：<code>syscall/syscall.rs</code> 的 <code>async fn syscall_inner</code> 里 <code>SYS_READ =&gt; self.sys_read(...).await</code>，整个系统调用处理程序是一个 Future，遇 I/O 阻塞就直接 <code>.await</code> 让出当前任务；内核里跑着一个 future 执行器（<code>sched/runtime.rs</code> 的 <code>RUNTIME</code>），某个系统调用 Future 阻塞时就调度下一个任务。传统宏内核的系统调用同步阻塞、让整个线程睡眠等待，NoAxiomOS 则用无栈协程实现非阻塞内核，效果等价于”内核态的 io_uring/epoll”却用 Rust async 写成。它是造异步内核的拆解对象（与下文 「异步内核：把 Future 放进内核」 的另两条异步路线对照）。</p>
 <p><strong>biscuit——带 GC 的高级语言内核。</strong> biscuit 无公开可读的源码树，下述据其 OSDI’18 论文《The benefits and costs of writing a POSIX kernel in a high-level language》整理。它约两万八千行 Go 加改造过的 Go runtime，证明带垃圾回收（GC）的高级语言也能写可用的 OS 内核：内核态对象由 Go GC 管理（须把 GC 暂停限制在百微秒内），每个用户进程对应一个 goroutine，用 channel/select 替代信号量与等待队列。最难处在于 Go runtime 默认依赖宿主 OS 的 mmap/futex/sigaction，biscuit 要把这些全替换成内核内部的等价实现（自分自用）。论文测得其性能比同规模 Linux 慢约 5%–15%，代价主要来自 GC 与 runtime。它与 Rust 系内核形成对照：Rust 用借用检查加编译期管理提供安全性而无 GC 暂停，biscuit 用有栈的 M:N goroutine 而非 NoAxiomOS 的无栈 Future。</p>
 <p>把六者并置，分歧本质收敛为六个维度：</p>
 <table>
@@ -907,10 +731,10 @@
 </tr>
 </tbody></table>
 <p>这张表也回答了”造宏内核要先定什么”：语言（C 贴硬件 / Rust 所有权安全 / Go 验证 GC 可行）、是否背 Linux ABI（教学 OS 与工业 OS 的分水岭，决定能否直接跑 busybox/musl）、调度算法、HAL 厚薄（厚则易横移多架构但启动代码难读）、自造还是复用组件。这五个选择一旦定下，内核的形态大半已定。</p>
-<h3 id="3-2-组件化内核与框内核：编译期拆分的可组装内核"><a href="#3-2-组件化内核与框内核：编译期拆分的可组装内核" class="headerlink" title="3.2 组件化内核与框内核：编译期拆分的可组装内核"></a>3.2 组件化内核与框内核：编译期拆分的可组装内核</h3><p>组件化（componentized）首先要纠正一个常见误解：它<strong>不是第六种内核结构</strong>，而是一种正交于宏、微、外、库、框各范式的实现风格——用 cargo crate 作模块边界、用 cargo features 作组装开关、用 Rust trait 作接口契约、再由一个顶层”装配 crate”按依赖顺序拼起来。因此可以有组件化的宏内核与 Unikernel（arceos）、组件化的框内核（asterinas）、组件化的单地址空间内核（Theseus）。</p>
+<h3 id="组件化内核与框内核：编译期拆分的可组装内核"><a href="#组件化内核与框内核：编译期拆分的可组装内核" class="headerlink" title="组件化内核与框内核：编译期拆分的可组装内核"></a>组件化内核与框内核：编译期拆分的可组装内核</h3><p>组件化（componentized）首先要纠正一个常见误解：它<strong>不是第六种内核结构</strong>，而是一种正交于宏、微、外、库、框各范式的实现风格——用 cargo crate 作模块边界、用 cargo features 作组装开关、用 Rust trait 作接口契约、再由一个顶层”装配 crate”按依赖顺序拼起来。因此可以有组件化的宏内核与 Unikernel（arceos）、组件化的框内核（asterinas）、组件化的单地址空间内核（Theseus）。</p>
 <p>它与微内核的本质区别要说清：微内核是<strong>运行期分离</strong>（子系统拆成多进程，靠 IPC 通信，牺牲性能换可靠）；组件化是<strong>编译期分离</strong>（子系统拆成多个 crate 编进同一个二进制，运行期共享地址空间，保留宏内核的性能，靠 Rust 类型系统在编译期保证可靠）。一个把隔离推到运行时，一个把隔离收到编译期。</p>
 <p><strong>arceos——一份模块、三种人格。</strong> 清华 rcore-os 团队把 rCore Tutorial 组件化重构的产物，灵感来自 Unikraft。它最直白地体现了组件化：启动入口 <code>axruntime/src/lib.rs</code> 的 <code>rust_main</code> 就是一串 <code>#[cfg(feature=…)]</code> 块的拼接——<code>init_allocator</code>（<code>alloc</code>）、<code>init_memory_management</code>（<code>paging</code>）、<code>init_scheduler</code>（<code>multitask</code>）、<code>init_drivers</code>/<code>init_filesystems</code>（<code>fs</code>/<code>net</code>/<code>display</code>）逐个按 feature 编译期增删，最小 Unikernel 仅约 80 KB。最关键的一个文件是 <code>api/axfeat/Cargo.toml</code>：它把 cargo features 当作物料清单（BoM），每个 feature 的右侧是一组下游 feature 的并集，feature 之间的逻辑依赖（如 <code>net = [&quot;alloc&quot;,&quot;paging&quot;,…]</code>）把不合理的组合阻断在编译期。同一份 <code>modules/</code>，靠 features 组合切出三种人格：默认是 Unikernel（app 与 kernel 同特权级、单 ELF）；打开 <code>uspace</code> 开关，axcpu 便提供 <code>UserContext::run()</code> 与陷阱原因枚举，升级为带用户态进程边界的宏内核底座；再加入 axvm/axvcpu 等 crate，启动后进入 H 模式（rv）/EL2（aa）/root（x86），成为 Hypervisor。</p>
-<p>arceos 真正值得吸取的是它<strong>衍生不靠 fork 源码</strong>这一点——这正是 StarryOS 与 AxVisor 的范本。它提供四类扩展点让下游不动 arceos 源码就长出新 OS：① <code>uspace</code> feature 把单地址空间 Unikernel 一键升级为宏内核底座（StarryOS 在此之上加系统调用与 Linux ABI 跑 musl 二进制）；② <code>TaskExtRef&lt;T&gt;</code> / task_ext 让下游把自己的 per-task 数据（进程、线程、fd 表、信号）挂到 arceos 的 <code>TaskInner</code> 上，arceos 对扩展内容零知识，调度器是 arceos 的、业务数据是下游的（”叶子自治”）；③ <code>crate_interface</code> 反向回调，让下层模块声明 trait 接口、上层填实现，打破 Rust”上层依赖下层”的单向约束（如 axlog 能回调尚不存在的上层取当前任务号）；④ axns 命名空间为多进程隔离预留全局/线程局部两种命名空间。衍生靠”编译期组合 + 扩展点 trait”，而非源码分叉——这是组件化最有工程价值的一课（StarryOS/AxVisor 的具体脉络见 §10）。</p>
+<p>arceos 真正值得吸取的是它<strong>衍生不靠 fork 源码</strong>这一点——这正是 StarryOS 与 AxVisor 的范本。它提供四类扩展点让下游不动 arceos 源码就长出新 OS：① <code>uspace</code> feature 把单地址空间 Unikernel 一键升级为宏内核底座（StarryOS 在此之上加系统调用与 Linux ABI 跑 musl 二进制）；② <code>TaskExtRef&lt;T&gt;</code> / task_ext 让下游把自己的 per-task 数据（进程、线程、fd 表、信号）挂到 arceos 的 <code>TaskInner</code> 上，arceos 对扩展内容零知识，调度器是 arceos 的、业务数据是下游的（”叶子自治”）；③ <code>crate_interface</code> 反向回调，让下层模块声明 trait 接口、上层填实现，打破 Rust”上层依赖下层”的单向约束（如 axlog 能回调尚不存在的上层取当前任务号）；④ axns 命名空间为多进程隔离预留全局/线程局部两种命名空间。衍生靠”编译期组合 + 扩展点 trait”，而非源码分叉——这是组件化最有工程价值的一课（StarryOS/AxVisor 的具体脉络见 「单微宏外库框：内核范式坐标系与衍生」）。</p>
 <p>tg-arceos 是 arceos 的教学示例集合（约二十个自包含 crate），按”人格难度”递增组织：Unikernel 组（helloworld → 集合 → MMIO 裸访问 → 多线程 → 协作调度 → CFS 抢占 → virtio-blk → 读 FAT 文件）、宏内核组（用户特权 → 按需缺页 → 跑真 musl ELF）、Hypervisor 组（最简 VM → 嵌套缺页 → 虚拟设备 → guest 跑完整 arceos）。跑完一遍即把 arceos 三人格全摸过，是理解”cargo features 实际如何影响二进制与人格边界”的最佳动手材料。</p>
 <p><strong>asterinas——框内核（framekernel）的”框”。</strong> 框内核由蚂蚁集团 OS Lab 于 2022 年提出（论文见 USENIX ATC’25《Asterinas: A Linux ABI-Compatible, Rust-Based Framekernel OS with a Small and Sound TCB》，arXiv 2506.03876；另有 SOSP’25 最佳论文 CortenMM）。其定义经论文与官方 Asterinas Book 核实如下：整个 OS 处于<strong>单一地址空间</strong>（与宏内核一样，无跨域 IPC 开销）、全部用 Rust 写，但在逻辑上劈成两半——</p>
 <ul>
@@ -976,7 +800,7 @@
 </tr>
 </tbody></table>
 <p>第一道是<strong>组装机制</strong>光谱（feature / inventory / cfg+运行时加载），第二道是<strong>隔离</strong>光谱：MMU（arceos）→ MMU 加 safe 边界沙箱（asterinas）→ 纯类型隔离（Theseus）——越往右，运行期开销越小，对编译器与语言的信任越重。给自己造内核的三条可直接取用的经验是：用 cargo features 当物料清单做编译期死代码消除；用 trait 当接口契约换多后端；用扩展点（task_ext / crate_interface / inventory）让下游不改源码就能扩展。而 TCB 收敛是可以工程化强制的——asterinas 的 <code>#![deny(unsafe_code)]</code> 加 <code>pub(crate)</code> 锁住危险 API 加类型化沙箱，就是把”框”焊死的具体手段。</p>
-<h3 id="3-3-微内核：把一切都赶出内核"><a href="#3-3-微内核：把一切都赶出内核" class="headerlink" title="3.3 微内核：把一切都赶出内核"></a>3.3 微内核：把一切都赶出内核</h3><p>微内核（microkernel）与组件化恰成对照——它把隔离推到运行期。内核只保留最小机制（地址空间、线程调度、进程间通信），驱动、文件系统、网络栈全部作为用户态进程运行，彼此靠 IPC 通信。好处是可靠（一个驱动崩溃不拖垮内核）与可验证（内核足够小），代价是跨域 IPC 的开销——而 1990 年代”微内核慢”的旧账，早被 Liedtke 的 L4 以重新设计的快速 IPC 翻案（SOSP’93）；seL4 属 L4 家族，继承并精炼这条快速路径，再叠加形式化验证。这里的三个样本是一条清晰的演进线：seL4（形式化验证的极致最小）、Zircon（Google Fuchsia 的工程级 C++ 实现）、zCore（清华用 Rust 重写 Zircon）。</p>
+<h3 id="微内核：把一切都赶出内核"><a href="#微内核：把一切都赶出内核" class="headerlink" title="微内核：把一切都赶出内核"></a>微内核：把一切都赶出内核</h3><p>微内核（microkernel）与组件化恰成对照——它把隔离推到运行期。内核只保留最小机制（地址空间、线程调度、进程间通信），驱动、文件系统、网络栈全部作为用户态进程运行，彼此靠 IPC 通信。好处是可靠（一个驱动崩溃不拖垮内核）与可验证（内核足够小），代价是跨域 IPC 的开销——而 1990 年代”微内核慢”的旧账，早被 Liedtke 的 L4 以重新设计的快速 IPC 翻案（SOSP’93）；seL4 属 L4 家族，继承并精炼这条快速路径，再叠加形式化验证。这里的三个样本是一条清晰的演进线：seL4（形式化验证的极致最小）、Zircon（Google Fuchsia 的工程级 C++ 实现）、zCore（清华用 Rust 重写 Zircon）。</p>
 <p><strong>系统调用数量：9 对 150 的背后。</strong> 微内核与宏内核最直观的差别是系统调用表的厚薄。seL4 只有八个核心系统调用（Call / ReplyRecv / Send / NBSend / Recv / Reply / Yield / NBRecv，定义在 <code>libsel4/include/api/syscall.xml</code>；MCS 模式扩到十一个），Zircon 约一百四十三个 <code>sys_</code> 实现，zCore 镜像为一百二十八条分发分支。seL4 八个为何够用是关键洞察：所有”操作能力的具体动作”（CNode_Copy、TCB_Configure、Untyped_Retype 等约六十个 invocation）<strong>都不是系统调用</strong>——它们都通过 Send/Call 发到目标能力，再由内核 <code>decodeInvocation()</code> 按能力类型解析执行。即”内核机制（八条路径）”与”用户接口（六十余个 invocation）”彻底解耦。Zircon 反其道：每个功能直接做成一个系统调用，便利但接口表庞大。</p>
 <p><strong>IPC 快速路径——微内核性能的命门。</strong> seL4 的同步 IPC 可压到亚微秒级（ARMv7 上论文测得数百周期，相较 Mach 早年的约百微秒是数量级翻案）。其 <code>fastpath.c</code> 的 <code>fastpath_call</code> 是一串”守卫”，任一不满足就跌回 <code>slowpath</code>：解出消息信息、检查无错误、查端点能力（能力树深度不超过一时 O(1)）、确认是可发送的端点能力、确认接收方正好在等待，全部通过后取目标线程的地址空间、切页表、用寄存器拷消息、直接返回到目标用户态。它快的设计权衡有五：<strong>跳过调度器</strong>（同步 IPC 直接把 CPU 交给目标线程，不进就绪队列）、<strong>寄存器传消息</strong>（短消息走 a0–a3 不碰内存）、<strong>手工内联</strong>（函数体几乎全内联、无栈帧）、<strong>统一异常出口</strong>（快速路径自身不含任何异常处理，任何异常都跌回慢路径，保持热路径无分支污染）、<strong>页表切换最小化</strong>（只切 ASID/SATP，靠 ASID 复用不刷 TLB）。Zircon 与 zCore 没有这种 fastpath，它们走异步 channel 加消息队列模型（读即从队列 <code>pop_front</code>），性能在 1–3 微秒量级；zCore 进一步把”等待”变成 async future 的 <code>.await</code>，省掉阻塞线程栈，但 channel 写入仍是队列 push。三者的底层抽象其实一致——seL4 的端点线程队列、Zircon 的 <code>ChannelDispatcher.messages_</code>、zCore 的 <code>Channel.recv_queue</code>（一个 <code>VecDeque</code>）是同一个东西，只是工程取舍不同。</p>
 <p><strong>能力（capability）系统的三种形态。</strong> 能力是微内核的安全基石——一个不可伪造的对象引用，自带一组权利位，权利只能减不能增。三者实现各异：</p>
@@ -989,7 +813,7 @@
 <p><strong>形式化验证——seL4 最独特的方法论。</strong> 这是它区别于一切其他内核之处（此处只点与内核相关的核心）。证明仓库 l4v 起初约二十万行 Isabelle（功能正确性版本，含证明框架），随后续里程碑累积已逾百万行，做三层精化（refinement）：抽象规约（Isabelle/HOL，约 5K）→ 可执行规约（Haskell，约 5K）→ C 实现（关键路径约 9K）→ 编译后的二进制（2014 年做到二进制级），每层证明”实现层的可观察行为是规约层行为的子集”。里程碑从 2009 年功能正确性（SOSP 最佳论文）、2011 年完整性、2013 年机密性（信息流强制）、2014 年二进制级、2018 年 MCS，到 2020 年 RV64；多核（SMP）的形式化验证则至今仍在进行中。已证明的性质包括无缓冲区溢出/空指针解引用/除零、状态转移符合规约、无能力者不能改资源（完整性）、无读能力者不能读（机密性）；作为假设而未证的是编译器、汇编、bootloader、硬件 MMU/TLB 模型，也不证时间侧信道。工程代价是约三十比一的证明代码比，且每加一行 C 都要重证——这正是 Zircon 四十万行 C++ 不做形式化验证、改走 fuzzing 加 sanitizer 的根本原因。一条限制要记住：验证只覆盖 <code>kernel.elf</code>，用户态的根服务器与驱动若有 bug，系统照样被攻破。</p>
 <p><strong>调度与启动。</strong> seL4 的调度器严格只是机制：domain × priority 两级（domain 是编译期固定的分时片段，是机密性的基础；priority 在 domain 内轮转），不做公平、不做抢占检测、不处理优先级反转——这些策略全推给用户态去操作 TCB。启动上三者都有一个”单点信任根”：seL4 的根服务器拥有”宇宙间所有能力”（剩余物理内存全打包成 untyped 能力交给它），由它 retype 派生出整个用户态生态；Zircon 装载 <code>userboot.so</code>，zCore 则用 cargo features 选人格（<code>linux</code> 从 rootfs 跑 musl ELF，<code>zircon</code> 跑 ZBI）。这个第一个用户态进程的 bug 等于内核 bug，因此应尽快把能力派生、退化成普通进程。</p>
 <p><strong>zCore = Zircon 的 Rust 重写。</strong> 它的工程意义是一份”C++ 内核如何用 Rust 重做”的完整对照：内存安全从手动 RefPtr 变成 <code>Arc</code>/<code>Weak</code> 自动管理（编译期消除释放后使用、数据竞争、溢出）；等待从阻塞线程的 <code>wait_one</code> 变成 async 的 <code>.await</code>（每个 future 几十字节，相较每内核栈 16 KB）；完全兼容 Zircon ABI（可跑 Fuchsia 的 userboot）；一套对象层同时支撑 zircon 与 linux 双人格；既能裸机运行，也能作为 LibOS 在 Linux 上跑成普通进程调试。残留的 <code>unsafe</code> 集中在内核硬件抽象层的物理内存/页表写、启动早期的 GDT/IDT、对 SBI 的 FFI、以及 channel 创建时的双向链接——审计面比整个内核小得多。给自己造微内核的提炼：机制与策略分离有 seL4（全推用户态）与 Zircon（内核留便利 dispatcher）两个极端，这是设计内核的根本张力；fastpath 是性能命门；要细粒度安全授权选树状能力、要简单选平表带权利；形式化验证有约三十比一的硬上限，只适合极小内核。</p>
-<h3 id="3-4-外核、单地址空间内核与-Unikernel：减法路线"><a href="#3-4-外核、单地址空间内核与-Unikernel：减法路线" class="headerlink" title="3.4 外核、单地址空间内核与 Unikernel：减法路线"></a>3.4 外核、单地址空间内核与 Unikernel：减法路线</h3><p>如果说宏内核做加法、微内核做拆分，那么外核（exokernel）这一系做的是减法——把内核能做的事尽量拿走，交还给应用。它有两个极点和一处工业化收敛。外核（jos）把内核削到只暴露原始资源加保护检查，OS 抽象全下放到用户态的 LibOS，但仍保留多地址空间与 MMU 隔离；单地址空间内核（SASOS，BareMetal）更进一步，连用户态/内核态的特权切换都取消，全部代码同处一个地址空间、一个特权级；而 Unikernel（unikraft、HermitOS、MirageOS、TenonOS、rumprun）是外核与 LibOS 思想的工业化简化——单应用加单地址空间，把 OS 库链进应用编成一份可启动镜像（这三者的概念层次辨析放在 §10 的范式坐标系里统一厘清，这里只拆实现）。</p>
+<h3 id="外核、单地址空间内核与-Unikernel：减法路线"><a href="#外核、单地址空间内核与-Unikernel：减法路线" class="headerlink" title="外核、单地址空间内核与 Unikernel：减法路线"></a>外核、单地址空间内核与 Unikernel：减法路线</h3><p>如果说宏内核做加法、微内核做拆分，那么外核（exokernel）这一系做的是减法——把内核能做的事尽量拿走，交还给应用。它有两个极点和一处工业化收敛。外核（jos）把内核削到只暴露原始资源加保护检查，OS 抽象全下放到用户态的 LibOS，但仍保留多地址空间与 MMU 隔离；单地址空间内核（SASOS，BareMetal）更进一步，连用户态/内核态的特权切换都取消，全部代码同处一个地址空间、一个特权级；而 Unikernel（unikraft、HermitOS、MirageOS、TenonOS、rumprun）是外核与 LibOS 思想的工业化简化——单应用加单地址空间，把 OS 库链进应用编成一份可启动镜像（这三者的概念层次辨析放在 「单微宏外库框：内核范式坐标系与衍生」 的范式坐标系里统一厘清，这里只拆实现）。</p>
 <p><strong>jos——外核的教学样本。</strong> MIT 6.828 曾用的外核实验（2018 年起 MIT 改回 xv6，因学生反馈外核太反直觉）。它的灵魂是”内核只暴露资源、不暴露抽象”：完整版暴露 <code>sys_page_alloc</code>/<code>map</code>/<code>unmap</code>（应用直接操控页表）、<code>sys_exofork</code>（只建一个空地址空间、不复制内存）、<code>sys_env_set_pgfault_upcall</code>（用户态缺页处理），而<strong>不提供</strong> fork/exec/open/socket。于是 fork 在用户态实现——用 <code>sys_page_map</code> 把页以写时复制（COW）位映射给子进程，COW 逻辑对应用完全可见，与 Linux 在内核 <code>kernel/fork.c</code> 里实现、应用不可见恰成对照。文件系统与网络也是用户态进程，经 IPC 提供服务。它还把页表、PageInfo 数组、Env 数组只读映射到用户空间，应用能直接读自己的页表——这正是外核”暴露资源”的标志。数据结构极简到 <code>struct Env</code> 约十二个字段（对照 Linux <code>task_struct</code> 一千五百余个）、<code>struct PageInfo</code> 仅两个字段。</p>
 <p><strong>BareMetal——纯汇编的单地址空间内核。</strong> Return Infinity 团队用约 4355 行 NASM x86_64 写成整个 OS。它的”系统调用”机制极有启发性：内核镜像头部排了一张函数指针表（<code>b_input</code>/<code>b_output</code>/<code>b_net_tx</code>… 每八字节一个），应用调用就是 <code>call *0x00100018</code> 这样直接跳过去——<strong>没有 <code>syscall</code> 指令、没有特权切换、没有内核/用户分离，应用就当内核态跑</strong>，约 5 纳秒，对照传统系统调用约 250 纳秒。地址空间是恒等映射（物理即虚拟），永不切换页表、TLB 永不失效。调度器没有任何 TCB 与队列，就是”函数指针加 CPU 编号”，唤醒任务即 <code>call rax</code> 直接跳任务函数地址；异常处理是任何异常就打印并死循环挂起（因为没有进程可杀）。它把外核”直接暴露资源”推到极致——应用甚至能直接索引内核的网卡接口表、调驱动的传输函数指针，绕过一切检查。优势是零运行时、启动小于百微秒、内核小于 32 KB、一周读完每条指令可控；代价是与 x86_64 死耦合、无结构体抽象（对象靠手算偏移）、零隔离、不可多租户——它是工艺品而非工业品。</p>
 <p><strong>unikraft——最完备的工业 Unikernel SDK。</strong> 用 C 写的八十八个微库，每个功能（malloc/sched/vfs/netdev/posix-<em>）独立成 <code>lib/&lt;name&gt;/</code>，带 Kconfig 选项与 Makefile，由 <code>.config</code> 决定哪些库进最终镜像——这是它与教学 OS 的最大区别。它的两处技法值得直接借用：其一，*</em>弱符号 main<strong>——<code>weak_main.c</code> 定义一个弱的 <code>int main()</code> 兜底，应用若定义了 <code>main</code> 链接器就用应用的，这一个技巧把 OS 镜像与应用 ELF 串联起来，应用写的就是普通 C <code>main</code>，只是链进的不是 glibc 而是 unikraft；其二，</strong>Linux ABI 兼容用代码生成**——<code>syscall_shim/</code> 用十七个 awk 脚本扫描 <code>UK_SYSCALL_DEFINE</code> 宏，构建期生成”系统调用号到函数指针”的跳板表，于是 musl 编出的 Linux ELF 可直接跑。它复用 Linux/buildroot 的 Kconfig+Make 而不自造构建系统，截至当前版本 arch 尚不含 RV64。</p>
@@ -1075,7 +899,7 @@
 </tr>
 </tbody></table>
 <p>给自己造内核的提炼有几条：应用入口接入有四种成熟做法（弱符号 main 最简、外部符号约定、多 main 烤一镜像、DSL register），其中弱符号 main 是把”OS 库”与”应用 ELF”解耦的最低成本技法；Linux ABI 兼容值得早规划，unikraft 用代码生成器扫宏出跳板表是比手写更可扩展的范式；”复用现成内核”（rumprun/anykernel）与”从零写库”（unikraft/Hermit）是根本路线分叉；而外核哲学最深的收获是——内核不必是”提供 fork/fs/socket 的庞然大物”，而可以只做资源仲裁者，Linux 里大量代码（缓冲缓存、调度器、文件系统、TCP）其实可被应用代替，这正是 io_uring、eBPF、DPDK 能在 Linux 内部做外核式优化的原因。</p>
-<h3 id="3-5-异步内核：把-Future-放进内核"><a href="#3-5-异步内核：把-Future-放进内核" class="headerlink" title="3.5 异步内核：把 Future 放进内核"></a>3.5 异步内核：把 Future 放进内核</h3><p>§2 的 embassy 是把异步运行时当作裸机调度框架，那是 MCU 上”轻量并发”的用法。当同一思想被放进一个结构完整的通用内核时，问题就升级为”异步如何进内核”，并分化出四大流派：① 异步作 I/O 接口（Linux io_uring，用户态环形缓冲加内核 worker，内核本身仍是同步线程模型）；② 异步函数即系统调用（把系统调用处理程序写成 <code>async fn</code>，编译期生成 Future，前面 §3.1 的 NoAxiomOS 即此）；③ 调度器外置（TornadoOS，把调度器单独编成裸机二进制、固定物理地址、跨地址空间共享）；④ 运行时可选（arceos，运行时是一个 Rust feature，前面 §3.2 已覆盖）。</p>
+<h3 id="异步内核：把-Future-放进内核"><a href="#异步内核：把-Future-放进内核" class="headerlink" title="异步内核：把 Future 放进内核"></a>异步内核：把 Future 放进内核</h3><p>「异步运行时充当调度框架：embassy」 的 embassy 是把异步运行时当作裸机调度框架，那是 MCU 上”轻量并发”的用法。当同一思想被放进一个结构完整的通用内核时，问题就升级为”异步如何进内核”，并分化出四大流派：① 异步作 I/O 接口（Linux io_uring，用户态环形缓冲加内核 worker，内核本身仍是同步线程模型）；② 异步函数即系统调用（把系统调用处理程序写成 <code>async fn</code>，编译期生成 Future，前面 「宏内核：一个地址空间装下整个内核」 的 NoAxiomOS 即此）；③ 调度器外置（TornadoOS，把调度器单独编成裸机二进制、固定物理地址、跨地址空间共享）；④ 运行时可选（arceos，运行时是一个 Rust feature，前面 「组件化内核与框内核：编译期拆分的可组装内核」 已覆盖）。</p>
 <p>这背后有一条统一的方法论曲线。AsyncOS 的设计文档把 I/O 接口排成五级谱系：同步阻塞 → 同步非阻塞 → 多路复用（epoll）→ 异步（token）→ 循环队列（io_uring / 硬件）。其核心命题是：<strong>请求状态与执行状态越松耦合，并行性与性能越高，但易用性越差</strong>。异步内核就是把这条曲线推到极致的尝试。本地的 TornadoOS、rCore-N、ReL4、embassy_preempt 恰好串成这个研究家族的一条因果链。</p>
 <p><strong>TornadoOS——调度器外置流派的鼻祖。</strong> 它的核心创新是 SHARED_RAW_TABLE 这个跨地址空间 ABI：调度器侧把一个七元组静态量放进 <code>.meta</code> 段最前（字段含编译时基址、初始化函数、调度器实例指针，以及 add/peek/delete/set_state 四个 <code>extern &quot;C&quot;</code> 函数指针），全程只用裸函数指针与 <code>NonNull&lt;()&gt;</code>，不依赖 Rust 的 trait object 胖指针，以保证跨地址空间安全。内核侧则手写了一段动态链接：读出七元组后，对每个指针做基址重定位（<code>减编译时基址、加实际加载基址</code>）——这是 <code>ld.so</code> 的极简版（无 GOT/PLT/符号表，就七个固定入口），是”模块化内核 + 动态加载”的最小可用范本。它的调度算法 <code>RingFifoScheduler</code> 是最简的环形 FIFO（无优先级、无公平、无工作窃取），复杂度全压在”跨地址空间共享”而非算法本身。最值得吸取的设计是一处分层——<code>shared_peek_task</code> 把”是否该切换地址空间”的判断权交给调用方执行器（调度器并不知道”当前是哪个地址空间”），即”调度器返回 hint、执行器决定动作”；调度器只认裸 <code>usize</code> 的任务句柄，知道身份不知道内容，只有创建任务的地址空间能把它转回真正的任务结构。它的瓶颈也很清楚：内核执行器用一把全局自旋锁包住整个调度器，多 hart 共享必须串行化。</p>
 <p><strong>rCore-N——把外置调度器做成 vDSO。</strong> 它把 TornadoOS 的”固定物理地址加手写重定位”升级为更工程化的 vDSO 机制：用一个过程宏为每个共享函数自动生成三样东西——一个放在 <code>.vdso.&lt;name&gt;</code> 段里的函数指针槽、一个仅内核侧编译的 <code>init_&lt;name&gt;(ptr)</code> 填指针、一个调用 stub。内核启动时填好这些 vDSO 槽，之后用户态与内核态调 <code>spawn</code>/<code>poll_*</code> 都经同一份指针落到同一份调度器实例——比 TornadoOS 更接近 Linux vDSO 的工程范式。它的执行器也比 RingFifo 强：用”优先级位图 + 每优先级一条队列”做 O(1) 取最高优先级，且支持运行时改优先级。更关键的是它建立在 rv 用户态中断（N 扩展）之上：硬件事件可不陷入内核就在 U 态被处理（待处理中断或直接置 <code>uip</code> 后 <code>SRET</code> 跳 <code>utvec</code>、或暂存进程控制块待调度时注入），这是异步系统调用、异步 IPC、用户态信号的硬件根基，区别于 io_uring 的纯共享内存轮询。</p>
@@ -1144,7 +968,7 @@
 </tbody></table>
 <p>给自己造异步内核的提炼：跨态共享调度器有”固定物理地址 + 手写重定位”（最小但脆）与”vDSO 段 + 过程宏自动生成指针表”（更工程化）两条路线，后者可借鉴度更高；”调度器返回 hint、执行器决定动作”是跨地址空间调度的解耦关键；优先级调度用”位图 + 每优先级队列”比环形 FIFO 强且取最高优先级是 O(1)；”主动让权复用栈、被抢占才分配栈”是 MCU 上兼顾内存与实时的核心技巧。这一研究家族还在向硬件协同延伸——任务感知中断控制器（TAIC）、rv 用户态中断（uintr）把”调度与中断响应”卸载到硬件，是异步内核的下一步方向。</p>
 <p>至此五类内核拆解完毕。它们各自回答了”特权边界划在哪、隔离靠硬件还是语言、调度同步还是异步”。接下来换一个切面——不按内核分类，而按子系统横切，看同一个组件（调度器、内存、系统调用、驱动、文件系统、IPC、网络）在不同内核里如何安放。</p>
-<h2 id="4-子系统横向（一）：调度器"><a href="#4-子系统横向（一）：调度器" class="headerlink" title="4. 子系统横向（一）：调度器"></a>4. 子系统横向（一）：调度器</h2><p>从这里起换一个切面：不按内核分类，而按子系统横切，看同一个组件在不同内核里”是什么存在、用什么库、各家怎么搭”——重在每个子系统在内核整体中的位置与各家选型。下面以 xv6、tg-rcore、arceos、StarryOS、DragonOS、seL4 六个内核为样本。</p>
+<h2 id="子系统横向（一）：调度器"><a href="#子系统横向（一）：调度器" class="headerlink" title="子系统横向（一）：调度器"></a>子系统横向（一）：调度器</h2><p>从这里起换一个切面：不按内核分类，而按子系统横切，看同一个组件在不同内核里”是什么存在、用什么库、各家怎么搭”——重在每个子系统在内核整体中的位置与各家选型。下面以 xv6、tg-rcore、arceos、StarryOS、DragonOS、seL4 六个内核为样本。</p>
 <p>调度器要回答的就一个问题：从一组就绪任务里选出下一个该跑的。各家答案铺出一条从朴素到工业的谱：</p>
 <ul>
 <li><strong>xv6</strong> 是最朴素的轮转——一个全局进程表数组，每 CPU 一个 scheduler 协程在 <code>for(;;)</code> 里线性扫描找到 RUNNABLE 就切进去，无优先级、无负载均衡、进程数有固定上限。内核内是协作式的（进程主动让出），但时钟中断里调 <code>yield()</code> 实现了用户态时间片抢占。</li>
@@ -1155,11 +979,11 @@
 <li><strong>seL4</strong> 是固定优先级抢占加域时间分区：每优先级一条就绪队列，用两级位图做 O(1) 选取最高优先级；domain 在安全域之间做时间片轮转以隔离信息流（确定性优先而非吞吐优先）；MCS 模式下调度上下文带预算补充，把”时间”也做成一种能力。</li>
 </ul>
 <p>横向看，算法复杂度谱是 xv6 RR &lt; tg-rcore FIFO/RR（可换 stride）&lt; arceos 三选一 &lt; seL4 固定优先级 + MCS &lt; DragonOS Linux-CFS；抢占程度谱是 xv6/tg-rcore 仅用户态时间片 &lt; arceos 抢占可关 &lt; StarryOS/DragonOS/seL4 全抢占。给自己造内核最值得借的一课，是 tg-rcore 与 arceos 都显式做的”存储与调度解耦”——把调度策略抽成 trait，就能在不动调度框架的前提下替换算法。</p>
-<h2 id="5-子系统横向（二）：内存管理"><a href="#5-子系统横向（二）：内存管理" class="headerlink" title="5. 子系统横向（二）：内存管理"></a>5. 子系统横向（二）：内存管理</h2><p>内存管理分两层：物理页分配器（管物理内存）与地址空间抽象（管虚拟内存映射）。两层在六个内核里同样铺出一条谱。</p>
+<h2 id="子系统横向（二）：内存管理"><a href="#子系统横向（二）：内存管理" class="headerlink" title="子系统横向（二）：内存管理"></a>子系统横向（二）：内存管理</h2><p>内存管理分两层：物理页分配器（管物理内存）与地址空间抽象（管虚拟内存映射）。两层在六个内核里同样铺出一条谱。</p>
 <p>物理分配器：xv6 是最简的空闲链表（空闲页本身当链表节点，头插头弹，粒度固定 4 KB），无 buddy、无 slab；tg-rcore 用成熟的 buddy crate 注册为全局分配器；arceos 是两级懒扩展——字节分配器（slab/buddy/tlsf 三选一）覆盖在位图页分配器之上，字节级不够时才向页级要 2 的幂页扩堆；DragonOS 是 Linux 四层（早期 bump → buddy 管帧 → slab 做 kmalloc → 顶层全局分配器），完整对标 Linux mm；StarryOS 借用 arceos 的；而 seL4 反常识——<strong>内核从不动态分配内存</strong>，所有内存以 untyped 能力交给用户态，由用户 invoke Retype 切出 TCB、CNode、页表、frame，从而资源可证明无泄漏（这是形式化验证的前提）。</p>
 <p>地址空间抽象的层级：xv6 是裸的两级页表（手写 walkpgdir/mappages），即时映射、无 lazy 无 COW；tg-rcore 用 page_table crate 封装 Sv39；arceos 与 StarryOS 用 <code>MemorySet + Backend</code> 模型——一个地址空间是若干区域（area），每个区域绑一个 backend 决定映射策略（线性、可懒分配的 alloc），缺页时找到区域转给 backend 处理；StarryOS 在此之上把 backend 扩成 cow/file/shared/linear 四种，支撑文件映射、fork 写时复制与共享内存，是 arceos 演化成宏内核的内存样本；DragonOS 是 Linux 的 VMA/ucontext 加 <code>handle_mm_fault</code>（返回 COMPLETED/SIGSEGV/OOM），几乎是 Linux mm 的 Rust 重写;seL4 则把页表本身也做成被能力管理的对象，map/unmap 都经能力 invocation。懒映射与 COW 只有 arceos、StarryOS、DragonOS 三家有，xv6 与 tg-rcore 是即时映射。</p>
 <p>值得吸取的是 arceos 的 <code>MemorySet + Backend</code> 设计——把”映射策略”从地址空间结构里抽出来做成可替换的 backend，于是同一套地址空间机制既能服务 Unikernel 的线性映射，又能经 StarryOS 扩出 COW 与文件映射，不必改地址空间核心。</p>
-<h2 id="6-子系统横向（三）：陷入与系统调用"><a href="#6-子系统横向（三）：陷入与系统调用" class="headerlink" title="6. 子系统横向（三）：陷入与系统调用"></a>6. 子系统横向（三）：陷入与系统调用</h2><p>陷入（trap）有一套通用骨架：硬件原子地保存 PC 与特权模式、切换模式与栈、跳向量；软件接管后保存通用寄存器、分发、恢复、再用 <code>sret</code>/<code>iret</code>/<code>eret</code> 返回。差别在”软件接管段”怎么搭。这里有一个前提要交代：这里采用的 xv6 是 i386 版，走 IDT 与 <code>int 0x40</code>；其余五个内核的主路径都是 rv，走 <code>ecall</code>、系统调用号在 a7、用 <code>sscratch</code> 抢救内核栈。</p>
+<h2 id="子系统横向（三）：陷入与系统调用"><a href="#子系统横向（三）：陷入与系统调用" class="headerlink" title="子系统横向（三）：陷入与系统调用"></a>子系统横向（三）：陷入与系统调用</h2><p>陷入（trap）有一套通用骨架：硬件原子地保存 PC 与特权模式、切换模式与栈、跳向量；软件接管后保存通用寄存器、分发、恢复、再用 <code>sret</code>/<code>iret</code>/<code>eret</code> 返回。差别在”软件接管段”怎么搭。这里有一个前提要交代：这里采用的 xv6 是 i386 版，走 IDT 与 <code>int 0x40</code>；其余五个内核的主路径都是 rv，走 <code>ecall</code>、系统调用号在 a7、用 <code>sscratch</code> 抢救内核栈。</p>
 <ul>
 <li><strong>xv6</strong> 是 i386 的 IDT 加 alltraps：硬件经中断门进 alltraps，压全部通用寄存器建陷阱帧后 <code>call trap</code>，<code>trap</code> 里判断是系统调用就调 <code>syscall()</code>，号在 eax，查函数指针表调用、返回值写回 eax——是 CISC 风格的对照样本。</li>
 <li><strong>tg-rcore</strong> 把陷入入口与上下文切换”合一”：一段 <code>execute_naked</code> 汇编先把调度器上下文压内核栈、设好陷入返回点、再从 <code>sscratch</code> 取线程上下文切栈恢复后 <code>sret</code> 进线程；线程触发陷入就落回那个返回点，存线程、切回调度器栈、<code>ret</code>——陷入与任务切换是同一段汇编，省一层，是 rCore 教学的经典手法。</li>
@@ -1169,7 +993,7 @@
 <li><strong>seL4</strong> 按 scause 分流，对 <code>seL4_Call</code>/<code>ReplyRecv</code> 走手写汇编的 IPC 快速路径、其余走慢路径；它的”系统调用”约十个、全部围绕 IPC 与 Yield，没有 read/write/mmap——文件、驱动、网络全由用户态 server 经 IPC 提供。</li>
 </ul>
 <p>横向看，系统调用规模谱极为悬殊：seL4 约十个（全是 IPC）&lt; xv6 二十一 &lt; tg-rcore 约三十 &lt; arceos 零（Unikernel）/ StarryOS、DragonOS 两三百（Linux 兼容）。入口风格则从 IDT（xv6）、陷入与切换合一（tg-rcore）、注册槽解耦（arceos）、run-loop 高层抽象（StarryOS）、Linux entry.S 端口（DragonOS）到 fastpath 分流（seL4），各自映射了它在”教学—工程—验证”光谱上的位置。</p>
-<h2 id="7-子系统横向（四）：驱动模型"><a href="#7-子系统横向（四）：驱动模型" class="headerlink" title="7. 子系统横向（四）：驱动模型"></a>7. 子系统横向（四）：驱动模型</h2><p>驱动模型回答”内核如何发现设备、如何把设备的读写统一成抽象”。它在各内核里呈现两极三档：</p>
+<h2 id="子系统横向（四）：驱动模型"><a href="#子系统横向（四）：驱动模型" class="headerlink" title="子系统横向（四）：驱动模型"></a>子系统横向（四）：驱动模型</h2><p>驱动模型回答”内核如何发现设备、如何把设备的读写统一成抽象”。它在各内核里呈现两极三档：</p>
 <ul>
 <li><strong>极简：函数指针表。</strong> xv6 没有”驱动框架”，只有一张”主设备号到 read/write 函数指针”的全局表 <code>devsw[]</code>，约三十行就是全部设备抽象，无总线、无 probe、无设备树。这是驱动模型的最小标尺。</li>
 <li><strong>组件化：trait object + 外部驱动 crate。</strong> arceos 把探测到的设备组装进一个 <code>AllDevices</code> 结构，提供静态与动态两种模型——静态模型下设备类型编译期定、由 cargo feature 决定、零动态分发但每类只能一个实例；动态模型用 <code>Box&lt;dyn NetDriverOps&gt;</code> 支持多实例。驱动 trait（<code>NetDriverOps</code> 等）放在外部版本化的 driver crate 里、不在主仓，是”叶子自治的驱动池”的工业实例。探测支持 MMIO（设备树）与 PCI 总线两种。</li>
@@ -1177,13 +1001,13 @@
 <li><strong>中间路线：设备树优先探测。</strong> NoAxiomOS 用一个 <code>DeviceTreeInfo</code> trait 在编译期把驱动绑定到设备树的 compatible 字符串，设备分成 Block/Net/Display/Interrupt/Char/Power 六大类，运行时按 compatible 匹配——介于 xv6（无探测）与 DragonOS（全设备模型）之间。</li>
 </ul>
 <p>此外两种结构化做法值得记：Theseus 把每个驱动（e1000/ixgbe/ata/pci 乃至网卡缓冲、队列、初始化）都拆成独立的 crate（cell），驱动是可运行时热替换的单元；asterinas 把驱动做成组件，<code>unsafe</code> 全锁在 OSTD 的 frame 里、组件本身是安全 Rust。而微内核（seL4、Zircon/zCore）则把驱动整个推到用户态——内核里没有任何设备驱动（除串口调试），驱动是用户态进程，通过能力拿到 MMIO 与 IRQ。</p>
-<h2 id="8-子系统横向（五）：文件系统与进程间通信"><a href="#8-子系统横向（五）：文件系统与进程间通信" class="headerlink" title="8. 子系统横向（五）：文件系统与进程间通信"></a>8. 子系统横向（五）：文件系统与进程间通信</h2><h3 id="文件系统（作为组件的浅层定位）"><a href="#文件系统（作为组件的浅层定位）" class="headerlink" title="文件系统（作为组件的浅层定位）"></a>文件系统（作为组件的浅层定位）</h3><p>文件系统是个大题，这里只做组件级定位——它在内核里以何种抽象存在、各家用什么。三档：xv6 没有 VFS 抽象层，<code>struct file</code> 直接 union 了 pipe 与 inode 两种后端，read/write 用硬分支区分，只支持自家的 inode 文件系统——它的价值在于把”file/inode/pipe 同源”摆到最明白（管道也是一个 file）。arceos 的 axfs 用 Rust trait（<code>VfsOps</code>/<code>VfsNodeOps</code>）替代 C 的函数指针向量，cargo feature 选具体文件系统、<code>root</code>/<code>mounts</code> 管挂载，是用 Rust 重设计 VFS 的现代范例，StarryOS 直接复用。DragonOS 则是最接近 Linux VFS 的 Rust 实现，核心抽象之外有 ext4/fat/fuse/overlayfs/devfs/procfs/sysfs/tmpfs/ramfs 多文件系统共存，配页缓存、epoll、eventfd 与伪文件系统，与它”兼容 Linux”的总目标一致。一条已成共识的设计是：用 Rust trait 替代 C 函数指针向量来做 VFS，pipe、socket、伪文件系统都能挂进同一套 VFS——“一切皆文件”在 Rust 里同样成立。</p>
+<h2 id="子系统横向（五）：文件系统与进程间通信"><a href="#子系统横向（五）：文件系统与进程间通信" class="headerlink" title="子系统横向（五）：文件系统与进程间通信"></a>子系统横向（五）：文件系统与进程间通信</h2><h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>文件系统是个大题，这里只做组件级定位——它在内核里以何种抽象存在、各家用什么。三档：xv6 没有 VFS 抽象层，<code>struct file</code> 直接 union 了 pipe 与 inode 两种后端，read/write 用硬分支区分，只支持自家的 inode 文件系统——它的价值在于把”file/inode/pipe 同源”摆到最明白（管道也是一个 file）。arceos 的 axfs 用 Rust trait（<code>VfsOps</code>/<code>VfsNodeOps</code>）替代 C 的函数指针向量，cargo feature 选具体文件系统、<code>root</code>/<code>mounts</code> 管挂载，是用 Rust 重设计 VFS 的现代范例，StarryOS 直接复用。DragonOS 则是最接近 Linux VFS 的 Rust 实现，核心抽象之外有 ext4/fat/fuse/overlayfs/devfs/procfs/sysfs/tmpfs/ramfs 多文件系统共存，配页缓存、epoll、eventfd 与伪文件系统，与它”兼容 Linux”的总目标一致。一条已成共识的设计是：用 Rust trait 替代 C 函数指针向量来做 VFS，pipe、socket、伪文件系统都能挂进同一套 VFS——“一切皆文件”在 Rust 里同样成立。</p>
 <h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h3><p><strong>管道。</strong> 其本质骨架是”一段环形内存 + 条件变量语义 + 包成两个文件描述符”。xv6 看得最清楚：一个带锁的环形缓冲，满则 <code>sleep</code>、写后 <code>wakeup</code>，分配时建一读一写两个 <code>struct file</code>。要 Linux 兼容就升一层抽象——DragonOS 把管道实现成一个挂在 VFS 上的伪文件系统（PipeFS），并带 splice、tee、FIFO 等完整 Linux 语义。</p>
 <p><strong>信号量、互斥、条件变量。</strong> tg-rcore 的实现是教学上很干净的解耦范例：信号量的计数非负时是可用资源数、为负时其绝对值是等待线程数，<code>down</code> 减计数、为负就把线程 ID 推入等待队列并返回”需阻塞”，<code>up</code> 加计数、弹出一个线程 ID 交给调度器唤醒——<strong>原语本身不直接阻塞线程，而是返回线程 ID 让调度器处理</strong>，于是原语可单测、可换调度器（仅单核）。</p>
 <p><strong>信号。</strong> 谱从最原始到完整：xv6 只有一个 <code>killed</code> 标志，进程在陷入边界自检；DragonOS 是完整的 Linux 信号模型（pending/blocked/sigaction/实时信号/signalfd），注释里直接引 Linux <code>kernel/signal.c</code> 的函数名；tg-rcore 把信号拆成三个 crate 渐进教学。</p>
 <p><strong>共享内存与消息。</strong> DragonOS 实现了 SysV 共享内存（shmget/shmat 语义、key 到 id 的双 HashMap）与 eventfd；Theseus 则给出一个极有特色的无锁通道——用一个 <code>AtomicU16</code>（高八位放一字节消息、最低位是满标志），发送用 CAS，体现它”共享内存加原子”而非”陷入系统调用”的 IPC 哲学。</p>
 <p><strong>微内核的 IPC。</strong> 这里 IPC 是内核唯一的服务通道。seL4 全部 IPC 归结为两种——Endpoint（同步消息传递，消息走消息寄存器、可附带能力转移）与 Notification（异步通知，类二值信号量加 badge，三态状态机）；Zircon/zCore 则提供 channel、fifo、socket 三种对象化 IPC，比 seL4 原语更丰富。若走微内核路线，IPC 的消息寄存器快路径性能是第一优先级。</p>
-<h2 id="9-子系统横向（六）：网络协议栈"><a href="#9-子系统横向（六）：网络协议栈" class="headerlink" title="9. 子系统横向（六）：网络协议栈"></a>9. 子系统横向（六）：网络协议栈</h2><p>网络栈横切下来有一条极清晰的结论：<strong>Rust 系内核几乎一律选 smoltcp，C 系/嵌入式内核用 lwip</strong>。</p>
+<h2 id="子系统横向（六）：网络协议栈"><a href="#子系统横向（六）：网络协议栈" class="headerlink" title="子系统横向（六）：网络协议栈"></a>子系统横向（六）：网络协议栈</h2><p>网络栈横切下来有一条极清晰的结论：<strong>Rust 系内核几乎一律选 smoltcp，C 系/嵌入式内核用 lwip</strong>。</p>
 <p><strong>smoltcp 是 Rust 内核的事实标准。</strong> 它是专为裸机实时系统设计、不依赖堆的 no_std TCP/IP 栈，<code>#![deny(unsafe_code)]</code>。分五层：wire 层每协议一个解析器（arp/ethernet/ipv4/ipv6/tcp/udp/icmp/dhcp/dns 等），设计原则是”让非法状态无法表示”；phy 层是内核接驱动的关键接口——<code>trait Device</code> 加 <code>RxToken</code>/<code>TxToken</code>，<code>receive()</code> 返回收发 token、<code>transmit()</code> 返回发送 token，token 的 <code>consume(闭包)</code> 把缓冲递给闭包，从而零拷贝、无堆；iface 层管接口、邻居（ARP）、路由、分片与套接字集合；socket 层是 TCP/UDP/ICMP/raw/dhcp/dns 加 async 唤醒;storage 层是无堆的环形缓冲与重组器。它是 polling 模型——没有内部线程，由调用方周期性 <code>iface.poll()</code> 推进。</p>
 <p>各内核接 smoltcp 是同一个胶水模式：<strong>把自家网卡驱动包成 <code>phy::Device</code></strong>。arceos 是标准范式——<code>receive</code> 从网卡驱动拿缓冲指针包成 RxToken、<code>transmit</code> 给 TxToken，token 的 <code>consume</code> 里 Rx 把驱动缓冲递给 smoltcp 后回收、Tx 申请缓冲填好后发送，零拷贝桥接；它还自己实现了 smoltcp 不带的监听队列、对上暴露 TcpSocket/UdpSocket。Theseus 同样定义一个 <code>NetworkDevice</code> trait 再桥接到 smoltcp。DragonOS 在网卡设备（即 kobject 设备）上移植了 Linux NAPI（带预算的轮询收包），用 smoltcp 做 inet 族的 TCP/IP，但对上是完整的 Linux socket 层（inet/unix/netlink/packet/vsock 五族加全套 BSD 套接字系统调用）——smoltcp 只做 TCP/IP，套接字抽象、系统调用与其他协议族 DragonOS 自己写。</p>
 <p>asterinas 是唯一一个不直接照搬 smoltcp 全栈的内核，对”自己造”最有借鉴：它的 bigtcp <strong>只摘取 smoltcp 的 TCP 实现、自研以太网与 IP 分发层</strong>，理由是 smoltcp 为嵌入式设计、套接字数量小，通用 OS 内核需要更灵活高效的包分发。这提示了一个关键判断——当目标是嵌入式或轻量内核时直接包 smoltcp，当目标是通用 OS、追求高并发套接字性能时则应像 bigtcp 那样保留 TCP 内核、重做分发层。</p>
@@ -1223,26 +1047,26 @@
 </tr>
 </tbody></table>
 <p>子系统横切到此告一段落。六个组件（调度、内存、陷入、驱动、文件系统与 IPC、网络）在各内核里的安放，已经把”造一个内核要逐一决策什么”摊开。接下来收束到理论层——把这一切归入”单微宏外库框”的范式坐标系。</p>
-<h2 id="10-单微宏外库框：内核范式坐标系与衍生"><a href="#10-单微宏外库框：内核范式坐标系与衍生" class="headerlink" title="10. 单微宏外库框：内核范式坐标系与衍生"></a>10. 单微宏外库框：内核范式坐标系与衍生</h2><p>前面九节按内核拆、按子系统拆，积累了足够多的实例。现在收束到理论层，把这一切归入一个坐标系。</p>
-<h3 id="10-1-范式不是一条线，而是几条正交的轴"><a href="#10-1-范式不是一条线，而是几条正交的轴" class="headerlink" title="10.1 范式不是一条线，而是几条正交的轴"></a>10.1 范式不是一条线，而是几条正交的轴</h3><p>最常见的误区，是把内核范式排成”宏内核 → 微内核 → 外核……由旧到新、由次到优”的一维谱。这是错的。它们沿不同的轴度量，彼此正交，可以叠加。理清这一点，才能看懂为何会有”组件化的宏内核”（arceos）、”异步的宏内核”（NoAxiomOS）、”框内核”（asterinas）这类复合体。至少有三条结构性的轴加三种正交的风格：</p>
+<h2 id="单微宏外库框：内核范式坐标系与衍生"><a href="#单微宏外库框：内核范式坐标系与衍生" class="headerlink" title="单微宏外库框：内核范式坐标系与衍生"></a>单微宏外库框：内核范式坐标系与衍生</h2><p>前面九节按内核拆、按子系统拆，积累了足够多的实例。现在收束到理论层，把这一切归入一个坐标系。</p>
+<h3 id="范式不是一条线，而是几条正交的轴"><a href="#范式不是一条线，而是几条正交的轴" class="headerlink" title="范式不是一条线，而是几条正交的轴"></a>范式不是一条线，而是几条正交的轴</h3><p>最常见的误区，是把内核范式排成”宏内核 → 微内核 → 外核……由旧到新、由次到优”的一维谱。这是错的。它们沿不同的轴度量，彼此正交，可以叠加。理清这一点，才能看懂为何会有”组件化的宏内核”（arceos）、”异步的宏内核”（NoAxiomOS）、”框内核”（asterinas）这类复合体。至少有三条结构性的轴加三种正交的风格：</p>
 <p><strong>轴一·内核结构（功能放在哪、特权边界划在哪）。</strong> 这是”单微宏外库框”度量的主轴：</p>
 <ul>
 <li><strong>宏内核（单体，monolithic）</strong>：调度、内存、文件系统、网络、驱动全在同一个内核地址空间、同一特权级，子系统间直接函数调用。性能最好，缺陷波及面最大。</li>
 <li><strong>微内核（micro）</strong>：内核只留最小机制（IPC、调度、地址空间），文件系统、驱动、网络都作为用户态进程，靠 IPC 通信。可靠、可验证，代价是跨域 IPC 开销。</li>
 <li><strong>外核（exo）</strong>：更激进，连核心抽象也下放——内核只做资源仲裁与保护，OS 抽象交给应用侧的库 OS（LibOS）各自实现。</li>
 <li><strong>库 OS（library OS，库）</strong>：把 OS 功能做成库直接链进应用，与应用同地址空间、同特权级，没有系统调用边界。它是一种机制，常作为外核之上的抽象层、或宿主 OS 之上的兼容层。</li>
-<li><strong>框内核（framekernel，框）</strong>：单地址空间、全 Rust，把 <code>unsafe</code> 收敛成一个极小可审计的特权框架（TCB），其余服务用安全 Rust、靠类型系统在编译期隔离——兼得宏内核性能与微内核式最小 TCB，且无硬件隔离开销（见 §3.2，asterinas，USENIX ATC’25 论文）。</li>
+<li><strong>框内核（framekernel，框）</strong>：单地址空间、全 Rust，把 <code>unsafe</code> 收敛成一个极小可审计的特权框架（TCB），其余服务用安全 Rust、靠类型系统在编译期隔离——兼得宏内核性能与微内核式最小 TCB，且无硬件隔离开销（见 「组件化内核与框内核：编译期拆分的可组装内核」，asterinas，USENIX ATC’25 论文）。</li>
 </ul>
 <p><strong>轴二·隔离机制（凭什么相信一个组件不会破坏另一个）。</strong> 硬件特权级加 MMU（传统宏/微/外核）→ 语言类型系统在编译期保证（框内核、Theseus）→ 不隔离、信任所有代码（单地址空间内核 SASOS）。越往后，运行期开销越小，对编译器与语言的信任越重。</p>
 <p><strong>轴三·打包与部署形态（一个镜像里装几个程序、怎么启动）。</strong> 传统多进程通用 OS → Unikernel（单应用加所需库编成单一可启动镜像，一次只跑一个程序）→ 容器与兼容层。</p>
-<p><strong>三种正交的风格</strong>则不改变结构、只改变实现或调度方式：<strong>组件化</strong>（§3.2，用 crate + features + trait 把内核拆成可组装块，是实现风格，可叠加到任意结构上）、<strong>异步</strong>（§3.5，把 Future 当调度单元，是调度模型）、<strong>实时（RTOS）</strong>（§1，确定性取向）。</p>
-<h3 id="10-2-厘清几个高频混淆的术语"><a href="#10-2-厘清几个高频混淆的术语" class="headerlink" title="10.2 厘清几个高频混淆的术语"></a>10.2 厘清几个高频混淆的术语</h3><p>坐标系立起来后，几个常被混为一谈的词就能各归各位（定义依据 Wikipedia 与 ATC’25 等论文）：</p>
+<p><strong>三种正交的风格</strong>则不改变结构、只改变实现或调度方式：<strong>组件化</strong>（「组件化内核与框内核：编译期拆分的可组装内核」，用 crate + features + trait 把内核拆成可组装块，是实现风格，可叠加到任意结构上）、<strong>异步</strong>（「异步内核：把 Future 放进内核」，把 Future 当调度单元，是调度模型）、<strong>实时（RTOS）</strong>（「实时内核：从库式极简内核到完整 RTOS」，确定性取向）。</p>
+<h3 id="厘清几个高频混淆的术语"><a href="#厘清几个高频混淆的术语" class="headerlink" title="厘清几个高频混淆的术语"></a>厘清几个高频混淆的术语</h3><p>坐标系立起来后，几个常被混为一谈的词就能各归各位（定义依据 Wikipedia 与 ATC’25 等论文）：</p>
 <ul>
 <li><strong>单内核 / 单体内核 = 宏内核 = monolithic kernel。</strong> “单”指”单一的大内核”——整个 OS 在一个内核地址空间里。它们是同义词，量的是<strong>结构轴</strong>。</li>
 <li><strong>单内核（monolithic）≠ Unikernel。</strong> 这也是我早先曾混淆的一处：两个词都带”单 / single”，但量的是不同的轴。monolithic 讲的是<strong>内核结构</strong>（功能都在内核空间），Unikernel 讲的是<strong>打包形态</strong>（单个程序加它所需的库编成单一镜像，一次只跑一个程序）。一个 monolithic 内核既可以打包成传统的多进程 OS（如 Linux），也可以被裁剪成 Unikernel；二者根本不在一个维度上对立。顺带说明：并不存在”联内核”这样一个标准术语，需要区分的从来是 monolithic 这条结构轴与 Unikernel 这条打包轴。</li>
-<li><strong>微内核 ≠ 组件化内核。</strong> 微内核是运行期分离（多进程 + IPC），组件化是编译期分离（多 crate 编进同一二进制、运行期共享地址空间）——前者把隔离推到运行时，后者收到编译期（见 §3.2 与 §3.3 的对照）。</li>
+<li><strong>微内核 ≠ 组件化内核。</strong> 微内核是运行期分离（多进程 + IPC），组件化是编译期分离（多 crate 编进同一二进制、运行期共享地址空间）——前者把隔离推到运行时，后者收到编译期（见 「组件化内核与框内核：编译期拆分的可组装内核」 与 「微内核：把一切都赶出内核」 的对照）。</li>
 </ul>
-<h3 id="10-3-外核、LibOS-与-Unikernel-的层次"><a href="#10-3-外核、LibOS-与-Unikernel-的层次" class="headerlink" title="10.3 外核、LibOS 与 Unikernel 的层次"></a>10.3 外核、LibOS 与 Unikernel 的层次</h3><p>这三个最易混的概念，理清后是一组包含关系：<strong>Unikernel 是 LibOS 思想的一种具体打包形态（子集），LibOS 是更早、更宽的机制概念；Unikernel 必然是 LibOS，LibOS 却不一定是 Unikernel。</strong></p>
+<h3 id="外核、LibOS-与-Unikernel-的层次"><a href="#外核、LibOS-与-Unikernel-的层次" class="headerlink" title="外核、LibOS 与 Unikernel 的层次"></a>外核、LibOS 与 Unikernel 的层次</h3><p>这三个最易混的概念，理清后是一组包含关系：<strong>Unikernel 是 LibOS 思想的一种具体打包形态（子集），LibOS 是更早、更宽的机制概念；Unikernel 必然是 LibOS，LibOS 却不一定是 Unikernel。</strong></p>
 <p>LibOS 是一种<strong>机制</strong>：把传统位于内核的功能（调度、内存、文件系统、网络栈）实现为库，直接链进应用、与应用同地址空间同特权级，调用 OS 服务即普通函数调用，没有系统调用的特权切换边界。这一思想源自 MIT 1990 年代的外核研究——外核只暴露裸硬件并负责保护与资源复用，真正的 OS 抽象交由运行在用户态的若干 LibOS 各自实现，应用因此能定制甚至替换 OS 抽象。外核就是<strong>承载多个 LibOS 的底座</strong>：把机制（硬件复用、保护）留在内核，把策略（如何抽象硬件）下放给应用侧，一台机器上可同时存在多个 LibOS 实例。Unikernel 则是一种<strong>打包形态</strong>：把单个应用与其用到的 OS 库一起编译、专用化、封装成独立的单地址空间可启动镜像，运行在 hypervisor 或裸机上，一个镜像即一个实例，诉求是极小镜像、快速启动、小攻击面。</p>
 <p>LibOS 严格大于 Unikernel，因为它还有两类 Unikernel 之外的用法：其一，外核之上多个 LibOS 共存（是 LibOS，却非单镜像独占的 Unikernel）；其二，作为兼容层或隔离层运行在另一宿主 OS 之上——如 Drawbridge、WSL1 的 pico-process、Gramine-SGX，把一套 OS 人格做成库以提供 ABI 兼容或飞地隔离，同样是 LibOS，却不是裸机自启动的专用镜像。</p>
 <table>
@@ -1279,7 +1103,7 @@
 <td align="center">MirageOS、unikraft、HermitOS、rumprun</td>
 </tr>
 </tbody></table>
-<h3 id="10-4-六字坐标：把本地项目对号入座"><a href="#10-4-六字坐标：把本地项目对号入座" class="headerlink" title="10.4 六字坐标：把本地项目对号入座"></a>10.4 六字坐标：把本地项目对号入座</h3><p>把前面拆过的项目放进这个坐标系，”单微宏外库框”六字便落到实处：</p>
+<h3 id="六字坐标：把本地项目对号入座"><a href="#六字坐标：把本地项目对号入座" class="headerlink" title="六字坐标：把本地项目对号入座"></a>六字坐标：把本地项目对号入座</h3><p>把前面拆过的项目放进这个坐标系，”单微宏外库框”六字便落到实处：</p>
 <table>
 <thead>
 <tr>
@@ -1295,61 +1119,61 @@
 <td align="center">一切在一个内核地址空间</td>
 <td align="center">硬件 MMU + 特权级</td>
 <td align="center">xv6 / tg-rcore / DragonOS / StarryOS / NoAxiomOS</td>
-<td align="center">§3.1</td>
+<td align="center">「宏内核：一个地址空间装下整个内核」</td>
 </tr>
 <tr>
 <td align="center">微（micro）</td>
 <td align="center">内核只留 IPC+调度+地址空间，服务在用户态</td>
 <td align="center">硬件 + 运行期进程隔离</td>
 <td align="center">seL4 / Zircon / zCore</td>
-<td align="center">§3.3</td>
+<td align="center">「微内核：把一切都赶出内核」</td>
 </tr>
 <tr>
 <td align="center">外（exo）</td>
 <td align="center">内核只暴露资源与保护，抽象下放 LibOS</td>
 <td align="center">硬件 MMU（多空间）</td>
 <td align="center">jos</td>
-<td align="center">§3.4</td>
+<td align="center">「外核、单地址空间内核与 Unikernel：减法路线」</td>
 </tr>
 <tr>
 <td align="center">库（LibOS）</td>
 <td align="center">OS 即链接库，无特权边界</td>
 <td align="center">同地址空间，无边界 / 宿主隔离</td>
 <td align="center">HermitOS / MirageOS / rumprun</td>
-<td align="center">§3.4</td>
+<td align="center">「外核、单地址空间内核与 Unikernel：减法路线」</td>
 </tr>
 <tr>
 <td align="center">框（framekernel）</td>
 <td align="center">单地址空间全 Rust，TCB 收敛</td>
 <td align="center">内核内 TCB 靠类型系统（用户态进程仍用 MMU）</td>
 <td align="center">asterinas</td>
-<td align="center">§3.2</td>
+<td align="center">「组件化内核与框内核：编译期拆分的可组装内核」</td>
 </tr>
 <tr>
 <td align="center">（单地址空间内核 SASOS）</td>
 <td align="center">单地址空间单特权级，信任所有代码</td>
 <td align="center">无（或纯类型）</td>
 <td align="center">BareMetal / Theseus</td>
-<td align="center">§3.2 / §3.4</td>
+<td align="center">「组件化内核与框内核：编译期拆分的可组装内核」 / 「外核、单地址空间内核与 Unikernel：减法路线」</td>
 </tr>
 </tbody></table>
-<h3 id="10-5-衍生：一棵内核如何长出另一棵"><a href="#10-5-衍生：一棵内核如何长出另一棵" class="headerlink" title="10.5 衍生：一棵内核如何长出另一棵"></a>10.5 衍生：一棵内核如何长出另一棵</h3><p>最后一个值得记的现象是衍生——同一个内核基座长出形态迥异的新 OS。关键洞察是：<strong>成功的衍生大多不靠 fork 源码改写，而靠扩展点、重写或复用</strong>，这样上游演进的红利能持续流向下游。四条路径各有范本：</p>
+<h3 id="衍生：一棵内核如何长出另一棵"><a href="#衍生：一棵内核如何长出另一棵" class="headerlink" title="衍生：一棵内核如何长出另一棵"></a>衍生：一棵内核如何长出另一棵</h3><p>最后一个值得记的现象是衍生——同一个内核基座长出形态迥异的新 OS。关键洞察是：<strong>成功的衍生大多不靠 fork 源码改写，而靠扩展点、重写或复用</strong>，这样上游演进的红利能持续流向下游。四条路径各有范本：</p>
 <ul>
-<li><strong>编译期组合 + 扩展点（arceos → StarryOS / AxVisor）。</strong> 同一份 modules，靠 <code>uspace</code> feature 开关、<code>TaskExtRef</code> 挂 per-task 数据、<code>crate_interface</code> 反向回调、axns 命名空间四个扩展点，让 StarryOS 不改 arceos 源码就长成 Linux 兼容宏内核、让 AxVisor 长成 Type-1 hypervisor（详见 §12.2）。一份代码同时服务 Unikernel、宏内核、hypervisor 三种人格——这是最有工程价值的衍生方式。</li>
+<li><strong>编译期组合 + 扩展点（arceos → StarryOS / AxVisor）。</strong> 同一份 modules，靠 <code>uspace</code> feature 开关、<code>TaskExtRef</code> 挂 per-task 数据、<code>crate_interface</code> 反向回调、axns 命名空间四个扩展点，让 StarryOS 不改 arceos 源码就长成 Linux 兼容宏内核、让 AxVisor 长成 Type-1 hypervisor（详见 「组件化：axvisor 如何从 ArceOS 衍生」）。一份代码同时服务 Unikernel、宏内核、hypervisor 三种人格——这是最有工程价值的衍生方式。</li>
 <li><strong>保 ABI 的语言重写（Zircon → zCore；seL4 → ReL4）。</strong> 完整兼容上游 ABI，换一种语言重写以获得内存安全或异步能力，还能叠加新人格（zCore 在 zircon 之外加 linux 人格）。</li>
 <li><strong>fork + 增量（unikraft → TenonOS）。</strong> 继承上游的库，在旁边加增量（TenonOS 加 <code>tn-*</code> 实时调度与 mortise 嵌入式 hypervisor），代价是与上游演进耦合、需持续合并。</li>
 <li><strong>复用现成内核（NetBSD → rumprun）。</strong> 用 anykernel 思想把成熟内核的驱动、文件系统、网络整体收割成库，一行初始化即起整个内核。</li>
 </ul>
 <p>这四条路径，连同前面的范式坐标系，正是”要自己造一个内核”时最该先想清的两件事——把自己定位在哪几条轴上，以及打算从哪个基座、用哪种方式长出来。</p>
-<h2 id="11-虚拟化：概念与硬件基础"><a href="#11-虚拟化：概念与硬件基础" class="headerlink" title="11. 虚拟化：概念与硬件基础"></a>11. 虚拟化：概念与硬件基础</h2><p>谱系的最后一段，是在一套内核之上再并置多套内核——虚拟化层（hypervisor）。它让多个相互隔离的客户机（guest，每个含自己的内核与用户态）跑在同一台物理机上。</p>
-<h3 id="11-1-概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器"><a href="#11-1-概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器" class="headerlink" title="11.1 概念辨析：Hypervisor、VMM、Type-1/1.5/2 与模拟器"></a>11.1 概念辨析：Hypervisor、VMM、Type-1/1.5/2 与模拟器</h3><p>几个术语先各归各位。<strong>Hypervisor 与 VMM（Virtual Machine Monitor）是同义词</strong>，指占据比客户机更高特权级、负责陷入并模拟（trap-and-emulate）敏感操作、做二级地址翻译与资源分区的那层软件。按它如何取得特权，分三类：</p>
+<h2 id="虚拟化：概念与硬件基础"><a href="#虚拟化：概念与硬件基础" class="headerlink" title="虚拟化：概念与硬件基础"></a>虚拟化：概念与硬件基础</h2><p>谱系的最后一段，是在一套内核之上再并置多套内核——虚拟化层（hypervisor）。它让多个相互隔离的客户机（guest，每个含自己的内核与用户态）跑在同一台物理机上。</p>
+<h3 id="概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器"><a href="#概念辨析：Hypervisor、VMM、Type-1-1-5-2-与模拟器" class="headerlink" title="概念辨析：Hypervisor、VMM、Type-1/1.5/2 与模拟器"></a>概念辨析：Hypervisor、VMM、Type-1/1.5/2 与模拟器</h3><p>几个术语先各归各位。<strong>Hypervisor 与 VMM（Virtual Machine Monitor）是同义词</strong>，指占据比客户机更高特权级、负责陷入并模拟（trap-and-emulate）敏感操作、做二级地址翻译与资源分区的那层软件。按它如何取得特权，分三类：</p>
 <ul>
 <li><strong>Type-1（裸金属）</strong>：直接占据最高虚拟化特权级（rv 的 HS、x86 的 VMX-root、aa 的 EL2），自身就是最底层软件。xen、bao、acrn、hypocaust、hypocaust-2、rustyvisor、axvisor 都是 Type-1。</li>
 <li><strong>Type-1.5（在 Linux 中动态接管）</strong>：Linux 先正常启动占据全部硬件，再把 hypervisor 当内核模块加载，由驱动逐 CPU”把正在运行的 Linux 降级成客户机”。RVM1.5 是其代表。</li>
 <li><strong>Type-2（宿主用户态 VMM）</strong>：作为宿主 OS 上的普通用户态进程，借宿主内核的虚拟化接口（如 Linux KVM）跑客户机。firecracker、cloud-hypervisor、crosvm、KVM 模式下的 QEMU、rcore-vmm 都属此类。</li>
 </ul>
 <p><strong>hypervisor 与模拟器（emulator）要分清</strong>：模拟器（QEMU 的 TCG、rvvm、machina）用软件解释或即时编译（JIT）翻译客户机指令，不要求客户机与宿主同指令集、也不用硬件虚拟化扩展；hypervisor 则让客户机指令”原生”跑在 CPU 上，只在敏感操作处陷入。一个判据是：hypocaust 即使在没有 H 扩展的硬件上，也是”原生执行 + 影子页表”而非解释执行，所以它是 hypervisor 不是模拟器。</p>
-<h3 id="11-2-rv-H-扩展：虚拟化的硬件底座"><a href="#11-2-rv-H-扩展：虚拟化的硬件底座" class="headerlink" title="11.2 rv H 扩展：虚拟化的硬件底座"></a>11.2 rv H 扩展：虚拟化的硬件底座</h3><p>虚拟化要高效，靠的是硬件给的一层”虚拟化特权”。rv 的 H 扩展把 S 模式一分为二：hypervisor 跑在 HS 模式，客户机的内核降到 VS 模式（虚拟化的 S）、客户机用户态在 VU。从三个 rv 项目源码里提取出的实际机制如下（与 x86 VMX、aa EL2 同构）：</p>
+<h3 id="rv-H-扩展：虚拟化的硬件底座"><a href="#rv-H-扩展：虚拟化的硬件底座" class="headerlink" title="rv H 扩展：虚拟化的硬件底座"></a>rv H 扩展：虚拟化的硬件底座</h3><p>虚拟化要高效，靠的是硬件给的一层”虚拟化特权”。rv 的 H 扩展把 S 模式一分为二：hypervisor 跑在 HS 模式，客户机的内核降到 VS 模式（虚拟化的 S）、客户机用户态在 VU。从三个 rv 项目源码里提取出的实际机制如下（与 x86 VMX、aa EL2 同构）：</p>
 <ul>
 <li><strong>进出 VS 模式</strong>：<code>hstatus.SPV</code>（上一虚拟化状态）置位后，<code>sret</code> 返回的是 VS 模式而非 HS——这是”进入客户机”的开关。</li>
 <li><strong>二级地址翻译</strong>：<code>hgatp</code> 装客户机物理地址到宿主物理地址的 stage-2 页表根（类比 x86 的 EPT、aa 的 vttbr）。完整的两阶段翻译是 <code>客户机虚拟地址 →（vsatp，stage-1）客户机物理地址 →（hgatp，stage-2）宿主物理地址</code>。</li>
@@ -1360,14 +1184,14 @@
 </ul>
 <p>一个工程必备的细节是 <strong>H 扩展探测</strong>：不能假设硬件一定有 H，要装一个临时陷入处理程序、执行一条读 <code>hgatp</code>（CSR 地址 0x680）的指令，若触发非法指令异常就说明无 H 扩展。</p>
 <p>接下来按”教学三件 → 组件化 → Type-1.5 → 工业 Type-1 → microVM → 模拟器”的顺序，把本地的虚拟化项目逐一拆开。</p>
-<h2 id="12-虚拟化：各实现的源码拆解"><a href="#12-虚拟化：各实现的源码拆解" class="headerlink" title="12. 虚拟化：各实现的源码拆解"></a>12. 虚拟化：各实现的源码拆解</h2><h3 id="12-1-rv-教学三件：从无-H-到自带固件"><a href="#12-1-rv-教学三件：从无-H-到自带固件" class="headerlink" title="12.1 rv 教学三件：从无 H 到自带固件"></a>12.1 rv 教学三件：从无 H 到自带固件</h3><p>这三个项目恰好演示了”在哪一级取得虚拟化特权”的三种姿态。</p>
+<h2 id="虚拟化：各实现的源码拆解"><a href="#虚拟化：各实现的源码拆解" class="headerlink" title="虚拟化：各实现的源码拆解"></a>虚拟化：各实现的源码拆解</h2><h3 id="rv-教学三件：从无-H-到自带固件"><a href="#rv-教学三件：从无-H-到自带固件" class="headerlink" title="rv 教学三件：从无 H 到自带固件"></a>rv 教学三件：从无 H 到自带固件</h3><p>这三个项目恰好演示了”在哪一级取得虚拟化特权”的三种姿态。</p>
 <p><strong>hypocaust——在没有 H 扩展的硬件上做隔离。</strong> 它的方法论是影子页表（shadow page table）加陷入模拟 CSR：因为没有 <code>hgatp</code> 二级翻译，只能让真实的 <code>satp</code> 装上 hypervisor 维护的影子页表，客户机改 <code>satp</code>、改页表、执行特权指令全部陷入 hypervisor 模拟。它把客户机页表项设成只读以便捕获写入，用一套影子 CSR 状态机模拟客户机看到的特权状态，上下文切换用协作式的任务切换（rCore 风格）而非硬件 VM entry。代价是每次客户机改页表都要陷入加影子页表同步，性能差，但能跑在任意 rv 上。</p>
 <p><strong>hypocaust-2——H 扩展加速版。</strong> 它是 hypocaust 的继任，用硬件 <code>hgatp</code> 二级翻译取代影子页表、用 VS 模式直接原生跑客户机内核，只在敏感事件陷出。它的陷出分发是核心：虚拟 SBI 调用转给 hypervisor 提供的虚拟 SBI、客户机缺页读 <code>htval</code>/<code>htinst</code> 诊断（含模拟虚拟 PLIC）、定时器陷出用 <code>hvip.set_vstip</code> 注入客户机定时中断、外部中断从宿主 PLIC claim 后用 <code>hvip.set_vseip</code> 注入。它的设计取向是 <strong>vCPU 与物理核 1:1 绑定、不调度</strong>（无调度器、确定性好），配 rv IOMMU 让直通设备的 DMA 也走二级翻译以防越界。可跑 rCore、RT-Thread、Linux 6.2。</p>
 <p><strong>rustyvisor——一份代码看全 M→HS→VS 三级。</strong> 它的特别之处在于自带 M 模式固件层：自己读 <code>misa</code> 写回 <code>misa | H</code> 来启用 H 扩展、做异常与中断委派、配 PMP，再设 <code>mstatus.MPV</code> 后 <code>mret</code> 进入自己的 HS 模式 hypervisor——不像 hypocaust-2 那样纯依赖外部 OpenSBI/RustSBI 当 M 模式。它给客户机提供虚拟 SBI 时直接用 <code>rustsbi</code> crate 的 VmSBI，省去手写分发。它是教学上”从 M 到 HS 到 VS 全链路”最完整的样本（仍是单 VM 的开发中状态）。</p>
-<h3 id="12-2-组件化：axvisor-如何从-ArceOS-衍生"><a href="#12-2-组件化：axvisor-如何从-ArceOS-衍生" class="headerlink" title="12.2 组件化：axvisor 如何从 ArceOS 衍生"></a>12.2 组件化：axvisor 如何从 ArceOS 衍生</h3><p>axvisor 是 §10.5 所说”编译期组合加扩展点”衍生范式在虚拟化方向的落地——它本质是一个跑在 ArceOS 之上的 app（<code>extern crate axstd as std</code>），复用 ArceOS 的入口、堆、调度器、SMP、分页、中断，自己只把”虚拟化能力”拆成一组独立 crate（axvm 管 VM、axvcpu 管 vCPU、axaddrspace 管二级地址空间、axdevice 管设备、axhvc 管 hypercall），再用 HAL trait 把这些 crate 黏合到 ArceOS 的硬件抽象层。它的 <code>main</code> 极简：检测硬件支持、启用虚拟化、初始化并启动 VMM。跨架构（x86_64/aa/riscv64）由这些 crate 各自的 per-arch 实现完成，这就是它”unified”的含义。</p>
+<h3 id="组件化：axvisor-如何从-ArceOS-衍生"><a href="#组件化：axvisor-如何从-ArceOS-衍生" class="headerlink" title="组件化：axvisor 如何从 ArceOS 衍生"></a>组件化：axvisor 如何从 ArceOS 衍生</h3><p>axvisor 是 「衍生：一棵内核如何长出另一棵」 所说”编译期组合加扩展点”衍生范式在虚拟化方向的落地——它本质是一个跑在 ArceOS 之上的 app（<code>extern crate axstd as std</code>），复用 ArceOS 的入口、堆、调度器、SMP、分页、中断，自己只把”虚拟化能力”拆成一组独立 crate（axvm 管 VM、axvcpu 管 vCPU、axaddrspace 管二级地址空间、axdevice 管设备、axhvc 管 hypercall），再用 HAL trait 把这些 crate 黏合到 ArceOS 的硬件抽象层。它的 <code>main</code> 极简：检测硬件支持、启用虚拟化、初始化并启动 VMM。跨架构（x86_64/aa/riscv64）由这些 crate 各自的 per-arch 实现完成，这就是它”unified”的含义。</p>
 <p>它与 hypocaust-2 的关键对比在 vCPU 调度：hypocaust-2 是 1:1 不调度，axvisor 则把 vCPU 当作 ArceOS 的任务，借 ArceOS 的调度器调度——复用而非自造调度，这是组件化最直接的红利。构建走配置驱动（板级 toml 加虚机 toml，<code>cargo xtask</code> 加 menuconfig）。概括而言，用 axvisor 造 hypervisor 等于”写 HAL 实现 + 选 crate + 写 config”，开发量极小、三架构统一，代价是强耦合 ArceOS 生态、依赖一长串 preview 版 crate。</p>
-<h3 id="12-3-Type-1-5：RVM1-5-把运行中的-Linux-降级"><a href="#12-3-Type-1-5：RVM1-5-把运行中的-Linux-降级" class="headerlink" title="12.3 Type-1.5：RVM1.5 把运行中的 Linux 降级"></a>12.3 Type-1.5：RVM1.5 把运行中的 Linux 降级</h3><p>RVM1.5 是唯一的 Type-1.5（Jailhouse 风格，x86 VMX/SVM）。它最能说明 Type-1.5 的本质：Linux 正常启动占据全部硬件，把 RVM1.5 当内核模块加载，由 Jailhouse 的 Linux 驱动逐 CPU 跳进 hypervisor 入口，hypervisor 保存”正在运行的 Linux”的完整 CPU 上下文（<code>LinuxContext::load_from(linux_sp)</code>），执行 <code>vmxon</code> 加 <code>vmlaunch</code>，把这同一个 Linux 降级进 VMX-non-root 当 root cell 客户机；还能随时 deactivate 把 Linux 升回裸机。它借用 Jailhouse 的 cell 概念做静态分区，TCB 比 Type-1 略大（含 Linux 子集知识）但远小于 Type-2，最大价值是”零停机进出虚拟化”加复用 Linux 的全部驱动与调度。</p>
-<h3 id="12-4-工业-Type-1：xen、bao、acrn"><a href="#12-4-工业-Type-1：xen、bao、acrn" class="headerlink" title="12.4 工业 Type-1：xen、bao、acrn"></a>12.4 工业 Type-1：xen、bao、acrn</h3><table>
+<h3 id="Type-1-5：RVM1-5-把运行中的-Linux-降级"><a href="#Type-1-5：RVM1-5-把运行中的-Linux-降级" class="headerlink" title="Type-1.5：RVM1.5 把运行中的 Linux 降级"></a>Type-1.5：RVM1.5 把运行中的 Linux 降级</h3><p>RVM1.5 是唯一的 Type-1.5（Jailhouse 风格，x86 VMX/SVM）。它最能说明 Type-1.5 的本质：Linux 正常启动占据全部硬件，把 RVM1.5 当内核模块加载，由 Jailhouse 的 Linux 驱动逐 CPU 跳进 hypervisor 入口，hypervisor 保存”正在运行的 Linux”的完整 CPU 上下文（<code>LinuxContext::load_from(linux_sp)</code>），执行 <code>vmxon</code> 加 <code>vmlaunch</code>，把这同一个 Linux 降级进 VMX-non-root 当 root cell 客户机；还能随时 deactivate 把 Linux 升回裸机。它借用 Jailhouse 的 cell 概念做静态分区，TCB 比 Type-1 略大（含 Linux 子集知识）但远小于 Type-2，最大价值是”零停机进出虚拟化”加复用 Linux 的全部驱动与调度。</p>
+<h3 id="工业-Type-1：xen、bao、acrn"><a href="#工业-Type-1：xen、bao、acrn" class="headerlink" title="工业 Type-1：xen、bao、acrn"></a>工业 Type-1：xen、bao、acrn</h3><table>
 <thead>
 <tr>
 <th align="center">项目</th>
@@ -1400,22 +1224,22 @@
 </tr>
 </tbody></table>
 <p>xen 是 2003 年起的经典——dom0（特权域，托管真实驱动与设备模型）加 domU（客户机），三条虚拟化路径并存（PV 半虚拟化、HVM 硬件辅助、PVH 二者结合），aa/rv 上还有 Dom0less（直接从设备树启多客户机省去 dom0 中转）。bao 走另一端——静态分区，boot 时一次性把 CPU、内存、IO 分给固定的 VM，运行期不重分配、不调度，因而实时可预测、故障隔离、易做 ISO 26262/IEC 61508 认证，已部署在 NXP、Renesas 等车规芯片。acrn 居中——同时支持硬分区的确定性 VM 与共享硬件的富 VM，三种配置模式（partitioned 纯静态、hybrid 混合、shared 共享）让实时负载与富负载在一台机器共存，设备模型放在 Service VM 的用户态以隔离并复用 Linux 驱动栈。这三者恰好把”静态分区不调度（确定性）”与”动态调度（灵活）”的取舍铺成一条谱。</p>
-<h3 id="12-5-KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm"><a href="#12-5-KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm" class="headerlink" title="12.5 KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm"></a>12.5 KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm</h3><p>这三个是 Type-2 的现代代表，都构建在 Linux KVM 之上、用 Rust 写；其中 firecracker 与 cloud-hypervisor 复用 rust-vmm 共享地基，crosvm 则是这套 crate 的源头。三者安全模型与功能取向各异：</p>
+<h3 id="KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm"><a href="#KVM-上的-Rust-microVM：firecracker、cloud-hypervisor、crosvm" class="headerlink" title="KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm"></a>KVM 上的 Rust microVM：firecracker、cloud-hypervisor、crosvm</h3><p>这三个是 Type-2 的现代代表，都构建在 Linux KVM 之上、用 Rust 写；其中 firecracker 与 cloud-hypervisor 复用 rust-vmm 共享地基，crosvm 则是这套 crate 的源头。三者安全模型与功能取向各异：</p>
 <ul>
 <li><strong>firecracker（AWS，serverless）</strong>：为 AWS Lambda/Fargate 设计，极简——只有 block/net/vsock/balloon/rng 等少数 virtio 设备、以 MMIO 传输为主、无完整 PCI，vCPU 的陷出循环只处理 MMIO 读写与系统事件。启动约 125 毫秒，纯 KVM 单后端。安全靠三重：seccomp 过滤、jailer（chroot + cgroup + namespace）、独立的 seccomp BPF 编译器。还有快照机制做秒级 fork 与预热池。</li>
 <li><strong>cloud-hypervisor（Intel/CNCF，现代云）</strong>：功能比 firecracker 全得多——完整 PCI、ACPI、CPU/内存/设备热插拔、vhost-user（设备后端可跑独立进程）、VFIO 直通、机密计算（TDX/SEV-SNP）。它最大的设计特点是<strong>多 hypervisor 后端 trait 抽象</strong>：<code>Hypervisor</code>/<code>Vm</code>/<code>Vcpu</code> 三个 trait 之下并列 KVM 与 MSHV（Microsoft Hypervisor，经 <code>/dev/mshv</code> 跑在 Linux root partition，如 Azure）两套后端，同一份 VMM 代码可跑在两种底层 hypervisor 之上（均为 Linux 宿主）。</li>
 <li><strong>crosvm（Google ChromeOS，rust-vmm 鼻祖）</strong>：跑 ChromeOS 的 Linux（Crostini）与 Android（ARCVM），rust-vmm 的多个 crate 最初就是从它抽出。它的安全模型最激进——<strong>每个虚拟设备 fork 成独立进程、用 minijail 加 seccomp 沙箱</strong>，单个设备被攻破不波及全机；功能也最全（GPU、音频、媒体直通，面向桌面与 Android）；支持的宿主 hypervisor 后端最多（KVM、GenieZone、Gunyah、HAXM、WHPX 等）。</li>
 </ul>
 <p>三者的安全面恰好递增：firecracker（单进程多线程 + seccomp + jailer）&lt; cloud-hypervisor（可选 vhost-user 进程隔离）&lt; crosvm（每设备独立进程 + minijail）。</p>
-<h3 id="12-6-rust-vmm-crates：三大-VMM-的共享地基"><a href="#12-6-rust-vmm-crates：三大-VMM-的共享地基" class="headerlink" title="12.6 rust-vmm crates：三大 VMM 的共享地基"></a>12.6 rust-vmm crates：三大 VMM 的共享地基</h3><p>firecracker 与 cloud-hypervisor 能各取所需，靠的是 rust-vmm——一组正交、可复用、各带 CI 的 crate（crosvm 正是这套 crate 的发源地）。它把”VMM = 内存模型 + KVM 接口 + virtio 队列 + 设备 + 启动加载 + 系统工具 + 事件循环”切成独立 crate，VMM 项目只写装配与策略（安全模型、设备集、API）。三块地基最关键：<code>vm-memory</code>（客户机物理内存抽象，用 <code>GuestMemory</code> trait 解耦”内存消费者”与”内存提供者”，统一 GPA→HVA 翻译）、<code>kvm-ioctls</code>（把 unsafe 的 KVM ioctl 封成类型安全的 <code>Kvm</code>/<code>VmFd</code>/<code>VcpuFd</code> 三层句柄，<code>VcpuExit</code> 枚举就是各 VMM 陷出循环要分发的事件）、<code>virtio-queue</code>（split-ring 的描述符链处理，<code>DescriptorChain</code> 迭代器是设备后端读写客户机缓冲的统一入口）。这正是 firecracker（极简单后端）与 cloud-hypervisor（多后端全功能）能复用同一地基的原因。值得一提的是，QEMU 的 <code>kvm-all.c</code> 里 <code>MemoryListener</code> 到 <code>set_user_memory_region</code> 的机制，就是 rust-vmm 的 <code>vm-memory</code> 加 <code>kvm-ioctls</code> 在 C 世界的对应物。</p>
-<h3 id="12-7-模拟器三家：rvvm、machina、qemu"><a href="#12-7-模拟器三家：rvvm、machina、qemu" class="headerlink" title="12.7 模拟器三家：rvvm、machina、qemu"></a>12.7 模拟器三家：rvvm、machina、qemu</h3><p>最后是不占特权级、纯软件翻译指令的模拟器。它们共享一套骨架——解码、转中间表示（IR）、JIT 编译、翻译块（TB）缓存、设备 MMIO 分发：</p>
+<h3 id="rust-vmm-crates：三大-VMM-的共享地基"><a href="#rust-vmm-crates：三大-VMM-的共享地基" class="headerlink" title="rust-vmm crates：三大 VMM 的共享地基"></a>rust-vmm crates：三大 VMM 的共享地基</h3><p>firecracker 与 cloud-hypervisor 能各取所需，靠的是 rust-vmm——一组正交、可复用、各带 CI 的 crate（crosvm 正是这套 crate 的发源地）。它把”VMM = 内存模型 + KVM 接口 + virtio 队列 + 设备 + 启动加载 + 系统工具 + 事件循环”切成独立 crate，VMM 项目只写装配与策略（安全模型、设备集、API）。三块地基最关键：<code>vm-memory</code>（客户机物理内存抽象，用 <code>GuestMemory</code> trait 解耦”内存消费者”与”内存提供者”，统一 GPA→HVA 翻译）、<code>kvm-ioctls</code>（把 unsafe 的 KVM ioctl 封成类型安全的 <code>Kvm</code>/<code>VmFd</code>/<code>VcpuFd</code> 三层句柄，<code>VcpuExit</code> 枚举就是各 VMM 陷出循环要分发的事件）、<code>virtio-queue</code>（split-ring 的描述符链处理，<code>DescriptorChain</code> 迭代器是设备后端读写客户机缓冲的统一入口）。这正是 firecracker（极简单后端）与 cloud-hypervisor（多后端全功能）能复用同一地基的原因。值得一提的是，QEMU 的 <code>kvm-all.c</code> 里 <code>MemoryListener</code> 到 <code>set_user_memory_region</code> 的机制，就是 rust-vmm 的 <code>vm-memory</code> 加 <code>kvm-ioctls</code> 在 C 世界的对应物。</p>
+<h3 id="模拟器三家：rvvm、machina、qemu"><a href="#模拟器三家：rvvm、machina、qemu" class="headerlink" title="模拟器三家：rvvm、machina、qemu"></a>模拟器三家：rvvm、machina、qemu</h3><p>最后是不占特权级、纯软件翻译指令的模拟器。它们共享一套骨架——解码、转中间表示（IR）、JIT 编译、翻译块（TB）缓存、设备 MMIO 分发：</p>
 <ul>
 <li><strong>rvvm（C，约 5.8 万行）</strong>：rv 的 tracing JIT 模拟器，纯软件、不依赖宿主虚拟化扩展，宿主可为 x86/aa/rv。它的 JIT 有多个宿主后端，比 QEMU 的 TCG 快，纯 C99 极便携（能在 Apple M1 上跑 rv，这是 KVM 跨架构做不到的），聚焦单一 ISA 因而轻。</li>
 <li><strong>machina（Rust，约 16 万行）</strong>：QEMU 的 Rust 重写，TCG 风格的 JIT（干净的 IR 加活跃分析、寄存器分配、优化、x86-64 后端），客户机支持 RV64 与 la64。它规模可读完，是”用 Rust 写 QEMU 式全系统模拟器”的样板，并用指令级 difftest（经 GDB 远程协议对照 QEMU）验证，已能启动 OpenSBI 加 Linux 到 shell。</li>
 <li><strong>qemu（C，约一百五十万至两百余万行）</strong>：事实标准，30 多种客户机架构，既可 TCG 软件模拟也可作 KVM/HVF/WHPX/Xen 的用户态设备模型前端。所有现代 Rust VMM 与 machina/rvvm，概念上都在对标或替换 QEMU 的”用户态设备模型 + 加速器抽象 + 陷出分发循环”——KVM 模式下的 QEMU 扮演的就是 cloud-hypervisor 那样的用户态 VMM 角色，只是设备与架构覆盖远更广、体量也重得多。</li>
 </ul>
-<h3 id="12-8-横向小结"><a href="#12-8-横向小结" class="headerlink" title="12.8 横向小结"></a>12.8 横向小结</h3><p>把虚拟化这一段收束成几条给自己造 hypervisor 的取舍：<strong>特权级占据决定范式</strong>（自己占最高级是 Type-1、依附 KVM 用户态是 Type-2、纯软件不占特权是模拟器）；<strong>隔离机制看硬件</strong>（有 H/VMX/EL2 就用硬件二级翻译，无则退回影子页表软件模拟，性能差但可移植）；<strong>三种占位姿态</strong>（外部 SBI 占 HS、自带 M 模式自启用 H、Linux 之上动态降级 Linux 自己）；<strong>vCPU 调度二选一</strong>（1:1 物理核不调度求确定性，或借宿主调度器把 vCPU 当任务调求灵活）；<strong>设备模型放哪决定隔离与复用</strong>（hypervisor 内极简、特权客户机用户态、VMM 进程内多线程、VMM 子进程沙箱）；以及<strong>组件化把造 hypervisor 降为写 HAL 加选 crate 加写 config</strong>（axvisor 范式），而 rust-vmm 把 Type-2 VMM 降为装配正交 crate。虚拟 SBI 这类接口也不必重造轮子——直接用 <code>rustsbi</code> crate 即可。</p>
-<h2 id="13-按生态位精读：一条动手路线"><a href="#13-按生态位精读：一条动手路线" class="headerlink" title="13. 按生态位精读：一条动手路线"></a>13. 按生态位精读：一条动手路线</h2><p>读完上面的横纵两扫，真要动手时，按”由简到繁、每档选一个吃透”的顺序最省力：</p>
+<h3 id="横向小结"><a href="#横向小结" class="headerlink" title="横向小结"></a>横向小结</h3><p>把虚拟化这一段收束成几条给自己造 hypervisor 的取舍：<strong>特权级占据决定范式</strong>（自己占最高级是 Type-1、依附 KVM 用户态是 Type-2、纯软件不占特权是模拟器）；<strong>隔离机制看硬件</strong>（有 H/VMX/EL2 就用硬件二级翻译，无则退回影子页表软件模拟，性能差但可移植）；<strong>三种占位姿态</strong>（外部 SBI 占 HS、自带 M 模式自启用 H、Linux 之上动态降级 Linux 自己）；<strong>vCPU 调度二选一</strong>（1:1 物理核不调度求确定性，或借宿主调度器把 vCPU 当任务调求灵活）；<strong>设备模型放哪决定隔离与复用</strong>（hypervisor 内极简、特权客户机用户态、VMM 进程内多线程、VMM 子进程沙箱）；以及<strong>组件化把造 hypervisor 降为写 HAL 加选 crate 加写 config</strong>（axvisor 范式），而 rust-vmm 把 Type-2 VMM 降为装配正交 crate。虚拟 SBI 这类接口也不必重造轮子——直接用 <code>rustsbi</code> crate 即可。</p>
+<h2 id="按生态位精读：一条动手路线"><a href="#按生态位精读：一条动手路线" class="headerlink" title="按生态位精读：一条动手路线"></a>按生态位精读：一条动手路线</h2><p>读完上面的横纵两扫，真要动手时，按”由简到繁、每档选一个吃透”的顺序最省力：</p>
 <ol>
 <li><strong>先打实时内核的底</strong>：FreeRTOS 是库式 RTOS 的极简范本，读懂它的位图调度、队列即一切同步原语、PIP，就掌握了调度、上下文切换、IPC、优先级反转四件事；想看认证级与教科书级实现读 μC/OS-II（8×8 位图加常量表的 O(1) 选取）与 μC/OS-III（真 PIP、delta 节拍）；想看完整 RTOS 怎么搭设备框架、shell、自动初始化读 RT-Thread。</li>
 <li><strong>再换异步的脑筋</strong>：embassy 是把异步运行时当调度框架的最成熟样本，约两千行的执行器加 run_queue 加 waker 就是全部，读它能彻底改写”任务必须有独立栈”的直觉。</li>
@@ -1424,7 +1248,7 @@
 <li><strong>最后上虚拟化</strong>：rv 上从 hypocaust（无 H 的影子页表）到 hypocaust-2（H 扩展二级翻译）读懂硬件底座；要看组件化衍生读 axvisor；要看工业取舍读 bao（静态分区）与 xen（全调度）；要看 Type-2 怎么搭读 firecracker 加 rust-vmm 地基。</li>
 </ol>
 <p>一条贯穿始终的主线是：<strong>每一档都先看它怎么回答”谁来调度、内存怎么管、陷入怎么进、设备怎么接”这同一组问题，再看它的独门设计</strong>——骨架相同，肉各不同，这正是把一整条谱系装进脑子的最省力方式。</p>
-<h2 id="14-词典"><a href="#14-词典" class="headerlink" title="14. 词典"></a>14. 词典</h2><ul>
+<h2 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h2><ul>
 <li><strong>RTOS（实时操作系统）</strong>：以确定性（最坏延迟有上界）而非吞吐为目标的内核；分库式（FreeRTOS、μC/OS）与完整（RT-Thread）两档。</li>
 <li><strong>库式 RTOS</strong>：只提供内核本体、与应用编成单一镜像的 RTOS。</li>
 <li><strong>PIP（优先级继承）/ PCP（优先级天花板）</strong>：两种优先级反转对策；前者临时抬升持锁者优先级，后者给锁预设天花板优先级。</li>
@@ -1456,7 +1280,7 @@
 <li><strong>rust-vmm</strong>：一组正交可复用的 Rust crate（vm-memory/kvm-ioctls/virtio-queue 等），Type-2 VMM 的共享地基。</li>
 <li><strong>模拟器（emulator）</strong>：用软件解释或 JIT 翻译指令、不要求同 ISA、不用硬件虚拟化扩展；QEMU、rvvm、machina 属此。</li>
 </ul>
-<h2 id="15-思考题"><a href="#15-思考题" class="headerlink" title="15. 思考题"></a>15. 思考题</h2><p><strong>一、为什么 FreeRTOS 把信号量、互斥量都实现成队列的特例，而不各写一套？</strong><br>因为三者的核心都是”等待集合加唤醒”。计数信号量是元素大小为 0、长度为 N 的队列（计数即填充度），二值信号量是长度为 1 的队列，互斥量是二值信号量加持有者记录与 PIP。归约为同一结构后，等待、超时、按优先级唤醒的逻辑只写一份，代码极简且一致——这是库式 RTOS 追求极小的典型手法。</p>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><p><strong>一、为什么 FreeRTOS 把信号量、互斥量都实现成队列的特例，而不各写一套？</strong><br>因为三者的核心都是”等待集合加唤醒”。计数信号量是元素大小为 0、长度为 N 的队列（计数即填充度），二值信号量是长度为 1 的队列，互斥量是二值信号量加持有者记录与 PIP。归约为同一结构后，等待、超时、按优先级唤醒的逻辑只写一份，代码极简且一致——这是库式 RTOS 追求极小的典型手法。</p>
 <p><strong>二、embassy 的”任务”和传统 RTOS 的”任务”在内存上有何根本不同？</strong><br>传统 RTOS 每个任务有独立的栈（保守预留），上下文切换要保存约十八个寄存器并切栈。embassy 的任务是一个编译期生成的 Future 状态机，状态保存在静态任务存储里而非栈上，所有任务共享同一个栈（栈深等于最深的 <code>await</code> 链），”切换”就是 <code>poll</code> 返回 Pending（不到十个周期、不保存寄存器）。这就是 embassy 比 RTOS 省 RAM 的根源——不必为每个任务预留独立栈。</p>
 <p><strong>三、组件化内核与微内核都”把内核拆开”，区别在哪？</strong><br>微内核是运行期分离——子系统是用户态多进程，靠 IPC 通信，隔离由硬件特权与地址空间在运行时保证，代价是跨域开销。组件化是编译期分离——子系统是多个 crate，编进同一个二进制、运行期共享地址空间，保留宏内核性能，隔离由 Rust 类型系统在编译期保证（asterinas 更用 <code>#![deny(unsafe_code)]</code> 把 TCB 收敛到框架）。一个把隔离推到运行时，一个收到编译期。</p>
 <p><strong>四、”单内核”和”Unikernel”都带”单”，是一回事吗？</strong><br>不是，它们量的是不同的轴。单内核（monolithic）讲的是内核结构——所有功能在一个内核地址空间里；Unikernel 讲的是打包形态——单个程序加它所需的库编成单一可启动镜像、一次只跑一个程序。一个 monolithic 内核既能打包成传统多进程 OS（Linux），也能被裁成 Unikernel；二者不在一个维度上对立。</p>
@@ -1470,8 +1294,65 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/blog/tags/rCore/" rel="tag"># rCore</a>
+              <a href="/blog/tags/StarryOS/" rel="tag"># StarryOS</a>
+              <a href="/blog/tags/RTOS/" rel="tag"># RTOS</a>
               <a href="/blog/tags/author-%E9%80%B8%E4%BB%99/" rel="tag"># author:逸仙</a>
               <a href="/blog/tags/repo-https-cnb-cool-heke-learning-ArceOS-Tutorial-2026S/" rel="tag"># repo:https://cnb.cool/heke_learning/ArceOS-Tutorial-2026S</a>
+              <a href="/blog/tags/Async-Runtime/" rel="tag"># Async Runtime</a>
+              <a href="/blog/tags/ArceOS/" rel="tag"># ArceOS</a>
+              <a href="/blog/tags/FreeRTOS/" rel="tag"># FreeRTOS</a>
+              <a href="/blog/tags/embassy/" rel="tag"># embassy</a>
+              <a href="/blog/tags/RTT/" rel="tag"># RTT</a>
+              <a href="/blog/tags/Unikernel/" rel="tag"># Unikernel</a>
+              <a href="/blog/tags/rt-thread/" rel="tag"># rt-thread</a>
+              <a href="/blog/tags/%CE%BCC-OS/" rel="tag"># μC-OS</a>
+              <a href="/blog/tags/uC-OS2/" rel="tag"># uC-OS2</a>
+              <a href="/blog/tags/uC-OS3/" rel="tag"># uC-OS3</a>
+              <a href="/blog/tags/RVM1-5/" rel="tag"># RVM1.5</a>
+              <a href="/blog/tags/axvisor/" rel="tag"># axvisor</a>
+              <a href="/blog/tags/bao-hypervisor/" rel="tag"># bao-hypervisor</a>
+              <a href="/blog/tags/hypocaust/" rel="tag"># hypocaust</a>
+              <a href="/blog/tags/hypocaust-2/" rel="tag"># hypocaust-2</a>
+              <a href="/blog/tags/kvmtool/" rel="tag"># kvmtool</a>
+              <a href="/blog/tags/rHyper/" rel="tag"># rHyper</a>
+              <a href="/blog/tags/rcore-vmm/" rel="tag"># rcore-vmm</a>
+              <a href="/blog/tags/rust-hypervisor-firmware/" rel="tag"># rust-hypervisor-firmware</a>
+              <a href="/blog/tags/rustyvisor/" rel="tag"># rustyvisor</a>
+              <a href="/blog/tags/rvvm/" rel="tag"># rvvm</a>
+              <a href="/blog/tags/tg-rcore/" rel="tag"># tg-rcore</a>
+              <a href="/blog/tags/DragonOS/" rel="tag"># DragonOS</a>
+              <a href="/blog/tags/NoAxiomOS/" rel="tag"># NoAxiomOS</a>
+              <a href="/blog/tags/Theseus/" rel="tag"># Theseus</a>
+              <a href="/blog/tags/TornadoOS/" rel="tag"># TornadoOS</a>
+              <a href="/blog/tags/Zircon/" rel="tag"># Zircon</a>
+              <a href="/blog/tags/Asterinas/" rel="tag"># Asterinas</a>
+              <a href="/blog/tags/JOS/" rel="tag"># JOS</a>
+              <a href="/blog/tags/libos/" rel="tag"># libos</a>
+              <a href="/blog/tags/HermitOS/" rel="tag"># HermitOS</a>
+              <a href="/blog/tags/MirageOS/" rel="tag"># MirageOS</a>
+              <a href="/blog/tags/TenonOS/" rel="tag"># TenonOS</a>
+              <a href="/blog/tags/rumprun/" rel="tag"># rumprun</a>
+              <a href="/blog/tags/seL4/" rel="tag"># seL4</a>
+              <a href="/blog/tags/unikraft/" rel="tag"># unikraft</a>
+              <a href="/blog/tags/xv6/" rel="tag"># xv6</a>
+              <a href="/blog/tags/zCore/" rel="tag"># zCore</a>
+              <a href="/blog/tags/aCore/" rel="tag"># aCore</a>
+              <a href="/blog/tags/Bare-metal-Runtime/" rel="tag"># Bare-metal Runtime</a>
+              <a href="/blog/tags/Monolithic-Kernel/" rel="tag"># Monolithic Kernel</a>
+              <a href="/blog/tags/Microkernel/" rel="tag"># Microkernel</a>
+              <a href="/blog/tags/Macro-Kernel/" rel="tag"># Macro Kernel</a>
+              <a href="/blog/tags/Exokernel/" rel="tag"># Exokernel</a>
+              <a href="/blog/tags/Library-OS/" rel="tag"># Library OS</a>
+              <a href="/blog/tags/Framekernel/" rel="tag"># Framekernel</a>
+              <a href="/blog/tags/SASOS/" rel="tag"># SASOS</a>
+              <a href="/blog/tags/Component-Kernel/" rel="tag"># Component Kernel</a>
+              <a href="/blog/tags/Async-Kernel/" rel="tag"># Async Kernel</a>
+              <a href="/blog/tags/Virtualization/" rel="tag"># Virtualization</a>
+              <a href="/blog/tags/Hypervisor/" rel="tag"># Hypervisor</a>
+              <a href="/blog/tags/Type1/" rel="tag"># Type1</a>
+              <a href="/blog/tags/Type2/" rel="tag"># Type2</a>
+              <a href="/blog/tags/Type1-5/" rel="tag"># Type1.5</a>
           </div>
 
         
