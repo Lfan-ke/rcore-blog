@@ -197,7 +197,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">948</span>
+        <span class="site-state-item-count">949</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -264,7 +264,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,7 +347,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -430,7 +430,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -453,9 +453,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="引言：从上电到内核接管之间的固件与引导"><a href="#引言：从上电到内核接管之间的固件与引导" class="headerlink" title="引言：从上电到内核接管之间的固件与引导"></a>引言：从上电到内核接管之间的固件与引导</h2><p>按下电源键，到屏幕上滚出第一行内核日志，中间有一段几乎没有人看得见的旅程。这段旅程里没有操作系统，没有 <code>printf</code>，没有调试器，没有文件系统，甚至最开始连内存都不能用。CPU 从一个写死在芯片里的地址取出第一条指令，从零开始逐步建立起自己能用的运行环境——初始化时钟、训练内存、建立串口、找到下一段代码、校验它、跳过去——如此接力五六棒，直到把控制权郑重交给内核的第一条指令。</p>
-<p>这段旅程的核心，是固件（firmware）与引导（boot）——要拆解的，正是它从上电到内核入口之间的每一棒。</p>
-<p>“之前”这段最容易被跳过，也最容易被误解。大多数人对启动的认识停在”BIOS 然后 GRUB 然后开机”，而真实的启动链是一条有五六棒的接力，每一棒都有它存在的硬件理由：有的因为复位时 DRAM 还不能用，有的因为需要一个比内核更高的特权级来管硬件，有的因为要在不可信的世界外面再套一层可信的世界。把这条链拆开，每一棒”为什么出现、解决了什么、被谁取代”,才算真的看懂一台机器是怎么启动起来的。</p>
+          <p>从按下电源到内核打印第一行日志，中间没有操作系统、没有 <code>printf</code>、没有文件系统，最开始连内存都不能用。CPU 从芯片里固定的地址取第一条指令，然后逐步建立运行环境：初始化时钟、训练内存、打开串口、找到下一段代码、校验、跳过去，这样交接五六次，最后把控制权交给内核的第一条指令。</p>
+<p>这一段由固件（firmware）和引导程序（bootloader）完成。常见的理解停在「BIOS，然后 GRUB，然后开机」，实际是五六级逐级交接，每一级都有硬件上的原因：复位时 DRAM 还不能用；需要一个比内核更高的特权级管理硬件；需要在不可信的环境外再加一层可信环境。下面逐级说明每一级为什么出现、解决什么问题、后来被什么取代。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/2026/05/03/Leo%20Cheng%EF%BC%9ABIOS%20SPL%20SBI%20BOOTLOADER%20-%20%E7%A9%BF%E8%B6%8A%E7%B3%BB%E7%BB%9F%E4%B9%8B%E5%89%8D/#more" rel="contents">
@@ -513,7 +512,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -598,7 +597,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -681,7 +680,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -862,7 +861,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -979,7 +978,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1311,7 +1310,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1434,7 +1433,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-10-10 08:56:36" itemprop="dateModified" datetime="2026-10-10T08:56:36+00:00">2026-10-10</time>
+                <time title="Modified: 2026-10-10 09:54:34" itemprop="dateModified" datetime="2026-10-10T09:54:34+00:00">2026-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
